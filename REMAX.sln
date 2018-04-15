@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REMAX", "REMAX\REMAX.csproj", "{D1DB060A-2BDA-448E-9D8C-3CA405598E7C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REMAXAPI", "REMAXAPI\REMAXAPI.csproj", "{DA9EBCD2-8734-4D09-8867-A0C0A31639DF}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D1DB060A-2BDA-448E-9D8C-3CA405598E7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1DB060A-2BDA-448E-9D8C-3CA405598E7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1DB060A-2BDA-448E-9D8C-3CA405598E7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1DB060A-2BDA-448E-9D8C-3CA405598E7C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DA9EBCD2-8734-4D09-8867-A0C0A31639DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DA9EBCD2-8734-4D09-8867-A0C0A31639DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA9EBCD2-8734-4D09-8867-A0C0A31639DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
