@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="29066d7392184da68939e9d1dcd719e8" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.User" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.UserClaim" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.UserLogin" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.UserRole" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <AssociationConnector Association="DB_A38003_DEVModel.FK_UserClaim_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_A38003_DEVModel.FK_UserLogin_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_A38003_DEVModel.UserUserRole" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.Account" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.AlternatorMaker" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.Channel" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.ChartType" Width="1.5" PointX="7.75" PointY="5.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.Country" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.DashboardSetting" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.Engine" Width="1.5" PointX="4.75" PointY="8.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.EngineType" Width="1.5" PointX="6.75" PointY="8.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.Model" Width="1.5" PointX="8.75" PointY="8.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.Monitoring" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.OptionSet" Width="1.5" PointX="9.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.OptionSetGroup" Width="1.5" PointX="10.75" PointY="7.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.ShipClass" Width="1.5" PointX="10.75" PointY="10.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.ShipType" Width="1.5" PointX="11.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.Vessel" Width="1.5" PointX="0.75" PointY="11.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

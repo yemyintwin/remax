@@ -12,19 +12,14 @@ namespace REMAXAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Channel
+    public partial class Monitoring
     {
         public System.Guid Id { get; set; }
+        public string IMO_No { get; set; }
+        public string SerialNo { get; set; }
         public int ChannelNo { get; set; }
-        public string Name { get; set; }
-        public Nullable<System.Guid> ModelNoId { get; set; }
-        public Nullable<decimal> MinRange { get; set; }
-        public Nullable<decimal> MaxRange { get; set; }
-        public Nullable<decimal> Scale { get; set; }
-        public string DisplayUnit { get; set; }
-        public Nullable<decimal> LowerLimit { get; set; }
-        public Nullable<decimal> UpperLimit { get; set; }
-        public Nullable<decimal> MonitoringTimer { get; set; }
-        public Nullable<int> DataTypeNo { get; set; }
+        public string ChannelDescription { get; set; }
+        public System.DateTime TimeStamp { get; set; }
+        public string Unit { get; set; }
     }
 }

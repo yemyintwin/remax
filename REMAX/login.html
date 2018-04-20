@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -26,18 +26,55 @@
                         <h3 class="panel-title">Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="form-group"><input type="email" class="form-control" placeholder="Email" name="email" autofocus=""></div>
-                        <div class="form-group"><input type="password" class="form-control" placeholder="Password" value=""></div><div class="checkbox"><label><input type="checkbox" name="remember" value="Remember Me" />Remember Me</label></div><a href="index.html"><button class="btn btn-default btn-lg btn-success btn-block" type="button">Login</button></a></div>
+                        <div class="form-group"><input type="email" class="form-control" placeholder="Email" id="email" name="email" autofocus="" value="remax@daikai.com"></div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" id="password" name="password" value="mypassword">
+                        </div><div class="checkbox"><label><input type="checkbox" name="remember" id="remember" />Remember Me</label></div>
+                        <a><button class="btn btn-default btn-lg btn-success btn-block" type="button" id="login" onclick="login()">Login</button></a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
     <script src="assets/js/kendo.all.min.js"></script>
     <script src="assets/js/metisMenu.js"></script>
     <script src="assets/js/remax.js"></script>
     <script src="assets/js/account.js"></script>
-</body>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        login = function () {
+            sessionStorage.removeItem('tokenKey');
 
+            var loginData = {
+                grant_type: 'password',
+                username: $('#email').val(),
+                password: $('#password').val()
+            };
+
+            $('#login').prop('disabled', true);
+            $('#login').text("Authenticating...");
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:56376/Token',
+                data: loginData
+            }).done(function (data) {
+                //debugger;
+                // Cache the access token in session storage.
+                if ($('#remember').prop('checked')) {
+                    $.cookie('tokenKey', data.access_token);
+                }
+                else {
+                    localStorage.setItem('tokenKey', data.access_token);
+                }
+                document.location = "/index.html";
+            }).fail(function () {
+                $('#login').prop('disabled', false);
+                $('#login').text("Login");
+            });
+        }
+    </script>
+</body>
 </html>

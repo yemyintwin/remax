@@ -24,9 +24,10 @@ namespace REMAXAPI.Provider
                 User user = userService.GetUserByCredentials(username, password);
                 if (user != null) {
                     var claims = new List<Claim>() {
-                        new Claim(ClaimTypes.Name, user.Name),
+                        new Claim(ClaimTypes.Name, user.FullName),
                         new Claim(ClaimTypes.Sid, user.Id.ToString()),
-                        new Claim(ClaimTypes.Email, user.Email)
+                        new Claim(ClaimTypes.Email, user.Email),
+                        new Claim(ClaimTypes.Expiration, user.Email)
                     };
 
                     ClaimsIdentity oAuthIdentity = new ClaimsIdentity(claims, Startup.OAuthOptions.AuthenticationType);
