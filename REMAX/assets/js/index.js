@@ -66,44 +66,14 @@
         });
     },
 
-    onload : function () {
+    onload: function () {
+        
+
         index.createChart();
         $(document).bind("kendo:skinChange", index.createChart);
 
         $(window).resize(function () {
             $("#chart1").data("kendoChart").refresh();
         });
-
-        var token;
-
-        if (localStorage.getItem('tokenKey')) token = localStorage.getItem('tokenKey').toString();
-        else if ($.cookie('tokenKey')) token = $.cookie('tokenKey');
-
-        var currentUser = localStorage.getItem('currentUser');
-
-        if (token) {
-            /* Has toekn but no current user */
-            if (!currentUser.FullName) {
-                $.ajax({
-                    type: "POST",
-                    url: "http://localhost:56376/api/Token/GetCurrentUser",
-                    dataType: 'json',
-                    async: false,
-                    data: '{}',
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader('Authorization', 'bearer ' + token);
-                    },
-                    success: function (data) {
-                        localStorage.setItem('currentUser', JSON.stringify(data));
-                    }
-                });
-            }
-            currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            $('#welcome').text('Welcome ' + currentUser.FullName.toString());
-        }
-        else {
-            /* User haven't login yet */
-            document.location = 'login.html';
-        }
     }
 }

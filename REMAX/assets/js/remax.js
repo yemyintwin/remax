@@ -1,8 +1,20 @@
-/*!
- * Start Bootstrap - SB Admin 2 v3.3.7+1 (http://startbootstrap.com/template-overviews/sb-admin-2)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
+var Settings = {
+    WebApiUrl : 'http://localhost:56376/'
+} 
+
+$(document).ready(function () {
+   var currentUser, currentToken;
+
+    if (localStorage.getItem('tokenKey')) token = localStorage.getItem('tokenKey').toString();
+    else if ($.cookie('tokenKey')) token = $.cookie('tokenKey');
+
+    currentUser = localStorage.getItem('currentUser');
+
+    if ((!currentUser || !currentToken) && window.location.href.indexOf('/login.html')<0) {
+        document.location = "/login.html?callbackurl=" + window.location.href;
+    }
+});
+
 $(function() {
     $('#side-menu').metisMenu();
 });

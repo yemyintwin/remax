@@ -15,6 +15,14 @@
     <link rel="stylesheet" href="assets/css/kendo.default.mobile.min.css">
     <link rel="stylesheet" href="assets/css/metisMenu.css">
     <link rel="stylesheet" href="assets/css/remax.css">
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <script src="assets/js/kendo.all.min.js"></script>
+    <script src="assets/js/metisMenu.js"></script>
+    <script src="assets/js/remax.js"></script>
+    <script src="assets/js/account.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -30,19 +38,13 @@
                         <div class="form-group">
                             <input type="password" class="form-control" placeholder="Password" id="password" name="password" value="mypassword">
                         </div><div class="checkbox"><label><input type="checkbox" name="remember" id="remember" />Remember Me</label></div>
-                        <a><button class="btn btn-default btn-lg btn-success btn-block" type="button" id="login" onclick="login()">Login</button></a>
+                        <button class="btn btn-default btn-lg btn-success btn-block" type="button" id="login" onclick="login()">Login</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.cookie.js"></script>
-    <script src="assets/js/kendo.all.min.js"></script>
-    <script src="assets/js/metisMenu.js"></script>
-    <script src="assets/js/remax.js"></script>
-    <script src="assets/js/account.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
     <script>
         login = function () {
             sessionStorage.removeItem('tokenKey');
@@ -58,7 +60,8 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:56376/Token',
+                dataType: 'json',
+                url: Settings.WebApiUrl + '/Token',
                 data: loginData
             }).done(function (data) {
                 //debugger;
@@ -69,11 +72,43 @@
                 else {
                     localStorage.setItem('tokenKey', data.access_token);
                 }
-                document.location = "/index.html";
+                getCurrentUserInfo(data.access_token);
+                //document.location = "/index.html";
             }).fail(function () {
                 $('#login').prop('disabled', false);
                 $('#login').text("Login");
             });
+        }
+
+        getCurrentUserInfo = function (token) {
+            if (!token) {
+                if (localStorage.getItem('tokenKey')) token = localStorage.getItem('tokenKey').toString();
+                else if ($.cookie('tokenKey')) token = $.cookie('tokenKey');
+            }
+
+            var currentUser = localStorage.getItem('currentUser');
+
+            if (token) {
+                /* Has toekn but no current user */
+                if (!currentUser) {
+                    $.ajax({
+                        type: "POST",
+                        dataType: 'json',
+                        contentType: "application/json; charset=utf-8",
+                        url: Settings.WebApiUrl + '/api/User/GetCurrentUser',
+                        data: '{}',
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                        },
+                        success: function (data) {
+                            localStorage.setItem('currentUser', JSON.stringify(data));
+                        },
+                        error: function (jqXhr, textStatus, errorThrown) {
+
+                        }
+                    });
+                }
+            }
         }
     </script>
 </body>

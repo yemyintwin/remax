@@ -31,8 +31,6 @@ namespace REMAXAPI.Service
                     , EmailConfirmed = (bool)dr["EmailConfirmed"]
                     , FullName = dr["FullName"].ToString()
                 };
-
-                TokenController tokenController = new TokenController();
             }
             connection.Close();
             return user;
