@@ -146,8 +146,11 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\ChannelData.cs" />
     <Compile Include="Controllers\ChannelDataController.cs" />
+    <Compile Include="Controllers\ChannelsController.cs" />
+    <Compile Include="Controllers\ModelsController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Extension\OwinContextExtention.cs" />
@@ -190,6 +193,7 @@
     <Compile Include="Models\OptionSetGroup.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PageParameterModel.cs" />
     <Compile Include="Models\Remax.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

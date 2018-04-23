@@ -5,6 +5,8 @@ using System.Net.Http.Formatting;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using System.Web.Http.Cors;
+using System.Web.Http.Routing;
+using System.Net.Http;
 
 namespace REMAXAPI
 {
@@ -12,9 +14,6 @@ namespace REMAXAPI
     {
         public static void Register(HttpConfiguration config)
         {
-            var cors = new EnableCorsAttribute("*", "*", "*");
-            config.EnableCors(cors);
-
             // Web API configuration and services
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
@@ -30,6 +29,17 @@ namespace REMAXAPI
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            //config.Routes.MapHttpRoute("DefaultApiGet"
+            //    , "Api/{controller}"
+            //    , new { action = "Get" }
+            //    , new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) }
+            //);
+            //config.Routes.MapHttpRoute("DefaultApiPost"
+            //    , "Api/{controller}"
+            //    , new { action = "Post" }
+            //    , new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) }
+            //);
         }
     }
 }

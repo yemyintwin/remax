@@ -67,7 +67,6 @@
     },
 
     onload: function () {
-        
 
         index.createChart();
         $(document).bind("kendo:skinChange", index.createChart);
@@ -75,5 +74,9 @@
         $(window).resize(function () {
             $("#chart1").data("kendoChart").refresh();
         });
+
+        if (Settings.CurrentUser && Settings.CurrentUser.fullName) {
+            $('#welcome').text('Welcome ' + Settings.CurrentUser.fullName);
+        }
     }
 }

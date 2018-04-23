@@ -19,9 +19,9 @@ namespace REMAXAPI.Controllers
     {
         [HttpPost]
         [HttpGet]
-        public string GetCurrentUser()
+        public object GetCurrentUser()
         {
-            User user = null;
+            Object user = null;
             ClaimsPrincipal currentClaim = HttpContext.Current.GetOwinContext().Authentication.User;
             if (currentClaim != null && currentClaim.Claims != null && currentClaim.Claims.Count() > 1)
             {
@@ -30,11 +30,18 @@ namespace REMAXAPI.Controllers
                            select c).FirstOrDefault();
 
                 Remax_Entities entities = new Remax_Entities();
-                var user_found = entities.Users.Where(u => u.Id.ToString() == sid.Value).FirstOrDefault();
-                user = user_found as User;
-                if (user != null) user.PasswordHash = "****";
+                //var user_found = entities.Users.Where(u => u.Id.ToString() == sid.Value).FirstOrDefault();
+                var user_found = (from u in entities.Users
+                                  where u.Id.ToString() == sid.Value
+                                  select new
+                                  {
+                                      u.Id,
+                                      u.FullName,
+                                      u.Email
+                                  }).FirstOrDefault();
+                if (user_found != null) user = user_found; 
             }
-            return JsonConvert.SerializeObject(user);
+            return user;
         }
     }
 }

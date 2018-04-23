@@ -1,17 +1,46 @@
 var Settings = {
-    WebApiUrl : 'http://localhost:56376/'
-} 
+    WebApiUrl: 'http://localhost:56376/',
+    Token: null,
+    CurrentUser: null
+}
+
+function parse_query_string(query) {
+    var vars = query.split("&");
+    var query_string = {};
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        // If first entry with this name
+        if (typeof query_string[pair[0]] === "undefined") {
+            query_string[pair[0]] = decodeURIComponent(pair[1]);
+            // If second entry with this name
+        } else if (typeof query_string[pair[0]] === "string") {
+            var arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
+            query_string[pair[0]] = arr;
+            // If third or later entry with this name
+        } else {
+            query_string[pair[0]].push(decodeURIComponent(pair[1]));
+        }
+    }
+    return query_string;
+}
 
 $(document).ready(function () {
-   var currentUser, currentToken;
+    var currentUser, currentToken;
 
-    if (localStorage.getItem('tokenKey')) token = localStorage.getItem('tokenKey').toString();
-    else if ($.cookie('tokenKey')) token = $.cookie('tokenKey');
+    if (window.location.href.indexOf('/login.html') > 0) return;
 
-    currentUser = localStorage.getItem('currentUser');
+    if (localStorage.getItem('currentToken')) currentToken = localStorage.getItem('currentToken').toString();
+    else if ($.cookie('currentToken')) currentToken = $.cookie('currentToken');
 
-    if ((!currentUser || !currentToken) && window.location.href.indexOf('/login.html')<0) {
+    if (localStorage.getItem('currentUser')) currentUser = localStorage.getItem('currentUser').toString();
+    else if ($.cookie('currentUser')) currentUser = $.cookie('currentUser');
+
+    if (!currentUser || !currentToken) {
         document.location = "/login.html?callbackurl=" + window.location.href;
+    }
+    else {
+        Settings.Token = currentToken;
+        Settings.CurrentUser = JSON.parse(currentUser);
     }
 });
 

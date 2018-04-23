@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -8,13 +8,21 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="assets/css/kendo.common.min.css">
     <link rel="stylesheet" href="assets/css/kendo.default.min.css">
     <link rel="stylesheet" href="assets/css/kendo.default.mobile.min.css">
     <link rel="stylesheet" href="assets/css/metisMenu.css">
     <link rel="stylesheet" href="assets/css/remax.css">
+    <link rel="stylesheet" href="assets/datatables/css/dataTables.bootstrap.min.css" />
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <script src="assets/js/kendo.all.min.js"></script>
+    <script src="assets/js/metisMenu.js"></script>
+    <script src="assets/js/remax.js"></script>
+    <script src="assets/js/registration.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -681,112 +689,7 @@
                                 </div>
                                 <div class="col-md-6 col-sm-6">
                                     <div id="table_filter" class="dataTables_filter"><label>Select Engine Model:
-<select class="form-control" id="model">
-	<option>6DEM-18</option>
-	<option>6DEM-18(L)</option>
-	<option>6DKM-20e</option>
-	<option>6DKM-20eL</option>
-	<option>6DKM-20e(L)(F)</option>
-	<option>6DKM-20e(L)F</option>
-	<option>6DEM-20</option>
-	<option>6DEM-20L</option>
-	<option>6DEM-20(L)(F)</option>
-	<option>6DEM-20(L)F</option>
-	<option>6DEM-23</option>
-	<option>6DEM-23L</option>
-	<option>6DEM-23(L)(F)</option>
-	<option>6DEM-23(L)F</option>
-	<option>8DEM-23</option>
-	<option>8DEM-23F</option>
-	<option>8DEM-23(L)(F)</option>
-	<option>8DEM-23(L)F</option>
-	<option>6DKM-26e</option>
-	<option>6DKM-26eL</option>
-	<option>6DKM-26e(L)(F)</option>
-	<option>6DKM-26e(L)F</option>
-	<option>6DKM-28e</option>
-	<option>6DKM-28eL</option>
-	<option>6DKM-28e(L)(F)</option>
-	<option>6DKM-28e(L)F</option>
-	<option>6DEM-28</option>
-	<option>6DEM-28L</option>
-	<option>6DEM-28(L)(F)</option>
-	<option>6DEM-28(L)F</option>
-	<option>8DKM-28e</option>
-	<option>8DKM-28eL</option>
-	<option>8DKM-28e(L)(F)</option>
-	<option>8DKM-28e(L)F</option>
-	<option>8DEM-28</option>
-	<option>8DEM-28L</option>
-	<option>8DEM-28(L)(F)</option>
-	<option>8DEM-28(L)F</option>
-	<option>6DCM-32e</option>
-	<option>6DCM-32eL</option>
-	<option>6DCM-32e(L)(F)</option>
-	<option>6DCM-32e(L)F</option>
-	<option>8DCM-32e</option>
-	<option>8DCM-32eL</option>
-	<option>8DCM-32e(L)(F)</option>
-	<option>8DCM-32e(L)F</option>
-	<option>16DCM-32e</option>
-	<option>16DCM-32eL</option>
-	<option>16DCM-32e(L)(F)</option>
-	<option>16DCM-32e(L)F</option>
-	<option>6DEM-33</option>
-	<option>6DEM-33L</option>
-	<option>6DEM-33(L)(F)</option>
-	<option>6DEM-33(L)F</option>
-	<option>8DEM-33</option>
-	<option>8DEM-33L</option>
-	<option>8DEM-33(L)(F)</option>
-	<option>8DEM-33(L)F</option>
-	<option>6DKM-36e</option>
-	<option>6DKM-36eL</option>
-	<option>6DKM-36e(L)(F)</option>
-	<option>6DKM-36e(L)F</option>
-	<option>8DKM-36e</option>
-	<option>8DKM-36eL</option>
-	<option>8DKM-36e(L)(F)</option>
-	<option>8DKM-36e(L)F</option>
-	<option>12DKM-36e</option>
-	<option>12DKM-36eL</option>
-	<option>12DKM-36e(L)(F)</option>
-	<option>12DKM-36e(L)F</option>
-	<option>M5</option>
-	<option>6DL-16Ae</option>
-	<option>6DE-18</option>
-	<option>6DK-20e</option>
-	<option>6DE-20</option>
-	<option>6DE-23</option>
-	<option>6DE-23F</option>
-	<option>6DK-26e</option>
-	<option>6DK-26eF</option>
-	<option>8DE-23</option>
-	<option>8DE-23F</option>
-	<option>6DK-28e</option>
-	<option>6DK-28eF</option>
-	<option>6DE-28</option>
-	<option>6DE-28F</option>
-	<option>8DK-28e</option>
-	<option>8DK-28eF</option>
-	<option>6DK-36e</option>
-	<option>6DK-36eF</option>
-	<option>6DE-33</option>
-	<option>6DE-33F</option>
-	<option>6DC-32e</option>
-	<option>6DC-32eF</option>
-	<option>8DC-32e</option>
-	<option>8DC-32eF</option>
-	<option>8DK-36e</option>
-	<option>8DK-36eF</option>
-	<option>8DE-33</option>
-	<option>8DE-33F</option>
-	<option>12DC-32e</option>
-	<option>12DC-32eF</option>
-	<option>12DK-36e</option>
-	<option>12DK-36eF</option>
-	<option>16DC-32e</option>
-	<option>16DC-32eF</option>
+        <select class="form-control" id="model">
 		</select>
 </label></div>
                                 </div>
@@ -1790,12 +1693,7 @@
         <p class="copyright">Daikai Engineering Pte Ltd © 1992</p>
     </footer>
 </div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/kendo.all.min.js"></script>
-    <script src="assets/js/metisMenu.js"></script>
-    <script src="assets/js/remax.js"></script>
-    <script src="assets/js/account.js"></script>
+
 </body>
 
 </html>
