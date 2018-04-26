@@ -29,7 +29,6 @@ namespace REMAXAPI.Models
         public virtual DbSet<UserClaim> UserClaims { get; set; }
         public virtual DbSet<UserLogin> UserLogins { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
-        public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<AlternatorMaker> AlternatorMakers { get; set; }
         public virtual DbSet<Channel> Channels { get; set; }
         public virtual DbSet<ChartType> ChartTypes { get; set; }
@@ -44,5 +43,6 @@ namespace REMAXAPI.Models
         public virtual DbSet<ShipClass> ShipClasses { get; set; }
         public virtual DbSet<ShipType> ShipTypes { get; set; }
         public virtual DbSet<Vessel> Vessels { get; set; }
+        public virtual DbSet<Account> Accounts { get; set; }
     }
 }

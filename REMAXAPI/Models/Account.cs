@@ -16,7 +16,7 @@ namespace REMAXAPI.Models
     {
         public System.Guid Id { get; set; }
         public string AccountID { get; set; }
-        public string AccountName { get; set; }
+        public string Name { get; set; }
         public string PrimaryContact { get; set; }
         public string MainPhone { get; set; }
         public string Fax { get; set; }

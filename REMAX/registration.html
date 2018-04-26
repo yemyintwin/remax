@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="assets/css/kendo.default.mobile.min.css">
     <link rel="stylesheet" href="assets/css/metisMenu.css">
     <link rel="stylesheet" href="assets/css/remax.css">
-    <link rel="stylesheet" href="assets/datatables/css/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.css" />
+    <link href="assets/datatables-responsive/dataTables.responsive.css" rel="stylesheet" />
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/jquery.cookie.js"></script>
@@ -22,7 +23,10 @@
     <script src="assets/js/metisMenu.js"></script>
     <script src="assets/js/remax.js"></script>
     <script src="assets/js/registration.js"></script>
+    <script src="assets/js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/dataTables.bootstrap.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/datatables-responsive/dataTables.responsive.js"></script>
 </head>
 
 <body>
@@ -163,26 +167,12 @@
                     <div class="panel-body">
                         <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                             <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <div id="table_length" class="dataTables_length"><span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
-    <option value="10" selected>10</option>
-    <option value="25">25</option>
-    <option value="50">50</option>
-    <option value="100">100</option>
-</select></div>
-                                </div>
-                                <div class="col-md-6 col-sm-6">
-                                    <div id="table_filter" class="dataTables_filter"><label>Search Account Name:
-<input type="search" class="form-control input-sm" placeholder aria-controls="dataTables-example" />
-</label></div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table table-striped table-bordered table-hover dataTable no-footer dtr-inline">
+                                        <table id="table_accounts" class="table table table-striped table-bordered table-hover dataTable no-footer dtr-inline">
                                             <thead>
                                                 <tr role="row">
+                                                    <th class="sorting">ID</th>
                                                     <th class="sorting_asc" aria-controls="dataTables-example" aria-sort="ascending" aria-label="Account Name">Account Name</th>
                                                     <th class="sorting">Account Number (Key)</th>
                                                     <th class="sorting">Primary Contact</th>
@@ -191,65 +181,7 @@
                                                     <th class="sorting">Email</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr class="gradeA odd" role="row">
-                                                    <td>Maersk</td>
-                                                    <td>acc-0001</td>
-                                                    <td>Mr. Fong</td>
-                                                    <td>61234567</td>
-                                                    <td>69876543</td>
-                                                    <td>fong@maersk.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Mediterranean Shipping</td>
-                                                    <td>acc-0002</td>
-                                                    <td>Mr. Tang</td>
-                                                    <td>61234567</td>
-                                                    <td>69876543</td>
-                                                    <td>tang@mshipping.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>CMA-CGM<br></td>
-                                                    <td>acc-0003</td>
-                                                    <td>Mrs. Choo</td>
-                                                    <td>61234567</td>
-                                                    <td>69876543</td>
-                                                    <td>choo@cma.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>COSCO<br></td>
-                                                    <td>acc-0004</td>
-                                                    <td>Mr.&nbsp;Wang Fang<br></td>
-                                                    <td>61234567</td>
-                                                    <td>69876543</td>
-                                                    <td>wang@cosco.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Evergreen<br></td>
-                                                    <td>acc-0005</td>
-                                                    <td>Mr. Oliva</td>
-                                                    <td>61234567</td>
-                                                    <td>69876543</td>
-                                                    <td>oliva@maersk.com</td>
-                                                </tr>
-                                            </tbody>
                                         </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12 col-xs-12">
-                                    <div class="dataTables_info"><span>Showing 1 to 5 of 12</span></div>
-                                </div>
-                                <div class="col-md-8 col-sm-12 col-xs-12">
-                                    <div class="dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="paginate_button previous disabled"><a href="#">Previous</a></li>
-                                            <li class="paginate_button active"><a href="#">1</a></li>
-                                            <li class="paginate_button"><a href="#">2</a></li>
-                                            <li class="paginate_button"><a href="#">3</a></li>
-                                            <li class="paginate_button next"><a href="#">Next</a></li>
-                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -1694,6 +1626,12 @@
     </footer>
 </div>
 
+    <script>
+        $(document).ready(function () {
+            //debugger;
+            registration.onload();
+        });
+    </script>
 </body>
 
 </html>

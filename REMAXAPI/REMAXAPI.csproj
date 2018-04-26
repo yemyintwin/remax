@@ -150,6 +150,7 @@
     <Compile Include="Controllers\ChannelData.cs" />
     <Compile Include="Controllers\ChannelDataController.cs" />
     <Compile Include="Controllers\ChannelsController.cs" />
+    <Compile Include="Controllers\KendoAccountController.cs" />
     <Compile Include="Controllers\ModelsController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -175,6 +176,8 @@
     <Compile Include="Models\DashboardSetting.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataTableModelBinder.cs" />
+    <Compile Include="Models\DataTables.cs" />
     <Compile Include="Models\Engine.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>

@@ -15,6 +15,7 @@ namespace REMAXAPI.Service
     public class UserService
     {
         public User GetUserByCredentials(string email, string password) {
+            /*
             SqlConnection connection = new SqlConnection("Data Source=SQL7004.site4now.net;Initial Catalog=DB_A38003_DEV;User Id=DB_A38003_DEV_admin;Password=yanmarsucks66!;");
             connection.Open();
             string strCommand = string.Format("select * from [user] where email = '{0}' and passwordhash = '{1}';",email, password);
@@ -33,6 +34,13 @@ namespace REMAXAPI.Service
                 };
             }
             connection.Close();
+            */
+            Remax_Entities entities = new Remax_Entities();
+            User user = (
+                            from u in entities.Users
+                            where u.Email == email && u.PasswordHash == password
+                            select u
+                        ).FirstOrDefault();
             return user;
         }
     }

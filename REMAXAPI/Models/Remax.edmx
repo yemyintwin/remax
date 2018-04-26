@@ -11,7 +11,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="AccountID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="AccountName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
           <Property Name="PrimaryContact" Type="nvarchar" MaxLength="100" />
           <Property Name="MainPhone" Type="nvarchar" MaxLength="100" />
           <Property Name="Fax" Type="nvarchar" MaxLength="100" />
@@ -418,7 +418,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-          <EntitySet Name="Accounts" EntityType="DB_A38003_DEVModel.Account" />
           <EntitySet Name="AlternatorMakers" EntityType="DB_A38003_DEVModel.AlternatorMaker" />
           <EntitySet Name="Channels" EntityType="DB_A38003_DEVModel.Channel" />
           <EntitySet Name="ChartTypes" EntityType="DB_A38003_DEVModel.ChartType" />
@@ -433,19 +432,8 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="ShipClasses" EntityType="DB_A38003_DEVModel.ShipClass" />
           <EntitySet Name="ShipTypes" EntityType="DB_A38003_DEVModel.ShipType" />
           <EntitySet Name="Vessels" EntityType="DB_A38003_DEVModel.Vessel" />
+          <EntitySet Name="Accounts" EntityType="DB_A38003_DEVModel.Account" />
         </EntityContainer>
-        <EntityType Name="Account">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="AccountID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AccountName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PrimaryContact" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="MainPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Fax" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="AlternatorMaker">
           <Key>
             <PropertyRef Name="Id" />
@@ -592,6 +580,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="TotalPropulsionPower" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="TotalGeneratorPower" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="AccountID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PrimaryContact" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MainPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -655,19 +655,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Accounts">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.Account">
-              <MappingFragment StoreEntitySet="Account">
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Fax" ColumnName="Fax" />
-                <ScalarProperty Name="MainPhone" ColumnName="MainPhone" />
-                <ScalarProperty Name="PrimaryContact" ColumnName="PrimaryContact" />
-                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
-                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AlternatorMakers">
             <EntityTypeMapping TypeName="DB_A38003_DEVModel.AlternatorMaker">
               <MappingFragment StoreEntitySet="AlternatorMaker">
@@ -824,6 +811,19 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
                 <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
                 <ScalarProperty Name="VesselName" ColumnName="VesselName" />
                 <ScalarProperty Name="IMO_No" ColumnName="IMO_No" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="DB_A38003_DEVModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="MainPhone" ColumnName="MainPhone" />
+                <ScalarProperty Name="PrimaryContact" ColumnName="PrimaryContact" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

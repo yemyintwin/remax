@@ -1,15 +1,15 @@
-﻿using System;
+﻿using REMAXAPI.Models;
+using REMAXAPI.Models.DataTables;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using REMAXAPI.Models;
 
 namespace REMAXAPI.Controllers
 {
@@ -18,39 +18,77 @@ namespace REMAXAPI.Controllers
         private Remax_Entities db = new Remax_Entities();
 
         [HttpPost]
+        [HttpGet]
         // GET: api/Accounts
-        public IQueryable<Object> GetAccounts()
+        public DataTableResponse GetAccounts(DataTableRequest request)
         {
-            var accounts = from a in db.Accounts
-                           select new {
-                               a.Id,
-                               a.AccountID,
-                               a.AccountName,
-                               a.MainPhone,
-                               a.Email,
-                               a.PrimaryContact
-                           };
-            return accounts;
-        }
+            IEnumerable<Account> filteredProducts;
+            if (request.Search.Value != "")
+            {
+                var searchText = request.Search.Value.Trim();
 
-        [HttpPost]
-        // GET: api/Accounts
-        public IQueryable<Object> GetAccounts([FromUri]PageParameterModel page)
-        {
-            int skip = (page.pageNumber - 1) * page.pageSize; 
+                filteredProducts = db.Accounts.Where(a =>
+                        a.AccountID.Contains(searchText) ||
+                        a.Email.Contains(searchText) ||
+                        a.MainPhone.Contains(searchText) ||
+                        a.Fax.Contains(searchText) ||
+                        a.Name.Contains(searchText) ||
+                        a.PrimaryContact.Contains(searchText)
+                        );
+            }
+            else
+            {
+                filteredProducts = db.Accounts;
+            }
 
-            var accounts = (from a in db.Accounts
+            string strOrderBy = string.Empty;
+            if (request.Order.Length > 0) {
+                foreach (var o in request.Order)
+                    strOrderBy += string.Format("{0} {1},", request.Columns[o.Column].Data, o.Dir);
+
+                if (strOrderBy.Length > 0 && strOrderBy.EndsWith(","))
+                    strOrderBy = strOrderBy.Remove(strOrderBy.Length - 1);
+            }
+
+            var accounts = from a in filteredProducts
+                           orderby (strOrderBy)
                            select new
                            {
                                a.Id,
                                a.AccountID,
-                               a.AccountName,
+                               a.Name,
                                a.MainPhone,
                                a.Email,
-                               a.PrimaryContact
-                           }).Skip(skip).Take(page.pageSize);
-            return accounts;
+                               a.PrimaryContact,
+                               a.Fax
+                           };
+            return new DataTableResponse() {
+                draw = request.Draw,
+                recordsTotal = accounts.Count(),
+                recordsFiltered = accounts.Count(),
+                data = accounts,
+                error = ""
+            };
         }
+
+        //[HttpPost]
+        //// GET: api/Accounts
+        //public IQueryable<Object> GetAccounts([FromUri]PageParameterModel page)
+        //{
+        //    int skip = (page.pageNumber - 1) * page.pageSize; 
+
+        //    var accounts = (from a in db.Accounts
+        //                   select new
+        //                   {
+        //                       a.Id,
+        //                       a.AccountID,
+        //                       a.AccountName,
+        //                       a.MainPhone,
+        //                       a.Email,
+        //                       a.PrimaryContact
+        //                   }).Skip(skip).Take(page.pageSize);
+        //    return accounts;
+        //}
 
         // GET: api/Accounts/5
         [ResponseType(typeof(Account))]
