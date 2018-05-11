@@ -85,6 +85,9 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -150,7 +153,7 @@
     <Compile Include="Controllers\ChannelData.cs" />
     <Compile Include="Controllers\ChannelDataController.cs" />
     <Compile Include="Controllers\ChannelsController.cs" />
-    <Compile Include="Controllers\KendoAccountController.cs" />
+    <Compile Include="Controllers\KendoAccountsController.cs" />
     <Compile Include="Controllers\ModelsController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -184,6 +187,7 @@
     <Compile Include="Models\EngineType.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Kendo.cs" />
     <Compile Include="Models\Model.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>

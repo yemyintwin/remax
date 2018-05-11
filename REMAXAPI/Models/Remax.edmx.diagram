@@ -14,7 +14,7 @@
         <AssociationConnector Association="DB_A38003_DEVModel.UserUserRole" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DB_A38003_DEVModel.AlternatorMaker" Width="1.5" PointX="5.75" PointY="4.75" />
         <EntityTypeShape EntityType="DB_A38003_DEVModel.Channel" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.ChartType" Width="1.5" PointX="7.75" PointY="5.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.ChartType" Width="1.5" PointX="7.875" PointY="5.75" />
         <EntityTypeShape EntityType="DB_A38003_DEVModel.Country" Width="1.5" PointX="0.75" PointY="8.75" />
         <EntityTypeShape EntityType="DB_A38003_DEVModel.DashboardSetting" Width="1.5" PointX="2.75" PointY="8.75" />
         <EntityTypeShape EntityType="DB_A38003_DEVModel.Engine" Width="1.5" PointX="4.75" PointY="8.75" />

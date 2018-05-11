@@ -21,5 +21,6 @@ namespace REMAXAPI.Models
         public string ChannelDescription { get; set; }
         public System.DateTime TimeStamp { get; set; }
         public string Unit { get; set; }
+        public string Value { get; set; }
     }
 }

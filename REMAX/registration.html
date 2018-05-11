@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prototype</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrapValidator.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
@@ -16,7 +17,14 @@
     <link rel="stylesheet" href="assets/css/remax.css">
     <link rel="stylesheet" href="assets/css/dataTables.bootstrap.css" />
     <link href="assets/datatables-responsive/dataTables.responsive.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.common.core.min.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.bootstrap.min.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.bootstrap.mobile.min.css" rel="stylesheet" />
 
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/kendo/js/kendo.all.min.js"></script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/jquery.cookie.js"></script>
     <script src="assets/js/kendo.all.min.js"></script>
@@ -26,22 +34,24 @@
     <script src="assets/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="assets/bootstrap/js/bootstrapValidator.min.js"></script>
+    <!--<script src="assets/datatables-responsive/dataTables.responsive.js"></script>-->
 </head>
 
 <body>
-    <div id="wrapper"><nav class="nav nav-tabs navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="index.html">Remax v1.0</a>
-    </div>
-    <ul class="nav navbar-top-links navbar-right">
-        <li class="dropdown">
+    <div id="wrapper">
+        <nav class="nav nav-tabs navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Remax v1.0</a>
+            </div>
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
                         <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
@@ -73,83 +83,86 @@
                     </ul>
                     <!-- /.dropdown-alerts -->
                 </li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                <i class="fa fa-user fa-fw"></i> 
-                <i class="fa fa-caret-down"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li><a href="userprofile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                </li>
-                <li class="divider"></li>
-                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                </li>
-            </ul>
-        </li>
-    </ul>
-    
-    <div class="navbar-default sidebar" role="navigation">
-        <div class="sidebar-nav navbar-collapse">
-            <ul class="nav in" id="side-menu">
-                <li>
-                    <a href="index.html" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                </li>
-                <li>
-                    <a href="registration.html"><i class="fa fa-edit fa-fw"></i> Registrations</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-sitemap fa-fw"></i> Vessel Status<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-user fa-fw"></i>
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
                         <li>
-                            <a href="#">PRINCESS SEAWAYS<span class="fa arrow"></span></a>
-							<ul class="nav nav-third-level collapse">
-                                <li>
-                                    <a href="engine.html">Engine 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Engine 2</a>
-                                </li>
-                                <li>
-                                    <a href="#">Engine 3</a>
-                                </li>
-                                <li>
-                                    <a href="#">Engine 4</a>
-                                </li>
-								<li>
-                                    <a href="#">Engine 5</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-third-level -->
+                            <a href="userprofile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
+                        <li class="divider"></li>
                         <li>
-                            <a href="#">QUEEN ELIZABETH</a>
-                        </li>
-                        <li>
-                            <a href="#">BITHIA</a>
+                            <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
-                    <!-- /.nav-second-level -->
-                </li>
-				<li>
-                    <a href="#"><i class="fa fa-clipboard fa-fw"></i> Reports<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-						<li>
-							<a href="#">Report 1</a>
-						</li>
-						<li>
-							<a href="#">Report 2</a>
-						</li>
-						<li>
-							<a href="#">Report 3</a>
-						</li>
-					</ul>
                 </li>
             </ul>
-        </div>
-        <!-- /.sidebar-collapse -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav in" id="side-menu">
+                        <li>
+                            <a href="index.html" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="registration.html"><i class="fa fa-edit fa-fw"></i> Registrations</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Vessel Status<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                    <a href="#">PRINCESS SEAWAYS<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li>
+                                            <a href="engine.html">Engine 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Engine 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Engine 3</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Engine 4</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Engine 5</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
+                                <li>
+                                    <a href="#">QUEEN ELIZABETH</a>
+                                </li>
+                                <li>
+                                    <a href="#">BITHIA</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-clipboard fa-fw"></i> Reports<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                    <a href="#">Report 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Report 2</a>
+                                </li>
+                                <li>
+                                    <a href="#">Report 3</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+        </nav>
     </div>
-</nav>
-</div>
+
     <div id="page-wrapper" style="min-height: 731px;">
         <div class="row">
             <div class="col-md-12 col-lg-12">
@@ -158,6 +171,8 @@
                 </div>
             </div>
         </div>
+
+        <!--- Account Registration -->
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -168,29 +183,19 @@
                         <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table id="table_accounts" class="table table table-striped table-bordered table-hover dataTable no-footer dtr-inline">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th class="sorting">ID</th>
-                                                    <th class="sorting_asc" aria-controls="dataTables-example" aria-sort="ascending" aria-label="Account Name">Account Name</th>
-                                                    <th class="sorting">Account Number (Key)</th>
-                                                    <th class="sorting">Primary Contact</th>
-                                                    <th class="sorting">Main Phone</th>
-                                                    <th class="sorting">Fax</th>
-                                                    <th class="sorting">Email</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
+                                    <div id="table_accounts"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="panel-footer">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_acc">New</button>
+                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_acc" id="btnEditAccount" onclick="btnEditAccount_OnClick">Edit</button>
+                            <button class="btn btn-default" type="button">Delete</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-12">
-                <div class="btn-group" role="group"><button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_acc">New</button><button class="btn btn-default" type="button">Edit</button><button class="btn btn-default" type="button">Delete</button></div>
             </div>
         </div>
         <div class="row">
@@ -198,6 +203,8 @@
                 <div style="height:20px"></div>
             </div>
         </div>
+
+        <!--- User Registration -->
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -207,105 +214,20 @@
                     <div class="panel-body">
                         <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                             <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <div id="table_length" class="dataTables_length"><span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
-    <option value="10" selected>10</option>
-    <option value="25">25</option>
-    <option value="50">50</option>
-    <option value="100">100</option>
-</select></div>
-                                </div>
-                                <div class="col-md-6 col-sm-6">
-                                    <div id="table_filter" class="dataTables_filter"><label>Search User Name:
-<input type="search" class="form-control input-sm" placeholder aria-controls="dataTables-example" />
-</label></div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table table table-striped table-bordered table-hover dataTable no-footer dtr-inline">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th class="sorting_asc" aria-controls="dataTables-example" aria-sort="ascending" aria-label="Account Name">User Name</th>
-                                                    <th class="sorting">Parent (Account)</th>
-                                                    <th class="sorting">Job Title</th>
-                                                    <th class="sorting">Business Phone</th>
-                                                    <th class="sorting">Mobile</th>
-                                                    <th class="sorting">Email (Key)</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="gradeA odd" role="row">
-                                                    <td>Mr. Fong<br></td>
-                                                    <td>Maersk<br></td>
-                                                    <td>Operation Manager</td>
-                                                    <td>61234567</td>
-                                                    <td>99876543</td>
-                                                    <td>fong@maersk.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Mr. Tang<br></td>
-                                                    <td>Mediterranean Shipping<br></td>
-                                                    <td>Account Manager</td>
-                                                    <td>61234567</td>
-                                                    <td>89876543</td>
-                                                    <td>tang@mshipping.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Mrs. Choo<br></td>
-                                                    <td>CMA-CGM<br></td>
-                                                    <td>CEO</td>
-                                                    <td>61234567</td>
-                                                    <td>89876543</td>
-                                                    <td>choo@cma.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Mr.&nbsp;Wang Fang<br></td>
-                                                    <td>COSCO<br></td>
-                                                    <td>Manager<br></td>
-                                                    <td>61234567</td>
-                                                    <td>89876543</td>
-                                                    <td>wang@cosco.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Mr. Oliva<br></td>
-                                                    <td>Evergreen<br></td>
-                                                    <td>Seniro Manager</td>
-                                                    <td>61234567</td>
-                                                    <td>99876543</td>
-                                                    <td>oliva@maersk.com</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12 col-xs-12">
-                                    <div class="dataTables_info"><span>Showing 1 to 5 of 28</span></div>
-                                </div>
-                                <div class="col-md-8 col-sm-12 col-xs-12">
-                                    <div class="dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="paginate_button previous disabled"><a href="#">Previous</a></li>
-                                            <li class="paginate_button active"><a href="#">1</a></li>
-                                            <li class="paginate_button"><a href="#">2</a></li>
-                                            <li class="paginate_button"><a href="#">3</a></li>
-                                            <li class="paginate_button"><a href="#">4</a></li>
-                                            <li class="paginate_button"><a href="#">5</a></li>
-                                            <li class="paginate_button"><a href="#">6</a></li>
-                                            <li class="paginate_button next"><a href="#">Next</a></li>
-                                        </ul>
-                                    </div>
+                                    <div id="table_users"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="panel-footer">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_user">New</button>
+                            <button class="btn btn-default" type="button">Edit</button>
+                            <button class="btn btn-default" type="button">Delete</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-12">
-                <div class="btn-group" role="group"><button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_user">New</button><button class="btn btn-default" type="button">Edit</button><button class="btn btn-default" type="button">Delete</button></div>
             </div>
         </div>
         <div class="row">
@@ -313,6 +235,8 @@
                 <div style="height:20px"></div>
             </div>
         </div>
+
+        <!--- Vessel Registration -->
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -323,17 +247,22 @@
                         <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
-                                    <div id="table_length" class="dataTables_length"><span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
-    <option value="10" selected>10</option>
-    <option value="25">25</option>
-    <option value="50">50</option>
-    <option value="100">100</option>
-</select></div>
+                                    <div id="table_length" class="dataTables_length">
+                                        <span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
+                                            <option value="10" selected>10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6">
-                                    <div id="table_filter" class="dataTables_filter"><label>Search IMO No.:
-<input type="search" class="form-control input-sm" placeholder aria-controls="dataTables-example" />
-</label></div>
+                                    <div id="table_filter" class="dataTables_filter">
+                                        <label>
+                                            Search IMO No.:
+                                            <input type="search" class="form-control input-sm" placeholder aria-controls="dataTables-example" />
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -446,17 +375,22 @@
                         <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
-                                    <div id="table_length" class="dataTables_length"><span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
-    <option value="10" selected>10</option>
-    <option value="25">25</option>
-    <option value="50">50</option>
-    <option value="100">100</option>
-</select></div>
+                                    <div id="table_length" class="dataTables_length">
+                                        <span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
+                                            <option value="10" selected>10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6">
-                                    <div id="table_filter" class="dataTables_filter"><label>Search Vessel Name:
-<input type="search" class="form-control input-sm" placeholder aria-controls="dataTables-example" />
-</label></div>
+                                    <div id="table_filter" class="dataTables_filter">
+                                        <label>
+                                            Search Vessel Name:
+                                            <input type="search" class="form-control input-sm" placeholder aria-controls="dataTables-example" />
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -612,18 +546,22 @@
                         <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
-                                    <div id="table_length" class="dataTables_length"><span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
-    <option value="10" selected>10</option>
-    <option value="25">25</option>
-    <option value="50">50</option>
-    <option value="100">100</option>
-</select></div>
+                                    <div id="table_length" class="dataTables_length">
+                                        <span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
+                                            <option value="10" selected>10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6">
-                                    <div id="table_filter" class="dataTables_filter"><label>Select Engine Model:
-        <select class="form-control" id="model">
-		</select>
-</label></div>
+                                    <div id="table_filter" class="dataTables_filter">
+                                        <label>
+                                            Select Engine Model:
+                                            <select class="form-control" id="model"></select>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -746,891 +684,938 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal registration_acc -->
     <div>
         <div class="modal fade" role="dialog" tabindex="-1" id="registration_acc" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
-    <em class="fa fa-building fa-1x"></em>
-    Account Registration
-</h4></div>
-                    <div class="modal-body">
-                        <form class="form-horizontal" role="form"><div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="accName">Account Name</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="accName" placeholder="Account Name"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="accNo">Account No.</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="accNo" placeholder="Account No."/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="primary">Primary Contact</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="primary" placeholder="Primary Contact"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="phone">Phone</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="phone" placeholder="Phone"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="fax">Fax</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="fax" placeholder="Fax"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="email">Email</label>
-	<div class="col-sm-8">
-		<input type="email" class="form-control" 
-		id="email" placeholder="Email"/>
-	</div>
-</div></form>
-                    </div>
-                    <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" data-dismiss="modal">Save</button></div>
+                    <form class="form-horizontal" role="form" id="form_acc" method="post">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">
+                                <em class="fa fa-building fa-1x"></em>Account Registration
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="accName">Account Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="accName" name="accName" placeholder="Account Name" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="accID">Account ID.</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="accID" name="accID" placeholder="Account No." required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="primary">Primary Contact</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="primary" name="primary" placeholder="Primary Contact" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="phone">Phone</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="fax">Fax</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="fax" name="fax" placeholder="Fax" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="email">Email</label>
+                                <div class="col-sm-8">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit" id="submit_acc">Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Model registration_user -->
     <div>
         <div class="modal fade" role="dialog" tabindex="-1" id="registration_user" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
-    <em class="fa fa-user fa-1x"></em>
-    User Registration
-</h4></div>
-                    <div class="modal-body">
-                        <form class="form-horizontal" role="form"><div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="userName">User Name</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="userName" placeholder="User Name"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="parent">Parent (Account)</label>
-	<div class="col-sm-8">
-		<select class="form-control" id="parent">
-			<option>Maersk</option>
-			<option>Mediterranean Shipping	</option>
-			<option>CMA-CGM</option>
-			<option>COSCO</option>
-			<option>Evergreen</option>
-		</select>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="title">Job Title</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="title" placeholder="Job Title"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="phone">Business Phone</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="phone" placeholder="Business Phone"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="mobile">Mobile</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="mobile" placeholder="Mobile"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="email">Email</label>
-	<div class="col-sm-8">
-		<input type="email" class="form-control" 
-		id="email" placeholder="Email"/>
-	</div>
-</div></form>
-                    </div>
-                    <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Reset Password</button><button class="btn btn-default" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" data-dismiss="modal">Save</button></div>
+                    <form class="form-horizontal" role="form" id="form_user" method="post">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
+                                <em class="fa fa-user fa-1x"></em>
+                                User Registration
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="userName">User Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="userName" placeholder="User Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="parent">Parent (Account)</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="parent">
+                                        <option>Maersk</option>
+                                        <option>Mediterranean Shipping	</option>
+                                        <option>CMA-CGM</option>
+                                        <option>COSCO</option>
+                                        <option>Evergreen</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="title">Job Title</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="title" placeholder="Job Title" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="phone">Business Phone</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="phone" placeholder="Business Phone" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="mobile">Mobile</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="mobile" placeholder="Mobile" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="email">Email</label>
+                                <div class="col-sm-8">
+                                    <input type="email" class="form-control"
+                                           id="email" placeholder="Email" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" type="button" data-dismiss="modal">Reset Password</button>
+                            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit" id="submit_user">Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Model registration_vessel -->
     <div>
         <div class="modal fade" role="dialog" tabindex="-1" id="registration_vessel" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
-    <em class="fa fa-ship fa-1x"></em>
-    Vessel Registration
-</h4></div>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
+                            <em class="fa fa-ship fa-1x"></em>
+                            Vessel Registration
+                        </h4>
+                    </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" role="form"><div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="vesselName">Vessel Name</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="vesselName" placeholder="Vessel Name"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="imo">IMO</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="imo" placeholder="IMO"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="owner">Owner</label>
-	<div class="col-sm-8">
-		<select class="form-control" id="owner">
-			<option>Maersk</option>
-			<option>Mediterranean Shipping	</option>
-			<option>CMA-CGM</option>
-			<option>COSCO</option>
-			<option>Evergreen</option>
-		</select>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="operator">Operator</label>
-	<div class="col-sm-8">
-		<select class="form-control" id="operator">
-			<option>Maersk</option>
-			<option>Mediterranean Shipping	</option>
-			<option>CMA-CGM</option>
-			<option>COSCO</option>
-			<option>Evergreen</option>
-		</select>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="type">Ship Type</label>
-	<div class="col-sm-8">
-		<select multiple="" class="form-control">
-			<option>AHT</option>
-			<option>AHTS</option>
-			<option>Bulk Carrier</option>
-			<option>Cable Layer</option>
-			<option>Container</option>
-			<option>Dredger</option>
-			<option>ERRV</option>
-			<option>FPSO</option>
-			<option>FSO</option>
-			<option>FSRU</option>
-			<option>Passenger</option>
-			<option>Passenger/Cargo</option>
-			<option>PSV</option>
-			<option>PSV</option>
-			<option>RoRo</option>
-			<option>Tanker</option>
-			<option>Tug</option>
-		</select>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="shipyard">Shipyard Name</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="shipyard" placeholder="Shipyard Name"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="shipyardCountry">Shipyard Country</label>
-	<div class="col-sm-8">
-		<select name="shipyardCountry" class="form-control"> 
-			<option value="" selected="selected">Select Country</option> 
-			<option value="United States">United States</option> 
-			<option value="United Kingdom">United Kingdom</option> 
-			<option value="Afghanistan">Afghanistan</option> 
-			<option value="Albania">Albania</option> 
-			<option value="Algeria">Algeria</option> 
-			<option value="American Samoa">American Samoa</option> 
-			<option value="Andorra">Andorra</option> 
-			<option value="Angola">Angola</option> 
-			<option value="Anguilla">Anguilla</option> 
-			<option value="Antarctica">Antarctica</option> 
-			<option value="Antigua and Barbuda">Antigua and Barbuda</option> 
-			<option value="Argentina">Argentina</option> 
-			<option value="Armenia">Armenia</option> 
-			<option value="Aruba">Aruba</option> 
-			<option value="Australia">Australia</option> 
-			<option value="Austria">Austria</option> 
-			<option value="Azerbaijan">Azerbaijan</option> 
-			<option value="Bahamas">Bahamas</option> 
-			<option value="Bahrain">Bahrain</option> 
-			<option value="Bangladesh">Bangladesh</option> 
-			<option value="Barbados">Barbados</option> 
-			<option value="Belarus">Belarus</option> 
-			<option value="Belgium">Belgium</option> 
-			<option value="Belize">Belize</option> 
-			<option value="Benin">Benin</option> 
-			<option value="Bermuda">Bermuda</option> 
-			<option value="Bhutan">Bhutan</option> 
-			<option value="Bolivia">Bolivia</option> 
-			<option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option> 
-			<option value="Botswana">Botswana</option> 
-			<option value="Bouvet Island">Bouvet Island</option> 
-			<option value="Brazil">Brazil</option> 
-			<option value="British Indian Ocean Territory">British Indian Ocean Territory</option> 
-			<option value="Brunei Darussalam">Brunei Darussalam</option> 
-			<option value="Bulgaria">Bulgaria</option> 
-			<option value="Burkina Faso">Burkina Faso</option> 
-			<option value="Burundi">Burundi</option> 
-			<option value="Cambodia">Cambodia</option> 
-			<option value="Cameroon">Cameroon</option> 
-			<option value="Canada">Canada</option> 
-			<option value="Cape Verde">Cape Verde</option> 
-			<option value="Cayman Islands">Cayman Islands</option> 
-			<option value="Central African Republic">Central African Republic</option> 
-			<option value="Chad">Chad</option> 
-			<option value="Chile">Chile</option> 
-			<option value="China">China</option> 
-			<option value="Christmas Island">Christmas Island</option> 
-			<option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option> 
-			<option value="Colombia">Colombia</option> 
-			<option value="Comoros">Comoros</option> 
-			<option value="Congo">Congo</option> 
-			<option value="Congo, The Democratic Republic of The">Congo, The Democratic Republic of The</option> 
-			<option value="Cook Islands">Cook Islands</option> 
-			<option value="Costa Rica">Costa Rica</option> 
-			<option value="Cote D'ivoire">Cote D'ivoire</option> 
-			<option value="Croatia">Croatia</option> 
-			<option value="Cuba">Cuba</option> 
-			<option value="Cyprus">Cyprus</option> 
-			<option value="Czech Republic">Czech Republic</option> 
-			<option value="Denmark">Denmark</option> 
-			<option value="Djibouti">Djibouti</option> 
-			<option value="Dominica">Dominica</option> 
-			<option value="Dominican Republic">Dominican Republic</option> 
-			<option value="Ecuador">Ecuador</option> 
-			<option value="Egypt">Egypt</option> 
-			<option value="El Salvador">El Salvador</option> 
-			<option value="Equatorial Guinea">Equatorial Guinea</option> 
-			<option value="Eritrea">Eritrea</option> 
-			<option value="Estonia">Estonia</option> 
-			<option value="Ethiopia">Ethiopia</option> 
-			<option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</option> 
-			<option value="Faroe Islands">Faroe Islands</option> 
-			<option value="Fiji">Fiji</option> 
-			<option value="Finland">Finland</option> 
-			<option value="France">France</option> 
-			<option value="French Guiana">French Guiana</option> 
-			<option value="French Polynesia">French Polynesia</option> 
-			<option value="French Southern Territories">French Southern Territories</option> 
-			<option value="Gabon">Gabon</option> 
-			<option value="Gambia">Gambia</option> 
-			<option value="Georgia">Georgia</option> 
-			<option value="Germany">Germany</option> 
-			<option value="Ghana">Ghana</option> 
-			<option value="Gibraltar">Gibraltar</option> 
-			<option value="Greece">Greece</option> 
-			<option value="Greenland">Greenland</option> 
-			<option value="Grenada">Grenada</option> 
-			<option value="Guadeloupe">Guadeloupe</option> 
-			<option value="Guam">Guam</option> 
-			<option value="Guatemala">Guatemala</option> 
-			<option value="Guinea">Guinea</option> 
-			<option value="Guinea-bissau">Guinea-bissau</option> 
-			<option value="Guyana">Guyana</option> 
-			<option value="Haiti">Haiti</option> 
-			<option value="Heard Island and Mcdonald Islands">Heard Island and Mcdonald Islands</option> 
-			<option value="Holy See (Vatican City State)">Holy See (Vatican City State)</option> 
-			<option value="Honduras">Honduras</option> 
-			<option value="Hong Kong">Hong Kong</option> 
-			<option value="Hungary">Hungary</option> 
-			<option value="Iceland">Iceland</option> 
-			<option value="India">India</option> 
-			<option value="Indonesia">Indonesia</option> 
-			<option value="Iran, Islamic Republic of">Iran, Islamic Republic of</option> 
-			<option value="Iraq">Iraq</option> 
-			<option value="Ireland">Ireland</option> 
-			<option value="Israel">Israel</option> 
-			<option value="Italy">Italy</option> 
-			<option value="Jamaica">Jamaica</option> 
-			<option value="Japan">Japan</option> 
-			<option value="Jordan">Jordan</option> 
-			<option value="Kazakhstan">Kazakhstan</option> 
-			<option value="Kenya">Kenya</option> 
-			<option value="Kiribati">Kiribati</option> 
-			<option value="Korea, Democratic People's Republic of">Korea, Democratic People's Republic of</option> 
-			<option value="Korea, Republic of">Korea, Republic of</option> 
-			<option value="Kuwait">Kuwait</option> 
-			<option value="Kyrgyzstan">Kyrgyzstan</option> 
-			<option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option> 
-			<option value="Latvia">Latvia</option> 
-			<option value="Lebanon">Lebanon</option> 
-			<option value="Lesotho">Lesotho</option> 
-			<option value="Liberia">Liberia</option> 
-			<option value="Libyan Arab Jamahiriya">Libyan Arab Jamahiriya</option> 
-			<option value="Liechtenstein">Liechtenstein</option> 
-			<option value="Lithuania">Lithuania</option> 
-			<option value="Luxembourg">Luxembourg</option> 
-			<option value="Macao">Macao</option> 
-			<option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former Yugoslav Republic of</option> 
-			<option value="Madagascar">Madagascar</option> 
-			<option value="Malawi">Malawi</option> 
-			<option value="Malaysia">Malaysia</option> 
-			<option value="Maldives">Maldives</option> 
-			<option value="Mali">Mali</option> 
-			<option value="Malta">Malta</option> 
-			<option value="Marshall Islands">Marshall Islands</option> 
-			<option value="Martinique">Martinique</option> 
-			<option value="Mauritania">Mauritania</option> 
-			<option value="Mauritius">Mauritius</option> 
-			<option value="Mayotte">Mayotte</option> 
-			<option value="Mexico">Mexico</option> 
-			<option value="Micronesia, Federated States of">Micronesia, Federated States of</option> 
-			<option value="Moldova, Republic of">Moldova, Republic of</option> 
-			<option value="Monaco">Monaco</option> 
-			<option value="Mongolia">Mongolia</option> 
-			<option value="Montserrat">Montserrat</option> 
-			<option value="Morocco">Morocco</option> 
-			<option value="Mozambique">Mozambique</option> 
-			<option value="Myanmar">Myanmar</option> 
-			<option value="Namibia">Namibia</option> 
-			<option value="Nauru">Nauru</option> 
-			<option value="Nepal">Nepal</option> 
-			<option value="Netherlands">Netherlands</option> 
-			<option value="Netherlands Antilles">Netherlands Antilles</option> 
-			<option value="New Caledonia">New Caledonia</option> 
-			<option value="New Zealand">New Zealand</option> 
-			<option value="Nicaragua">Nicaragua</option> 
-			<option value="Niger">Niger</option> 
-			<option value="Nigeria">Nigeria</option> 
-			<option value="Niue">Niue</option> 
-			<option value="Norfolk Island">Norfolk Island</option> 
-			<option value="Northern Mariana Islands">Northern Mariana Islands</option> 
-			<option value="Norway">Norway</option> 
-			<option value="Oman">Oman</option> 
-			<option value="Pakistan">Pakistan</option> 
-			<option value="Palau">Palau</option> 
-			<option value="Palestinian Territory, Occupied">Palestinian Territory, Occupied</option> 
-			<option value="Panama">Panama</option> 
-			<option value="Papua New Guinea">Papua New Guinea</option> 
-			<option value="Paraguay">Paraguay</option> 
-			<option value="Peru">Peru</option> 
-			<option value="Philippines">Philippines</option> 
-			<option value="Pitcairn">Pitcairn</option> 
-			<option value="Poland">Poland</option> 
-			<option value="Portugal">Portugal</option> 
-			<option value="Puerto Rico">Puerto Rico</option> 
-			<option value="Qatar">Qatar</option> 
-			<option value="Reunion">Reunion</option> 
-			<option value="Romania">Romania</option> 
-			<option value="Russian Federation">Russian Federation</option> 
-			<option value="Rwanda">Rwanda</option> 
-			<option value="Saint Helena">Saint Helena</option> 
-			<option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option> 
-			<option value="Saint Lucia">Saint Lucia</option> 
-			<option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option> 
-			<option value="Saint Vincent and The Grenadines">Saint Vincent and The Grenadines</option> 
-			<option value="Samoa">Samoa</option> 
-			<option value="San Marino">San Marino</option> 
-			<option value="Sao Tome and Principe">Sao Tome and Principe</option> 
-			<option value="Saudi Arabia">Saudi Arabia</option> 
-			<option value="Senegal">Senegal</option> 
-			<option value="Serbia and Montenegro">Serbia and Montenegro</option> 
-			<option value="Seychelles">Seychelles</option> 
-			<option value="Sierra Leone">Sierra Leone</option> 
-			<option value="Singapore">Singapore</option> 
-			<option value="Slovakia">Slovakia</option> 
-			<option value="Slovenia">Slovenia</option> 
-			<option value="Solomon Islands">Solomon Islands</option> 
-			<option value="Somalia">Somalia</option> 
-			<option value="South Africa">South Africa</option> 
-			<option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands</option> 
-			<option value="Spain">Spain</option> 
-			<option value="Sri Lanka">Sri Lanka</option> 
-			<option value="Sudan">Sudan</option> 
-			<option value="Suriname">Suriname</option> 
-			<option value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option> 
-			<option value="Swaziland">Swaziland</option> 
-			<option value="Sweden">Sweden</option> 
-			<option value="Switzerland">Switzerland</option> 
-			<option value="Syrian Arab Republic">Syrian Arab Republic</option> 
-			<option value="Taiwan, Province of China">Taiwan, Province of China</option> 
-			<option value="Tajikistan">Tajikistan</option> 
-			<option value="Tanzania, United Republic of">Tanzania, United Republic of</option> 
-			<option value="Thailand">Thailand</option> 
-			<option value="Timor-leste">Timor-leste</option> 
-			<option value="Togo">Togo</option> 
-			<option value="Tokelau">Tokelau</option> 
-			<option value="Tonga">Tonga</option> 
-			<option value="Trinidad and Tobago">Trinidad and Tobago</option> 
-			<option value="Tunisia">Tunisia</option> 
-			<option value="Turkey">Turkey</option> 
-			<option value="Turkmenistan">Turkmenistan</option> 
-			<option value="Turks and Caicos Islands">Turks and Caicos Islands</option> 
-			<option value="Tuvalu">Tuvalu</option> 
-			<option value="Uganda">Uganda</option> 
-			<option value="Ukraine">Ukraine</option> 
-			<option value="United Arab Emirates">United Arab Emirates</option> 
-			<option value="United Kingdom">United Kingdom</option> 
-			<option value="United States">United States</option> 
-			<option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option> 
-			<option value="Uruguay">Uruguay</option> 
-			<option value="Uzbekistan">Uzbekistan</option> 
-			<option value="Vanuatu">Vanuatu</option> 
-			<option value="Venezuela">Venezuela</option> 
-			<option value="Viet Nam">Viet Nam</option> 
-			<option value="Virgin Islands, British">Virgin Islands, British</option> 
-			<option value="Virgin Islands, U.S.">Virgin Islands, U.S.</option> 
-			<option value="Wallis and Futuna">Wallis and Futuna</option> 
-			<option value="Western Sahara">Western Sahara</option> 
-			<option value="Yemen">Yemen</option> 
-			<option value="Zambia">Zambia</option> 
-			<option value="Zimbabwe">Zimbabwe</option>
-		</select>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="builtYear">Built Year</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="builtYear" placeholder="Built Year"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="ownYear">Delivery to Owner</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="ownYear" placeholder="Delivery to Owner"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="class">Ship Class</label>
-	<div class="col-sm-8">
-		<select class="form-control" id="class">
-			<option>ABS</option>
-			<option>BKI</option>
-			<option>BV</option>
-			<option>DNVGL</option>
-			<option>IRS</option>
-			<option>KR</option>
-			<option>LR</option>
-			<option>NK</option>
-		</select>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="dwt">DWT</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="dwt" placeholder="DWT"/>
-	</div>
-</div>
-</form>
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="vesselName">Vessel Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="vesselName" placeholder="Vessel Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="imo">IMO</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="imo" placeholder="IMO" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="owner">Owner</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="owner">
+                                        <option>Maersk</option>
+                                        <option>Mediterranean Shipping	</option>
+                                        <option>CMA-CGM</option>
+                                        <option>COSCO</option>
+                                        <option>Evergreen</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="operator">Operator</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="operator">
+                                        <option>Maersk</option>
+                                        <option>Mediterranean Shipping	</option>
+                                        <option>CMA-CGM</option>
+                                        <option>COSCO</option>
+                                        <option>Evergreen</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="type">Ship Type</label>
+                                <div class="col-sm-8">
+                                    <select multiple="" class="form-control">
+                                        <option>AHT</option>
+                                        <option>AHTS</option>
+                                        <option>Bulk Carrier</option>
+                                        <option>Cable Layer</option>
+                                        <option>Container</option>
+                                        <option>Dredger</option>
+                                        <option>ERRV</option>
+                                        <option>FPSO</option>
+                                        <option>FSO</option>
+                                        <option>FSRU</option>
+                                        <option>Passenger</option>
+                                        <option>Passenger/Cargo</option>
+                                        <option>PSV</option>
+                                        <option>PSV</option>
+                                        <option>RoRo</option>
+                                        <option>Tanker</option>
+                                        <option>Tug</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="shipyard">Shipyard Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="shipyard" placeholder="Shipyard Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="shipyardCountry">Shipyard Country</label>
+                                <div class="col-sm-8">
+                                    <select name="shipyardCountry" class="form-control">
+                                        <option value="" selected="selected">Select Country</option>
+                                        <option value="United States">United States</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="Afghanistan">Afghanistan</option>
+                                        <option value="Albania">Albania</option>
+                                        <option value="Algeria">Algeria</option>
+                                        <option value="American Samoa">American Samoa</option>
+                                        <option value="Andorra">Andorra</option>
+                                        <option value="Angola">Angola</option>
+                                        <option value="Anguilla">Anguilla</option>
+                                        <option value="Antarctica">Antarctica</option>
+                                        <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                                        <option value="Argentina">Argentina</option>
+                                        <option value="Armenia">Armenia</option>
+                                        <option value="Aruba">Aruba</option>
+                                        <option value="Australia">Australia</option>
+                                        <option value="Austria">Austria</option>
+                                        <option value="Azerbaijan">Azerbaijan</option>
+                                        <option value="Bahamas">Bahamas</option>
+                                        <option value="Bahrain">Bahrain</option>
+                                        <option value="Bangladesh">Bangladesh</option>
+                                        <option value="Barbados">Barbados</option>
+                                        <option value="Belarus">Belarus</option>
+                                        <option value="Belgium">Belgium</option>
+                                        <option value="Belize">Belize</option>
+                                        <option value="Benin">Benin</option>
+                                        <option value="Bermuda">Bermuda</option>
+                                        <option value="Bhutan">Bhutan</option>
+                                        <option value="Bolivia">Bolivia</option>
+                                        <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                                        <option value="Botswana">Botswana</option>
+                                        <option value="Bouvet Island">Bouvet Island</option>
+                                        <option value="Brazil">Brazil</option>
+                                        <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+                                        <option value="Brunei Darussalam">Brunei Darussalam</option>
+                                        <option value="Bulgaria">Bulgaria</option>
+                                        <option value="Burkina Faso">Burkina Faso</option>
+                                        <option value="Burundi">Burundi</option>
+                                        <option value="Cambodia">Cambodia</option>
+                                        <option value="Cameroon">Cameroon</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="Cape Verde">Cape Verde</option>
+                                        <option value="Cayman Islands">Cayman Islands</option>
+                                        <option value="Central African Republic">Central African Republic</option>
+                                        <option value="Chad">Chad</option>
+                                        <option value="Chile">Chile</option>
+                                        <option value="China">China</option>
+                                        <option value="Christmas Island">Christmas Island</option>
+                                        <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+                                        <option value="Colombia">Colombia</option>
+                                        <option value="Comoros">Comoros</option>
+                                        <option value="Congo">Congo</option>
+                                        <option value="Congo, The Democratic Republic of The">Congo, The Democratic Republic of The</option>
+                                        <option value="Cook Islands">Cook Islands</option>
+                                        <option value="Costa Rica">Costa Rica</option>
+                                        <option value="Cote D'ivoire">Cote D'ivoire</option>
+                                        <option value="Croatia">Croatia</option>
+                                        <option value="Cuba">Cuba</option>
+                                        <option value="Cyprus">Cyprus</option>
+                                        <option value="Czech Republic">Czech Republic</option>
+                                        <option value="Denmark">Denmark</option>
+                                        <option value="Djibouti">Djibouti</option>
+                                        <option value="Dominica">Dominica</option>
+                                        <option value="Dominican Republic">Dominican Republic</option>
+                                        <option value="Ecuador">Ecuador</option>
+                                        <option value="Egypt">Egypt</option>
+                                        <option value="El Salvador">El Salvador</option>
+                                        <option value="Equatorial Guinea">Equatorial Guinea</option>
+                                        <option value="Eritrea">Eritrea</option>
+                                        <option value="Estonia">Estonia</option>
+                                        <option value="Ethiopia">Ethiopia</option>
+                                        <option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</option>
+                                        <option value="Faroe Islands">Faroe Islands</option>
+                                        <option value="Fiji">Fiji</option>
+                                        <option value="Finland">Finland</option>
+                                        <option value="France">France</option>
+                                        <option value="French Guiana">French Guiana</option>
+                                        <option value="French Polynesia">French Polynesia</option>
+                                        <option value="French Southern Territories">French Southern Territories</option>
+                                        <option value="Gabon">Gabon</option>
+                                        <option value="Gambia">Gambia</option>
+                                        <option value="Georgia">Georgia</option>
+                                        <option value="Germany">Germany</option>
+                                        <option value="Ghana">Ghana</option>
+                                        <option value="Gibraltar">Gibraltar</option>
+                                        <option value="Greece">Greece</option>
+                                        <option value="Greenland">Greenland</option>
+                                        <option value="Grenada">Grenada</option>
+                                        <option value="Guadeloupe">Guadeloupe</option>
+                                        <option value="Guam">Guam</option>
+                                        <option value="Guatemala">Guatemala</option>
+                                        <option value="Guinea">Guinea</option>
+                                        <option value="Guinea-bissau">Guinea-bissau</option>
+                                        <option value="Guyana">Guyana</option>
+                                        <option value="Haiti">Haiti</option>
+                                        <option value="Heard Island and Mcdonald Islands">Heard Island and Mcdonald Islands</option>
+                                        <option value="Holy See (Vatican City State)">Holy See (Vatican City State)</option>
+                                        <option value="Honduras">Honduras</option>
+                                        <option value="Hong Kong">Hong Kong</option>
+                                        <option value="Hungary">Hungary</option>
+                                        <option value="Iceland">Iceland</option>
+                                        <option value="India">India</option>
+                                        <option value="Indonesia">Indonesia</option>
+                                        <option value="Iran, Islamic Republic of">Iran, Islamic Republic of</option>
+                                        <option value="Iraq">Iraq</option>
+                                        <option value="Ireland">Ireland</option>
+                                        <option value="Israel">Israel</option>
+                                        <option value="Italy">Italy</option>
+                                        <option value="Jamaica">Jamaica</option>
+                                        <option value="Japan">Japan</option>
+                                        <option value="Jordan">Jordan</option>
+                                        <option value="Kazakhstan">Kazakhstan</option>
+                                        <option value="Kenya">Kenya</option>
+                                        <option value="Kiribati">Kiribati</option>
+                                        <option value="Korea, Democratic People's Republic of">Korea, Democratic People's Republic of</option>
+                                        <option value="Korea, Republic of">Korea, Republic of</option>
+                                        <option value="Kuwait">Kuwait</option>
+                                        <option value="Kyrgyzstan">Kyrgyzstan</option>
+                                        <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
+                                        <option value="Latvia">Latvia</option>
+                                        <option value="Lebanon">Lebanon</option>
+                                        <option value="Lesotho">Lesotho</option>
+                                        <option value="Liberia">Liberia</option>
+                                        <option value="Libyan Arab Jamahiriya">Libyan Arab Jamahiriya</option>
+                                        <option value="Liechtenstein">Liechtenstein</option>
+                                        <option value="Lithuania">Lithuania</option>
+                                        <option value="Luxembourg">Luxembourg</option>
+                                        <option value="Macao">Macao</option>
+                                        <option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former Yugoslav Republic of</option>
+                                        <option value="Madagascar">Madagascar</option>
+                                        <option value="Malawi">Malawi</option>
+                                        <option value="Malaysia">Malaysia</option>
+                                        <option value="Maldives">Maldives</option>
+                                        <option value="Mali">Mali</option>
+                                        <option value="Malta">Malta</option>
+                                        <option value="Marshall Islands">Marshall Islands</option>
+                                        <option value="Martinique">Martinique</option>
+                                        <option value="Mauritania">Mauritania</option>
+                                        <option value="Mauritius">Mauritius</option>
+                                        <option value="Mayotte">Mayotte</option>
+                                        <option value="Mexico">Mexico</option>
+                                        <option value="Micronesia, Federated States of">Micronesia, Federated States of</option>
+                                        <option value="Moldova, Republic of">Moldova, Republic of</option>
+                                        <option value="Monaco">Monaco</option>
+                                        <option value="Mongolia">Mongolia</option>
+                                        <option value="Montserrat">Montserrat</option>
+                                        <option value="Morocco">Morocco</option>
+                                        <option value="Mozambique">Mozambique</option>
+                                        <option value="Myanmar">Myanmar</option>
+                                        <option value="Namibia">Namibia</option>
+                                        <option value="Nauru">Nauru</option>
+                                        <option value="Nepal">Nepal</option>
+                                        <option value="Netherlands">Netherlands</option>
+                                        <option value="Netherlands Antilles">Netherlands Antilles</option>
+                                        <option value="New Caledonia">New Caledonia</option>
+                                        <option value="New Zealand">New Zealand</option>
+                                        <option value="Nicaragua">Nicaragua</option>
+                                        <option value="Niger">Niger</option>
+                                        <option value="Nigeria">Nigeria</option>
+                                        <option value="Niue">Niue</option>
+                                        <option value="Norfolk Island">Norfolk Island</option>
+                                        <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+                                        <option value="Norway">Norway</option>
+                                        <option value="Oman">Oman</option>
+                                        <option value="Pakistan">Pakistan</option>
+                                        <option value="Palau">Palau</option>
+                                        <option value="Palestinian Territory, Occupied">Palestinian Territory, Occupied</option>
+                                        <option value="Panama">Panama</option>
+                                        <option value="Papua New Guinea">Papua New Guinea</option>
+                                        <option value="Paraguay">Paraguay</option>
+                                        <option value="Peru">Peru</option>
+                                        <option value="Philippines">Philippines</option>
+                                        <option value="Pitcairn">Pitcairn</option>
+                                        <option value="Poland">Poland</option>
+                                        <option value="Portugal">Portugal</option>
+                                        <option value="Puerto Rico">Puerto Rico</option>
+                                        <option value="Qatar">Qatar</option>
+                                        <option value="Reunion">Reunion</option>
+                                        <option value="Romania">Romania</option>
+                                        <option value="Russian Federation">Russian Federation</option>
+                                        <option value="Rwanda">Rwanda</option>
+                                        <option value="Saint Helena">Saint Helena</option>
+                                        <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                                        <option value="Saint Lucia">Saint Lucia</option>
+                                        <option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
+                                        <option value="Saint Vincent and The Grenadines">Saint Vincent and The Grenadines</option>
+                                        <option value="Samoa">Samoa</option>
+                                        <option value="San Marino">San Marino</option>
+                                        <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                                        <option value="Saudi Arabia">Saudi Arabia</option>
+                                        <option value="Senegal">Senegal</option>
+                                        <option value="Serbia and Montenegro">Serbia and Montenegro</option>
+                                        <option value="Seychelles">Seychelles</option>
+                                        <option value="Sierra Leone">Sierra Leone</option>
+                                        <option value="Singapore">Singapore</option>
+                                        <option value="Slovakia">Slovakia</option>
+                                        <option value="Slovenia">Slovenia</option>
+                                        <option value="Solomon Islands">Solomon Islands</option>
+                                        <option value="Somalia">Somalia</option>
+                                        <option value="South Africa">South Africa</option>
+                                        <option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands</option>
+                                        <option value="Spain">Spain</option>
+                                        <option value="Sri Lanka">Sri Lanka</option>
+                                        <option value="Sudan">Sudan</option>
+                                        <option value="Suriname">Suriname</option>
+                                        <option value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option>
+                                        <option value="Swaziland">Swaziland</option>
+                                        <option value="Sweden">Sweden</option>
+                                        <option value="Switzerland">Switzerland</option>
+                                        <option value="Syrian Arab Republic">Syrian Arab Republic</option>
+                                        <option value="Taiwan, Province of China">Taiwan, Province of China</option>
+                                        <option value="Tajikistan">Tajikistan</option>
+                                        <option value="Tanzania, United Republic of">Tanzania, United Republic of</option>
+                                        <option value="Thailand">Thailand</option>
+                                        <option value="Timor-leste">Timor-leste</option>
+                                        <option value="Togo">Togo</option>
+                                        <option value="Tokelau">Tokelau</option>
+                                        <option value="Tonga">Tonga</option>
+                                        <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                                        <option value="Tunisia">Tunisia</option>
+                                        <option value="Turkey">Turkey</option>
+                                        <option value="Turkmenistan">Turkmenistan</option>
+                                        <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                                        <option value="Tuvalu">Tuvalu</option>
+                                        <option value="Uganda">Uganda</option>
+                                        <option value="Ukraine">Ukraine</option>
+                                        <option value="United Arab Emirates">United Arab Emirates</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="United States">United States</option>
+                                        <option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+                                        <option value="Uruguay">Uruguay</option>
+                                        <option value="Uzbekistan">Uzbekistan</option>
+                                        <option value="Vanuatu">Vanuatu</option>
+                                        <option value="Venezuela">Venezuela</option>
+                                        <option value="Viet Nam">Viet Nam</option>
+                                        <option value="Virgin Islands, British">Virgin Islands, British</option>
+                                        <option value="Virgin Islands, U.S.">Virgin Islands, U.S.</option>
+                                        <option value="Wallis and Futuna">Wallis and Futuna</option>
+                                        <option value="Western Sahara">Western Sahara</option>
+                                        <option value="Yemen">Yemen</option>
+                                        <option value="Zambia">Zambia</option>
+                                        <option value="Zimbabwe">Zimbabwe</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="builtYear">Built Year</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="builtYear" placeholder="Built Year" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="ownYear">Delivery to Owner</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="ownYear" placeholder="Delivery to Owner" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="class">Ship Class</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="class">
+                                        <option>ABS</option>
+                                        <option>BKI</option>
+                                        <option>BV</option>
+                                        <option>DNVGL</option>
+                                        <option>IRS</option>
+                                        <option>KR</option>
+                                        <option>LR</option>
+                                        <option>NK</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="dwt">DWT</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="dwt" placeholder="DWT" />
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" data-dismiss="modal">Save</button></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Model registration_equipment -->
     <div>
         <div class="modal fade" role="dialog" tabindex="-1" id="registration_equipment" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
-    <em class="fa fa-gears fa-1x"></em>
-    Equipment Registration
-</h4></div>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
+                            <em class="fa fa-gears fa-1x"></em>
+                            Equipment Registration
+                        </h4>
+                    </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" role="form"><div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="vesselName">Vessel Name</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="vesselName" placeholder="Vessel Name"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="type">Engine Type</label>
-	<div class="col-sm-8">
-		<select class="form-control" id="type">
-			<option>Engine</option>
-			<option>Generator</option>
-		</select>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="model">Engine Model</label>
-	<div class="col-sm-8">
-		<select class="form-control" id="model">
-			<option>6DEM-18</option>
-			<option>6DEM-18(L)</option>
-			<option>6DKM-20e</option>
-			<option>6DKM-20eL</option>
-			<option>6DKM-20e(L)(F)</option>
-			<option>6DKM-20e(L)F</option>
-			<option>6DEM-20</option>
-			<option>6DEM-20L</option>
-			<option>6DEM-20(L)(F)</option>
-			<option>6DEM-20(L)F</option>
-			<option>6DEM-23</option>
-			<option>6DEM-23L</option>
-			<option>6DEM-23(L)(F)</option>
-			<option>6DEM-23(L)F</option>
-			<option>8DEM-23</option>
-			<option>8DEM-23F</option>
-			<option>8DEM-23(L)(F)</option>
-			<option>8DEM-23(L)F</option>
-			<option>6DKM-26e</option>
-			<option>6DKM-26eL</option>
-			<option>6DKM-26e(L)(F)</option>
-			<option>6DKM-26e(L)F</option>
-			<option>6DKM-28e</option>
-			<option>6DKM-28eL</option>
-			<option>6DKM-28e(L)(F)</option>
-			<option>6DKM-28e(L)F</option>
-			<option>6DEM-28</option>
-			<option>6DEM-28L</option>
-			<option>6DEM-28(L)(F)</option>
-			<option>6DEM-28(L)F</option>
-			<option>8DKM-28e</option>
-			<option>8DKM-28eL</option>
-			<option>8DKM-28e(L)(F)</option>
-			<option>8DKM-28e(L)F</option>
-			<option>8DEM-28</option>
-			<option>8DEM-28L</option>
-			<option>8DEM-28(L)(F)</option>
-			<option>8DEM-28(L)F</option>
-			<option>6DCM-32e</option>
-			<option>6DCM-32eL</option>
-			<option>6DCM-32e(L)(F)</option>
-			<option>6DCM-32e(L)F</option>
-			<option>8DCM-32e</option>
-			<option>8DCM-32eL</option>
-			<option>8DCM-32e(L)(F)</option>
-			<option>8DCM-32e(L)F</option>
-			<option>16DCM-32e</option>
-			<option>16DCM-32eL</option>
-			<option>16DCM-32e(L)(F)</option>
-			<option>16DCM-32e(L)F</option>
-			<option>6DEM-33</option>
-			<option>6DEM-33L</option>
-			<option>6DEM-33(L)(F)</option>
-			<option>6DEM-33(L)F</option>
-			<option>8DEM-33</option>
-			<option>8DEM-33L</option>
-			<option>8DEM-33(L)(F)</option>
-			<option>8DEM-33(L)F</option>
-			<option>6DKM-36e</option>
-			<option>6DKM-36eL</option>
-			<option>6DKM-36e(L)(F)</option>
-			<option>6DKM-36e(L)F</option>
-			<option>8DKM-36e</option>
-			<option>8DKM-36eL</option>
-			<option>8DKM-36e(L)(F)</option>
-			<option>8DKM-36e(L)F</option>
-			<option>12DKM-36e</option>
-			<option>12DKM-36eL</option>
-			<option>12DKM-36e(L)(F)</option>
-			<option>12DKM-36e(L)F</option>
-			<option>M5</option>
-			<option>6DL-16Ae</option>
-			<option>6DE-18</option>
-			<option>6DK-20e</option>
-			<option>6DE-20</option>
-			<option>6DE-23</option>
-			<option>6DE-23F</option>
-			<option>6DK-26e</option>
-			<option>6DK-26eF</option>
-			<option>8DE-23</option>
-			<option>8DE-23F</option>
-			<option>6DK-28e</option>
-			<option>6DK-28eF</option>
-			<option>6DE-28</option>
-			<option>6DE-28F</option>
-			<option>8DK-28e</option>
-			<option>8DK-28eF</option>
-			<option>6DK-36e</option>
-			<option>6DK-36eF</option>
-			<option>6DE-33</option>
-			<option>6DE-33F</option>
-			<option>6DC-32e</option>
-			<option>6DC-32eF</option>
-			<option>8DC-32e</option>
-			<option>8DC-32eF</option>
-			<option>8DK-36e</option>
-			<option>8DK-36eF</option>
-			<option>8DE-33</option>
-			<option>8DE-33F</option>
-			<option>12DC-32e</option>
-			<option>12DC-32eF</option>
-			<option>12DK-36e</option>
-			<option>12DK-36eF</option>
-			<option>16DC-32e</option>
-			<option>16DC-32eF</option>
-		</select>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="sno">Engine Serial No.</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="sno" placeholder="Engine Serial No."/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="outputPower">Output Power x RPM</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="outputPower" placeholder="Output Power x RPM"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="gearboxModel">Gearbox Model</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="gearboxModel" placeholder="Gearbox Model"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="gearboxSrNo">Gearbox Serial No.</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="gearboxSrNo" placeholder="Gearbox Serial No."/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="gearboxRatio">Gear Ratio</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="gearboxRatio" placeholder="Gear Ratio"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="alternatorMaker">Alternator Maker</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="alternatorMaker" placeholder="Alternator Maker"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="alternatorMakerModel">Alternator Maker Model</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="alternatorMakerModel" placeholder="Alternator Maker Model"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="alternatorSrNo">Alternator Serial No.</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="alternatorSrNo" placeholder="Alternator Serial No."/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="alternatorOutput">Alternator Output (kWe)</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="alternatorOutput" placeholder="Alternator Output (kWe)"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="insulation">Insulation / Temperature Rise</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="insulation" placeholder="Insulation / Temperature Rise"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="irRate">IP Rating</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="irRate" placeholder="IP Rating"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="mounting">Mounting</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="mounting" placeholder="Mounting"/>
-	</div>
-</div>
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="vesselName">Vessel Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="vesselName" placeholder="Vessel Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="type">Engine Type</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="type">
+                                        <option>Engine</option>
+                                        <option>Generator</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="model">Engine Model</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="model">
+                                        <option>6DEM-18</option>
+                                        <option>6DEM-18(L)</option>
+                                        <option>6DKM-20e</option>
+                                        <option>6DKM-20eL</option>
+                                        <option>6DKM-20e(L)(F)</option>
+                                        <option>6DKM-20e(L)F</option>
+                                        <option>6DEM-20</option>
+                                        <option>6DEM-20L</option>
+                                        <option>6DEM-20(L)(F)</option>
+                                        <option>6DEM-20(L)F</option>
+                                        <option>6DEM-23</option>
+                                        <option>6DEM-23L</option>
+                                        <option>6DEM-23(L)(F)</option>
+                                        <option>6DEM-23(L)F</option>
+                                        <option>8DEM-23</option>
+                                        <option>8DEM-23F</option>
+                                        <option>8DEM-23(L)(F)</option>
+                                        <option>8DEM-23(L)F</option>
+                                        <option>6DKM-26e</option>
+                                        <option>6DKM-26eL</option>
+                                        <option>6DKM-26e(L)(F)</option>
+                                        <option>6DKM-26e(L)F</option>
+                                        <option>6DKM-28e</option>
+                                        <option>6DKM-28eL</option>
+                                        <option>6DKM-28e(L)(F)</option>
+                                        <option>6DKM-28e(L)F</option>
+                                        <option>6DEM-28</option>
+                                        <option>6DEM-28L</option>
+                                        <option>6DEM-28(L)(F)</option>
+                                        <option>6DEM-28(L)F</option>
+                                        <option>8DKM-28e</option>
+                                        <option>8DKM-28eL</option>
+                                        <option>8DKM-28e(L)(F)</option>
+                                        <option>8DKM-28e(L)F</option>
+                                        <option>8DEM-28</option>
+                                        <option>8DEM-28L</option>
+                                        <option>8DEM-28(L)(F)</option>
+                                        <option>8DEM-28(L)F</option>
+                                        <option>6DCM-32e</option>
+                                        <option>6DCM-32eL</option>
+                                        <option>6DCM-32e(L)(F)</option>
+                                        <option>6DCM-32e(L)F</option>
+                                        <option>8DCM-32e</option>
+                                        <option>8DCM-32eL</option>
+                                        <option>8DCM-32e(L)(F)</option>
+                                        <option>8DCM-32e(L)F</option>
+                                        <option>16DCM-32e</option>
+                                        <option>16DCM-32eL</option>
+                                        <option>16DCM-32e(L)(F)</option>
+                                        <option>16DCM-32e(L)F</option>
+                                        <option>6DEM-33</option>
+                                        <option>6DEM-33L</option>
+                                        <option>6DEM-33(L)(F)</option>
+                                        <option>6DEM-33(L)F</option>
+                                        <option>8DEM-33</option>
+                                        <option>8DEM-33L</option>
+                                        <option>8DEM-33(L)(F)</option>
+                                        <option>8DEM-33(L)F</option>
+                                        <option>6DKM-36e</option>
+                                        <option>6DKM-36eL</option>
+                                        <option>6DKM-36e(L)(F)</option>
+                                        <option>6DKM-36e(L)F</option>
+                                        <option>8DKM-36e</option>
+                                        <option>8DKM-36eL</option>
+                                        <option>8DKM-36e(L)(F)</option>
+                                        <option>8DKM-36e(L)F</option>
+                                        <option>12DKM-36e</option>
+                                        <option>12DKM-36eL</option>
+                                        <option>12DKM-36e(L)(F)</option>
+                                        <option>12DKM-36e(L)F</option>
+                                        <option>M5</option>
+                                        <option>6DL-16Ae</option>
+                                        <option>6DE-18</option>
+                                        <option>6DK-20e</option>
+                                        <option>6DE-20</option>
+                                        <option>6DE-23</option>
+                                        <option>6DE-23F</option>
+                                        <option>6DK-26e</option>
+                                        <option>6DK-26eF</option>
+                                        <option>8DE-23</option>
+                                        <option>8DE-23F</option>
+                                        <option>6DK-28e</option>
+                                        <option>6DK-28eF</option>
+                                        <option>6DE-28</option>
+                                        <option>6DE-28F</option>
+                                        <option>8DK-28e</option>
+                                        <option>8DK-28eF</option>
+                                        <option>6DK-36e</option>
+                                        <option>6DK-36eF</option>
+                                        <option>6DE-33</option>
+                                        <option>6DE-33F</option>
+                                        <option>6DC-32e</option>
+                                        <option>6DC-32eF</option>
+                                        <option>8DC-32e</option>
+                                        <option>8DC-32eF</option>
+                                        <option>8DK-36e</option>
+                                        <option>8DK-36eF</option>
+                                        <option>8DE-33</option>
+                                        <option>8DE-33F</option>
+                                        <option>12DC-32e</option>
+                                        <option>12DC-32eF</option>
+                                        <option>12DK-36e</option>
+                                        <option>12DK-36eF</option>
+                                        <option>16DC-32e</option>
+                                        <option>16DC-32eF</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="sno">Engine Serial No.</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="sno" placeholder="Engine Serial No." />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="outputPower">Output Power x RPM</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="outputPower" placeholder="Output Power x RPM" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="gearboxModel">Gearbox Model</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="gearboxModel" placeholder="Gearbox Model" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="gearboxSrNo">Gearbox Serial No.</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="gearboxSrNo" placeholder="Gearbox Serial No." />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="gearboxRatio">Gear Ratio</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="gearboxRatio" placeholder="Gear Ratio" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="alternatorMaker">Alternator Maker</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="alternatorMaker" placeholder="Alternator Maker" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="alternatorMakerModel">Alternator Maker Model</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="alternatorMakerModel" placeholder="Alternator Maker Model" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="alternatorSrNo">Alternator Serial No.</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="alternatorSrNo" placeholder="Alternator Serial No." />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="alternatorOutput">Alternator Output (kWe)</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="alternatorOutput" placeholder="Alternator Output (kWe)" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="insulation">Insulation / Temperature Rise</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="insulation" placeholder="Insulation / Temperature Rise" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="irRate">IP Rating</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="irRate" placeholder="IP Rating" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="mounting">Mounting</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="mounting" placeholder="Mounting" />
+                                </div>
+                            </div>
 
-</form>
+                        </form>
                     </div>
                     <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" data-dismiss="modal">Save</button></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Model registration_datachannel -->
     <div>
         <div class="modal fade" role="dialog" tabindex="-1" id="registration_datachannel" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
-    <em class="fa fa-upload fa-1x"></em>
-    Data Channel Registration
-</h4></div>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
+                            <em class="fa fa-upload fa-1x"></em>
+                            Data Channel Registration
+                        </h4>
+                    </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" role="form"><div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="channelNo">Channel No</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="channelNo" placeholder="Channel No"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="channelName">Channel Name</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="channelName" placeholder="Channel Name"/>
-	</div>
-</div>
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="channelNo">Channel No</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="channelNo" placeholder="Channel No" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="channelName">Channel Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="channelName" placeholder="Channel Name" />
+                                </div>
+                            </div>
 
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="dashboardDisplay">Dashboard Display</label>
-	<div class="col-sm-8">
-		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="dashboardDisplay"></input>
-			</label>
-		</div>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="chartType">Chart Type</label>
-	<div class="col-sm-8">
-		<select class="form-control" id="chartType">
-			<option>Gauge</option>
-			<option>Column</option>
-			<option>Bar</option>
-		</select>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="minRange">Min Range</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="minRange" placeholder="Min Range"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="maxRange">Max Range</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="maxRange" placeholder="Max Range"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="scale">Scale</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="scale" placeholder="Scale"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="unit">Display Unit</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="unit" placeholder="Display Unit"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="lowerLimit">Lower Limit</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="lowerLimit" placeholder="Lower Limit"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="upperLimit">Upper Limit</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="upperLimit" placeholder="Upper Limit"/>
-	</div>
-</div>
-<div class="form-group">
-	<label  class="col-sm-4 control-label"
-			  for="monitor">Monitoring Timer</label>
-	<div class="col-sm-8">
-		<input type="text" class="form-control" 
-		id="monitor" placeholder="Monitoring Timer"/>
-	</div>
-</div>
-</form>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="dashboardDisplay">Dashboard Display</label>
+                                <div class="col-sm-8">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="dashboardDisplay"></input>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="chartType">Chart Type</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="chartType">
+                                        <option>Gauge</option>
+                                        <option>Column</option>
+                                        <option>Bar</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="minRange">Min Range</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="minRange" placeholder="Min Range" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="maxRange">Max Range</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="maxRange" placeholder="Max Range" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="scale">Scale</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="scale" placeholder="Scale" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="unit">Display Unit</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="unit" placeholder="Display Unit" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="lowerLimit">Lower Limit</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="lowerLimit" placeholder="Lower Limit" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="upperLimit">Upper Limit</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="upperLimit" placeholder="Upper Limit" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"
+                                       for="monitor">Monitoring Timer</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           id="monitor" placeholder="Monitoring Timer" />
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" data-dismiss="modal">Save</button></div>
                 </div>
             </div>
         </div>
-    </div><div class="footer-basic footer-remax">
-    <footer>
-        <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
-        <ul class="list-inline">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Terms</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-        </ul>
-        <p class="copyright">Daikai Engineering Pte Ltd © 1992</p>
-    </footer>
-</div>
+    </div>
+
+    <!-- Modal for displaying the messages -->
+    <div class="modal fade" id="messageModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">
+                        <em class="fa fa-warning fa-1x"> </em> Server Error(s)
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <!-- The messages container -->
+                    <div id="errors"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-basic footer-remax">
+        <footer>
+            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
+            <ul class="list-inline">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+            <p class="copyright">Daikai Engineering Pte Ltd © 1992</p>
+        </footer>
+    </div>
 
     <script>
         $(document).ready(function () {
-            //debugger;
+            // Calling on load method from registration.js
             registration.onload();
         });
+
     </script>
 </body>
 

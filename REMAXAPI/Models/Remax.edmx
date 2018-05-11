@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="AccountID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
           <Property Name="PrimaryContact" Type="nvarchar" MaxLength="100" />
@@ -21,14 +21,14 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Channel">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ChannelNo" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ModelNoId" Type="uniqueidentifier" />
@@ -43,23 +43,23 @@
         </EntityType>
         <EntityType Name="ChartType">
           <Key>
-            <PropertyRef Name="ChartType" />
+            <PropertyRef Name="ChartTypeID" />
           </Key>
-          <Property Name="ChartType" Type="int" Nullable="false" />
+          <Property Name="ChartTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ChartName" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="DashboardSetting">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ModelNo" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ChannelNo" Type="uniqueidentifier" Nullable="false" />
           <Property Name="DisplayOnDashboard" Type="bit" />
@@ -70,7 +70,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="IMO_No" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SerialNo" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="EngineType" Type="uniqueidentifier" />
@@ -91,36 +91,35 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Model">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="EngineType" Type="uniqueidentifier" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'Value' in the table 'DB_A38003_DEV.dbo.Monitoring' was excluded.-->
         <EntityType Name="Monitoring">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="IMO_No" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SerialNo" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ChannelNo" Type="int" Nullable="false" />
           <Property Name="ChannelDescription" Type="nvarchar" MaxLength="100" />
           <Property Name="TimeStamp" Type="datetime" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Unit" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OptionSet">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="GroupId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Value" Type="int" Nullable="false" />
@@ -130,28 +129,28 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="ShipClass">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="ShipType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
           <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" />
@@ -172,7 +171,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="256" />
           <Property Name="Value" Type="nvarchar" MaxLength="4000" />
@@ -205,7 +204,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="IMO_No" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="VesselName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="OwnerID" Type="uniqueidentifier" Nullable="false" />
@@ -321,7 +320,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -345,7 +344,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Value" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
@@ -438,14 +437,14 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Channel">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ChannelNo" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ModelNoId" Type="Guid" />
@@ -460,23 +459,23 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
         </EntityType>
         <EntityType Name="ChartType">
           <Key>
-            <PropertyRef Name="ChartType1" />
+            <PropertyRef Name="ChartTypeID" />
           </Key>
-          <Property Name="ChartType1" Type="Int32" Nullable="false" />
           <Property Name="ChartName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ChartTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DashboardSetting">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ModelNo" Type="Guid" Nullable="false" />
           <Property Name="ChannelNo" Type="Guid" Nullable="false" />
           <Property Name="DisplayOnDashboard" Type="Boolean" />
@@ -487,7 +486,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IMO_No" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SerialNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="EngineType" Type="Guid" />
@@ -508,14 +507,14 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Model">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="EngineType" Type="Guid" />
         </EntityType>
@@ -523,19 +522,20 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IMO_No" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SerialNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ChannelNo" Type="Int32" Nullable="false" />
           <Property Name="ChannelDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="TimeStamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OptionSet">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GroupId" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Value" Type="Int32" Nullable="false" />
@@ -545,28 +545,28 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ShipClass">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ShipType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Vessel">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IMO_No" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="VesselName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="OwnerID" Type="Guid" Nullable="false" />
@@ -584,7 +584,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AccountID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="PrimaryContact" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -684,8 +684,8 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySetMapping Name="ChartTypes">
             <EntityTypeMapping TypeName="DB_A38003_DEVModel.ChartType">
               <MappingFragment StoreEntitySet="ChartType">
+                <ScalarProperty Name="ChartTypeID" ColumnName="ChartTypeID" />
                 <ScalarProperty Name="ChartName" ColumnName="ChartName" />
-                <ScalarProperty Name="ChartType1" ColumnName="ChartType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -751,6 +751,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySetMapping Name="Monitorings">
             <EntityTypeMapping TypeName="DB_A38003_DEVModel.Monitoring">
               <MappingFragment StoreEntitySet="Monitoring">
+                <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
                 <ScalarProperty Name="ChannelDescription" ColumnName="ChannelDescription" />

@@ -1,11 +1,15 @@
+// Settings
 var Settings = {
     WebApiUrl: 'http://localhost:56376/',
     Token: null,
-    CurrentUser: null
+    CurrentUser: null,
+    PageSize: 5,
 }
+// Utility functions
+var Util = {
 
-function parse_query_string(query) {
-    var vars = query.split("&");
+    parse_query_string: function (query) {
+        var vars = query.split("&");
     var query_string = {};
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split("=");
@@ -22,7 +26,15 @@ function parse_query_string(query) {
         }
     }
     return query_string;
+    },
+
+    isEmail: function (email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
 }
+
+
 
 $(document).ready(function () {
     var currentUser, currentToken;

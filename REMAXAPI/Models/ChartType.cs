@@ -14,7 +14,7 @@ namespace REMAXAPI.Models
     
     public partial class ChartType
     {
-        public int ChartType1 { get; set; }
         public string ChartName { get; set; }
+        public int ChartTypeID { get; set; }
     }
 }
