@@ -35,7 +35,7 @@
             }
             var success = login.getCurrentUserInfo(data.access_token);
             if (success) {
-                var params = parse_query_string(window.location.search.substring(1));
+                var params = Util.parse_query_string(window.location.search.substring(1));
                 if (params && params.callbackurl) {
                     window.location = params.callbackurl;
                 }

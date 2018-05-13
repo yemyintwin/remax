@@ -44,6 +44,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="com.ymw.security">
+      <HintPath>..\..\..\..\Suprema Central Control\com.ymw.security\bin\Debug\com.ymw.security.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -153,7 +156,9 @@
     <Compile Include="Controllers\ChannelData.cs" />
     <Compile Include="Controllers\ChannelDataController.cs" />
     <Compile Include="Controllers\ChannelsController.cs" />
+    <Compile Include="Controllers\DropDownController.cs" />
     <Compile Include="Controllers\KendoAccountsController.cs" />
+    <Compile Include="Controllers\KendoUsersController.cs" />
     <Compile Include="Controllers\ModelsController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -216,10 +221,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Remax.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Resource.cs">
+      <DependentUpon>Remax.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ResourcePermission.cs">
+      <DependentUpon>Remax.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ShipClass.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShipType.cs">
+      <DependentUpon>Remax.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_ResourcePermission_Result.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
@@ -241,6 +255,7 @@
     <Compile Include="Provider\OAuthAppProvider.cs" />
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\SampleChannelData.json" />
@@ -262,6 +277,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

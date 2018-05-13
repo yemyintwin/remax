@@ -12,6 +12,8 @@ namespace REMAXAPI.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Remax_Entities : DbContext
     {
@@ -44,5 +46,24 @@ namespace REMAXAPI.Models
         public virtual DbSet<ShipType> ShipTypes { get; set; }
         public virtual DbSet<Vessel> Vessels { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<Resource> Resources { get; set; }
+        public virtual DbSet<ResourcePermission> ResourcePermissions { get; set; }
+    
+        public virtual ObjectResult<sp_ResourcePermission_Result> sp_ResourcePermission(Nullable<System.Guid> userid, string resource_name, Nullable<int> operation_type)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(System.Guid));
+    
+            var resource_nameParameter = resource_name != null ?
+                new ObjectParameter("resource_name", resource_name) :
+                new ObjectParameter("resource_name", typeof(string));
+    
+            var operation_typeParameter = operation_type.HasValue ?
+                new ObjectParameter("operation_type", operation_type) :
+                new ObjectParameter("operation_type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ResourcePermission_Result>("sp_ResourcePermission", useridParameter, resource_nameParameter, operation_typeParameter);
+        }
     }
 }

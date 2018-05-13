@@ -102,4 +102,8 @@ namespace REMAXAPI.Models.Kendo
             this.Data = data;
         }
     }
+
+    public class OptionResponse {
+        public object[] Data { get; set; }
+    }
 }

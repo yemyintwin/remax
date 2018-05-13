@@ -190,9 +190,9 @@
                     </div>
                     <div class="panel-footer">
                         <div class="btn-group" role="group">
-                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_acc">New</button>
-                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_acc" id="btnEditAccount" onclick="btnEditAccount_OnClick">Edit</button>
-                            <button class="btn btn-default" type="button">Delete</button>
+                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_acc" id="btnNewAccount" onclick="registration.btnNewAccount_OnClick();">New</button>
+                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_acc" id="btnEditAccount" onclick="registration.btnEditAccount_OnClick();">Edit</button>
+                            <button class="btn btn-default" type="button" id="btnDelAccount" onclick="registration.btnDelAccount_OnClick();">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -222,9 +222,10 @@
                     </div>
                     <div class="panel-footer">
                         <div class="btn-group" role="group">
-                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_user">New</button>
-                            <button class="btn btn-default" type="button">Edit</button>
-                            <button class="btn btn-default" type="button">Delete</button>
+                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_user" id="btnNewUser" onclick="registration.btnNewUser_OnClick();">New</button>
+                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_user" id="btnEditUser" onclick="registration.btnEditUser_OnClick();">Edit</button>
+                            <button class="btn btn-default" type="button" id="btnDelUser" onclick="registration.btnDelUser_OnClick();">Delete</button>
+                            <button class="btn btn-default" type="button" data-dismiss="modal" id="btnResetPassword" onclick="registration.btnResetPassword_OnClick()">Reset Password</button>
                         </div>
                     </div>
                 </div>
@@ -237,129 +238,6 @@
         </div>
 
         <!--- Vessel Registration -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Vessels</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <div id="table_length" class="dataTables_length">
-                                        <span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
-                                            <option value="10" selected>10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-sm-6">
-                                    <div id="table_filter" class="dataTables_filter">
-                                        <label>
-                                            Search IMO No.:
-                                            <input type="search" class="form-control input-sm" placeholder aria-controls="dataTables-example" />
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table table table-striped table-bordered table-hover dataTable no-footer dtr-inline">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th class="sorting_asc" aria-controls="dataTables-example" aria-sort="ascending" aria-label="Account Name">Vessel Name</th>
-                                                    <th class="sorting">IMO (Key)</th>
-                                                    <th class="sorting">Owner</th>
-                                                    <th class="sorting">Operator</th>
-                                                    <th class="sorting">Ship Type</th>
-                                                    <th class="sorting">Shipyard Name</th>
-                                                    <th class="sorting">Shipyard Country</th>
-                                                    <th class="sorting">Built Year</th>
-                                                    <th class="sorting">Delivery to Owner</th>
-                                                    <th class="sorting">Ship Class</th>
-                                                    <th class="sorting">DWT (Tonnage)</th>
-                                                    <th class="sorting"><strong>Total Propulsion Power (kWm)</strong><br></th>
-                                                    <th class="sorting"><strong>Total Generator Power (kWe)</strong><br></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="gradeA odd" role="row">
-                                                    <td>PRINCESS SEAWAYS<br></td>
-                                                    <td>8502391<br></td>
-                                                    <td>Maersk<br></td>
-                                                    <td>Evergreen<br></td>
-                                                    <td>Passenger/Ro-Ro Cargo Ship<br></td>
-                                                    <td>Keppel</td>
-                                                    <td>Singapore</td>
-                                                    <td>1998</td>
-                                                    <td>2001</td>
-                                                    <td>CMA CGM</td>
-                                                    <td>31356<br></td>
-                                                    <td>30,000</td>
-                                                    <td>32,640<br></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>QUEEN ELIZABETH<br></td>
-                                                    <td>9477438<br></td>
-                                                    <td>Maersk<br></td>
-                                                    <td>Mediterranean Shipping<br></td>
-                                                    <td>Passenger (Cruise) Ship<br></td>
-                                                    <td>Keppel<br></td>
-                                                    <td>Singapore<br></td>
-                                                    <td>2000<br></td>
-                                                    <td>2002<br></td>
-                                                    <td>Concordia<br></td>
-                                                    <td>90901<br></td>
-                                                    <td>62,000<br></td>
-                                                    <td>66,640<br></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>BITHIA<br></td>
-                                                    <td>9222522</td>
-                                                    <td>Mediterranean Shipping<br></td>
-                                                    <td>Evergreen<br></td>
-                                                    <td>Passenger/Ro-Ro Cargo Ship</td>
-                                                    <td>Keppel<br></td>
-                                                    <td>Singapore<br></td>
-                                                    <td>2006<br></td>
-                                                    <td>2009<br></td>
-                                                    <td>CMA CGM<br></td>
-                                                    <td>35736</td>
-                                                    <td>32,000</td>
-                                                    <td>36,640<br></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12 col-xs-12">
-                                    <div class="dataTables_info"><span>Showing 1 to 3 of 3</span></div>
-                                </div>
-                                <div class="col-md-8 col-sm-12 col-xs-12">
-                                    <div class="dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="paginate_button previous disabled"><a href="#">Previous</a></li>
-                                            <li class="paginate_button active"><a href="#">1</a></li>
-                                            <li class="paginate_button"></li>
-                                            <li class="paginate_button next"><a href="#">Next</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="btn-group" role="group"><button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_vessel">New</button><button class="btn btn-default" type="button">Edit</button><button class="btn btn-default" type="button">Delete</button></div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-12">
                 <div style="height:20px"></div>
@@ -698,6 +576,7 @@
                             </h4>
                         </div>
                         <div class="modal-body">
+                            <input type="hidden" id="id" name="id" />
                             <div class="form-group">
                                 <label class="col-sm-4 control-label" for="accName">Account Name</label>
                                 <div class="col-sm-8">
@@ -738,7 +617,7 @@
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                            <button class="btn btn-primary" type="submit" id="submit_acc">Save</button>
+                            <button class="btn btn-primary" type="submit" id="btnAccSubmit">Save</button>
                         </div>
                     </form>
                 </div>
@@ -760,63 +639,41 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="userName">User Name</label>
+                                <label class="col-sm-4 control-label" for="userName">User Name</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="userName" placeholder="User Name" />
+                                    <input type="text" class="form-control" id="userName" name="userName" placeholder="User Name" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label"
                                        for="parent">Parent (Account)</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="parent">
-                                        <option>Maersk</option>
-                                        <option>Mediterranean Shipping	</option>
-                                        <option>CMA-CGM</option>
-                                        <option>COSCO</option>
-                                        <option>Evergreen</option>
+                                    <select class="form-control" id="userParent" name="userParent">
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="title">Job Title</label>
+                                <label class="col-sm-4 control-label" for="title">Job Title</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="title" placeholder="Job Title" />
+                                    <input type="text" class="form-control" id="userTitle" name="userTitle" placeholder="Job Title" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="phone">Business Phone</label>
+                                <label class="col-sm-4 control-label" for="mobile">Mobile</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="phone" placeholder="Business Phone" />
+                                    <input type="text" class="form-control" id="userMobile" name="userMobile" placeholder="Mobile" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="mobile">Mobile</label>
+                                <label class="col-sm-4 control-label" for="email">Email</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="mobile" placeholder="Mobile" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="email">Email</label>
-                                <div class="col-sm-8">
-                                    <input type="email" class="form-control"
-                                           id="email" placeholder="Email" />
+                                    <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email" />
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-default" type="button" data-dismiss="modal">Reset Password</button>
                             <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                            <button class="btn btn-primary" type="submit" id="submit_user">Save</button>
+                            <button class="btn btn-primary" type="submit" id="btnUserSubmit">Save</button>
                         </div>
                     </form>
                 </div>
@@ -1570,6 +1427,27 @@
                         </form>
                     </div>
                     <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" data-dismiss="modal">Save</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for displaying the messages -->
+    <div class="modal fade" id="messageModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">
+                        <em class="fa fa-warning fa-1x"> </em> Server Error(s)
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <!-- The messages container -->
+                    <div id="errors"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

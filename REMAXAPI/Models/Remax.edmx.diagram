@@ -27,6 +27,8 @@
         <EntityTypeShape EntityType="DB_A38003_DEVModel.ShipType" Width="1.5" PointX="11.75" PointY="0.75" />
         <EntityTypeShape EntityType="DB_A38003_DEVModel.Vessel" Width="1.5" PointX="0.75" PointY="11.75" />
         <EntityTypeShape EntityType="DB_A38003_DEVModel.Account" Width="1.5" PointX="7.375" PointY="11.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.Resource" Width="1.5" PointX="12.375" PointY="3.75" />
+        <EntityTypeShape EntityType="DB_A38003_DEVModel.ResourcePermission" Width="1.5" PointX="3.375" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

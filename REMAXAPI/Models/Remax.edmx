@@ -132,6 +132,25 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Resource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ResourcePermission">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="ResourceId" />
+          </Key>
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ResourceId" Type="int" Nullable="false" />
+          <Property Name="ReadPermission" Type="tinyint" />
+          <Property Name="WritePermission" Type="tinyint" />
+          <Property Name="DeletePermission" Type="tinyint" />
+          <Property Name="ExecutePermission" Type="tinyint" />
+        </EntityType>
         <EntityType Name="ShipClass">
           <Key>
             <PropertyRef Name="Id" />
@@ -166,6 +185,7 @@
           <Property Name="AccountID" Type="uniqueidentifier" />
           <Property Name="JobTitle" Type="nvarchar" MaxLength="100" />
           <Property Name="BusinessPhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsRootUser" Type="bit" />
         </EntityType>
         <EntityType Name="UserClaim">
           <Key>
@@ -274,6 +294,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_ResourcePermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="resource_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="operation_type" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="DB_A38003_DEVModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlternatorMaker" EntityType="Self.AlternatorMaker" Schema="dbo" store:Type="Tables" />
@@ -287,6 +312,8 @@
           <EntitySet Name="Monitoring" EntityType="Self.Monitoring" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OptionSet" EntityType="Self.OptionSet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OptionSetGroup" EntityType="Self.OptionSetGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resource" EntityType="Self.Resource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResourcePermission" EntityType="Self.ResourcePermission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShipClass" EntityType="Self.ShipClass" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShipType" EntityType="Self.ShipType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -339,6 +366,7 @@
           <Property Name="AccountID" Type="Guid" />
           <Property Name="JobTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="BusinessPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsRootUser" Type="Boolean" />
         </EntityType>
         <EntityType Name="UserClaim">
           <Key>
@@ -432,6 +460,13 @@
           <EntitySet Name="ShipTypes" EntityType="DB_A38003_DEVModel.ShipType" />
           <EntitySet Name="Vessels" EntityType="DB_A38003_DEVModel.Vessel" />
           <EntitySet Name="Accounts" EntityType="DB_A38003_DEVModel.Account" />
+          <EntitySet Name="Resources" EntityType="DB_A38003_DEVModel.Resource" />
+          <EntitySet Name="ResourcePermissions" EntityType="DB_A38003_DEVModel.ResourcePermission" />
+          <FunctionImport Name="sp_ResourcePermission" ReturnType="Collection(DB_A38003_DEVModel.sp_ResourcePermission_Result)">
+            <Parameter Name="userid" Mode="In" Type="Guid" />
+            <Parameter Name="resource_name" Mode="In" Type="String" />
+            <Parameter Name="operation_type" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="AlternatorMaker">
           <Key>
@@ -592,6 +627,34 @@
           <Property Name="Fax" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Resource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ResourcePermission">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="ResourceId" />
+          </Key>
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="ResourceId" Type="Int32" Nullable="false" />
+          <Property Name="ReadPermission" Type="Byte" />
+          <Property Name="WritePermission" Type="Byte" />
+          <Property Name="DeletePermission" Type="Byte" />
+          <Property Name="ExecutePermission" Type="Byte" />
+        </EntityType>
+        <ComplexType Name="sp_ResourcePermission_Result">
+          <Property Type="Guid" Name="User_Id" Nullable="true" />
+          <Property Type="String" Name="User_Name" Nullable="true" MaxLength="100" />
+          <Property Type="Guid" Name="Role_Id" Nullable="true" />
+          <Property Type="String" Name="Role_Name" Nullable="true" MaxLength="256" />
+          <Property Type="Int32" Name="Resource_Id" Nullable="true" />
+          <Property Type="String" Name="Resource_Name" Nullable="true" MaxLength="100" />
+          <Property Type="Byte" Name="Resource_Permission" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -601,6 +664,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="DB_A38003_DEVModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsRootUser" ColumnName="IsRootUser" />
                 <ScalarProperty Name="BusinessPhoneNumber" ColumnName="BusinessPhoneNumber" />
                 <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
@@ -829,6 +893,39 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Resources">
+            <EntityTypeMapping TypeName="DB_A38003_DEVModel.Resource">
+              <MappingFragment StoreEntitySet="Resource">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResourcePermissions">
+            <EntityTypeMapping TypeName="DB_A38003_DEVModel.ResourcePermission">
+              <MappingFragment StoreEntitySet="ResourcePermission">
+                <ScalarProperty Name="ExecutePermission" ColumnName="ExecutePermission" />
+                <ScalarProperty Name="DeletePermission" ColumnName="DeletePermission" />
+                <ScalarProperty Name="WritePermission" ColumnName="WritePermission" />
+                <ScalarProperty Name="ReadPermission" ColumnName="ReadPermission" />
+                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_ResourcePermission" FunctionName="DB_A38003_DEVModel.Store.sp_ResourcePermission">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_A38003_DEVModel.sp_ResourcePermission_Result">
+                <ScalarProperty Name="User_Id" ColumnName="User Id" />
+                <ScalarProperty Name="User_Name" ColumnName="User Name" />
+                <ScalarProperty Name="Role_Id" ColumnName="Role Id" />
+                <ScalarProperty Name="Role_Name" ColumnName="Role Name" />
+                <ScalarProperty Name="Resource_Id" ColumnName="Resource Id" />
+                <ScalarProperty Name="Resource_Name" ColumnName="Resource Name" />
+                <ScalarProperty Name="Resource_Permission" ColumnName="Resource Permission" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

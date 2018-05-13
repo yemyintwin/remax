@@ -4,6 +4,8 @@ var Settings = {
     Token: null,
     CurrentUser: null,
     PageSize: 5,
+    TokenKey: 'currentToken',
+    UserKey: 'currentUser',
 }
 // Utility functions
 var Util = {
@@ -48,7 +50,7 @@ $(document).ready(function () {
     else if ($.cookie('currentUser')) currentUser = $.cookie('currentUser');
 
     if (!currentUser || !currentToken) {
-        //document.location = "/login.html?callbackurl=" + window.location.href;
+        document.location = "/login.html?callbackurl=" + window.location.href;
     }
     else {
         Settings.Token = currentToken;

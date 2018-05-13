@@ -1,61 +1,76 @@
 ﻿/// <reference path="../../vendor/kendo/vsdoc/kendo.all.min.intellisense.js" />
 /// <reference path="../../vendor/kendo/vsdoc/kendo.all-vsdoc.js" />
+
+var components = {
+    gridId: null,
+    grid: null,
+    formId: null,
+    dialogId: null,
+    state: null,
+    webApiUrl: null
+};
+var token;
+
 var registration = {
+    error: {
+
+    },
+    modules: {
+        account: null,
+        user: null,
+        vessel: null,
+        engine: null,
+        channel: null,
+    },
+    grids: {
+        account : null
+    },
+    /* On Load */
     onload: function () {
-        //debugger;
+        //get current token;
+        if (!token) {
+            if (localStorage.getItem(Settings.TokenKey)) token = localStorage.getItem(Settings.TokenKey).toString();
+            else if ($.cookie(Settings.TokenKey)) token = $.cookie(Settings.TokenKey);
+        }
 
         // resetting for all modal dialogs
         $('body').on('hidden.bs.modal', '.modal', function () {
             $(this).find('form').bootstrapValidator("resetForm", true);
         });
 
-        registration.retrieveAccounts('table_accounts'); // kendo grid id
-        registration.registerNewAccount('form_acc', 'registration_acc', 'table_accounts'); // from id, modal id, kendo grid id
+        // initializing accounts related
+        try {
+            registration.modules.account = {
+                gridId: '#table_accounts',
+                formId: '#form_acc',
+                dialogId: '#registration_acc',
+                webApiUrl: Settings.WebApiUrl + '/api/KendoAccounts',
+            };
+            registration.retrieveAccounts(); // kendo grid id
+            registration.SubmitAccount(); // Create, Update
+        } catch (e) {
+            console.log(e.message);
+        }
 
-        registration.retrieveUsers('table_accounts'); // kendo grid id
-        registration.registerNewUser('form_user', 'registration_user', 'table_users'); // from id, modal id, kendo grid id
+        // initializing users related
+        try {
+            registration.modules.user = {
+                gridId: '#table_users',
+                formId: '#form_user',
+                dialogId: '#registration_user',
+                webApiUrl: Settings.WebApiUrl + '/api/KendoUsers',
+            };
+            registration.retrieveUsers(); // kendo grid id
+            registration.SubmitUser(); // Create, Update
+        } catch (e) {
+            console.log(e.message);
+        }
     },
 
-    //retrieveAccounts_DataTable: function() {
-    //    var pageNumber = 1;
-    //    var pageSize = $('#pagesizeaccounts').val();
-    //    var columnName = 'AccountName';
-    //    var columnSorting = 'asc';
-
-    //    var queryString = 'pageNumber=' + (pageNumber?pageNumber:1)
-    //                        + '&pageSize=' + (pageSize ? pageSize : 10)
-    //                        + '&sorting=' + columnName + encodeURI(' ') + columnSorting
-
-    //    var generateAccountTable = $("#table_accounts")
-    //        .DataTable({
-    //            "processing": true,
-    //            "serverSide": true,
-    //            "columnDefs": [
-    //                { "visible": false, "targets": 0 }
-    //            ],
-    //            "ajax": {
-    //                "url": Settings.WebApiUrl + '/api/Accounts'
-    //            },
-    //            "columns": [
-    //                { "data": "id" }, { "data": "name" }, { "data": "accountID" }, { "data": "primaryContact" }, { "data": "mainPhone" }
-    //                , { "data": "fax" }, { "data": "email" }
-
-    //            ],
-    //            "language": {
-    //                "emptyTable": "There are no customers at present.",
-    //                "zeroRecords": "There were no matching customers found."
-    //            },
-    //            "searching": false,
-    //            "ordering": true,
-    //            "paging": true
-    //        });
-    //},
-
-    /* */
-    retrieveAccounts: function (gridid) {
+    /* ----------------------------------------------------------------- Accounts -----------------------------------------------------------------*/
+    retrieveAccounts: function () {
         var pageNumber = 1;
-        var url = Settings.WebApiUrl + "/api/KendoAccount";
-        var gridName = "#" + gridid;
+        var url = registration.modules.account.webApiUrl;
 
         // data source settings
         var dataSource = new kendo.data.DataSource({
@@ -143,28 +158,31 @@ var registration = {
         ];
 
         // initialize grid
-        $(gridName).kendoGrid({
+        $(registration.modules.account.gridId).kendoGrid({
             dataSource: dataSource,
             columns: columns,
             filterable: true,
             sortable: true,
             pageable: true,
-            selectable: "row"
+            selectable: "row",
+            change: registration.accGrid_OnChange,
         });
 
-        var grid = $(gridName).data("kendoGrid");
-        grid.bind("sort", function (e) {
-            return;
-        });
+        // assgining grid to global variable
+        var grid = $(registration.modules.account.gridId).data("kendoGrid");
+        registration.modules.account.grid = grid;
+
+        $('#btnEditAccount').prop('disabled', true);
+        $('#btnDelAccount').prop('disabled', true);
     },
 
-    registerNewAccount: function (formid, modalid, gridid) {
-        var formId = "#" + formid;
-        var modalId = "#" + modalid;
-        var gridId = "#" + gridid;
+    SubmitAccount: function () {
+        //var formId = "#" + formid;
+        //var modalId = "#" + modalid;
+        //var gridId = "#" + gridid;
 
         // validation
-        $(formId).bootstrapValidator({
+        $(registration.modules.account.formId).bootstrapValidator({
             feedbackIcons: {
                 valid: 'glyphicon glyphicon-ok',
                 invalid: 'glyphicon glyphicon-remove',
@@ -227,7 +245,7 @@ var registration = {
         }).on('success.form.bv', function (e) {
             // Prevent form submission
             e.preventDefault();
-            var url = Settings.WebApiUrl + "/api/KendoAccount";
+            var url = registration.modules.account.webApiUrl;
             var data = {
                 AccountID : $('#accID').val(),
                 Name : $('#accName').val(),
@@ -236,8 +254,16 @@ var registration = {
                 Fax : $('#fax').val(),
                 Email : $('#email').val()
             };
+            var requestType = "POST"; // Create
+
+            if (registration.modules.account.state === 'update') {
+                data.id = $('#id').val();
+                requestType = "PUT";
+                url += '/' + data.id;
+            }// Update
+
             $.ajax({
-                type: "POST",
+                type: requestType,
                 url: url,
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -245,25 +271,91 @@ var registration = {
                 success: function (d, textStatus, xhr) {
                     console.log(d);
 
-                    $(modalId).modal('toggle'); 
+                    $(registration.modules.account.dialogId).modal('toggle'); 
 
-                    $(gridId).data('kendoGrid').dataSource.read();
-                    $(gridId).data('kendoGrid').refresh();
+                    $(registration.modules.account.gridId).data('kendoGrid').dataSource.read();
+                    $(registration.modules.account.gridId).data('kendoGrid').refresh();
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     $('#errors').html('');
                     $('#errors').append(xhr.responseText);
                     $('#messageModal').modal('show');
-                    $("#submit_acc").prop("disabled", false);
+                    $("#btnAccSubmit").prop("disabled", false);
                 }
             });
         });
     },
 
-    retrieveUsers: function (gridid) {
+    accGrid_OnChange: function (arg) {
+        var row = this.select();
+        if (row) {
+            $('#btnEditAccount').prop('disabled', false);
+            $('#btnDelAccount').prop('disabled', false);
+        }
+    },
+
+    btnNewAccount_OnClick: function () {
+        registration.modules.account.state = 'create';
+    },
+
+    btnEditAccount_OnClick: function () {
+        var accountGrid = registration.modules.account.grid;
+        var selectedItem = accountGrid.dataItem(accountGrid.select());
+
+        if (selectedItem) {
+            $('#id').val(selectedItem.id);
+            $('#accName').val(selectedItem.name);
+            $('#accID').val(selectedItem.accountID);
+            $('#primary').val(selectedItem.primaryContact);
+            $('#phone').val(selectedItem.mainPhone);
+            $('#fax').val(selectedItem.fax);
+            $('#email').val(selectedItem.email);
+
+            registration.modules.account.state = 'update';
+        }
+        else {
+            $(registration.modules.account.dialogId).modal('hide'); 
+        }
+    },
+
+    btnDelAccount_OnClick: function () {
+        var accountGrid = registration.modules.account.grid;
+        var selectedItem = accountGrid.dataItem(accountGrid.select());
+        var url = registration.modules.account.webApiUrl + '/' + selectedItem.id;
+
+        if (selectedItem) {
+            var ans = confirm("Are you sure you want to delete \'" + selectedItem.name + "\' account?");
+            if (!ans) return;
+
+            $.ajax({
+                type: 'DELETE',
+                url: url,
+                contentType: "application/json",
+                data: null,
+                dataType: 'json',
+                success: function (d, textStatus, xhr) {
+                    console.log(d);
+
+                    $(registration.modules.account.gridId).data('kendoGrid').dataSource.read();
+                    $(registration.modules.account.gridId).data('kendoGrid').refresh();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    $('#errors').html('');
+                    $('#errors').append(xhr.responseText);
+                    $('#messageModal').modal('show');
+                }
+            });
+        }
+        else {
+            $(registration.modules.account.dialogId).modal('hide');
+        }
+    },
+
+    /* ----------------------------------------------------------------- Users -----------------------------------------------------------------*/
+
+    retrieveUsers: function () {
         var pageNumber = 1;
-        var url = Settings.WebApiUrl + "/api/KendoAccount";
-        var gridName = "#" + gridid;
+        var url = registration.modules.user.webApiUrl;
 
         // data source settings
         var dataSource = new kendo.data.DataSource({
@@ -276,7 +368,12 @@ var registration = {
                     type: "get",
 
                     // the data type of the returned result
-                    dataType: "json"
+                    dataType: "json",
+
+                    // passing token
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                    }
                 },
                 parameterMap: function (data, type) {
                     if (type === "read") {
@@ -304,7 +401,7 @@ var registration = {
             serverPaging: true,
             serverFiltering: true,
             serverSorting: true,
-            sort: { field: "AccountID", dir: "asc" }
+            sort: { field: "fullName", dir: "asc" }
         });
 
         // column settings
@@ -315,63 +412,80 @@ var registration = {
                 hidden: true
             },
             {
-                field: "accountID",
-                title: "Account ID",
+                field: "fullName",
+                title: "Full Name",
                 filterable: {
                     extra: false
                 }
+            },
+            {
+                field: "jobTitle",
+                title: "Job Title",
+                filterable: false
             },
             {
                 field: "name",
-                title: "Name",
+                title: "Company Name",
                 filterable: {
                     extra: false
                 }
-            },
-            {
-                field: "primaryContact",
-                title: "Primary Contact",
-                filterable: false
-            },
-            {
-                field: "mainPhone",
-                title: "Phone",
-                filterable: false
-            },
-            {
-                field: "fax",
-                title: "Fax",
-                filterable: false
             },
             {
                 field: "email",
                 title: "Email",
+                filterable: {
+                    extra: false
+                }
+            },
+            {
+                field: "businessPhoneNumber",
+                title: "Office No.",
                 filterable: false
-            }
+            },
+            {
+                field: "phoneNumber",
+                title: "Mobile",
+                filterable: false
+            },
         ];
 
         // initialize grid
-        $(gridName).kendoGrid({
+        $(registration.modules.user.gridId).kendoGrid({
             dataSource: dataSource,
             columns: columns,
             filterable: true,
             sortable: true,
-            pageable: true
+            pageable: true,
+            selectable: "row",
+            change: registration.userGrid_OnChange,
         });
 
-        var grid = $(gridName).data("kendoGrid");
-        grid.bind("sort", function (e) {
-            return;
-        });
+        // assgining grid to global variable
+        var grid = $(registration.modules.user.gridId).data("kendoGrid");
+        registration.modules.user.grid = grid;
+
+        $('#btnEditUser').prop('disabled', true);
+        $('#btnDelUser').prop('disabled', true);
+        $('#btnResetPassword').prop('disabled', true);
     },
 
-    registerNewUser: function (formid, modalid, gridid) {
-        var formId = "#" + formid;
-        var modalId = "#" + modalid;
-        var gridId = "#" + gridid;
+    SubmitUser: function () {
+        // initailize dropdown
+        var dropdownParent = $('#userParent');
+        dropdownParent.empty();
+
+        const url = Settings.WebApiUrl + "/api/DropDown/ListAllAccounts";
+
+        // Populate dropdown with list of provinces
+        $.getJSON(url, function (data) {
+            $.each(data, function (key, entry) {
+                dropdownParent.append($('<option></option>').attr('value', entry.id).text(entry.name));
+            })
+        });
+
 
         // validation
-        $(formId).bootstrapValidator({
+        $(registration.modules.user.formId).bootstrapValidator({
             feedbackIcons: {
                 valid: 'glyphicon glyphicon-ok',
                 invalid: 'glyphicon glyphicon-remove',
@@ -379,51 +493,58 @@ var registration = {
             },
             excluded: ':disabled',
             fields: {
-                accName: {
+                userName: {
                     validators: {
                         notEmpty: {
-                            message: 'The account name is required'
+                            message: 'The user name is required'
                         },
                         stringLength: {
                             max: 100,
-                            message: 'The account name must be less than 100 characters long'
+                            message: 'The user name must be less than 100 characters long'
                         }
                     }
                 },
-                accID: {
+                userParent: {
                     validators: {
                         notEmpty: {
-                            message: 'The account ID is required'
+                            message: 'The parent account (company) is required'
                         },
-                        stringLength: {
-                            max: 50,
-                            message: 'The account ID must be less than 50 characters long'
-                        }
                     }
                 },
-                primary: {
+                userTitle: {
                     validators: {
                         notEmpty: {
-                            message: 'The primary contact is required'
+                            message: 'The job title is required'
                         },
                         stringLength: {
                             max: 100,
-                            message: 'The primary contact must be less than 100 characters long'
+                            message: 'The job title must be less than 100 characters long'
                         }
                     }
                 },
-                phone: {
+                userPhone: {
                     validators: {
                         notEmpty: {
-                            message: 'Phone number is required'
+                            message: 'Office phone number is required'
                         },
                         stringLength: {
                             max: 20,
-                            message: 'Phone number must be less than 20 characters long'
+                            message: 'Office phone number must be less than 20 characters long'
                         }
                     }
                 },
-                email: {
+                userMobile: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Mobile phone number is required'
+                        },
+                        stringLength: {
+                            max: 20,
+                            message: 'Mobile phone number must be less than 20 characters long'
+                        }
+                    }
+                },
+                userEmail: {
                     validators: {
                         notEmpty: {
                             message: 'Email is required'
@@ -431,20 +552,29 @@ var registration = {
                     }
                 }
             }
-        }).on('success.form.bv', function (e) {
+        })
+        .on('success.form.bv', function (e) {
             // Prevent form submission
             e.preventDefault();
-            var url = Settings.WebApiUrl + "/api/KendoAccount";
+            var url = registration.modules.user.webApiUrl;
             var data = {
-                AccountID: $('#accID').val(),
-                Name: $('#accName').val(),
-                PrimaryContact: $('#primary').val(),
-                MainPhone: $('#phone').val(),
-                Fax: $('#fax').val(),
-                Email: $('#email').val()
+                fullName: $('#userName').val(),
+                accountID: $('#userParent').val(),
+                jobTitle: $('#userTitle').val(),
+                businessPhoneNumber: $('#userPhone').val(),
+                phoneNumber: $('#userMobile').val(),
+                email: $('#userEmail').val()
             };
+            var requestType = "POST"; // Create
+
+            if (registration.modules.user.state == 'update') {
+                data.id = $('#id').val();
+                requestType = "PUT";
+                url += '/' + data.id;
+            }// Update
+
             $.ajax({
-                type: "POST",
+                type: requestType,
                 url: url,
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -452,18 +582,115 @@ var registration = {
                 success: function (d, textStatus, xhr) {
                     console.log(d);
 
-                    $(modalId).modal('toggle');
+                    $(registration.modules.user.dialogId).modal('toggle');
 
-                    $(gridId).data('kendoGrid').dataSource.read();
-                    $(gridId).data('kendoGrid').refresh();
+                    $(registration.modules.user.gridId).data('kendoGrid').dataSource.read();
+                    $(registration.modules.user.gridId).data('kendoGrid').refresh();
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     $('#errors').html('');
                     $('#errors').append(xhr.responseText);
                     $('#messageModal').modal('show');
-                    $("#submit_acc").prop("disabled", false);
+                    $("#btnUserSubmit").prop("disabled", false);
                 }
             });
         });
-    }
+    },
+
+    userGrid_OnChange: function (arg) {
+        var row = this.select();
+        if (row) {
+            $('#btnEditUser').prop('disabled', false);
+            $('#btnDelUser').prop('disabled', false);
+            $('#btnResetPassword').prop('disabled', false);
+        }
+    },
+
+    btnNewUser_OnClick: function () {
+        registration.modules.user.state = 'create';
+    },
+
+    btnEditUser_OnClick: function () {
+        var userGrid = registration.modules.user.grid;
+        var selectedItem = userGrid.dataItem(userGrid.select());
+
+        if (selectedItem) {
+            $('#id').val(selectedItem.id);
+            $('#userName').val(selectedItem.fullName);
+            $('#userParent').val(selectedItem.accountID);
+            $('#userTitle').val(selectedItem.jobTitle);
+            $('#userPhone').val(selectedItem.businessPhoneNumber);
+            $('#userMobile').val(selectedItem.phoneNumber);
+            $('#userEmail').val(selectedItem.email);
+
+            registration.modules.user.state = 'update';
+        }
+        else {
+            $(registration.modules.account.dialogId).modal('hide');
+        }
+    },
+
+    btnDelUser_OnClick: function () {
+        var userGrid = registration.modules.user.grid;
+        var selectedItem = userGrid.dataItem(userGrid.select());
+        var url = registration.modules.user.webApiUrl + '/' + selectedItem.id;
+
+        if (selectedItem) {
+            var ans = confirm("Are you sure you want to delete \'" + selectedItem.name + "\' user?");
+            if (!ans) return;
+
+            $.ajax({
+                type: 'DELETE',
+                url: url,
+                contentType: "application/json",
+                data: null,
+                dataType: 'json',
+                success: function (d, textStatus, xhr) {
+                    console.log(d);
+
+                    $(registration.modules.user.gridId).data('kendoGrid').dataSource.read();
+                    $(registration.modules.user.gridId).data('kendoGrid').refresh();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    $('#errors').html('');
+                    $('#errors').append(xhr.responseText);
+                    $('#messageModal').modal('show');
+                    $("#btnUserSubmit").prop("disabled", false);
+                }
+            });
+        }
+        else {
+            $(registration.modules.user.dialogId).modal('hide');
+        }
+    },
+
+    btnResetPassword_OnClick: function () {
+        var userGrid = registration.modules.user.grid;
+        var selectedItem = userGrid.dataItem(userGrid.select());
+        var url = Settings.WebApiUrl + '/api/User/UserPasswordReset?id=' + selectedItem.id;
+
+        if (selectedItem) {
+            var ans = confirm("New password will send to user email (" + selectedItem.email + "). Do you want to continue?");
+            if (!ans) return;
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                contentType: "application/json",
+                data: null,
+                dataType: 'json',
+                success: function (d, textStatus, xhr) {
+                    console.log(d);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    $('#errors').html('');
+                    $('#errors').append(xhr.responseText);
+                    $('#messageModal').modal('show');
+                }
+            });
+        }
+        else {
+            $(registration.modules.user.dialogId).modal('hide');
+        }
+    },
 };

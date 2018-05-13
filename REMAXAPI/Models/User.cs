@@ -38,6 +38,7 @@ namespace REMAXAPI.Models
         public Nullable<System.Guid> AccountID { get; set; }
         public string JobTitle { get; set; }
         public string BusinessPhoneNumber { get; set; }
+        public Nullable<bool> IsRootUser { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserClaim> UserClaims { get; set; }

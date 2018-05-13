@@ -7,8 +7,8 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 
 using REMAXAPI.Models;
-using REMAXAPI.Controllers;
-
+using com.ymw.security;
+using System.Text;
 
 namespace REMAXAPI.Service
 {
@@ -35,13 +35,21 @@ namespace REMAXAPI.Service
             }
             connection.Close();
             */
+
             Remax_Entities entities = new Remax_Entities();
             User user = (
                             from u in entities.Users
-                            where u.Email == email && u.PasswordHash == password
+                            where u.Email == email 
                             select u
                         ).FirstOrDefault();
+
+            if (user != null) {
+                byte[] hashBytes = Util.StringToByteArray(user.PasswordHash);
+                PasswordHash hash = new PasswordHash(hashBytes);
+                if (!hash.Verify(password)) user = null;
+            }
+
             return user;
-        }
+        }        
     }
 }

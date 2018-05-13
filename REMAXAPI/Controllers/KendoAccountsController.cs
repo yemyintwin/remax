@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Linq.SqlClient;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Dynamic;
@@ -16,13 +15,11 @@ using System.Net.Http;
 
 namespace REMAXAPI.Controllers
 {
-
-    public class KendoAccountController : ApiController
+    public class KendoAccountsController : ApiController
     {
         private Remax_Entities db = new Remax_Entities();
 
-        // GET: api/KendoAccount
-        //[HttpGet]
+        // GET: api/KendoAccounts
         //public KendoResponse GetAccounts()
         //{
         //    var total = db.Accounts.Count();
@@ -31,7 +28,7 @@ namespace REMAXAPI.Controllers
         //    return new KendoResponse(total, data);
         //}
 
-        [HttpGet]
+        // GET: api/KendoAccounts
         public KendoResponse GetAccounts([FromUri] KendoRequest kendoRequest)
         {
             IQueryable<Account> accounts = db.Accounts;
