@@ -119,7 +119,12 @@ namespace REMAXAPI.Controllers
                 return BadRequest();
             }
 
-            db.Entry(account).State = EntityState.Modified;
+            DbEntityEntry entry = db.Entry(account);
+            entry.State = EntityState.Modified;
+
+            // Marking properties to update by compareing default object
+            Account defaultAccount = new Account();
+            entry = Util.GetUpdatedProperties(defaultAccount, account, entry);
 
             try
             {

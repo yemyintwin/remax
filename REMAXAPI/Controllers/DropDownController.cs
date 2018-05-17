@@ -24,6 +24,7 @@ namespace REMAXAPI.Controllers
         public Object ListAllAccounts()
         {
             Object[] objects = (from a in db.Accounts
+                                orderby a.Name
                                    select new {
                                        a.Id,
                                        a.Name

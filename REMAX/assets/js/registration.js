@@ -12,18 +12,12 @@ var components = {
 var token;
 
 var registration = {
-    error: {
-
-    },
     modules: {
         account: null,
         user: null,
         vessel: null,
         engine: null,
         channel: null,
-    },
-    grids: {
-        account : null
     },
     /* On Load */
     onload: function () {
@@ -83,7 +77,12 @@ var registration = {
                     type: "get",
 
                     // the data type of the returned result
-                    dataType: "json"
+                    dataType: "json",
+
+                    // passing token
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                    },
                 },
                 parameterMap: function (data, type) {
                     if (type === "read") {
@@ -242,7 +241,8 @@ var registration = {
                     }
                 }
             }
-        }).on('success.form.bv', function (e) {
+        })
+        .on('success.form.bv', function (e) {
             // Prevent form submission
             e.preventDefault();
             var url = registration.modules.account.webApiUrl;
@@ -268,6 +268,10 @@ var registration = {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 dataType: 'json',
+                // passing token
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
                 success: function (d, textStatus, xhr) {
                     console.log(d);
 
@@ -333,6 +337,10 @@ var registration = {
                 contentType: "application/json",
                 data: null,
                 dataType: 'json',
+                // passing token
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
                 success: function (d, textStatus, xhr) {
                     console.log(d);
 
@@ -373,7 +381,7 @@ var registration = {
                     // passing token
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
-                    }
+                    },
                 },
                 parameterMap: function (data, type) {
                     if (type === "read") {
@@ -439,7 +447,7 @@ var registration = {
             },
             {
                 field: "businessPhoneNumber",
-                title: "Office No.",
+                title: "Office Phone",
                 filterable: false
             },
             {
@@ -567,7 +575,7 @@ var registration = {
             };
             var requestType = "POST"; // Create
 
-            if (registration.modules.user.state == 'update') {
+            if (registration.modules.user.state === 'update') {
                 data.id = $('#id').val();
                 requestType = "PUT";
                 url += '/' + data.id;
@@ -579,6 +587,10 @@ var registration = {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 dataType: 'json',
+                // passing token
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
                 success: function (d, textStatus, xhr) {
                     console.log(d);
 
@@ -608,6 +620,7 @@ var registration = {
 
     btnNewUser_OnClick: function () {
         registration.modules.user.state = 'create';
+        registration.SubmitUser();
     },
 
     btnEditUser_OnClick: function () {
@@ -624,6 +637,7 @@ var registration = {
             $('#userEmail').val(selectedItem.email);
 
             registration.modules.user.state = 'update';
+            registration.SubmitUser();
         }
         else {
             $(registration.modules.account.dialogId).modal('hide');
@@ -645,6 +659,10 @@ var registration = {
                 contentType: "application/json",
                 data: null,
                 dataType: 'json',
+                // passing token
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
                 success: function (d, textStatus, xhr) {
                     console.log(d);
 
@@ -679,6 +697,10 @@ var registration = {
                 contentType: "application/json",
                 data: null,
                 dataType: 'json',
+                // passing token
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
                 success: function (d, textStatus, xhr) {
                     console.log(d);
                 },

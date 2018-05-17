@@ -6,151 +6,167 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prototype</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrapValidator.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="assets/css/kendo.common.min.css">
     <link rel="stylesheet" href="assets/css/kendo.default.min.css">
     <link rel="stylesheet" href="assets/css/kendo.default.mobile.min.css">
     <link rel="stylesheet" href="assets/css/metisMenu.css">
     <link rel="stylesheet" href="assets/css/remax.css">
+    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.css" />
+    <link href="assets/datatables-responsive/dataTables.responsive.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.common.core.min.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.bootstrap.min.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.bootstrap.mobile.min.css" rel="stylesheet" />
 
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/kendo/js/kendo.all.min.js"></script>
     <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
     <script src="assets/js/kendo.all.min.js"></script>
     <script src="assets/js/metisMenu.js"></script>
     <script src="assets/js/remax.js"></script>
-    <script src="assets/js/user.js"></script>
+    <script src="assets/js/userprofile.js"></script>
+    <script src="assets/js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/dataTables.bootstrap.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrapValidator.min.js"></script>
+
 </head>
 
 <body>
     <div id="wrapper">
         <nav class="nav nav-tabs navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.html">Remax v1.0</a>
-        </div>
-
-        <ul class="nav navbar-top-links navbar-right">
-            <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                            <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-alerts">
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-warning fa-fw"></i>7 Alerts
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a class="text-center" href="alertsettings.html">
-                                    <strong>See All Alerts and Settings</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- /.dropdown-alerts -->
-                    </li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                    <i class="fa fa-user fa-fw"></i> 
-                    <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <li><a href="userprofile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    
-        <div class="navbar-default sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse">
-                <ul class="nav in" id="side-menu">
-                    <li>
-                        <a href="index.html" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="registration.html"><i class="fa fa-edit fa-fw"></i> Registrations</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Vessel Status<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li>
-                                <a href="#">PRINCESS SEAWAYS<span class="fa arrow"></span></a>
-							    <ul class="nav nav-third-level collapse">
-                                    <li>
-                                        <a href="engine.html">Engine 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Engine 2</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Engine 3</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Engine 4</a>
-                                    </li>
-								    <li>
-                                        <a href="#">Engine 5</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-third-level -->
-                            </li>
-                            <li>
-                                <a href="#">QUEEN ELIZABETH</a>
-                            </li>
-                            <li>
-                                <a href="#">BITHIA</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-				    <li>
-                        <a href="#"><i class="fa fa-clipboard fa-fw"></i> Reports<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-						    <li>
-							    <a href="#">Report 1</a>
-						    </li>
-						    <li>
-							    <a href="#">Report 2</a>
-						    </li>
-						    <li>
-							    <a href="#">Report 3</a>
-						    </li>
-					    </ul>
-                    </li>
-                </ul>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Remax v1.0</a>
             </div>
-            <!-- /.sidebar-collapse -->
-        </div>
-    </nav>
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-warning fa-fw"></i>7 Alerts
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="alertsettings.html">
+                                <strong>See All Alerts and Settings</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-user fa-fw"></i>
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="userprofile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav in" id="side-menu">
+                        <li>
+                            <a href="index.html" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="registration.html"><i class="fa fa-edit fa-fw"></i> Registrations</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Vessel Status<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                    <a href="#">PRINCESS SEAWAYS<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li>
+                                            <a href="engine.html">Engine 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Engine 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Engine 3</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Engine 4</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Engine 5</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
+                                <li>
+                                    <a href="#">QUEEN ELIZABETH</a>
+                                </li>
+                                <li>
+                                    <a href="#">BITHIA</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-clipboard fa-fw"></i> Reports<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                    <a href="#">Report 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Report 2</a>
+                                </li>
+                                <li>
+                                    <a href="#">Report 3</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+        </nav>
 
         <div id="page-wrapper" style="min-height: auto;">
             <div class="row">
                 <div class="col-md-12 col-lg-12">
-                    <div class="page-header"><h1><em class="fa fa-user fa-1x"></em> {User Name}</h1></div>
+                    <div class="page-header"><h1><em class="fa fa-user fa-1x"></em> <span id="userNameHeading">{User Name}</span></h1></div>
                 </div>
             </div>
             <div class="row">
@@ -161,14 +177,41 @@
                         </div>
                         <div class="panel-body">
                             <div class="col-md-6">
-                                <form role="form">
-                                    <div class="form-group"><label class="control-label">Full Name :</label><input class="form-control" type="text"></div>
-                                    <div class="form-group"><label class="control-label">Company :</label><input class="form-control" type="text" disabled=""></div>
-                                    <div class="form-group"><label class="control-label">Job Title :</label><input class="form-control" type="text"></div>
-                                    <div class="form-group"><label class="control-label">Business Phone :</label><input class="form-control" type="text"></div>
-                                    <div class="form-group"><label class="control-label">Mobile :</label><input class="form-control" type="text"></div>
-                                    <div class="form-group"><label class="control-label">Email (Login ID):</label><input class="form-control" type="text" disabled=""></div>
-                                    <div class="form-group"><button class="btn btn-default btn-primary pull-left" type="button">Save</button><button class="btn btn-default pull-left" type="button" style="margin-left:12px">Cancel</button></div>
+                                <form class="form-horizontal" role="form" id="form_userprofile" method="post">
+                                    <!-- Input Fields -->
+                                    <div class="form-group">
+                                        <input class="form-control" type="hidden" id="id" name="id">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Full Name :</label>
+                                        <input class="form-control" type="text" id="userName" name="userName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Company :</label>
+                                        <input class="form-control" type="text" disabled="disabled" id="userParent" name="userParent">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Job Title :</label>
+                                        <input class="form-control" type="text" id="userTitle" name="userTitle">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Business Phone :</label>
+                                        <input class="form-control" type="text" id="userPhone" name="userPhone">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Mobile :</label>
+                                        <input class="form-control" type="text" id="userMobile" name="userMobile">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Email (Login ID):</label>
+                                        <input class="form-control" type="text" disabled="disabled" id="userEmail" name="userEmail">
+                                    </div>
+
+                                    <!-- Buttont Grop -->
+                                    <div class="form-group">
+                                        <button class="btn btn-default btn-primary pull-left" type="submit" id="btnSave" name="btnSave">Save</button>
+                                        <button class="btn btn-default pull-left" type="button" style="margin-left:12px" id="btnReset" name="btnReset" onclick="userprofile.btnReset_OnClick">Reset</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -194,57 +237,93 @@
                 </div>
             </div>
         </div>
-    </div><div class="footer-basic footer-remax">
-    <footer>
-        <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
-        <ul class="list-inline">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Terms</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-        </ul>
-        <p class="copyright">Daikai Engineering Pte Ltd © 1992</p>
-    </footer>
-</div>
+    </div>
+
+    <div class="footer-basic footer-remax">
+        <footer>
+            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
+            <ul class="list-inline">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+            <p class="copyright">Daikai Engineering Pte Ltd © 1992</p>
+        </footer>
+    </div>
+
+    <!-- Password changes modal dialog -->
     <div>
         <div class="modal fade" role="dialog" tabindex="-1" id="change_password" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
-    <em class="fa fa-unlock-alt fa-1x"></em>
-    Change Password
-</h4></div>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
+                            <em class="fa fa-unlock-alt fa-1x"></em>
+                            Change Password
+                        </h4>
+                    </div>
                     <div class="modal-body">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label  class="col-sm-4 control-label" for="oldPassword">Old Password</label>
+                                <label class="col-sm-4 control-label" for="oldPassword">Old Password</label>
                                 <div class="col-sm-8">
-                                    <input type="password" class="form-control" id="oldPassword" placeholder="Old Password"/>
+                                    <input type="password" class="form-control" id="oldPassword" placeholder="Old Password" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label  class="col-sm-4 control-label" for="newPassword">New Password</label>
+                                <label class="col-sm-4 control-label" for="newPassword">New Password</label>
                                 <div class="col-sm-8">
-                                    <input type="password" class="form-control" id="newPassword" placeholder="New Password"/>
+                                    <input type="password" class="form-control" id="newPassword" placeholder="New Password" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label  class="col-sm-4 control-label" for="retypePassword">Retype Password</label>
+                                <label class="col-sm-4 control-label" for="retypePassword">Retype Password</label>
                                 <div class="col-sm-8">
-                                    <input type="password" class="form-control" id="retypePassword" placeholder="Retype Password"/>
+                                    <input type="password" class="form-control" id="retypePassword" placeholder="Retype Password" />
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="button" data-dismiss="modal">Save</button>
+                        <button class="btn btn-default" type="button" data-dismiss="modal" id="btnClose" name="btnClose">Close</button>
+                        <button class="btn btn-primary" type="button" data-dismiss="modal" id="btnChangePassword" name="btnChangePassword"
+                                onclick="userprofile.btnChangePassword_OnClick()">Change Password</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal for displaying the messages -->
+    <div class="modal fade" id="messageModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">
+                        <em class="fa fa-warning fa-1x"> </em> Server Error(s)
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <!-- The messages container -->
+                    <div id="errors"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Calling on load method from registration.js
+            userprofile.onload();
+        });
+
+    </script>
 </body>
 
 </html>

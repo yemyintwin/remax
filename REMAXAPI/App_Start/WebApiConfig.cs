@@ -30,16 +30,7 @@ namespace REMAXAPI
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            //config.Routes.MapHttpRoute("DefaultApiGet"
-            //    , "Api/{controller}"
-            //    , new { action = "Get" }
-            //    , new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) }
-            //);
-            //config.Routes.MapHttpRoute("DefaultApiPost"
-            //    , "Api/{controller}"
-            //    , new { action = "Post" }
-            //    , new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) }
-            //);
+            //config.Services.Add(typeof(IExceptionLogger), new ElmahExceptionLogger());
         }
     }
 }

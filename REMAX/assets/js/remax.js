@@ -6,6 +6,7 @@ var Settings = {
     PageSize: 5,
     TokenKey: 'currentToken',
     UserKey: 'currentUser',
+    MessageLevel: 'info' // info, debug
 }
 // Utility functions
 var Util = {

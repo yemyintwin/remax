@@ -95,11 +95,19 @@ namespace REMAXAPI.Models.Kendo
     {
         public int Total { get; set; }
         public object[] Data { get; set; }
+        public string ErrorMessage { get; set; }
 
         public KendoResponse(int total, object[] data)
         {
             this.Total = total;
             this.Data = data;
+        }
+
+        public KendoResponse(int total, object[] data, string error)
+        {
+            this.Total = total;
+            this.Data = data;
+            this.ErrorMessage = error;
         }
     }
 

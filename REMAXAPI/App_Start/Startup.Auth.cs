@@ -23,7 +23,8 @@ namespace REMAXAPI
                 TokenEndpointPath = new PathString("/token"),
                 Provider = new OAuthAppProvider(),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(2),
-                AllowInsecureHttp = true
+                AllowInsecureHttp = true,
+                AuthorizationCodeExpireTimeSpan = new TimeSpan(24,0,0)
             };
         }
 

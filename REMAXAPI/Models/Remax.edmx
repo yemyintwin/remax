@@ -16,6 +16,10 @@
           <Property Name="MainPhone" Type="nvarchar" MaxLength="100" />
           <Property Name="Fax" Type="nvarchar" MaxLength="100" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="AlternatorMaker">
           <Key>
@@ -186,6 +190,10 @@
           <Property Name="JobTitle" Type="nvarchar" MaxLength="100" />
           <Property Name="BusinessPhoneNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="IsRootUser" Type="bit" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="UserClaim">
           <Key>
@@ -238,6 +246,18 @@
           <Property Name="TotalPropulsionPower" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TotalGeneratorPower" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <Association Name="FK_Account_User">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserClaim_User">
           <End Role="User" Type="Self.User" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -322,6 +342,10 @@
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserUserRole" EntityType="Self.UserUserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vessel" EntityType="Self.Vessel" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Account_User" Association="Self.FK_Account_User">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserClaim_User" Association="Self.FK_UserClaim_User">
             <End Role="User" EntitySet="User" />
             <End Role="UserClaim" EntitySet="UserClaim" />
@@ -367,6 +391,11 @@
           <Property Name="JobTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="BusinessPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsRootUser" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="DB_A38003_DEVModel.FK_Account_User" FromRole="User" ToRole="Account" />
         </EntityType>
         <EntityType Name="UserClaim">
           <Key>
@@ -467,6 +496,10 @@
             <Parameter Name="resource_name" Mode="In" Type="String" />
             <Parameter Name="operation_type" Mode="In" Type="Int32" />
           </FunctionImport>
+          <AssociationSet Name="FK_Account_User" Association="DB_A38003_DEVModel.FK_Account_User">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AlternatorMaker">
           <Key>
@@ -626,6 +659,11 @@
           <Property Name="MainPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Fax" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="DB_A38003_DEVModel.FK_Account_User" FromRole="Account" ToRole="User" />
         </EntityType>
         <EntityType Name="Resource">
           <Key>
@@ -655,6 +693,18 @@
           <Property Type="String" Name="Resource_Name" Nullable="true" MaxLength="100" />
           <Property Type="Byte" Name="Resource_Permission" Nullable="true" />
         </ComplexType>
+        <Association Name="FK_Account_User">
+          <End Type="DB_A38003_DEVModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="DB_A38003_DEVModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -664,6 +714,10 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="DB_A38003_DEVModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsRootUser" ColumnName="IsRootUser" />
                 <ScalarProperty Name="BusinessPhoneNumber" ColumnName="BusinessPhoneNumber" />
                 <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
@@ -883,6 +937,10 @@
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="DB_A38003_DEVModel.Account">
               <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Fax" ColumnName="Fax" />
                 <ScalarProperty Name="MainPhone" ColumnName="MainPhone" />

@@ -146,6 +146,7 @@
     </Content>
     <Content Include="SQL\Channels.sql" />
     <Content Include="SQL\Data Setup.sql" />
+    <Content Include="SQL\sp_ResourcePermission.sql" />
     <Content Include="SQL\User.sql" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -172,6 +173,7 @@
     <Compile Include="Models\AlternatorMaker.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\Audit.cs" />
     <Compile Include="Models\Channel.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>

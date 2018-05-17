@@ -46,6 +46,7 @@
             else throw 'User info can\'t get!!';
 
         }).fail(function () {
+            alert('User login failed. Please try again.');
             $('#login').prop('disabled', false);
             $('#login').text("Login");
         });

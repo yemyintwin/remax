@@ -28,6 +28,7 @@ namespace REMAXAPI.Controllers
         [HttpPost]
         [HttpGet]
         [AllowAnonymous]
+        [Route("api/User/GetCurrentUser")]
         public object GetCurrentUser()
         {
             Object user = null;
@@ -41,12 +42,7 @@ namespace REMAXAPI.Controllers
                 //var user_found = db.Users.Where(u => u.Id.ToString() == sid.Value).FirstOrDefault();
                 var user_found = (from u in db.Users
                                   where u.Id.ToString() == sid.Value
-                                  select new
-                                  {
-                                      u.Id,
-                                      u.FullName,
-                                      u.Email
-                                  }).FirstOrDefault();
+                                  select u).FirstOrDefault();
                 if (user_found != null) user = user_found; 
             }
             return user;
@@ -54,25 +50,17 @@ namespace REMAXAPI.Controllers
 
         [HttpGet]
         [ResponseType(typeof(User))]
+        [Authorize]
         public async Task<IHttpActionResult> UserPasswordReset(Guid id)
         {
-            User currentUser = Util.GetCurrentUser();
-            if (currentUser == null)
-            {
-                return InternalServerError(new Exception(Messages.AnonymousUserDetected));
-            }
-
-            var permission = db.sp_ResourcePermission(currentUser.Id, "Password Reset", 4);
-
-
             User user = db.Users.Where(u => u.Id == id).FirstOrDefault();
             if (user != null)
             {
-                string pwd = "mypassword";//System.Web.Security.Membership.GeneratePassword(8, 3);
+                string pwd = System.Web.Security.Membership.GeneratePassword(8, 3);
 
                 var fromAddress = new MailAddress("yemyintwin@gmail.com", "Ye Myint Win");
                 var toAddress = new MailAddress(user.Email, user.FullName);
-                string fromPassword = "Ros3_215u";
+                string fromPassword = "Ros3_215u2018";
                 string subject = "Security Update";
                 string body = string.Format("This is your new password. {0}", pwd);
 
@@ -94,7 +82,13 @@ namespace REMAXAPI.Controllers
                     byte[] hashBytes = new PasswordHash(pwd).ToArray();
                     string strBase64 =  Util.ByteArrayToString(hashBytes);
                     user.PasswordHash = strBase64;
-                    db.Entry(user).State = EntityState.Modified;
+
+                    DbEntityEntry entry = db.Entry(user);
+                    entry.State = EntityState.Modified;
+
+                    // Marking properties to update by compareing default object
+                    User defaultUser = new User();
+                    entry = Util.GetUpdatedProperties(defaultUser, user, entry);
 
                     try
                     {
@@ -116,6 +110,67 @@ namespace REMAXAPI.Controllers
                         throw;
                     }
                 }
+                return Ok(user);
+            }
+            else
+            {
+                return InternalServerError(new Exception("User ID not found."));
+            }
+        }
+
+        public class PasswordChangeData {
+            public Guid Id { get; set; }
+            public string OldPwd { get; set; }
+            public string NewPwd { get; set; }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("api/User/UserPasswordChange")]
+        public async Task<IHttpActionResult> UserPasswordChange(PasswordChangeData passwordChangeData)
+        {
+            //PasswordChangeData passwordChangeData = JsonConvert.DeserializeObject<PasswordChangeData>(body);
+
+            User user = db.Users.Where(u => u.Id == passwordChangeData.Id).FirstOrDefault();
+            if (user != null)
+            {
+                byte[] hashBytes = Util.StringToByteArray(user.PasswordHash);
+                PasswordHash hash = new PasswordHash(hashBytes);
+                if (!hash.Verify(passwordChangeData.OldPwd)) {
+                    return InternalServerError(new Exception("Incorrect current password"));
+                }
+
+                hashBytes = new PasswordHash(passwordChangeData.NewPwd).ToArray();
+                string strBase64 = Util.ByteArrayToString(hashBytes);
+                user.PasswordHash = strBase64;
+
+                DbEntityEntry entry = db.Entry(user);
+                entry.State = EntityState.Modified;
+
+                // Marking properties to update by compareing default object
+                User defaultUser = new User();
+                entry = Util.GetUpdatedProperties(defaultUser, user, entry);
+
+                try
+                {
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(passwordChangeData.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
                 return Ok(user);
             }
             else

@@ -26,12 +26,11 @@ namespace REMAXAPI.Provider
                     var claims = new List<Claim>() {
                         new Claim(ClaimTypes.Name, user.FullName),
                         new Claim(ClaimTypes.Sid, user.Id.ToString()),
-                        new Claim(ClaimTypes.Email, user.Email),
-                        new Claim(ClaimTypes.Expiration, user.Email)
+                        new Claim(ClaimTypes.Email, user.Email)
                     };
 
                     ClaimsIdentity oAuthIdentity = new ClaimsIdentity(claims, Startup.OAuthOptions.AuthenticationType);
-                    context.Validated(new AuthenticationTicket(oAuthIdentity, new AuthenticationProperties() { }));
+                    context.Validated(new AuthenticationTicket(oAuthIdentity, new AuthenticationProperties() {AllowRefresh=true}));
                 }
                 else {
                     context.SetError("invalid_grant", "The user name or password is incorrect");

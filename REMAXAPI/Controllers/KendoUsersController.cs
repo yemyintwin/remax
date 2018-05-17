@@ -8,9 +8,11 @@ using System.Linq.Dynamic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using REMAXAPI;
 using REMAXAPI.Models;
 using REMAXAPI.Models.Kendo;
 
@@ -30,12 +32,16 @@ namespace REMAXAPI.Controllers
         // GET: api/KendoUsers
         public KendoResponse GetUsers([FromUri] KendoRequest kendoRequest)
         {
+            int readLevel = Util.GetResourcePermission("User", Util.ReourceOperations.Read);
+            if (readLevel == 0) return new KendoResponse(0, null);
+
             User currentUser = Util.GetCurrentUser();
-            var permission = db.sp_ResourcePermission(currentUser.Id, "Password Reset", 4);
 
             IQueryable<Object> users = from u in db.Users
                                        join a in db.Accounts on u.AccountID equals a.Id into ua
                                        from a in ua.DefaultIfEmpty()
+                                       where (u.AccountID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own) || readLevel == Util.AccessLevel.All
+                                       // do not remove above where caluse, this is for access permission
                                        select new {
                                            u.Id,
                                            u.Email,
@@ -47,8 +53,9 @@ namespace REMAXAPI.Controllers
                                            u.BusinessPhoneNumber
                                        };
 
+
             // total count
-            var total = db.Users.Count();
+            var total = users.Count();
 
             // filtering
             if (kendoRequest.filter != null && kendoRequest.filter.Filters != null && kendoRequest.filter.Filters.Count() > 0)
@@ -117,7 +124,12 @@ namespace REMAXAPI.Controllers
                 return BadRequest();
             }
 
-            db.Entry(user).State = EntityState.Modified;
+            DbEntityEntry entry = db.Entry(user);
+            entry.State = EntityState.Modified;
+
+            // Marking properties to update by compareing default object
+            User defaultUser = new User();
+            entry = Util.GetUpdatedProperties(defaultUser, user, entry);
 
             try
             {
@@ -133,6 +145,9 @@ namespace REMAXAPI.Controllers
                 {
                     throw;
                 }
+            }
+            catch (Exception ex) {
+                throw ex;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
