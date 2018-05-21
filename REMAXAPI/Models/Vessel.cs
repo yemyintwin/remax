@@ -14,6 +14,12 @@ namespace REMAXAPI.Models
     
     public partial class Vessel
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Vessel()
+        {
+            this.Engines = new HashSet<Engine>();
+        }
+    
         public System.Guid Id { get; set; }
         public string IMO_No { get; set; }
         public string VesselName { get; set; }
@@ -27,5 +33,19 @@ namespace REMAXAPI.Models
         public Nullable<decimal> DWT { get; set; }
         public Nullable<decimal> TotalPropulsionPower { get; set; }
         public Nullable<decimal> TotalGeneratorPower { get; set; }
+        public Nullable<int> Status { get; set; }
+        public System.Guid CreatedBy { get; set; }
+        public System.DateTime CreatedOn { get; set; }
+        public System.Guid ModifiedBy { get; set; }
+        public System.DateTime ModifiedOn { get; set; }
+        public Nullable<System.Guid> ShipyardCountry { get; set; }
+    
+        public virtual Account OperatorAccount { get; set; }
+        public virtual Account OwnerAccount { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Engine> Engines { get; set; }
+        public virtual ShipClass ShipClass { get; set; }
+        public virtual ShipType ShipType { get; set; }
+        public virtual Country Country { get; set; }
     }
 }

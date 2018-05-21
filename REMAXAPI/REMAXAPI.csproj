@@ -157,9 +157,11 @@
     <Compile Include="Controllers\ChannelData.cs" />
     <Compile Include="Controllers\ChannelDataController.cs" />
     <Compile Include="Controllers\ChannelsController.cs" />
+    <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\DropDownController.cs" />
     <Compile Include="Controllers\KendoAccountsController.cs" />
     <Compile Include="Controllers\KendoUsersController.cs" />
+    <Compile Include="Controllers\KendoVesselsController.cs" />
     <Compile Include="Controllers\ModelsController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -255,6 +257,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\OAuthAppProvider.cs" />
+    <Compile Include="Provider\OAuthRefreshTokenProvider.cs" />
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Util.cs" />
@@ -279,7 +282,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\VesselPhotos\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

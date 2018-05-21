@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Infrastructure;
 using Microsoft.Owin.Security.OAuth;
 using REMAXAPI;
 using REMAXAPI.Models;
@@ -30,14 +31,14 @@ namespace REMAXAPI.Provider
                     };
 
                     ClaimsIdentity oAuthIdentity = new ClaimsIdentity(claims, Startup.OAuthOptions.AuthenticationType);
-                    context.Validated(new AuthenticationTicket(oAuthIdentity, new AuthenticationProperties() {AllowRefresh=true}));
+                    AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, new AuthenticationProperties() { AllowRefresh = true });
+                    context.Validated(ticket);
                 }
                 else {
                     context.SetError("invalid_grant", "The user name or password is incorrect");
                 }
             });
         }
-
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             if (context.ClientId == null) {
@@ -46,4 +47,5 @@ namespace REMAXAPI.Provider
             return Task.FromResult<object>(null);
         }
     }
+
 }

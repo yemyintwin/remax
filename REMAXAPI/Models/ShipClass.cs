@@ -14,7 +14,16 @@ namespace REMAXAPI.Models
     
     public partial class ShipClass
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ShipClass()
+        {
+            this.Vessels = new HashSet<Vessel>();
+        }
+    
         public System.Guid Id { get; set; }
         public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Vessel> Vessels { get; set; }
     }
 }

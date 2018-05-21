@@ -35,15 +35,15 @@ namespace REMAXAPI.Models
 
                         if (e.State == EntityState.Added)
                         {
-                            if (createdBy.PropertyType == typeof(Guid)) createdBy.SetValue(entity, u.Id);
-                            if (createdOn.PropertyType == typeof(DateTime)) createdOn.SetValue(entity, DateTime.Now);
-                            if (modifiedBy.PropertyType == typeof(Guid)) modifiedBy.SetValue(entity, u.Id);
-                            if (modifiedOn.PropertyType == typeof(DateTime)) modifiedOn.SetValue(entity, DateTime.Now);
+                            if (createdBy != null && createdBy.PropertyType == typeof(Guid)) createdBy.SetValue(entity, u.Id);
+                            if (createdOn != null && createdOn.PropertyType == typeof(DateTime)) createdOn.SetValue(entity, DateTime.Now);
+                            if (modifiedBy != null && modifiedBy.PropertyType == typeof(Guid)) modifiedBy.SetValue(entity, u.Id);
+                            if (modifiedOn != null && modifiedOn.PropertyType == typeof(DateTime)) modifiedOn.SetValue(entity, DateTime.Now);
                         }
                         else if (e.State == EntityState.Modified)
                         {
-                            if (modifiedBy.PropertyType == typeof(Guid)) modifiedBy.SetValue(entity, u.Id);
-                            if (modifiedOn.PropertyType == typeof(DateTime)) modifiedOn.SetValue(entity, DateTime.Now);
+                            if (modifiedBy != null && modifiedBy.PropertyType == typeof(Guid)) modifiedBy.SetValue(entity, u.Id);
+                            if (modifiedOn != null && modifiedOn.PropertyType == typeof(DateTime)) modifiedOn.SetValue(entity, DateTime.Now);
                         }
                     }
                 }

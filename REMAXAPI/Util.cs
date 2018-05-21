@@ -19,9 +19,6 @@ namespace REMAXAPI
 
     public static class Util
     {
-
-        private static Remax_Entities db = new Remax_Entities();
-
         public enum ReourceOperations {
             Read = 1,
             Write = 2,
@@ -68,31 +65,34 @@ namespace REMAXAPI
 
         public static User GetCurrentUser()
         {
-            User user = null;
-            ClaimsPrincipal currentClaim = HttpContext.Current.GetOwinContext().Authentication.User;
-            if (currentClaim != null && currentClaim.Claims != null && currentClaim.Claims.Count() > 1)
-            {
-                var sid = (from c in currentClaim.Claims.AsEnumerable()
-                           where c.Type.EndsWith("/sid")
-                           select c).FirstOrDefault();
+            using (var db = new Remax_Entities()) {
+                User user = null;
+                ClaimsPrincipal currentClaim = HttpContext.Current.GetOwinContext().Authentication.User;
+                if (currentClaim != null && currentClaim.Claims != null && currentClaim.Claims.Count() > 1)
+                {
+                    var sid = (from c in currentClaim.Claims.AsEnumerable()
+                               where c.Type.EndsWith("/sid")
+                               select c).FirstOrDefault();
 
-                var user_found = (from u in db.Users
-                                  where u.Id.ToString() == sid.Value
-                                  select u).FirstOrDefault();
-                if (user_found != null) user = user_found;
+                    var user_found = (from u in db.Users
+                                      where u.Id.ToString() == sid.Value
+                                      select u).FirstOrDefault();
+                    if (user_found != null) user = user_found;
 
-                //foreach (var u in db.Users)
-                //{
-                //    if (u.Id.ToString() == sid.Value)
-                //    {
-                //        user = u; break;
-                //    }
-                //}
+                    //foreach (var u in db.Users)
+                    //{
+                    //    if (u.Id.ToString() == sid.Value)
+                    //    {
+                    //        user = u; break;
+                    //    }
+                    //}
+                }
+                else
+                {
+                    throw new UnauthorizedAccessException("User login failed. Please login again.");
+                }
+                return user;
             }
-            else {
-                throw new UnauthorizedAccessException("User login failed. Please login again.");
-            }
-            return user;
         }
 
         public static int GetResourcePermission(string resource, ReourceOperations operation) {
@@ -105,16 +105,19 @@ namespace REMAXAPI
 
             Guid? id = new Guid(currentUser.Id.ToString("D"));
             int ops = (int)operation;
-            var permission = db.sp_ResourcePermission(id, resource, ops).ToList();
 
-            
-            foreach (var p in permission)
-            {
-                if (p.Resource_Permission.HasValue && p.Resource_Permission.Value > highest_permission)
-                    highest_permission = p.Resource_Permission.HasValue ? p.Resource_Permission.Value : highest_permission;
+            using (var db = new Remax_Entities()) {
+                var permission = db.sp_ResourcePermission(id, resource, ops).ToList();
+
+
+                foreach (var p in permission)
+                {
+                    if (p.Resource_Permission.HasValue && p.Resource_Permission.Value > highest_permission)
+                        highest_permission = p.Resource_Permission.HasValue ? p.Resource_Permission.Value : highest_permission;
+                }
+
+                return highest_permission;
             }
-
-            return highest_permission;
         }
 
         public static DbEntityEntry GetUpdatedProperties(Object defaultObject, Object updateObject, DbEntityEntry dBEntityEntry)

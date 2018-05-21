@@ -43,6 +43,7 @@ namespace REMAXAPI.Models
         public System.DateTime CreatedOn { get; set; }
         public System.Guid ModifiedBy { get; set; }
         public System.DateTime ModifiedOn { get; set; }
+        public Nullable<int> Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserClaim> UserClaims { get; set; }

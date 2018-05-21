@@ -15,6 +15,7 @@ using System.Net.Http;
 
 namespace REMAXAPI.Controllers
 {
+    [Authorize]
     public class KendoAccountsController : ApiController
     {
         private Remax_Entities db = new Remax_Entities();
@@ -109,6 +110,12 @@ namespace REMAXAPI.Controllers
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutAccount(Guid id, Account account)
         {
+            int writeLevel = Util.GetResourcePermission("Account", Util.ReourceOperations.Write);
+            if (writeLevel != 2)
+            {
+                ModelState.AddModelError("Access Level", "Unauthorized update access.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -149,6 +156,11 @@ namespace REMAXAPI.Controllers
         [ResponseType(typeof(Account))]
         public async Task<IHttpActionResult> PostAccount(Account account)
         {
+            int writeLevel = Util.GetResourcePermission("Account", Util.ReourceOperations.Write);
+            if (writeLevel != 2)
+            {
+                ModelState.AddModelError("Access Level", "Unauthorized create access.");
+            }
 
             var acc = db.Accounts.Where(a => a.AccountID == account.AccountID).FirstOrDefault();
             if (acc != null) ModelState.AddModelError("Duplicate", "Duplicate account ID.");
@@ -197,6 +209,12 @@ namespace REMAXAPI.Controllers
         [ResponseType(typeof(Account))]
         public async Task<IHttpActionResult> DeleteAccount(Guid id)
         {
+            int deleteLevel = Util.GetResourcePermission("Account", Util.ReourceOperations.Delete);
+            if (deleteLevel != 2)
+            {
+                ModelState.AddModelError("Access Level", "Unauthorized delete access.");
+            }
+
             Account account = await db.Accounts.FindAsync(id);
             if (account == null)
             {

@@ -15,7 +15,6 @@ namespace REMAXAPI.Models
     public partial class Engine
     {
         public System.Guid Id { get; set; }
-        public string IMO_No { get; set; }
         public string SerialNo { get; set; }
         public Nullable<System.Guid> EngineType { get; set; }
         public Nullable<System.Guid> EngineModel { get; set; }
@@ -30,5 +29,16 @@ namespace REMAXAPI.Models
         public Nullable<decimal> InsulationTempRise { get; set; }
         public string IPRating { get; set; }
         public string Mounting { get; set; }
+        public System.Guid VesselID { get; set; }
+        public Nullable<int> Status { get; set; }
+        public System.Guid CreatedBy { get; set; }
+        public System.DateTime CreatedOn { get; set; }
+        public System.Guid ModifiedBy { get; set; }
+        public System.DateTime ModifiedOn { get; set; }
+    
+        public virtual AlternatorMaker AlternatorMaker1 { get; set; }
+        public virtual EngineType EngineType1 { get; set; }
+        public virtual Model Model { get; set; }
+        public virtual Vessel Vessel { get; set; }
     }
 }

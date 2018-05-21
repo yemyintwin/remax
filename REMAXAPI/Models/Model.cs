@@ -14,8 +14,21 @@ namespace REMAXAPI.Models
     
     public partial class Model
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Model()
+        {
+            this.Engines = new HashSet<Engine>();
+            this.Channels = new HashSet<Channel>();
+        }
+    
         public System.Guid Id { get; set; }
         public string Name { get; set; }
         public Nullable<System.Guid> EngineType { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Engine> Engines { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Channel> Channels { get; set; }
+        public virtual EngineType EngineType1 { get; set; }
     }
 }

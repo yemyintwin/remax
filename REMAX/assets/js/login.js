@@ -6,8 +6,8 @@
         localStorage.removeItem(login.tokenKey); 
         localStorage.removeItem(login.userKey); 
 
-        try { $.cookie.removeItem(login.tokenKey); } catch (e) { }
-        try { $.cookie.removeItem(login.userKey); } catch (e) { }
+        try { $.cookie.removeItem(login.tokenKey); } catch (e) { console.log(e.message); }
+        try { $.cookie.removeItem(login.userKey); } catch (e) { console.log(e.message); }
        
 
         var loginData = {
@@ -27,11 +27,18 @@
         }).done(function (data) {
             //debugger;
             // Cache the access token in session storage.
-            if ($('#remember').prop('checked')) {
-                $.cookie(login.tokenKey, data.access_token);
+
+            if (data) {
+                var now = new Date();
+                data.expires_in_date = new Date(now.setSeconds(now.getSeconds() + data.expires_in));
+                data.remember_me = $('#remember').prop('checked');
+            }
+
+            if ($('#remember').prop('checked') && $('#remember').prop('checked') === 'true') {
+                $.cookie(login.tokenKey, JSON.stringify(data));
             }
             else {
-                localStorage.setItem(login.tokenKey, data.access_token);
+                localStorage.setItem(login.tokenKey, JSON.stringify(data));
             }
             var success = login.getCurrentUserInfo(data.access_token);
             if (success) {
@@ -55,8 +62,8 @@
     getCurrentUserInfo: function (token) {
         var success = false;
         if (!token) {
-            if (localStorage.getItem(login.tokenKey)) token = localStorage.getItem(login.tokenKey).toString();
-            else if ($.cookie(login.tokenKey)) token = $.cookie(login.tokenKey);
+            if (localStorage.getItem(login.tokenKey)) token = localStorage.getItem(login.tokenKey).access_token.toString();
+            else if ($.cookie(login.tokenKey)) token = $.cookie(login.tokenKey).access_token;
         }
 
         if (token) {

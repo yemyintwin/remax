@@ -40,6 +40,7 @@ var Util = {
 
 
 $(document).ready(function () {
+    // debugger;
     var currentUser, currentToken;
 
     if (window.location.href.indexOf('/login.html') > 0) return;
@@ -54,8 +55,13 @@ $(document).ready(function () {
         document.location = "/login.html?callbackurl=" + window.location.href;
     }
     else {
-        Settings.Token = currentToken;
+        Settings.Token = JSON.parse(currentToken);
         Settings.CurrentUser = JSON.parse(currentUser);
+
+        if (new Date(Settings.Token.expires_in_date) < new Date()) {
+            // To Do
+            // Call renew token service
+        }
     }
 });
 
@@ -90,7 +96,7 @@ $(function() {
     //     return this.href == url;
     // }).addClass('active').parent().parent().addClass('in').parent();
     var element = $('ul.nav a').filter(function() {
-        return this.href == url;
+        return this.href === url;
     }).addClass('active').parent();
 
     while (true) {

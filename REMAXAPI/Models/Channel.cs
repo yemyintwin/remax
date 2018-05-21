@@ -17,7 +17,6 @@ namespace REMAXAPI.Models
         public System.Guid Id { get; set; }
         public int ChannelNo { get; set; }
         public string Name { get; set; }
-        public Nullable<System.Guid> ModelNoId { get; set; }
         public Nullable<decimal> MinRange { get; set; }
         public Nullable<decimal> MaxRange { get; set; }
         public Nullable<decimal> Scale { get; set; }
@@ -26,5 +25,13 @@ namespace REMAXAPI.Models
         public Nullable<decimal> UpperLimit { get; set; }
         public Nullable<decimal> MonitoringTimer { get; set; }
         public Nullable<int> DataTypeNo { get; set; }
+        public Nullable<System.Guid> ModelID { get; set; }
+        public Nullable<int> Status { get; set; }
+        public System.Guid CreatedBy { get; set; }
+        public System.DateTime CreatedOn { get; set; }
+        public System.Guid ModifiedBy { get; set; }
+        public System.DateTime ModifiedOn { get; set; }
+    
+        public virtual Model Model { get; set; }
     }
 }

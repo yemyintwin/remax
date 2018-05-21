@@ -18,7 +18,7 @@ using REMAXAPI.Models.Kendo;
 
 namespace REMAXAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class KendoUsersController : ApiController
     {
         private Remax_Entities db = new Remax_Entities();
@@ -101,6 +101,9 @@ namespace REMAXAPI.Controllers
         [ResponseType(typeof(User))]
         public async Task<IHttpActionResult> GetUser(Guid id)
         {
+            int readLevel = Util.GetResourcePermission("User", Util.ReourceOperations.Read);
+            if (readLevel == 0) return NotFound();
+
             User user = await db.Users.FindAsync(id);
             if (user == null)
             {
@@ -114,6 +117,12 @@ namespace REMAXAPI.Controllers
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutUser(Guid id, User user)
         {
+            int writeLevel = Util.GetResourcePermission("User", Util.ReourceOperations.Write);
+            if (writeLevel != 2)
+            {
+                ModelState.AddModelError("Access Level", "Unauthorized update access.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -157,6 +166,15 @@ namespace REMAXAPI.Controllers
         [ResponseType(typeof(User))]
         public async Task<IHttpActionResult> PostUser(User user)
         {
+            int writeLevel = Util.GetResourcePermission("User", Util.ReourceOperations.Write);
+            if (writeLevel != 2)
+            {
+                ModelState.AddModelError("Access Level", "Unauthorized write access.");
+            }
+
+            var usr = db.Users.Where(u => u.Email == user.Email).FirstOrDefault();
+            if (usr != null) ModelState.AddModelError("Duplicate", "Duplicate IMO Number.");
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -172,6 +190,12 @@ namespace REMAXAPI.Controllers
         [ResponseType(typeof(User))]
         public async Task<IHttpActionResult> DeleteUser(Guid id)
         {
+            int deleteLevel = Util.GetResourcePermission("User", Util.ReourceOperations.Delete);
+            if (deleteLevel != 2)
+            {
+                ModelState.AddModelError("Access Level", "Unauthorized delete access.");
+            }
+
             User user = await db.Users.FindAsync(id);
             if (user == null)
             {

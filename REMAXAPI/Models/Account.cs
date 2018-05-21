@@ -18,6 +18,8 @@ namespace REMAXAPI.Models
         public Account()
         {
             this.Users = new HashSet<User>();
+            this.VesselsOperate = new HashSet<Vessel>();
+            this.VesselsOwn = new HashSet<Vessel>();
         }
     
         public System.Guid Id { get; set; }
@@ -31,8 +33,13 @@ namespace REMAXAPI.Models
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }
         public System.Guid ModifiedBy { get; set; }
+        public Nullable<int> Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Vessel> VesselsOperate { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Vessel> VesselsOwn { get; set; }
     }
 }
