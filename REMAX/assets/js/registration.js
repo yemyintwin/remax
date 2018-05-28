@@ -84,6 +84,37 @@ var registration = {
         } catch (e) {
             console.log(e.message);
         }
+
+        // initializing engine related
+        try {
+            registration.modules.engine = {
+                gridId: '#table_engines',
+                formId: '#form_engine',
+                dialogId: '#registration_engine',
+                photoFormId: '#form_engine_photo',
+                photoDialogId: '#registration_engine_photo',
+                webApiUrl: Settings.WebApiUrl + '/api/KendoEngines',
+            };
+            registration.retrieveEngines(); // kendo grid id
+            registration.SubmitEngine(); // Create, Update
+            registration.EnginePhotoSubmit();
+        } catch (e) {
+            console.log(e.message);
+        }
+
+        // initializing channel related
+        try {
+            registration.modules.channel = {
+                gridId: '#table_channels',
+                formId: '#form_channel',
+                dialogId: '#registration_channel',
+                webApiUrl: Settings.WebApiUrl + '/api/KendoChannels',
+            };
+            registration.retrieveChannels(); // kendo grid id
+            registration.SubmitChannel(); // Create, Update
+        } catch (e) {
+            console.log(e.message);
+        }
     },
 
     /* ----------------------------------------------------------------- Accounts -----------------------------------------------------------------*/
@@ -519,7 +550,10 @@ var registration = {
         $.ajax({
             url: url,
             dataType: 'json',
-            async:false,
+            async: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'bearer ' + token);
+            },
             success: function (data) {
                 //Process data retrieved
                 $.each(data, function (key, entry) {
@@ -818,6 +852,25 @@ var registration = {
                 hidden: true
             },
             {
+                field: "image",
+                title: "Image",
+                template: function (dataItem) {
+                    var url = Settings.WebApiUrl + "/api/KendoVessels/GetPhoto?fileName=" + dataItem.id;
+                    var str;
+                    $.ajax({
+                        url: url,
+                        async: false,
+                        success: function (imageData) {
+                            str = "<img class='img-rounded' src='" + imageData + "' width='70' height='70'>";
+                        }
+                    });
+
+                    return str;
+                },
+                width: 90,
+                filterable: false,
+            },
+            {
                 field: "imO_No",
                 title: "IMO No.",
                 filterable: {
@@ -834,7 +887,7 @@ var registration = {
                 width: 200
             },
             {
-                field: "ownerAccount",
+                field: "ownerAccount.name",
                 title: "Owner",
                 filterable: {
                     extra: false
@@ -845,7 +898,7 @@ var registration = {
                 }
             },
             {
-                field: "operatorAccount",
+                field: "operatorAccount.name",
                 title: "Operator",
                 filterable: {
                     extra: false
@@ -856,7 +909,7 @@ var registration = {
                 }
             },
             {
-                field: "shipType",
+                field: "shipType.name",
                 title: "Ship Type",
                 width: 100,
                 filterable: false,
@@ -889,7 +942,7 @@ var registration = {
                 }
             },
             {
-                field: "shipClass",
+                field: "shipClass.name",
                 title: "Ship Class",
                 filterable: false,
                 template: function (dataItem) {
@@ -948,6 +1001,55 @@ var registration = {
     SubmitVesselInitControls: function () {
         // initailize dropdown
 
+        var url = "/api/DropDown/";
+        var dropdownlist =
+            [
+                {
+                    ctrl: 'vessel_owner',
+                    method: 'ListAllAccounts'
+                },
+                {
+                    ctrl: 'vessel_operator',
+                    method: 'ListAllAccounts'
+                },
+                {
+                    ctrl: 'vessel_shipyardCountry',
+                    method: 'ListAllCountry'
+                },
+                {
+                    ctrl: 'vessel_shipType',
+                    method: 'ListAllShipType'
+                },
+                {
+                    ctrl: 'vessel_class',
+                    method: 'ListAllShipClass'
+                }
+            ];
+
+        // Populate dropdown with list of accounts
+        for (var i = 0; i < dropdownlist.length; i++) {
+            var drop = $('#' + dropdownlist[i].ctrl);
+            drop.empty();
+            url = Settings.WebApiUrl + "/api/DropDown/" + dropdownlist[i].method;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                dataType: 'json',
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
+                success: function (data) {
+                    //Process data retrieved
+                    $.each(data, function (key, entry) {
+                        drop.append($('<option></option>').attr('value', entry.id).text(entry.name));
+                    });
+                }
+            });
+        }
+
+        // Setting date time picker to year
+
         $("#vessel_builtYear").datepicker({
             format: " yyyy", // Notice the Extra space at the beginning
             viewMode: "years",
@@ -957,62 +1059,6 @@ var registration = {
             format: " yyyy", // Notice the Extra space at the beginning
             viewMode: "years",
             minViewMode: "years"
-        });
-
-        // Populate dropdown with list of accounts
-        var dropdownOwner = $('#vessel_owner');
-        dropdownOwner.empty();
-        var dropdownOperator = $('#vessel_operator');
-        dropdownOperator.empty();
-        var url = Settings.WebApiUrl + "/api/DropDown/ListAllAccounts";
-        //$.getJSON(url, function (data) {
-        //    $.each(data, function (key, entry) {
-        //        dropdownOwner.append($('<option></option>').attr('value', entry.id).text(entry.name));
-        //        dropdownOperator.append($('<option></option>').attr('value', entry.id).text(entry.name));
-        //    })
-        //});
-
-        $.ajax({
-            url: url,
-            dataType: 'json',
-            async: false,
-            success: function (data) {
-                //Process data retrieved
-                $.each(data, function (key, entry) {
-                    dropdownOwner.append($('<option></option>').attr('value', entry.id).text(entry.name));
-                    dropdownOperator.append($('<option></option>').attr('value', entry.id).text(entry.name));
-                });
-            }
-        });
-
-        // Populate dropdown with list of country
-        var dropdownShipyardCountry = $('#vessel_shipyardCountry');
-        dropdownShipyardCountry.empty();
-        var url = Settings.WebApiUrl + "/api/DropDown/ListAllCountry";
-        $.getJSON(url, function (data) {
-            $.each(data, function (key, entry) {
-                dropdownShipyardCountry.append($('<option></option>').attr('value', entry.id).text(entry.name));
-            })
-        });
-
-        // Populate dropdown with list of ship types
-        var dropdownShipType = $('#vessel_shipType');
-        dropdownShipType.empty();
-        var url = Settings.WebApiUrl + "/api/DropDown/ListAllShipType";
-        $.getJSON(url, function (data) {
-            $.each(data, function (key, entry) {
-                dropdownShipType.append($('<option></option>').attr('value', entry.id).text(entry.name));
-            })
-        });
-
-        // Populate dropdown with list of ship classes
-        var dropdownShipClass = $('#vessel_class');
-        dropdownShipClass.empty();
-        var url = Settings.WebApiUrl + "/api/DropDown/ListAllShipClass";
-        $.getJSON(url, function (data) {
-            $.each(data, function (key, entry) {
-                dropdownShipClass.append($('<option></option>').attr('value', entry.id).text(entry.name));
-            })
         });
     },
 
@@ -1123,7 +1169,7 @@ var registration = {
                     success: function (d, textStatus, xhr) {
                         console.log(d);
 
-                        $(registration.modules.vessel.dialogId).modal('toggle');
+                        $(registration.modules.vessel.dialogId).modal('hide');
 
                         $(registration.modules.vessel.gridId).data('kendoGrid').dataSource.read();
                         $(registration.modules.vessel.gridId).data('kendoGrid').refresh();
@@ -1132,7 +1178,7 @@ var registration = {
                         $('#errors').html('');
                         $('#errors').append(xhr.responseText);
                         $('#messageModal').modal('show');
-                        $("#btnUserSubmit").prop("disabled", false);
+                        $("#btnVesselSubmit").prop("disabled", false);
                     }
                 });
             });
@@ -1209,7 +1255,7 @@ var registration = {
                     $('#errors').html('');
                     $('#errors').append(xhr.responseText);
                     $('#messageModal').modal('show');
-                    $("#btnUserSubmit").prop("disabled", false);
+                    $("#btnVesselSubmit").prop("disabled", false);
                 }
             });
         }
@@ -1235,7 +1281,7 @@ var registration = {
                 // Setting file name on server
                 var vesselGrid = registration.modules.vessel.grid;
                 var selectedItem = vesselGrid.dataItem(vesselGrid.select());
-                var fileName = selectedItem.id + e.files[0].extension.toLowerCase();
+                var fileName = selectedItem.id; // + e.files[0].extension.toLowerCase();
                 e.sender.options.async.saveUrl = registration.modules.vessel.webApiUrl + '/UploadPhoto?fileName=' + fileName;
 
                 // Adding header
@@ -1251,7 +1297,9 @@ var registration = {
 
                 // Checks the extension of each file and aborts the upload if it is not .jpg
                 $.each(files, function () {
-                    if (this.extension.toLowerCase() != ".jpg" && this.extension.toLowerCase() != ".png") {
+                    if (this.extension.toLowerCase() != ".jpg"
+                        && this.extension.toLowerCase() != ".jpeg"
+                        && this.extension.toLowerCase() != ".png") {
                         alert("Only .jpg or .png files can be uploaded");
                         e.preventDefault();
                     }
@@ -1260,7 +1308,1014 @@ var registration = {
             error: function onError(e) { },
             success: function onSuccess() {
                 $(registration.modules.vessel.photoDialogId).modal('hide');
+                registration.retrieveVessels();
             }
         });
+    },
+
+    /* ----------------------------------------------------------------- Engine -----------------------------------------------------------------*/
+
+    retrieveEngines: function () {
+        var pageNumber = 1;
+        var url = registration.modules.engine.webApiUrl;
+
+        // data source settings
+        var dataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    // the remote service url
+                    url: url,
+
+                    // the request type
+                    type: "get",
+
+                    // the data type of the returned result
+                    dataType: "json",
+
+                    // passing token
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                    },
+                },
+                parameterMap: function (data, type) {
+                    if (type === "read") {
+                        // send take as "$top" and skip as "$skip"
+                        return {
+                            aggregate: data.aggregate,
+                            group: data.group,
+                            filter: data.filter,
+                            models: data.models,
+                            page: data.page,
+                            pageSize: data.pageSize,
+                            take: data.take,
+                            skip: data.skip,
+                            sort: data.sort
+                        };
+                    }
+                }
+            },
+            schema: {
+            // describe the result format
+                data: "data", // records are returned in the "data" field of the response
+                total: "total" // total number of records is in the "total" field of the response
+            },
+            pageSize: Settings.PageSize,
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true,
+            sort: { field: "serialNo", dir: "asc" }
+        });
+
+        // column settings
+        var columns = [
+            {
+                field: "id",
+                title: "ID",
+                hidden: true
+            },
+            {
+                field: "image",
+                title: "Image",
+                template: function (dataItem) {
+                    var url = Settings.WebApiUrl + "/api/KendoEngines/GetPhoto?fileName=" + dataItem.id;
+                    var str;
+                    $.ajax({
+                        url: url,
+                        async: false,
+                        success: function (imageData) {
+                            str = "<img class='img-rounded' src='" + imageData + "' width='70' height='70'>";
+                        }
+                    });
+
+                    return str;
+                },
+                width: 90,
+                filterable: false,
+            },
+            {
+                field: "vessel.vesselName",
+                title: "Vessel",
+                filterable: {
+                    extra: false
+                },
+                template: function (dataItem) {
+                    return (dataItem.vessel && dataItem.vessel.vesselName ? dataItem.vessel.vesselName : '');
+                },
+                width: 200
+            },
+            {
+                field: "engineType.name",
+                title: "Engine Type",
+                filterable: {
+                    extra: false
+                },
+                width: 100,
+                template: function (dataItem) {
+                    return (dataItem.engineType && dataItem.engineType.name ? dataItem.engineType.name : '');
+                }
+            },
+            {
+                field: "model.name",
+                title: "Model",
+                filterable: {
+                    extra: false
+                },
+                width: 100,
+                template: function (dataItem) {
+                    return (dataItem.model && dataItem.model.name ? dataItem.model.name : '');
+                }
+            },
+            {
+                field: "outputPower",
+                title: "Output Power",
+                width: 100,
+                filterable: {
+                    extra: false
+                },
+            },
+            {
+                field: "gearBoxModel",
+                title: "Gearbox Model",
+                width: 100,
+                filterable: false
+            },
+            {
+                field: "gearRatio",
+                title: "Gear Ratio",
+                filterable: false,
+                width: 100,
+            },
+            {
+                field: "alternatorMaker.name",
+                title: "Alternator Maker",
+                filterable: false,
+                width: 200,
+                template: function (dataItem) {
+                    return (dataItem.alternatorMaker && dataItem.alternatorMaker.name ? dataItem.alternatorMaker.name : '');
+                }
+            },
+            {
+                field: "alternatorMakerModel",
+                title: "Alternator Maker Model",
+                filterable: false,
+                width: 100,
+            },
+            {
+                field: "AlternatorSrNo",
+                title: "Alternator Sr. No.",
+                filterable: false,
+                width: 100,
+            },
+            {
+                field: "alternatorOutput",
+                title: "Alternator Output",
+                filterable: false,
+                width: 100,
+            },
+            {
+                field: "powerSupplySystem",
+                title: "PowerSupplySystem",
+                filterable: false,
+                width: 100,
+            },
+            {
+                field: "insulationTempRise",
+                title: "InsulationTempRise",
+                filterable: false,
+                width: 100,
+            },
+            {
+                field: "iPRating",
+                title: "IP Rating",
+                filterable: false,
+                width: 100,
+            },
+            {
+                field: "mounting",
+                title: "Mounting",
+                filterable: false,
+                width: 100,
+            },
+        ];
+
+        // initialize grid
+        $(registration.modules.engine.gridId).kendoGrid({
+            dataSource: dataSource,
+            columns: columns,
+            filterable: true,
+            sortable: true,
+            scrollable: true,
+            resizable: true,
+            pageable: true,
+            selectable: "row",
+            change: registration.engineGrid_OnChange,
+        });
+
+        // assgining grid to global variable
+        var grid = $(registration.modules.engine.gridId).data("kendoGrid");
+        registration.modules.engine.grid = grid;
+
+        $('#btnEditEngine').prop('disabled', true);
+        $('#btnDelEngine').prop('disabled', true);
+        $('#btnUploadEnginePhoto').prop('disabled', true);
+    },
+
+    SubmitEngineInitControls: function () {
+        // initailize dropdown
+        var url = "/api/DropDown/";
+        var dropdownlist =
+            [
+                {
+                    ctrl: 'engine_vessel',
+                    method: 'ListAllVessels'
+                },
+                {
+                    ctrl: 'engine_model',
+                    method: 'ListAllModels'
+                },
+                {
+                    ctrl: 'engine_type',
+                    method: 'ListAllEngineTypes'
+                },
+                {
+                    ctrl: 'engine_alternatorMaker',
+                    method: 'ListAllAlternatorMakers'
+                }            
+            ];
+
+        // Populate dropdown with list of accounts
+        for (var i = 0; i < dropdownlist.length ; i++) {
+            var drop = $('#' + dropdownlist[i].ctrl);
+            drop.empty();
+            url = Settings.WebApiUrl + "/api/DropDown/" + dropdownlist[i].method;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                dataType: 'json',
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
+                success: function (data) {
+                    //Process data retrieved
+                    $.each(data, function (key, entry) {
+                        drop.append($('<option></option>').attr('value', entry.id).text(entry.name));
+                    });
+                }
+            });
+        }
+    },
+
+    SubmitEngine: function () {
+
+        registration.SubmitEngineInitControls();
+
+        // validation
+        $(registration.modules.engine.formId).bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            excluded: ':disabled',
+            fields: {
+                engine_vessel: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Vessel is required'
+                        }
+                    }
+                },
+                engine_type: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Engine type required'
+                        }
+                    }
+                },
+                engine_model: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Engine model is required'
+                        },
+                    }
+                },
+                engine_sno: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Engine serial number is required'
+                        },
+                        stringLength: {
+                            max: 100,
+                            message: 'Serial number must be less than 100 characters long'
+                        },
+                    }
+                },
+                engine_outputPower: {
+                    integer: {
+                        message: 'The value is not an integer'
+                    }
+                },
+                engine_gearboxModel: {
+                    validators: {
+                        stringLength: {
+                            max: 100,
+                            message: 'Gear box model name must be less than 100 characters long'
+                        }
+                    }
+                },
+                engine_gearboxSrNo: {
+                    validators: {
+                        stringLength: {
+                            max: 100,
+                            message: 'Gear box serial number must be less than 100 characters long'
+                        }
+                    }
+                },
+                engine_gearboxRatio: {
+                    validators: {
+                        stringLength: {
+                            max: 100,
+                            message: 'Gear box ratio must be less than 100 characters long'
+                        }
+                    }
+                },
+                engine_alternatorMaker: {},
+                engine_alternatorMakerModel: {
+                    validators: {
+                        stringLength: {
+                            max: 100,
+                            message: 'Alternator maker model must be less than 100 characters long'
+                        }
+                    }
+                },
+                engine_alternatorSrNo: {
+                    validators: {
+                        stringLength: {
+                            max: 100,
+                            message: 'Alternator serial number must be less than 100 characters long'
+                        }
+                    }
+                },
+                engine_alternatorOutput: {
+                    integer: {
+                        message: 'The value is not an integer'
+                    }
+                },
+                engine_powerSupplySystem: {
+                    validators: {
+                        stringLength: {
+                            max: 100,
+                            message: 'Power supply system must be less than 100 characters long'
+                        }
+                    }
+                }, 
+                engine_insulation: {
+                    integer: {
+                        message: 'The value is not an integer'
+                    }
+                }, 
+                engine_iprRate: {
+                    validators: {
+                        stringLength: {
+                            max: 100,
+                            message: 'IPR rating must be less than 100 characters long'
+                        }
+                    }
+                }, 
+                engine_mounting: {
+                    validators: {
+                        stringLength: {
+                            max: 100,
+                            message: 'Mounting must be less than 100 characters long'
+                        }
+                    }
+                }, 
+            }
+        })
+        .on('success.form.bv', function (e) {
+            // Prevent form submission
+            e.preventDefault();
+            var url = registration.modules.engine.webApiUrl;
+            var data = {
+                vesselID: $('#engine_vessel').val(),
+                engineTypeID: $('#engine_type').val(),
+                engineModelID: $('#engine_model').val(),
+                serialNo: $('#engine_sno').val(),
+                outputPower: $('#engine_outputPower').val(),
+                gearBoxModel: $('#engine_gearboxModel').val(),
+                gearBoxSerialNo: $('#engine_gearboxSrNo').val(),
+                gearRatio: $('#engine_gearboxRatio').val(),
+                alternatorMakerID: $('#engine_alternatorMaker').val(),
+                alternatorMakerModel: $('#engine_alternatorMakerModel').val(),
+                alternatorSrNo: $('#engine_alternatorSrNo').val(),
+                alternatorOutput: $('#engine_alternatorOutput').val(),
+                powerSupplySystem: $('#engine_powerSupplySystem').val(),
+                insulationTempRise: $('#engine_insulation').val(),
+                iprRating: $('#engine_iprRate').val(),
+                mounting: $('#engine_mounting').val(),
+            };
+            var requestType = "POST"; // Create
+
+            if (registration.modules.engine.state === 'update') {
+                data.id = $('#id').val();
+                requestType = "PUT";
+                url += '/' + data.id;
+            }// Update
+
+            $.ajax({
+                type: requestType,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                dataType: 'json',
+                // passing token
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
+                success: function (d, textStatus, xhr) {
+                    console.log(d);
+
+                    $(registration.modules.engine.dialogId).modal('hide');
+
+                    $(registration.modules.engine.gridId).data('kendoGrid').dataSource.read();
+                    $(registration.modules.engine.gridId).data('kendoGrid').refresh();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    $('#errors').html('');
+                    $('#errors').append(xhr.responseText);
+                    $('#messageModal').modal('show');
+                    $("#btnEngineSubmit").prop("disabled", false);
+                }
+            });
+        });
+    },
+
+    engineGrid_OnChange: function (arg) {
+        var row = this.select();
+        if (row) {
+            $('#btnEditEngine').prop('disabled', false);
+            $('#btnDelEngine').prop('disabled', false);
+            $('#btnUploadEnginePhoto').prop('disabled', false);
+        }
+    },
+
+    btnNewEngine_OnClick: function () {
+        registration.modules.engine.state = 'create';
+        registration.SubmitEngineInitControls();
+    },
+
+    btnEditEngine_OnClick: function () {
+        var engineGrid = registration.modules.engine.grid;
+        var selectedItem = engineGrid.dataItem(engineGrid.select());
+
+        if (selectedItem) {
+            registration.modules.engine.state = 'update';
+            registration.SubmitEngineInitControls();
+
+            $('#id').val(selectedItem.id);
+            $('#engine_vessel').val(selectedItem.vesselID);
+            $('#engine_type').val(selectedItem.engineTypeID);
+            $('#engine_model').val(selectedItem.engineModelID);
+            $('#engine_sno').val(selectedItem.serialNo);
+            $('#engine_outputPower').val(selectedItem.outputPower);
+            $('#engine_gearboxModel').val(selectedItem.gearBoxModel);
+            $('#engine_gearboxSrNo').val(selectedItem.gearBoxSerialNo);
+            $('#engine_gearboxRatio').val(selectedItem.gearRatio);
+            $('#engine_alternatorMaker').val(selectedItem.alternatorMakerID);
+            $('#engine_alternatorMakerModel').val(selectedItem.alternatorMakerModel);
+            $('#engine_alternatorSrNo').val(selectedItem.alternatorSrNo);
+            $('#engine_alternatorOutput').val(selectedItem.alternatorOutput);
+            $('#engine_powerSupplySystem').val(selectedItem.powerSupplySystem);
+            $('#engine_insulation').val(selectedItem.insulationTempRise);
+            $('#engine_iprRate').val(selectedItem.iprRating);
+            $('#engine_mounting').val(selectedItem.mounting);
+        }
+        else {
+            $(registration.modules.engine.dialogId).modal('hide');
+        }
+    },
+
+    btnDelEngine_OnClick: function () {
+        var engineGrid = registration.modules.engine.grid;
+        var selectedItem = engineGrid.dataItem(engineGrid.select());
+        var url = registration.modules.engine.webApiUrl + '/' + selectedItem.id;
+
+        if (selectedItem) {
+            var ans = confirm("Are you sure you want to delete \'Engine (" + selectedItem.serialNo + ")\'?");
+            if (!ans) return;
+
+            $.ajax({
+                type: 'DELETE',
+                url: url,
+                contentType: "application/json",
+                data: null,
+                dataType: 'json',
+                // passing token
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
+                success: function (d, textStatus, xhr) {
+                    console.log(d);
+
+                    $(registration.modules.engine.gridId).data('kendoGrid').dataSource.read();
+                    $(registration.modules.engine.gridId).data('kendoGrid').refresh();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    $('#errors').html('');
+                    $('#errors').append(xhr.responseText);
+                    $('#messageModal').modal('show');
+                    $("#btnEngineSubmit").prop("disabled", false);
+                }
+            });
+        }
+        else {
+            $(registration.modules.engine.dialogId).modal('hide');
+        }
+    },
+
+    EnginePhotoSubmit: function () {
+        $("#enginePhoto").kendoUpload({
+            async: {
+                // will apend file name before uploading (upload event)
+                saveUrl: registration.modules.engine.webApiUrl + '/UploadPhoto',
+                autoUpload: false,
+            },
+            multiple: false,
+            upload: function onUpload(e) {
+                if (e.files.length != 1) {
+                    alert("No file to upload");
+                    e.preventDefault();
+                }
+
+                // Setting file name on server
+                var engineGrid = registration.modules.engine.grid;
+                var selectedItem = engineGrid.dataItem(engineGrid.select());
+                var fileName = selectedItem.id; // + e.files[0].extension.toLowerCase();
+                e.sender.options.async.saveUrl = registration.modules.engine.webApiUrl + '/UploadPhoto?fileName=' + fileName;
+
+                // Adding header
+                var xhr = e.XMLHttpRequest;
+                xhr.addEventListener("readystatechange", function (e) {
+                    if (xhr.readyState == 1 /* OPENED */) {
+                        xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                    }
+                });
+
+                // An array with information about the uploaded files
+                var files = e.files;
+
+                // Checks the extension of each file and aborts the upload if it is not .jpg
+                $.each(files, function () {
+                    if (this.extension.toLowerCase() != ".jpg"
+                        && this.extension.toLowerCase() != ".jpeg"
+                        && this.extension.toLowerCase() != ".png") {
+                        alert("Only .jpg or .png files can be uploaded");
+                        e.preventDefault();
+                    }
+                });
+            },
+            error: function onError(e) { },
+            success: function onSuccess() {
+                $(registration.modules.engine.photoDialogId).modal('hide');
+                registration.retrieveEngines();
+            }
+        });
+    },
+
+
+    /* ----------------------------------------------------------------- Channel -----------------------------------------------------------------*/
+
+    retrieveChannels: function () {
+        var pageNumber = 1;
+        var url = registration.modules.channel.webApiUrl;
+
+        // data source settings
+        var dataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    // the remote service url
+                    url: url,
+
+                    // the request type
+                    type: "get",
+
+                    // the data type of the returned result
+                    dataType: "json",
+
+                    // passing token
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                    },
+                },
+                parameterMap: function (data, type) {
+                    if (type === "read") {
+                        // send take as "$top" and skip as "$skip"
+                        return {
+                            aggregate: data.aggregate,
+                            group: data.group,
+                            filter: data.filter,
+                            models: data.models,
+                            page: data.page,
+                            pageSize: data.pageSize,
+                            take: data.take,
+                            skip: data.skip,
+                            sort: data.sort
+                        };
+                    }
+                }
+            },
+            schema: {
+                // describe the result format
+                data: "data", // records are returned in the "data" field of the response
+                total: "total" // total number of records is in the "total" field of the response
+            },
+            pageSize: 10,
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true,
+            sort: [
+                { field: "model.name", dir: "asc" },
+                { field: "channelNo", dir: "asc" }
+            ]
+        });
+
+        // column settings
+        var columns = [
+            {
+                field: "id",
+                title: "ID",
+                hidden: true
+            },
+            {
+                field: "channelNo",
+                title: "Channel No",
+                width: 150,
+                filterable: {
+                    extra: false
+                },
+            },
+            {
+                field: "name",
+                title: "Channel Name",
+                filterable: {
+                    extra: false
+                },
+                width: 200
+            },
+            {
+                field: "model.name",
+                title: "Model",
+                filterable: {
+                    extra: false
+                },
+                width: 100,
+                template: function (dataItem) {
+                    return (dataItem.model && dataItem.model.name ? dataItem.model.name : '');
+                }
+            },
+            {
+                field: "minRange",
+                title: "Min Range",
+                width: 100,
+                filterable: false,
+            },
+            {
+                field: "maxRange",
+                title: "Max Range",
+                width: 100,
+                filterable: false,
+            },
+            {
+                field: "scale",
+                title: "Scale",
+                filterable: false,
+                width: 100,
+            },
+            {
+                field: "displayUnit",
+                title: "Display Unit",
+                filterable: false,
+                width: 100,
+            },
+            {
+                field: "lowerLimit",
+                title: "Lower Limit",
+                filterable: false,
+                width: 100,
+            },
+            {
+                field: "upperLimit",
+                title: "Upper Limit",
+                filterable: false,
+                width: 100,
+            },
+            {
+                field: "monitoringTimer",
+                title: "Monitoring Timer",
+                filterable: false,
+                width: 100,
+            },
+            {
+                field: "dataTypeNo",
+                title: "Data Type",
+                filterable: false,
+                width: 100,
+                template: function (dataItem) {
+                    var display;
+                    switch (dataItem.dataTypeNo) {
+                        case 1: display = "Digital"; break;
+                        case 2: display = "Analog"; break;
+                        case 3: display = "Text"; break;
+                        default: display = "";
+                    }
+                    return display;
+                }
+            },
+        ];
+
+        // initialize grid
+        $(registration.modules.channel.gridId).kendoGrid({
+            dataSource: dataSource,
+            columns: columns,
+            filterable: true,
+            sortable: true,
+            scrollable: true,
+            resizable: true,
+            pageable: true,
+            selectable: "row",
+            change: registration.channelGrid_OnChange,
+        });
+
+        // assgining grid to global variable
+        var grid = $(registration.modules.channel.gridId).data("kendoGrid");
+        registration.modules.channel.grid = grid;
+
+        $('#btnEditChannel').prop('disabled', true);
+        $('#btnDelChannel').prop('disabled', true);
+    },
+
+    SubmitChannelInitControls: function () {
+        // initailize dropdown
+        var url = "/api/DropDown/";
+        var dropdownlist =
+            [
+                {
+                    ctrl: 'channel_model',
+                    method: 'ListAllModels'
+                },
+                {
+                    ctrl: 'channel_chartType',
+                    method: 'ListAllChartTypes'
+                },
+                {
+                    ctrl: 'channel_dataType',
+                    method: 'ListAllOptionSetByName?groupname=DataType'
+                },
+            ];
+
+        // Populate dropdown with list of accounts
+        for (var i = 0; i < dropdownlist.length; i++) {
+            var drop = $('#' + dropdownlist[i].ctrl);
+            drop.empty();
+            url = Settings.WebApiUrl + "/api/DropDown/" + dropdownlist[i].method;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                dataType: 'json',
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
+                success: function (data) {
+                    //Process data retrieved
+                    $.each(data, function (key, entry) {
+                        drop.append($('<option></option>').attr('value', entry.id).text(entry.name));
+                    });
+                }
+            });
+        }
+    },
+
+    SubmitChannel: function () {
+
+        registration.SubmitChannelInitControls();
+
+        // validation
+        $(registration.modules.channel.formId).bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            excluded: ':disabled',
+            fields: {
+                channel_model: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Engine model is required'
+                        }
+                    }
+                },
+                channel_channelNo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Channel number is required'
+                        }
+                    }
+                },
+                channel_channelName: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Channel name is required'
+                        },
+                    }
+                },
+                channel_dashboardDisplay: {},
+                channel_chartType: {
+                    validators: {}
+                },
+                channel_minRange: {
+                    validators: {
+                        stringLength: {
+                            max: 100,
+                            message: 'Gear box model name must be less than 100 characters long'
+                        }
+                    }
+                },
+                channel_maxRange: {
+                    integer: {
+                        message: 'The value is not an integer'
+                    }
+                },
+                channel_scale: {
+                    integer: {
+                        message: 'The value is not an integer'
+                    }
+                },
+                channel_unit: {
+                    validators: {
+                        stringLength: {
+                            max: 100,
+                            message: 'Gear box model name must be less than 100 characters long'
+                        }
+                    }
+                },
+                channel_lowerLimit: {
+                    integer: {
+                        message: 'The value is not an integer'
+                    }
+                },
+                channel_upperLimit: {
+                    integer: {
+                        message: 'The value is not an integer'
+                    }
+                },
+                channel_monitor: {
+                    integer: {
+                        message: 'The value is not an integer'
+                    }
+                },
+                channel_dataType: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Channel type is required'
+                        }
+                    }
+                },
+            }
+        })
+            .on('success.form.bv', function (e) {
+                // Prevent form submission
+                e.preventDefault();
+                var url = registration.modules.channel.webApiUrl;
+                var data = {
+                    channelNo: $('#channel_channelNo').val(),
+                    name: $('#channel_channelName').val(),
+                    modelID: $('#channel_model').val(),
+                    dashboardDisplay: $('#channel_dashboardDisplay').val(),
+                    chartTypeID: $('#channel_chartType').val(),
+                    minRange: $('#channel_minRange').val(),
+                    maxRange: $('#channel_maxRange').val(),
+                    scale: $('#channel_scale').val(),
+                    displayUnit: $('#channel_unit').val(),
+                    lowerLimit: $('#channel_lowerLimit').val(),
+                    upperLimit: $('#channel_upperLimit').val(),
+                    monitoringTimer: $('#channel_monitor').val(),
+                    dataTypeNo: $('#channel_dataType').val(),
+                };
+                var requestType = "POST"; // Create
+
+                if (registration.modules.channel.state === 'update') {
+                    data.id = $('#id').val();
+                    requestType = "PUT";
+                    url += '/' + data.id;
+                }// Update
+
+                $.ajax({
+                    type: requestType,
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    dataType: 'json',
+                    // passing token
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                    },
+                    success: function (d, textStatus, xhr) {
+                        console.log(d);
+
+                        $(registration.modules.channel.dialogId).modal('hide');
+
+                        $(registration.modules.channel.gridId).data('kendoGrid').dataSource.read();
+                        $(registration.modules.channel.gridId).data('kendoGrid').refresh();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        $('#errors').html('');
+                        $('#errors').append(xhr.responseText);
+                        $('#messageModal').modal('show');
+                        $("#btnChannelSubmit").prop("disabled", false);
+                    }
+                });
+            });
+    },
+
+    channelGrid_OnChange: function (arg) {
+        var row = this.select();
+        if (row) {
+            $('#btnEditChannel').prop('disabled', false);
+            $('#btnDelChannel').prop('disabled', false);
+        }
+    },
+
+    btnNewChannel_OnClick: function () {
+        registration.modules.channel.state = 'create';
+        registration.SubmitChannelInitControls();
+    },
+
+    btnEditChannel_OnClick: function () {
+        var channelGrid = registration.modules.channel.grid;
+        var selectedItem = channelGrid.dataItem(channelGrid.select());
+
+        if (selectedItem) {
+            registration.modules.channel.state = 'update';
+            registration.SubmitChannelInitControls();
+
+            $('#id').val(selectedItem.id);
+            $('#channel_model').val(selectedItem.modelID);
+            $('#channel_channelNo').val(selectedItem.channelNo);
+            $('#channel_channelName').val(selectedItem.name);
+            $('#channel_dashboardDisplay').val(selectedItem.dashboardDisplay);
+            $('#channel_chartType').val(selectedItem.chartTypeID);
+            $('#channel_minRange').val(selectedItem.minRange);
+            $('#channel_maxRange').val(selectedItem.maxRange);
+            $('#channel_scale').val(selectedItem.scale);
+            $('#channel_unit').val(selectedItem.displayUnit);
+            $('#channel_lowerLimit').val(selectedItem.lowerLimit);
+            $('#channel_upperLimit').val(selectedItem.upperLimit);
+            $('#channel_monitor').val(selectedItem.monitoringTimer);
+            $('#channel_dataType').val(selectedItem.dataTypeNo);
+        }
+        else {
+            $(registration.modules.channel.dialogId).modal('hide');
+        }
+    },
+
+    btnDelChannel_OnClick: function () {
+        var channelGrid = registration.modules.channel.grid;
+        var selectedItem = channelGrid.dataItem(channelGrid.select());
+        var url = registration.modules.channel.webApiUrl + '/' + selectedItem.id;
+
+        if (selectedItem) {
+            var ans = confirm("Are you sure you want to delete \'Channel (" + selectedItem.name + ")\'?");
+            if (!ans) return;
+
+            $.ajax({
+                type: 'DELETE',
+                url: url,
+                contentType: "application/json",
+                data: null,
+                dataType: 'json',
+                // passing token
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
+                success: function (d, textStatus, xhr) {
+                    console.log(d);
+
+                    $(registration.modules.channel.gridId).data('kendoGrid').dataSource.read();
+                    $(registration.modules.channel.gridId).data('kendoGrid').refresh();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    $('#errors').html('');
+                    $('#errors').append(xhr.responseText);
+                    $('#messageModal').modal('show');
+                    $("#btnChannelSubmit").prop("disabled", false);
+                }
+            });
+        }
+        else {
+            $(registration.modules.channel.dialogId).modal('hide');
+        }
     },
 };

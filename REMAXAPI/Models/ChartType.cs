@@ -14,7 +14,16 @@ namespace REMAXAPI.Models
     
     public partial class ChartType
     {
-        public string ChartName { get; set; }
-        public int ChartTypeID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ChartType()
+        {
+            this.Channels = new HashSet<Channel>();
+        }
+    
+        public System.Guid Id { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Channel> Channels { get; set; }
     }
 }

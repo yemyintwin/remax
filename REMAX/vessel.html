@@ -1,128 +1,47 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prototype</title>
+
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrapValidator.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="assets/css/kendo.common.min.css">
     <link rel="stylesheet" href="assets/css/kendo.default.min.css">
     <link rel="stylesheet" href="assets/css/kendo.default.mobile.min.css">
     <link rel="stylesheet" href="assets/css/metisMenu.css">
     <link rel="stylesheet" href="assets/css/remax.css">
+    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.css" />
+    <link href="assets/datatables-responsive/dataTables.responsive.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.common.core.min.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.bootstrap.min.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.bootstrap.mobile.min.css" rel="stylesheet" />
+    <link href="assets/bootstrap_datetime/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/kendo/js/kendo.all.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <script src="assets/js/kendo.all.min.js"></script>
+    <script src="assets/js/metisMenu.js"></script>
+    <script src="assets/js/remax.js"></script>
+    <script src="assets/js/vessel.js"></script>
+    <script src="assets/js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/dataTables.bootstrap.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrapValidator.min.js"></script>
+    <script src="assets/bootstrap_datetime/js/bootstrap-datepicker.min.js"></script>
 </head>
 
 <body>
-    <div id="wrapper"><nav class="nav nav-tabs navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="index.html">Remax v1.0</a>
-    </div>
-    <ul class="nav navbar-top-links navbar-right">
-        <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-warning fa-fw"></i>7 Alerts
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="alertsettings.html">
-                                <strong>See All Alerts and Settings</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-alerts -->
-                </li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                <i class="fa fa-user fa-fw"></i> 
-                <i class="fa fa-caret-down"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li><a href="userprofile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                </li>
-                <li class="divider"></li>
-                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                </li>
-            </ul>
-        </li>
-    </ul>
-    
-    <div class="navbar-default sidebar" role="navigation">
-        <div class="sidebar-nav navbar-collapse">
-            <ul class="nav in" id="side-menu">
-                <li>
-                    <a href="index.html" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                </li>
-                <li>
-                    <a href="registration.html"><i class="fa fa-edit fa-fw"></i> Registrations</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-sitemap fa-fw"></i> Vessel Status<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li>
-                            <a href="#">PRINCESS SEAWAYS<span class="fa arrow"></span></a>
-							<ul class="nav nav-third-level collapse">
-                                <li>
-                                    <a href="engine.html">Engine 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Engine 2</a>
-                                </li>
-                                <li>
-                                    <a href="#">Engine 3</a>
-                                </li>
-                                <li>
-                                    <a href="#">Engine 4</a>
-                                </li>
-								<li>
-                                    <a href="#">Engine 5</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-third-level -->
-                        </li>
-                        <li>
-                            <a href="#">QUEEN ELIZABETH</a>
-                        </li>
-                        <li>
-                            <a href="#">BITHIA</a>
-                        </li>
-                    </ul>
-                    <!-- /.nav-second-level -->
-                </li>
-            </ul>
-        </div>
-        <!-- /.sidebar-collapse -->
-    </div>
-</nav>
+    <div id="wrapper">
+        <div w3-include-html="nav.html"></div>
 
         <div id="page-wrapper">
             <div class="row">
@@ -134,34 +53,42 @@
             </div>
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="panel-group" role="tablist" aria-multiselectable="true" id="accordion-1">
-                        <div class="panel panel-default panel-collapse">
+                    <div class="panel-group" role="tablist" aria-multiselectable="true" id="accordionVessel">
+
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel-group" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
                             <div class="panel-heading" role="tab">
                                 <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion-1" aria-expanded="true" href="#accordion-1 .item-1">8502391 - PRINCESS SEAWAYS</a></h4>
                             </div>
                             <div class="panel-collapse collapse in item-1 collapse" role="tabpanel">
                                 <div class="panel-body">
                                     <div class="row">
-                                        <div class="col-lg-6 col-md-6 ymw-v-middle"><div style="ymw-v-middle">
-<dl class="dl-horizontal">
-  <dt>IMO</dt>
-  <dd>8502391</dd>
-  <dt>Ship Type</dt>
-  <dd>Passenger/Ro-Ro Cargo Ship</dd>
-  <dt>Shipyard</dt>
-  <dd>Keppel</dd>
-  <dt>Built</dt>
-  <dd>1986</dd>
-  <dt>Size</dt>
-  <dd>162 x 28 m</dd>
-  <dt>DWT</dt>
-  <dd>31356 t</dd>
-  <dt>Owner</dt>
-  <dd>Maersk</dd>
-  <dt>Operator</dt>
-  <dd>Evergreen</dd>
-</dl>
-</div></div>
+                                        <div class="col-lg-6 col-md-6 ymw-v-middle">
+                                            <div style="ymw-v-middle">
+                                                <dl class="dl-horizontal">
+                                                    <dt>IMO</dt>
+                                                    <dd>8502391</dd>
+                                                    <dt>Ship Type</dt>
+                                                    <dd>Passenger/Ro-Ro Cargo Ship</dd>
+                                                    <dt>Shipyard</dt>
+                                                    <dd>Keppel</dd>
+                                                    <dt>Built</dt>
+                                                    <dd>1986</dd>
+                                                    <dt>Size</dt>
+                                                    <dd>162 x 28 m</dd>
+                                                    <dt>DWT</dt>
+                                                    <dd>31356 t</dd>
+                                                    <dt>Owner</dt>
+                                                    <dd>Maersk</dd>
+                                                    <dt>Operator</dt>
+                                                    <dd>Evergreen</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
                                         <div class="col-md-6 col-sm-12 col-xs-12">
                                             <div><img src="assets/img/8502391.jpg" class="img-responsive shadow-depth-2" style="max-width:100%"></div>
                                         </div>
@@ -174,38 +101,48 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
-                                            <div class="thumbnail"><img src="assets/img/icons8-engine-75.png">
+                                            <div class="thumbnail">
+                                                <img src="assets/img/icons8-engine-75.png">
                                                 <div class="caption">
                                                     <h5>D623Z455<br></h5>
-                                                    <p>Running</p><a href="engine.html"><button class="btn btn-default btn-primary" type="button">View Details</button></a></div>
+                                                    <p>Running</p><a href="engine.html"><button class="btn btn-default btn-primary" type="button">View Details</button></a>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
-                                            <div class="thumbnail"><img src="assets/img/icons8-engine-75.png">
+                                            <div class="thumbnail">
+                                                <img src="assets/img/icons8-engine-75.png">
                                                 <div class="caption">
                                                     <h5>D623Z455<br></h5>
-                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button></div>
+                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
-                                            <div class="thumbnail"><img src="assets/img/icons8-engine-75.png">
+                                            <div class="thumbnail">
+                                                <img src="assets/img/icons8-engine-75.png">
                                                 <div class="caption">
                                                     <h5>D623Z455<br></h5>
-                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button></div>
+                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
-                                            <div class="thumbnail"><img src="assets/img/icons8-engine-75.png">
+                                            <div class="thumbnail">
+                                                <img src="assets/img/icons8-engine-75.png">
                                                 <div class="caption">
                                                     <h5>D623Z455<br></h5>
-                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button></div>
+                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
-                                            <div class="thumbnail"><img src="assets/img/icons8-engine-75.png">
+                                            <div class="thumbnail">
+                                                <img src="assets/img/icons8-engine-75.png">
                                                 <div class="caption">
                                                     <h5>D623Z455<br></h5>
-                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button></div>
+                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -217,24 +154,30 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
-                                            <div class="thumbnail"><img src="assets/img/icons8-lightning-bolt-75.png">
+                                            <div class="thumbnail">
+                                                <img src="assets/img/icons8-lightning-bolt-75.png">
                                                 <div class="caption">
                                                     <h5>DE623E1234<br></h5>
-                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button></div>
+                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
-                                            <div class="thumbnail"><img src="assets/img/icons8-lightning-bolt-75.png">
+                                            <div class="thumbnail">
+                                                <img src="assets/img/icons8-lightning-bolt-75.png">
                                                 <div class="caption">
                                                     <h5>DE623E1234<br></h5>
-                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button></div>
+                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
-                                            <div class="thumbnail"><img src="assets/img/icons8-lightning-bolt-75.png">
+                                            <div class="thumbnail">
+                                                <img src="assets/img/icons8-lightning-bolt-75.png">
                                                 <div class="caption">
                                                     <h5>DE623E1234<br></h5>
-                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button></div>
+                                                    <p>Running</p><button class="btn btn-default btn-primary disabled" type="button">View Details</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -248,26 +191,28 @@
                             <div class="panel-collapse collapse item-2" role="tabpanel">
                                 <div class="panel-body">
                                     <div class="row">
-                                        <div class="col-md-6 ymw-v-middle"><div>
-<dl class="dl-horizontal">
-  <dt>IMO</dt>
-  <dd>9477438</dd>
-  <dt>Ship Type</dt>
-  <dd>Passenger (Cruise) Ship</dd>
-  <dt>Shipyard</dt>
-  <dd>Keppel</dd>
-  <dt>Built</dt>
-  <dd>2010</dd>
-  <dt>Size</dt>
-  <dd>294 x 32 m</dd>
-  <dt>DWT</dt>
-  <dd>90901 t</dd>
-  <dt>Owner</dt>
-  <dd>Maersk</dd>
-  <dt>Operator</dt>
-  <dd>Mediterranean Shipping</dd>
-</dl>
-</div></div>
+                                        <div class="col-md-6 ymw-v-middle">
+                                            <div>
+                                                <dl class="dl-horizontal">
+                                                    <dt>IMO</dt>
+                                                    <dd>9477438</dd>
+                                                    <dt>Ship Type</dt>
+                                                    <dd>Passenger (Cruise) Ship</dd>
+                                                    <dt>Shipyard</dt>
+                                                    <dd>Keppel</dd>
+                                                    <dt>Built</dt>
+                                                    <dd>2010</dd>
+                                                    <dt>Size</dt>
+                                                    <dd>294 x 32 m</dd>
+                                                    <dt>DWT</dt>
+                                                    <dd>90901 t</dd>
+                                                    <dt>Owner</dt>
+                                                    <dd>Maersk</dd>
+                                                    <dt>Operator</dt>
+                                                    <dd>Mediterranean Shipping</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
                                         <div class="col-md-6">
                                             <div><img src="assets/img/9477438.jpg" class="img-responsive shadow-depth-2"></div>
                                         </div>
@@ -282,26 +227,28 @@
                             <div class="panel-collapse collapse item-3" role="tabpanel">
                                 <div class="panel-body">
                                     <div class="row">
-                                        <div class="col-md-6 ymw-v-middle"><div>
-<dl class="dl-horizontal">
-  <dt>IMO</dt>
-  <dd>9222522</dd>
-  <dt>Ship Type</dt>
-  <dd>Passenger/Ro-Ro Cargo Ship</dd>
-  <dt>Ship Type</dt>
-  <dd>Passenger (Cruise) Ship</dd>
-  <dt>Built</dt>
-  <dd>2001</dd>
-  <dt>Size</dt>
-  <dd>215 x 26 m</dd>
-  <dt>DWT</dt>
-  <dd>35736 t</dd>
-  <dt>Owner</dt>
-  <dd>Mediterranean Shipping</dd>
-  <dt>Operator</dt>
-  <dd>Evergreen</dd>
-</dl>
-</div></div>
+                                        <div class="col-md-6 ymw-v-middle">
+                                            <div>
+                                                <dl class="dl-horizontal">
+                                                    <dt>IMO</dt>
+                                                    <dd>9222522</dd>
+                                                    <dt>Ship Type</dt>
+                                                    <dd>Passenger/Ro-Ro Cargo Ship</dd>
+                                                    <dt>Ship Type</dt>
+                                                    <dd>Passenger (Cruise) Ship</dd>
+                                                    <dt>Built</dt>
+                                                    <dd>2001</dd>
+                                                    <dt>Size</dt>
+                                                    <dd>215 x 26 m</dd>
+                                                    <dt>DWT</dt>
+                                                    <dd>35736 t</dd>
+                                                    <dt>Owner</dt>
+                                                    <dd>Mediterranean Shipping</dd>
+                                                    <dt>Operator</dt>
+                                                    <dd>Evergreen</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
                                         <div class="col-md-6">
                                             <div><img src="assets/img/9222522.jpg" class="img-responsive shadow-depth-2"></div>
                                         </div>
@@ -313,25 +260,17 @@
                 </div>
             </div>
         </div>
-    </div><div class="footer-basic footer-remax">
-    <footer>
-        <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
-        <ul class="list-inline">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Terms</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-        </ul>
-        <p class="copyright">Daikai Engineering Pte Ltd © 1992</p>
-    </footer>
-</div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/kendo.all.min.js"></script>
-    <script src="assets/js/metisMenu.js"></script>
-    <script src="assets/js/remax.js"></script>
-    <script src="assets/js/account.js"></script>
+    </div>
+    
+    <div w3-include-html="footer.html"></div>
+
+    <script>
+        includeHTML();
+
+        $(document).ready(function () {
+            vessel.onload();
+        });
+    </script>
 </body>
 
 </html>

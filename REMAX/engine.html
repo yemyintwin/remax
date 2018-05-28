@@ -1,142 +1,47 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prototype</title>
+
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrapValidator.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="assets/css/kendo.common.min.css">
     <link rel="stylesheet" href="assets/css/kendo.default.min.css">
     <link rel="stylesheet" href="assets/css/kendo.default.mobile.min.css">
     <link rel="stylesheet" href="assets/css/metisMenu.css">
     <link rel="stylesheet" href="assets/css/remax.css">
+    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.css" />
+    <link href="assets/datatables-responsive/dataTables.responsive.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.common.core.min.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.bootstrap.min.css" rel="stylesheet" />
+    <link href="vendor/kendo/styles/kendo.bootstrap.mobile.min.css" rel="stylesheet" />
+    <link href="assets/bootstrap_datetime/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/kendo/js/kendo.all.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <script src="assets/js/kendo.all.min.js"></script>
+    <script src="assets/js/metisMenu.js"></script>
+    <script src="assets/js/remax.js"></script>
+    <script src="assets/js/engine.js"></script>
+    <script src="assets/js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/dataTables.bootstrap.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrapValidator.min.js"></script>
+    <script src="assets/bootstrap_datetime/js/bootstrap-datepicker.min.js"></script>
 </head>
 
 <body>
-    <div id="wrapper"><nav class="nav nav-tabs navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="index.html">Remax v1.0</a>
-    </div>
-    <ul class="nav navbar-top-links navbar-right">
-        <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-warning fa-fw"></i>7 Alerts
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="alertsettings.html">
-                                <strong>See All Alerts and Settings</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-alerts -->
-                </li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                <i class="fa fa-user fa-fw"></i> 
-                <i class="fa fa-caret-down"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li><a href="userprofile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                </li>
-                <li class="divider"></li>
-                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                </li>
-            </ul>
-        </li>
-    </ul>
-    
-    <div class="navbar-default sidebar" role="navigation">
-        <div class="sidebar-nav navbar-collapse">
-            <ul class="nav in" id="side-menu">
-                <li>
-                    <a href="index.html" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                </li>
-                <li>
-                    <a href="registration.html"><i class="fa fa-edit fa-fw"></i> Registrations</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-sitemap fa-fw"></i> Vessel Status<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li>
-                            <a href="#">PRINCESS SEAWAYS<span class="fa arrow"></span></a>
-							<ul class="nav nav-third-level collapse">
-                                <li>
-                                    <a href="engine.html">Engine 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Engine 2</a>
-                                </li>
-                                <li>
-                                    <a href="#">Engine 3</a>
-                                </li>
-                                <li>
-                                    <a href="#">Engine 4</a>
-                                </li>
-								<li>
-                                    <a href="#">Engine 5</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-third-level -->
-                        </li>
-                        <li>
-                            <a href="#">QUEEN ELIZABETH</a>
-                        </li>
-                        <li>
-                            <a href="#">BITHIA</a>
-                        </li>
-                    </ul>
-                    <!-- /.nav-second-level -->
-                </li>
-				<li>
-                    <a href="#"><i class="fa fa-clipboard fa-fw"></i> Reports<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-						<li>
-							<a href="#">Report 1</a>
-						</li>
-						<li>
-							<a href="#">Report 2</a>
-						</li>
-						<li>
-							<a href="#">Report 3</a>
-						</li>
-					</ul>
-                </li>
-            </ul>
-        </div>
-        <!-- /.sidebar-collapse -->
-    </div>
-</nav>
+    <div id="wrapper">
+        <div w3-include-html="nav.html"></div>
 
         <div id="page-wrapper">
             <div class="row">
@@ -147,84 +52,96 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"><div class="panel panel-default">
-    <div class="panel-body">
-        <div>
-            <div id="channel1" class="gauge"></div>
-        </div>
-    </div>
-    <!-- /.panel-body -->
-    <div class="panel-footer">
-        <span class="pull-left">S M/E EXH No.1 CYL TEMP</span>
-        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-        <div class="clearfix"></div>
-    </div>
-</div></div>
-                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"><div class="panel panel-default">
-    <div class="panel-body">
-        <div>
-            <div id="channel2" class="gauge"></div>
-        </div>
-    </div>
-    <!-- /.panel-body -->
-    <div class="panel-footer">
-        <span class="pull-left">S M/E EXH No.2 CYL TEMP</span>
-        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-        <div class="clearfix"></div>
-    </div>
-</div></div>
-                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"><div class="panel panel-default">
-    <div class="panel-body">
-        <div>
-            <div id="channel3" class="gauge"></div>
-        </div>
-    </div>
-    <!-- /.panel-body -->
-    <div class="panel-footer">
-        <span class="pull-left">S M/E EXH No.3 CYL TEMP</span>
-        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-        <div class="clearfix"></div>
-    </div>
-</div></div>
-                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"><div class="panel panel-default">
-    <div class="panel-body">
-        <div>
-            <div id="channel4" class="gauge"></div>
-        </div>
-    </div>
-    <!-- /.panel-body -->
-    <div class="panel-footer">
-        <span class="pull-left">S M/E EXH No.4 CYL TEMP</span>
-        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-        <div class="clearfix"></div>
-    </div>
-</div></div>
-                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"><div class="panel panel-default">
-    <div class="panel-body">
-        <div>
-            <div id="channel5" class="gauge"></div>
-        </div>
-    </div>
-    <!-- /.panel-body -->
-    <div class="panel-footer">
-        <span class="pull-left">S M/E EXH No.5 CYL TEMP</span>
-        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-        <div class="clearfix"></div>
-    </div>
-</div></div>
-                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"><div class="panel panel-default">
-    <div class="panel-body">
-        <div>
-            <div id="channel6" class="gauge"></div>
-        </div>
-    </div>
-    <!-- /.panel-body -->
-    <div class="panel-footer">
-        <span class="pull-left">S M/E EXH No.6 CYL TEMP</span>
-        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-        <div class="clearfix"></div>
-    </div>
-</div></div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div>
+                                <div id="channel1" class="gauge"></div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                        <div class="panel-footer">
+                            <span class="pull-left">S M/E EXH No.1 CYL TEMP</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div>
+                                <div id="channel2" class="gauge"></div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                        <div class="panel-footer">
+                            <span class="pull-left">S M/E EXH No.2 CYL TEMP</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div>
+                                <div id="channel3" class="gauge"></div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                        <div class="panel-footer">
+                            <span class="pull-left">S M/E EXH No.3 CYL TEMP</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div>
+                                <div id="channel4" class="gauge"></div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                        <div class="panel-footer">
+                            <span class="pull-left">S M/E EXH No.4 CYL TEMP</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div>
+                                <div id="channel5" class="gauge"></div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                        <div class="panel-footer">
+                            <span class="pull-left">S M/E EXH No.5 CYL TEMP</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div>
+                                <div id="channel6" class="gauge"></div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                        <div class="panel-footer">
+                            <span class="pull-left">S M/E EXH No.6 CYL TEMP</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -241,17 +158,22 @@
                             <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
-                                        <div id="table_length" class="dataTables_length"><span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
-    <option value="10" selected>10</option>
-    <option value="25">25</option>
-    <option value="50">50</option>
-    <option value="100">100</option>
-</select></div>
+                                        <div id="table_length" class="dataTables_length">
+                                            <span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
+                                                <option value="10" selected>10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
-                                        <div id="table_filter" class="dataTables_filter"><label>Search Channel No.:
-<input type="search" class="form-control input-sm" placeholder aria-controls="dataTables-example" />
-</label></div>
+                                        <div id="table_filter" class="dataTables_filter">
+                                            <label>
+                                                Search Channel No.:
+                                                <input type="search" class="form-control input-sm" placeholder aria-controls="dataTables-example" />
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -335,141 +257,133 @@
                 </div>
             </div>
         </div>
-    </div><script src="/js/jquery-3.2.1.min.js"></script>
-<script src="/kendo.all.min.js"></script>
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/kendo.all.min.js"></script>
-<script>
-	$(document).ready(function(){
-		$("#channel1").css({ width: "300px", height: "200px" }).kendoRadialGauge({
-			pointer: {
-				value: 350
-			},
-			scale: {
-				minorUnit: 10,
-				startAngle: -30,
-				endAngle: 210,
-				max: 700,
-				ranges: [
-					{
-						from: 480,
-						to: 700,
-						color: "#c20000"
-					}
-				]
-			}
-		});
-		$("#channel2").css({ width: "300px", height: "200px" }).kendoRadialGauge({
-			pointer: {
-				value: 340
-			},
-			scale: {
-				minorUnit: 10,
-				startAngle: -30,
-				endAngle: 210,
-				max: 700,
-				ranges: [
-					{
-						from: 480,
-						to: 700,
-						color: "#c20000"
-					}
-				]
-			}
-		});
-		$("#channel3").css({ width: "300px", height: "200px" }).kendoRadialGauge({
-			pointer: {
-				value: 300
-			},
-			scale: {
-				minorUnit: 10,
-				startAngle: -30,
-				endAngle: 210,
-				max: 700,
-				ranges: [
-					{
-						from: 480,
-						to: 700,
-						color: "#c20000"
-					}
-				]
-			}
-		});
-		$("#channel4").css({ width: "300px", height: "200px" }).kendoRadialGauge({
-			pointer: {
-				value: 320
-			},
-			scale: {
-				minorUnit: 10,
-				startAngle: -30,
-				endAngle: 210,
-				max: 700,
-				ranges: [
-					{
-						from: 480,
-						to: 700,
-						color: "#c20000"
-					}
-				]
-			}
-		});
-		$("#channel5").css({ width: "300px", height: "200px" }).kendoRadialGauge({
-			pointer: {
-				value: 370
-			},
-			scale: {
-				minorUnit: 10,
-				startAngle: -30,
-				endAngle: 210,
-				max: 700,
-				ranges: [
-					{
-						from: 480,
-						to: 700,
-						color: "#c20000"
-					}
-				]
-			}
-		});
-		$("#channel6").css({ width: "300px", height: "200px" }).kendoRadialGauge({
-			pointer: {
-				value: 350
-			},
-			scale: {
-				minorUnit: 10,
-				startAngle: -30,
-				endAngle: 210,
-				max: 700,
-				ranges: [
-					{
-						from: 480,
-						to: 700,
-						color: "#c20000"
-					}
-				]
-			}
-		});
-		
-	});
-</script><div class="footer-basic footer-remax">
-    <footer>
-        <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
-        <ul class="list-inline">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Terms</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-        </ul>
-        <p class="copyright">Daikai Engineering Pte Ltd © 1992</p>
-    </footer>
-</div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/kendo.all.min.js"></script>
-    <script src="assets/js/metisMenu.js"></script>
-    <script src="assets/js/remax.js"></script>
-    <script src="assets/js/account.js"></script>
+    </div>
+
+    <div w3-include-html="footer.html"></div>
+
+    <script>
+        includeHTML();
+
+        $(document).ready(function () {
+            //hiding url querystring
+            var uri = window.location.toString();
+            if (uri.indexOf("?") > 0) {
+                var clean_uri = uri.substring(0, uri.indexOf("?"));
+                window.history.replaceState({}, document.title, clean_uri);
+            }
+
+            // demo purpose
+            $("#channel1").css({ width: "300px", height: "200px" }).kendoRadialGauge({
+                pointer: {
+                    value: 350
+                },
+                scale: {
+                    minorUnit: 10,
+                    startAngle: -30,
+                    endAngle: 210,
+                    max: 700,
+                    ranges: [
+                        {
+                            from: 480,
+                            to: 700,
+                            color: "#c20000"
+                        }
+                    ]
+                }
+            });
+            $("#channel2").css({ width: "300px", height: "200px" }).kendoRadialGauge({
+                pointer: {
+                    value: 340
+                },
+                scale: {
+                    minorUnit: 10,
+                    startAngle: -30,
+                    endAngle: 210,
+                    max: 700,
+                    ranges: [
+                        {
+                            from: 480,
+                            to: 700,
+                            color: "#c20000"
+                        }
+                    ]
+                }
+            });
+            $("#channel3").css({ width: "300px", height: "200px" }).kendoRadialGauge({
+                pointer: {
+                    value: 300
+                },
+                scale: {
+                    minorUnit: 10,
+                    startAngle: -30,
+                    endAngle: 210,
+                    max: 700,
+                    ranges: [
+                        {
+                            from: 480,
+                            to: 700,
+                            color: "#c20000"
+                        }
+                    ]
+                }
+            });
+            $("#channel4").css({ width: "300px", height: "200px" }).kendoRadialGauge({
+                pointer: {
+                    value: 320
+                },
+                scale: {
+                    minorUnit: 10,
+                    startAngle: -30,
+                    endAngle: 210,
+                    max: 700,
+                    ranges: [
+                        {
+                            from: 480,
+                            to: 700,
+                            color: "#c20000"
+                        }
+                    ]
+                }
+            });
+            $("#channel5").css({ width: "300px", height: "200px" }).kendoRadialGauge({
+                pointer: {
+                    value: 370
+                },
+                scale: {
+                    minorUnit: 10,
+                    startAngle: -30,
+                    endAngle: 210,
+                    max: 700,
+                    ranges: [
+                        {
+                            from: 480,
+                            to: 700,
+                            color: "#c20000"
+                        }
+                    ]
+                }
+            });
+            $("#channel6").css({ width: "300px", height: "200px" }).kendoRadialGauge({
+                pointer: {
+                    value: 350
+                },
+                scale: {
+                    minorUnit: 10,
+                    startAngle: -30,
+                    endAngle: 210,
+                    max: 700,
+                    ranges: [
+                        {
+                            from: 480,
+                            to: 700,
+                            color: "#c20000"
+                        }
+                    ]
+                }
+            });
+
+        });
+    </script>
 </body>
 
 </html>

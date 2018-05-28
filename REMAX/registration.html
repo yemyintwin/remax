@@ -41,1068 +41,768 @@
 
 <body>
     <div id="wrapper">
-        <nav class="nav nav-tabs navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">Remax v1.0</a>
-            </div>
-            <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-warning fa-fw"></i>7 Alerts
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="alertsettings.html">
-                                <strong>See All Alerts and Settings</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-alerts -->
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <i class="fa fa-user fa-fw"></i>
-                        <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li>
-                            <a href="userprofile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+        <div w3-include-html="nav.html"></div>
 
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav in" id="side-menu">
-                        <li>
-                            <a href="index.html" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="registration.html"><i class="fa fa-edit fa-fw"></i> Registrations</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Vessel Status<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level collapse">
-                                <li>
-                                    <a href="#">PRINCESS SEAWAYS<span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level collapse">
-                                        <li>
-                                            <a href="engine.html">Engine 1</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Engine 2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Engine 3</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Engine 4</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Engine 5</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
-                                </li>
-                                <li>
-                                    <a href="#">QUEEN ELIZABETH</a>
-                                </li>
-                                <li>
-                                    <a href="#">BITHIA</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-clipboard fa-fw"></i> Reports<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level collapse">
-                                <li>
-                                    <a href="#">Report 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Report 2</a>
-                                </li>
-                                <li>
-                                    <a href="#">Report 3</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-        </nav>
-    </div>
-
-    <div id="page-wrapper" style="min-height: 731px;">
-        <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="page-header">
-                    <h1>Registration</h1>
-                </div>
-            </div>
-        </div>
-
-        <!--- Account Registration -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Accounts</h3>
+        <div id="page-wrapper" style="min-height: 731px;">
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="page-header">
+                        <h1>Registration</h1>
                     </div>
-                    <div class="panel-body">
-                        <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div id="table_accounts"></div>
-                                </div>
-                            </div>
+                </div>
+            </div>
+
+            <!--- Account Registration -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Accounts</h3>
                         </div>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_acc" id="btnNewAccount" onclick="registration.btnNewAccount_OnClick();">New</button>
-                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_acc" id="btnEditAccount" onclick="registration.btnEditAccount_OnClick();">Edit</button>
-                            <button class="btn btn-default" type="button" id="btnDelAccount" onclick="registration.btnDelAccount_OnClick();">Delete</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div style="height:20px"></div>
-            </div>
-        </div>
-
-        <!--- User Registration -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Users</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div id="table_users"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_user" id="btnNewUser" onclick="registration.btnNewUser_OnClick();">New</button>
-                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_user" id="btnEditUser" onclick="registration.btnEditUser_OnClick();">Edit</button>
-                            <button class="btn btn-default" type="button" id="btnDelUser" onclick="registration.btnDelUser_OnClick();">Delete</button>
-                            <button class="btn btn-default" type="button" data-dismiss="modal" id="btnResetPassword" onclick="registration.btnResetPassword_OnClick()">Reset Password</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div style="height:20px"></div>
-            </div>
-        </div>
-
-        <!--- Vessel Registration -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Vessels</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div id="table_vessels"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="btn-group" role="group">
-                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_vessel" id="btnNewVessel" onclick="registration.btnNewVessel_OnClick()">New</button>
-                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_vessel" id="btnEditVessel" onclick="registration.btnEditVessel_OnClick();">Edit</button>
-                    <button class="btn btn-default" type="button" id="btnDelVessel" onclick="registration.btnDelVessel_OnClick();">Delete</button>
-                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_vessel_photo" 
-                            id="btnUploadVesselPhoto">Photo Upload</button>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div style="height:20px"></div>
-            </div>
-        </div>
-
-        <!--- Channel Registration -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Data Channels (per Engine Modal)</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <div id="table_length" class="dataTables_length">
-                                        <span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
-                                            <option value="10" selected>10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-sm-6">
-                                    <div id="table_filter" class="dataTables_filter">
-                                        <label>
-                                            Select Engine Model:
-                                            <select class="form-control" id="model"></select>
-                                        </label>
+                        <div class="panel-body">
+                            <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="table_accounts"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table table table-striped table-bordered table-hover dataTable no-footer dtr-inline">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th class="sorting_asc" aria-controls="dataTables-example" aria-sort="ascending" aria-label="Account Name">Channel No.</th>
-                                                    <th class="sorting">Channel Name</th>
-                                                    <th class="sorting">Dashboard Display</th>
-                                                    <th class="sorting">Chart Type</th>
-                                                    <th class="sorting">Min Value</th>
-                                                    <th class="sorting">Max Value</th>
-                                                    <th class="sorting">Scale</th>
-                                                    <th class="sorting">Display Unit</th>
-                                                    <th class="sorting">Lower Limit</th>
-                                                    <th class="sorting">Upper Limit</th>
-                                                    <th class="sorting">Monitoring Timer</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="gradeA odd" role="row">
-                                                    <td>0101<br></td>
-                                                    <td>S M/E RUN<br></td>
-                                                    <td>☐<br></td>
-                                                    <td><br></td>
-                                                    <td>0</td>
-                                                    <td>1</td>
-                                                    <td><br></td>
-                                                    <td>RUN/STOP<br></td>
-                                                    <td><br></td>
-                                                    <td><br></td>
-                                                    <td><br></td>
-                                                </tr>
-                                                <tr class="gradeA odd" role="row">
-                                                    <td>0106<br></td>
-                                                    <td>S M/E REVOLUTION SPEED<br></td>
-                                                    <td>☑<br></td>
-                                                    <td>Gauge<br></td>
-                                                    <td>0</td>
-                                                    <td>1500</td>
-                                                    <td>100</td>
-                                                    <td>min-1<br></td>
-                                                    <td><br></td>
-                                                    <td>1300</td>
-                                                    <td><br></td>
-                                                </tr>
-                                                <tr class="gradeA odd" role="row">
-                                                    <td>0111<br></td>
-                                                    <td>S M/E LOAD RATIO (REV)<br><br></td>
-                                                    <td>☑<br></td>
-                                                    <td>Bar</td>
-                                                    <td>0</td>
-                                                    <td>150</td>
-                                                    <td>10</td>
-                                                    <td>%</td>
-                                                    <td><br></td>
-                                                    <td>110</td>
-                                                    <td><br></td>
-                                                </tr>
-                                                <tr class="gradeA odd" role="row">
-                                                    <td>0161<br></td>
-                                                    <td>S M/E EXH No.1 CYL TEMP<br></td>
-                                                    <td>☑<br></td>
-                                                    <td>Bar<br></td>
-                                                    <td>0</td>
-                                                    <td>700</td>
-                                                    <td>100</td>
-                                                    <td>°C</td>
-                                                    <td><br></td>
-                                                    <td>480</td>
-                                                    <td><br></td>
-                                                </tr>
-                                                <tr class="gradeA odd" role="row">
-                                                    <td>0162<br></td>
-                                                    <td>S M/E EXH No.2 CYL TEMP<br></td>
-                                                    <td>☑<br></td>
-                                                    <td>Bar<br></td>
-                                                    <td>0</td>
-                                                    <td>700</td>
-                                                    <td>100</td>
-                                                    <td>°C</td>
-                                                    <td><br></td>
-                                                    <td>480</td>
-                                                    <td><br></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_acc" id="btnNewAccount" onclick="registration.btnNewAccount_OnClick();">New</button>
+                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_acc" id="btnEditAccount" onclick="registration.btnEditAccount_OnClick();">Edit</button>
+                                <button class="btn btn-default" type="button" id="btnDelAccount" onclick="registration.btnDelAccount_OnClick();">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="height:20px"></div>
+                </div>
+            </div>
+
+            <!--- User Registration -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Users</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="table_users"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12 col-xs-12">
-                                    <div class="dataTables_info"><span>Showing 1 to 5 of 32</span></div>
-                                </div>
-                                <div class="col-md-8 col-sm-12 col-xs-12">
-                                    <div class="dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="paginate_button previous disabled"><a href="#">Previous</a></li>
-                                            <li class="paginate_button active"><a href="#">1</a></li>
-                                            <li class="paginate_button"><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a></li>
-                                            <li class="paginate_button"></li>
-                                            <li class="paginate_button next"><a href="#">Next</a></li>
-                                        </ul>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_user" id="btnNewUser" onclick="registration.btnNewUser_OnClick();">New</button>
+                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_user" id="btnEditUser" onclick="registration.btnEditUser_OnClick();">Edit</button>
+                                <button class="btn btn-default" type="button" id="btnDelUser" onclick="registration.btnDelUser_OnClick();">Delete</button>
+                                <button class="btn btn-default" type="button" data-dismiss="modal" id="btnResetPassword" onclick="registration.btnResetPassword_OnClick()">Reset Password</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="height:20px"></div>
+                </div>
+            </div>
+
+            <!--- Vessel Registration -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Vessels</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="table_vessels"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-12">
-                <div class="btn-group" role="group"><button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_datachannel">New</button><button class="btn btn-default" type="button">Edit</button><button class="btn btn-default" type="button">Delete</button></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div style="height:20px"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal registration_acc -->
-    <div>
-        <div class="modal fade" role="dialog" tabindex="-1" id="registration_acc" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form class="form-horizontal" role="form" id="form_acc" method="post">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title">
-                                <em class="fa fa-building fa-1x"></em>Account Registration
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <input type="hidden" id="id" name="id" />
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="accName">Account Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="accName" name="accName" placeholder="Account Name" required />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="accID">Account ID.</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="accID" name="accID" placeholder="Account No." required />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="primary">Primary Contact</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="primary" name="primary" placeholder="Primary Contact" required />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="phone">Phone</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="fax">Fax</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="fax" name="fax" placeholder="Fax" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="email">Email</label>
-                                <div class="col-sm-8">
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required />
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                            <button class="btn btn-primary" type="submit" id="btnAccSubmit">Save</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Model registration_user -->
-    <div>
-        <div class="modal fade" role="dialog" tabindex="-1" id="registration_user" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form class="form-horizontal" role="form" id="form_user" method="post">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
-                                <em class="fa fa-user fa-1x"></em>
-                                User Registration
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="userName">User Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="userName" name="userName" placeholder="User Name" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="parent">Parent (Account)</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="userParent" name="userParent"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="title">Job Title</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="userTitle" name="userTitle" placeholder="Job Title" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="userPhone">Office Phone</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="userPhone" name="userPhone" placeholder="Mobile" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="userMobile">Mobile</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="userMobile" name="userMobile" placeholder="Mobile" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="email">Email</label>
-                                <div class="col-sm-8">
-                                    <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                            <button class="btn btn-primary" type="submit" id="btnUserSubmit">Save</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Model registration_vessel -->
-    <div>
-        <div class="modal fade" role="dialog" tabindex="-1" id="registration_vessel" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form class="form-horizontal" role="form" id="form_vessel" method="post">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
-                                <em class="fa fa-ship fa-1x"></em>
-                                Vessel Registration
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="vessel_Name">Vessel Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="vessel_Name" name="vessel_Name" placeholder="Vessel Name" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="vessel_imo">IMO</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="vessel_imo" name="vessel_imo" placeholder="IMO Number" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="vessel_owner">Owner</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="vessel_owner" name="vessel_owner"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="vessel_operator">Operator</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="vessel_operator" name="vessel_operator"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="vessel_shipType">Ship Type</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="vessel_shipType" name="vessel_shipType"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="vessel_shipyard">Shipyard Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="vessel_shipyard" name="vessel_shipyard" placeholder="Shipyard Name" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="vessel_shipyardCountry">Shipyard Country</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="vessel_shipyardCountry" name="vessel_shipyardCountry"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="vessel_builtYear">Built Year</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="vessel_builtYear" name="vessel_builtYear" placeholder="Built Year" data-provide="datepicker" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="vessel_ownYear">Delivery to Owner</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="vessel_ownYear" name="vessel_ownYear" placeholder="Delivery to Owner" data-provide="datepicker" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="vessel_class">Ship Class</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="vessel_class" name="vessel_class"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="vessel_dwt">DWT</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="vessel_dwt" name="vessel_dwt" placeholder="DWT" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="vessel_propulsion">Total Propulsion Power</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="vessel_propulsion" name="vessel_propulsion" placeholder="Total Propulsion Power" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="vessel_generator">Total Propulsion Power</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="vessel_generator" name="vessel_generator" placeholder="Total Generator Power" />
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                            <button class="btn btn-primary" type="submit" id="btnVesselSubmit">Save</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Model registration_vessel_photo -->
-    <div>
-        <div class="modal fade" role="dialog" tabindex="-1" id="registration_vessel_photo" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form class="form-horizontal" role="form" id="form_vessel_photo" method="post">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
-                                <em class="fa fa-ship fa-1x"></em>
-                                Vessel Photo Upload
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <input name="vesselId" id="vesselId" type="hidden" />
-                                <input name="vesselPhoto" id="vesselPhoto" type="file" aria-label="files" />
-                            </div>
-                        </div>
-                        <!--<div class="modal-footer">
-                            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                            <button class="btn btn-primary" type="submit" id="btnVesselPhotoSubmit">Save</button>
-                        </div>-->
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Model registration_equipment -->
-    <div>
-        <div class="modal fade" role="dialog" tabindex="-1" id="registration_equipment" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
-                            <em class="fa fa-gears fa-1x"></em>
-                            Equipment Registration
-                        </h4>
+                <div class="col-md-12">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_vessel" id="btnNewVessel" onclick="registration.btnNewVessel_OnClick()">New</button>
+                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_vessel" id="btnEditVessel" onclick="registration.btnEditVessel_OnClick();">Edit</button>
+                        <button class="btn btn-default" type="button" id="btnDelVessel" onclick="registration.btnDelVessel_OnClick();">Delete</button>
+                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_vessel_photo"
+                                id="btnUploadVesselPhoto">
+                            Photo Upload
+                        </button>
                     </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="vesselName">Vessel Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="vesselName" placeholder="Vessel Name" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="type">Engine Type</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="type">
-                                        <option>Engine</option>
-                                        <option>Generator</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="model">Engine Model</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="model">
-                                        <option>6DEM-18</option>
-                                        <option>6DEM-18(L)</option>
-                                        <option>6DKM-20e</option>
-                                        <option>6DKM-20eL</option>
-                                        <option>6DKM-20e(L)(F)</option>
-                                        <option>6DKM-20e(L)F</option>
-                                        <option>6DEM-20</option>
-                                        <option>6DEM-20L</option>
-                                        <option>6DEM-20(L)(F)</option>
-                                        <option>6DEM-20(L)F</option>
-                                        <option>6DEM-23</option>
-                                        <option>6DEM-23L</option>
-                                        <option>6DEM-23(L)(F)</option>
-                                        <option>6DEM-23(L)F</option>
-                                        <option>8DEM-23</option>
-                                        <option>8DEM-23F</option>
-                                        <option>8DEM-23(L)(F)</option>
-                                        <option>8DEM-23(L)F</option>
-                                        <option>6DKM-26e</option>
-                                        <option>6DKM-26eL</option>
-                                        <option>6DKM-26e(L)(F)</option>
-                                        <option>6DKM-26e(L)F</option>
-                                        <option>6DKM-28e</option>
-                                        <option>6DKM-28eL</option>
-                                        <option>6DKM-28e(L)(F)</option>
-                                        <option>6DKM-28e(L)F</option>
-                                        <option>6DEM-28</option>
-                                        <option>6DEM-28L</option>
-                                        <option>6DEM-28(L)(F)</option>
-                                        <option>6DEM-28(L)F</option>
-                                        <option>8DKM-28e</option>
-                                        <option>8DKM-28eL</option>
-                                        <option>8DKM-28e(L)(F)</option>
-                                        <option>8DKM-28e(L)F</option>
-                                        <option>8DEM-28</option>
-                                        <option>8DEM-28L</option>
-                                        <option>8DEM-28(L)(F)</option>
-                                        <option>8DEM-28(L)F</option>
-                                        <option>6DCM-32e</option>
-                                        <option>6DCM-32eL</option>
-                                        <option>6DCM-32e(L)(F)</option>
-                                        <option>6DCM-32e(L)F</option>
-                                        <option>8DCM-32e</option>
-                                        <option>8DCM-32eL</option>
-                                        <option>8DCM-32e(L)(F)</option>
-                                        <option>8DCM-32e(L)F</option>
-                                        <option>16DCM-32e</option>
-                                        <option>16DCM-32eL</option>
-                                        <option>16DCM-32e(L)(F)</option>
-                                        <option>16DCM-32e(L)F</option>
-                                        <option>6DEM-33</option>
-                                        <option>6DEM-33L</option>
-                                        <option>6DEM-33(L)(F)</option>
-                                        <option>6DEM-33(L)F</option>
-                                        <option>8DEM-33</option>
-                                        <option>8DEM-33L</option>
-                                        <option>8DEM-33(L)(F)</option>
-                                        <option>8DEM-33(L)F</option>
-                                        <option>6DKM-36e</option>
-                                        <option>6DKM-36eL</option>
-                                        <option>6DKM-36e(L)(F)</option>
-                                        <option>6DKM-36e(L)F</option>
-                                        <option>8DKM-36e</option>
-                                        <option>8DKM-36eL</option>
-                                        <option>8DKM-36e(L)(F)</option>
-                                        <option>8DKM-36e(L)F</option>
-                                        <option>12DKM-36e</option>
-                                        <option>12DKM-36eL</option>
-                                        <option>12DKM-36e(L)(F)</option>
-                                        <option>12DKM-36e(L)F</option>
-                                        <option>M5</option>
-                                        <option>6DL-16Ae</option>
-                                        <option>6DE-18</option>
-                                        <option>6DK-20e</option>
-                                        <option>6DE-20</option>
-                                        <option>6DE-23</option>
-                                        <option>6DE-23F</option>
-                                        <option>6DK-26e</option>
-                                        <option>6DK-26eF</option>
-                                        <option>8DE-23</option>
-                                        <option>8DE-23F</option>
-                                        <option>6DK-28e</option>
-                                        <option>6DK-28eF</option>
-                                        <option>6DE-28</option>
-                                        <option>6DE-28F</option>
-                                        <option>8DK-28e</option>
-                                        <option>8DK-28eF</option>
-                                        <option>6DK-36e</option>
-                                        <option>6DK-36eF</option>
-                                        <option>6DE-33</option>
-                                        <option>6DE-33F</option>
-                                        <option>6DC-32e</option>
-                                        <option>6DC-32eF</option>
-                                        <option>8DC-32e</option>
-                                        <option>8DC-32eF</option>
-                                        <option>8DK-36e</option>
-                                        <option>8DK-36eF</option>
-                                        <option>8DE-33</option>
-                                        <option>8DE-33F</option>
-                                        <option>12DC-32e</option>
-                                        <option>12DC-32eF</option>
-                                        <option>12DK-36e</option>
-                                        <option>12DK-36eF</option>
-                                        <option>16DC-32e</option>
-                                        <option>16DC-32eF</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="sno">Engine Serial No.</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="sno" placeholder="Engine Serial No." />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="outputPower">Output Power x RPM</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="outputPower" placeholder="Output Power x RPM" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="gearboxModel">Gearbox Model</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="gearboxModel" placeholder="Gearbox Model" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="gearboxSrNo">Gearbox Serial No.</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="gearboxSrNo" placeholder="Gearbox Serial No." />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="gearboxRatio">Gear Ratio</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="gearboxRatio" placeholder="Gear Ratio" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="alternatorMaker">Alternator Maker</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="alternatorMaker" placeholder="Alternator Maker" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="alternatorMakerModel">Alternator Maker Model</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="alternatorMakerModel" placeholder="Alternator Maker Model" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="alternatorSrNo">Alternator Serial No.</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="alternatorSrNo" placeholder="Alternator Serial No." />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="alternatorOutput">Alternator Output (kWe)</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="alternatorOutput" placeholder="Alternator Output (kWe)" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="insulation">Insulation / Temperature Rise</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="insulation" placeholder="Insulation / Temperature Rise" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="irRate">IP Rating</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="irRate" placeholder="IP Rating" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="mounting">Mounting</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="mounting" placeholder="Mounting" />
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                    <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" data-dismiss="modal">Save</button></div>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="height:20px"></div>
+                </div>
+            </div>
 
-    <!-- Model registration_datachannel -->
-    <div>
-        <div class="modal fade" role="dialog" tabindex="-1" id="registration_datachannel" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
-                            <em class="fa fa-upload fa-1x"></em>
-                            Data Channel Registration
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="channelNo">Channel No</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="channelNo" placeholder="Channel No" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="channelName">Channel Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="channelName" placeholder="Channel Name" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="dashboardDisplay">Dashboard Display</label>
-                                <div class="col-sm-8">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" value="dashboardDisplay"></input>
-                                        </label>
+            <!--- Engine Registration -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Engines</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="table_engines"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="chartType">Chart Type</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="chartType">
-                                        <option>Gauge</option>
-                                        <option>Column</option>
-                                        <option>Bar</option>
-                                    </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_engine"
+                                id="btnNewEngine" onclick="registration.btnNewEngine_OnClick()">
+                            New
+                        </button>
+                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_engine"
+                                id="btnEditEngine" onclick="registration.btnEditEngine_OnClick();">
+                            Edit
+                        </button>
+                        <button class="btn btn-default" type="button"
+                                id="btnDelEngine" onclick="registration.btnDelEngine_OnClick();">
+                            Delete
+                        </button>
+                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_engine_photo"
+                                id="btnUploadEnginePhoto">
+                            Photo Upload
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="height:20px"></div>
+                </div>
+            </div>
+
+            <!--- Channel Registration -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Data Channels (per Engine Modal)</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="table_channels"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="minRange">Min Range</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="minRange" placeholder="Min Range" />
-                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_channel"
+                            id="btnNewChannel" onclick="registration.btnNewChannel_OnClick()">
+                        New
+                    </button>
+                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_channel"
+                            id="btnEditChannel" onclick="registration.btnEditChannel_OnClick();">
+                        Edit
+                    </button>
+                    <button class="btn btn-default" type="button"
+                            id="btnDelChannel" onclick="registration.btnDelChannel_OnClick();">
+                        Delete
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="height:20px"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div w3-include-html="footer.html"></div>
+
+    <div id="model_dialogs">
+        <!-- Modal registration_acc -->
+        <div>
+            <div class="modal fade" role="dialog" tabindex="-1" id="registration_acc" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form class="form-horizontal" role="form" id="form_acc" method="post">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <h4 class="modal-title">
+                                    <em class="fa fa-building fa-1x"></em>Account Registration
+                                </h4>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="maxRange">Max Range</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="maxRange" placeholder="Max Range" />
+                            <div class="modal-body">
+                                <input type="hidden" id="id" name="id" />
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="accName">Account Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="accName" name="accName" placeholder="Account Name" required />
+                                    </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="accID">Account ID.</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="accID" name="accID" placeholder="Account No." required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="primary">Primary Contact</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="primary" name="primary" placeholder="Primary Contact" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="phone">Phone</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="fax">Fax</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="fax" name="fax" placeholder="Fax" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="email">Email</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required />
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="scale">Scale</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="scale" placeholder="Scale" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="unit">Display Unit</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="unit" placeholder="Display Unit" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="lowerLimit">Lower Limit</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="lowerLimit" placeholder="Lower Limit" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="upperLimit">Upper Limit</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="upperLimit" placeholder="Upper Limit" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="monitor">Monitoring Timer</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control"
-                                           id="monitor" placeholder="Monitoring Timer" />
-                                </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit" id="btnAccSubmit">Save</button>
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" data-dismiss="modal">Save</button></div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal for displaying the messages -->
-    <div class="modal fade" id="messageModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title">
-                        <em class="fa fa-warning fa-1x"> </em> Server Error(s)
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <!-- The messages container -->
-                    <div id="errors"></div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+        <!-- Model registration_user -->
+        <div>
+            <div class="modal fade" role="dialog" tabindex="-1" id="registration_user" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form class="form-horizontal" role="form" id="form_user" method="post">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
+                                    <em class="fa fa-user fa-1x"></em>
+                                    User Registration
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="userName">User Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="userName" name="userName" placeholder="User Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label"
+                                           for="parent">Parent (Account)</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="userParent" name="userParent"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="title">Job Title</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="userTitle" name="userTitle" placeholder="Job Title" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="userPhone">Office Phone</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="userPhone" name="userPhone" placeholder="Mobile" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="userMobile">Mobile</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="userMobile" name="userMobile" placeholder="Mobile" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="email">Email</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit" id="btnUserSubmit">Save</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal for displaying the messages -->
-    <div class="modal fade" id="messageModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title">
-                        <em class="fa fa-warning fa-1x"> </em> Server Error(s)
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <!-- The messages container -->
-                    <div id="errors"></div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+        <!-- Model registration_vessel -->
+        <div>
+            <div class="modal fade" role="dialog" tabindex="-1" id="registration_vessel" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form class="form-horizontal" role="form" id="form_vessel" method="post">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
+                                    <em class="fa fa-ship fa-1x"></em>
+                                    Vessel Registration
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="vessel_Name">Vessel Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="vessel_Name" name="vessel_Name" placeholder="Vessel Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="vessel_imo">IMO</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="vessel_imo" name="vessel_imo" placeholder="IMO Number" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="vessel_owner">Owner</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="vessel_owner" name="vessel_owner"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="vessel_operator">Operator</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="vessel_operator" name="vessel_operator"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="vessel_shipType">Ship Type</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="vessel_shipType" name="vessel_shipType"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="vessel_shipyard">Shipyard Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="vessel_shipyard" name="vessel_shipyard" placeholder="Shipyard Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="vessel_shipyardCountry">Shipyard Country</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="vessel_shipyardCountry" name="vessel_shipyardCountry"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="vessel_builtYear">Built Year</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="vessel_builtYear" name="vessel_builtYear" placeholder="Built Year" data-provide="datepicker" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="vessel_ownYear">Delivery to Owner</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="vessel_ownYear" name="vessel_ownYear" placeholder="Delivery to Owner" data-provide="datepicker" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="vessel_class">Ship Class</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="vessel_class" name="vessel_class"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="vessel_dwt">DWT</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="vessel_dwt" name="vessel_dwt" placeholder="DWT" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="vessel_propulsion">Total Propulsion Power</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="vessel_propulsion" name="vessel_propulsion" placeholder="Total Propulsion Power" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="vessel_generator">Total Propulsion Power</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="vessel_generator" name="vessel_generator" placeholder="Total Generator Power" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit" id="btnVesselSubmit">Save</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="footer-basic footer-remax">
-        <footer>
-            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
-            <ul class="list-inline">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Terms</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-            </ul>
-            <p class="copyright">Daikai Engineering Pte Ltd © 1992</p>
-        </footer>
+        <!-- Model registration_vessel_photo -->
+        <div>
+            <div class="modal fade" role="dialog" tabindex="-1" id="registration_vessel_photo" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form class="form-horizontal" role="form" id="form_vessel_photo" method="post">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
+                                    <em class="fa fa-ship fa-1x"></em>
+                                    Vessel Photo Upload
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <input name="vesselId" id="vesselId" type="hidden" />
+                                    <input name="vesselPhoto" id="vesselPhoto" type="file" aria-label="files" />
+                                </div>
+                            </div>
+                            <!--<div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit" id="btnVesselPhotoSubmit">Save</button>
+                            </div>-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model registration_engine -->
+        <div>
+            <div class="modal fade" role="dialog" tabindex="-1" id="registration_engine" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form class="form-horizontal" role="form" id="form_engine" method="post">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
+                                    <em class="fa fa-gears fa-1x"></em>
+                                    Equipment Registration
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_vessel">Vessel</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="engine_vessel" name="engine_vessel"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_type">Engine Type</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="engine_type" name="engine_type"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_model">Engine Model</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="engine_model" name="engine_model"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_sno">Engine Serial No.</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="engine_sno" name="engine_sno" placeholder="Engine Serial No." />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_outputPower">Output Power x RPM</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" step="1" class="form-control" id="engine_outputPower" name="engine_outputPower" placeholder="Output Power x RPM" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_gearboxModel">Gearbox Model</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="engine_gearboxModel" name="engine_gearboxModel" placeholder="Gearbox Model" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_gearboxSrNo">Gearbox Serial No.</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="engine_gearboxSrNo" name="engine_gearboxSrNo" placeholder="Gearbox Serial No." />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_gearboxRatio">Gear Ratio</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="engine_gearboxRatio" name="engine_gearboxRatio" placeholder="Gear Ratio" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_alternatorMaker">Alternator Maker</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="engine_alternatorMaker" name="engine_alternatorMaker"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_alternatorMakerModel">Alternator Maker Model</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="engine_alternatorMakerModel" name="engine_alternatorMakerModel" placeholder="Alternator Maker Model" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_alternatorSrNo">Alternator Serial No.</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="engine_alternatorSrNo" name="engine_alternatorSrNo" placeholder="Alternator Serial No." />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_alternatorOutput">Alternator Output (kWe)</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="engine_alternatorOutput" name="engine_alternatorOutput" placeholder="Alternator Output (kWe)" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_powerSupplySystem">IP Rating</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="engine_powerSupplySystem" name="engine_powerSupplySystem" placeholder="Power Supply System" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_insulation">Insulation / Temperature Rise</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="engine_insulation" name="engine_insulation" placeholder="Insulation / Temperature Rise" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_iprRate">IP Rating</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="engine_iprRate" name="engine_iprRate" placeholder="IP Rating" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="engine_mounting">Mounting</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="engine_mounting" name="engine_mounting" placeholder="Mounting" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit" id="btnEngineSubmit">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model registration_engine_photo -->
+        <div>
+            <div class="modal fade" role="dialog" tabindex="-1" id="registration_engine_photo" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form class="form-horizontal" role="form" id="form_engine_photo" method="post">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
+                                    <em class="fa fa-ship fa-1x"></em>
+                                    Engine Photo Upload
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <input name="engineId" id="engineId" type="hidden" />
+                                    <input name="enginePhoto" id="enginePhoto" type="file" aria-label="files" />
+                                </div>
+                            </div>
+                            <!--<div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit" id="btnVesselPhotoSubmit">Save</button>
+                            </div>-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model registration_datachannel -->
+        <div>
+            <div class="modal fade" role="dialog" tabindex="-1" id="registration_channel" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form class="form-horizontal" role="form" id="form_channel" method="post">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
+                                    <em class="fa fa-upload fa-1x"></em>
+                                    Data Channel Registration
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="channel_model">Engine Model</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="channel_model" name="channel_model"></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="channel_channelNo">Channel No</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="channel_channelNo" name="channel_channelNo" placeholder="Channel No" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="channel_channelName">Channel Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="channel_channelName" name="channel_channelName" placeholder="Channel Name" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="channel_dashboardDisplay">Dashboard Display</label>
+                                    <div class="col-sm-8">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" id="channel_dashboardDisplay" name="channel_dashboardDisplay" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="channel_chartType">Chart Type</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="channel_chartType" name="channel_chartType"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="channel_minRange">Min Range</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="channel_minRange" name="channel_minRange" placeholder="Min Range" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="channel_maxRange">Max Range</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="channel_maxRange" name="channel_maxRange" placeholder="Max Range" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="channel_scale">Scale</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="channel_scale" name="channel_scale" placeholder="Scale" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="channel_unit">Display Unit</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="channel_unit" name="channel_unit" placeholder="Display Unit" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="channel_lowerLimit">Lower Limit</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="channel_lowerLimit" name="channel_lowerLimit" placeholder="Lower Limit" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="channel_upperLimit">Upper Limit</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="channel_upperLimit" name="channel_upperLimit" placeholder="Upper Limit" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="channel_monitor">Monitoring Timer</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="channel_monitor" name="channel_monitor" placeholder="Monitoring Timer" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="channel_dataType">Data Type</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="channel_dataType" name="channel_dataType"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit" id="btnChannelSubmit">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for displaying the messages -->
+        <div class="modal fade" id="messageModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">
+                            <em class="fa fa-warning fa-1x"> </em> Server Error(s)
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- The messages container -->
+                        <div id="errors"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for displaying the messages -->
+        <div class="modal fade" id="messageModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">
+                            <em class="fa fa-warning fa-1x"> </em> Server Error(s)
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- The messages container -->
+                        <div id="errors"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
+        includeHTML();
+
         $(document).ready(function () {
             // Calling on load method from registration.js
             registration.onload();
         });
-
     </script>
 </body>
 

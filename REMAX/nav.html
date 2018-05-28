@@ -1,0 +1,97 @@
+﻿<nav class="nav nav-tabs navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">Remax v1.0</a>
+    </div>
+
+    <ul class="nav navbar-top-links navbar-right">
+        <li class="navbar-brand" id="welcome">Welcome</li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-alerts">
+                <li>
+                    <a href="#">
+                        <div>
+                            <i class="fa fa-warning fa-fw"></i>7 Alerts
+                            <span class="pull-right text-muted small">4 minutes ago</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="#">
+                        <div>
+                            <i class="fa fa-envelope fa-fw"></i> Message Sent
+                            <span class="pull-right text-muted small">4 minutes ago</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a class="text-center" href="alertsettings.html">
+                        <strong>See All Alerts and Settings</strong>
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+            </ul>
+            <!-- /.dropdown-alerts -->
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                <i class="fa fa-user fa-fw"></i>
+                <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li>
+                    <a href="userprofile.html"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav in" id="side-menu">
+                <li>
+                    <a href="index.html" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                </li>
+                <li id="nav_registration">
+                    <a href="registration.html"><i class="fa fa-edit fa-fw"></i> Registrations</a>
+                </li>
+                <li id="nav_vessel">
+                    <a href="#"><i class="fa fa-sitemap fa-fw"></i> Vessel Status<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse" id="nav_vessel_list">
+                        <!--Adding dynamic menu here-->
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+                <li id="nav_report">
+                    <a href="#"><i class="fa fa-clipboard fa-fw"></i> Reports<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse" id="nav_report_list">
+                        <li>
+                            <a href="#">Report 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Report 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Report 3</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.sidebar-collapse -->
+    </div>
+</nav>

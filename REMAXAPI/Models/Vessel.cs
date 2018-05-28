@@ -42,10 +42,10 @@ namespace REMAXAPI.Models
     
         public virtual Account OperatorAccount { get; set; }
         public virtual Account OwnerAccount { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Engine> Engines { get; set; }
         public virtual ShipClass ShipClass { get; set; }
         public virtual ShipType ShipType { get; set; }
         public virtual Country Country { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Engine> Engines { get; set; }
     }
 }

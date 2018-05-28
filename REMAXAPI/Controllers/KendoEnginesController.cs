@@ -19,35 +19,38 @@ using REMAXAPI.Models.Kendo;
 
 namespace REMAXAPI.Controllers
 {
-    //[Authorize]
-    public class KendoVesselsController : ApiController
+    [Authorize]
+    public class KendoEnginesController : ApiController
     {
         private Remax_Entities db = new Remax_Entities();
 
-        // GET: api/KendoVessels
-        public KendoResponse GetVessels([FromUri] KendoRequest kendoRequest)
+        // GET: api/KendoEngines
+        public KendoResponse GetEngines([FromUri] KendoRequest kendoRequest)
         {
-            int readLevel = Util.GetResourcePermission("Vessel", Util.ReourceOperations.Read);
+            int readLevel = Util.GetResourcePermission("Engine", Util.ReourceOperations.Read);
             if (readLevel == 0) return new KendoResponse(0, null);
 
             User currentUser = Util.GetCurrentUser();
 
-            IQueryable<Object> vessels = from v in db.Vessels
-                                       where
-                                        // Login user is from Owing company
-                                        ((v.OwnerID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own))
-                                        ||
-                                        // Login user is from Operating company
-                                        ((v.OperatorID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own))
-                                        ||
-                                        // Admin user
-                                        readLevel == Util.AccessLevel.All
-                                       select v;
+            IQueryable<Object> engines = from v in db.Vessels
+                                         join e in db.Engines
+                                            on v.Id equals e.VesselID into VesselEngines
+                                         from eng in VesselEngines.DefaultIfEmpty()
+                                         where
+                                          // Login user is from Owing company
+                                          ((v.OwnerID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own))
+                                          ||
+                                          // Login user is from Operating company
+                                          ((v.OperatorID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own))
+                                          ||
+                                          // Admin user
+                                          readLevel == Util.AccessLevel.All
+                                         select eng;
 
 
             // total count
-            var total = vessels.Count();
-
+            var total = engines.Count();
+  
             // filtering
             if (kendoRequest.filter != null && kendoRequest.filter.Filters != null && kendoRequest.filter.Filters.Count() > 0)
             {
@@ -58,7 +61,7 @@ namespace REMAXAPI.Controllers
                     string whereFormat = DataFilterOperators.Operators[f.Operator];
                     if (!string.IsNullOrEmpty(whereFormat))
                     {
-                        vessels = vessels.Where(string.Format(whereFormat, f.Field, f.Value));
+                        engines = engines.Where(string.Format(whereFormat, f.Field, f.Value));
                     }
                 }
             }
@@ -77,36 +80,37 @@ namespace REMAXAPI.Controllers
             }
             if (strOrderBy == string.Empty) strOrderBy = "1"; //Sort Noting
 
-            var sortedVessels = vessels.OrderBy(strOrderBy);
+            var sortedEngines = engines.OrderBy(strOrderBy);
 
             // filtereding
 
             // take single page data
             if (kendoRequest.take == 0) kendoRequest.take = total;
-            object[] data = sortedVessels.Skip(kendoRequest.skip).Take(kendoRequest.take).ToArray<object>();
+            object[] data = sortedEngines.Skip(kendoRequest.skip).Take(kendoRequest.take).ToArray<object>();
 
             return new KendoResponse(total, data);
         }
 
-        // GET: api/KendoVessels/5
-        [ResponseType(typeof(Vessel))]
-        public async Task<IHttpActionResult> GetVessel(Guid id)
+        // GET: api/KendoEngines/5
+        [ResponseType(typeof(Engine))]
+        public async Task<IHttpActionResult> GetEngine(Guid id)
         {
-            Vessel vessel = await db.Vessels.FindAsync(id);
-            if (vessel == null)
+            Engine engine = await db.Engines.FindAsync(id);
+            if (engine == null)
             {
                 return NotFound();
             }
 
-            return Ok(vessel);
+            return Ok(engine);
         }
 
-        // PUT: api/KendoVessels/5
+        // PUT: api/KendoEngines/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutVessel(Guid id, Vessel vessel)
+        public async Task<IHttpActionResult> PutEngine(Guid id, Engine engine)
         {
-            int writeLevel = Util.GetResourcePermission("Vessel", Util.ReourceOperations.Write);
-            if (writeLevel != 2) {
+            int writeLevel = Util.GetResourcePermission("Engine", Util.ReourceOperations.Write);
+            if (writeLevel != 2)
+            {
                 ModelState.AddModelError("Access Level", "Unauthorized update access.");
             }
 
@@ -115,18 +119,18 @@ namespace REMAXAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != vessel.Id)
+            if (id != engine.Id)
             {
                 return BadRequest();
             }
 
 
-            DbEntityEntry entry = db.Entry(vessel);
+            DbEntityEntry entry = db.Entry(engine);
             entry.State = EntityState.Modified;
 
             // Marking properties to update by compareing default object
-            Vessel defaultVessel = new Vessel();
-            entry = Util.GetUpdatedProperties(defaultVessel, vessel, entry);
+            Engine defaultEngine = new Engine();
+            entry = Util.GetUpdatedProperties(defaultEngine, engine, entry);
 
             try
             {
@@ -134,7 +138,7 @@ namespace REMAXAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VesselExists(id))
+                if (!EngineExists(id))
                 {
                     return NotFound();
                 }
@@ -147,17 +151,17 @@ namespace REMAXAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/KendoVessels
-        [ResponseType(typeof(Vessel))]
-        public async Task<IHttpActionResult> PostVessel(Vessel vessel)
+        // POST: api/KendoEngines
+        [ResponseType(typeof(Engine))]
+        public async Task<IHttpActionResult> PostEngine(Engine engine)
         {
-            int writeLevel = Util.GetResourcePermission("Vessel", Util.ReourceOperations.Write);
+            int writeLevel = Util.GetResourcePermission("Engine", Util.ReourceOperations.Write);
             if (writeLevel != 2)
             {
                 ModelState.AddModelError("Access Level", "Unauthorized create access.");
             }
-            var ves = db.Vessels.Where(v => v.IMO_No == vessel.IMO_No).FirstOrDefault();
-            if (ves != null) ModelState.AddModelError("Duplicate", "Duplicate IMO Number.");
+            var ves = db.Engines.Where(e => e.SerialNo == engine.SerialNo).FirstOrDefault();
+            if (ves != null) ModelState.AddModelError("Duplicate", "Duplicate Enginer Serial Number.");
 
             if (!ModelState.IsValid)
             {
@@ -165,74 +169,76 @@ namespace REMAXAPI.Controllers
             }
 
 
-            db.Vessels.Add(vessel);
+            db.Engines.Add(engine);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = vessel.Id }, vessel);
+            return CreatedAtRoute("DefaultApi", new { id = engine.Id }, engine);
         }
 
-        // DELETE: api/KendoVessels/5
-        [ResponseType(typeof(Vessel))]
-        public async Task<IHttpActionResult> DeleteVessel(Guid id)
+        // DELETE: api/KendoEngines/5
+        [ResponseType(typeof(Engine))]
+        public async Task<IHttpActionResult> DeleteEngine(Guid id)
         {
-            int deleteLevel = Util.GetResourcePermission("Vessel", Util.ReourceOperations.Delete);
+            int deleteLevel = Util.GetResourcePermission("Engine", Util.ReourceOperations.Delete);
             if (deleteLevel != 2)
             {
                 ModelState.AddModelError("Access Level", "Unauthorized delete access.");
             }
 
-            Vessel vessel = await db.Vessels.FindAsync(id);
-            if (vessel == null)
+            Engine engine = await db.Engines.FindAsync(id);
+            if (engine == null)
             {
                 return NotFound();
             }
 
-            db.Vessels.Remove(vessel);
+            db.Engines.Remove(engine);
             await db.SaveChangesAsync();
 
-            return Ok(vessel);
+            return Ok(engine);
         }
 
-        [Route("api/KendoVessels/UploadPhoto")]
-        public async Task<HttpResponseMessage> UploadPhotoVessel(string fileName) {
+        [Route("api/KendoEngines/UploadPhoto")]
+        public async Task<HttpResponseMessage> UploadPhotoVessel(string fileName)
+        {
             HttpRequestMessage request = this.Request;
             if (!request.Content.IsMimeMultipartContent())
             {
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
 
-            string root = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/VesselPhotos");
+            string root = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/EnginePhotos");
             MultipartFormDataStreamProvider provider = new MultipartFormDataStreamProvider(root);
 
-             var task = await request.Content.ReadAsMultipartAsync(provider).
-                ContinueWith<HttpResponseMessage>(o =>
-                {
-                    string oldFilePath = provider.FileData.First().LocalFileName;
-                    string newFilePath = Path.GetDirectoryName(oldFilePath) + @"\" + fileName;
-                    if (File.Exists(newFilePath)) File.Delete(newFilePath);
-                    File.Move(oldFilePath, newFilePath);
+            var task = await request.Content.ReadAsMultipartAsync(provider).
+               ContinueWith<HttpResponseMessage>(o =>
+               {
+                   string oldFilePath = provider.FileData.First().LocalFileName;
+                   string newFilePath = Path.GetDirectoryName(oldFilePath) + @"\" + fileName;
+                   if (File.Exists(newFilePath)) File.Delete(newFilePath);
+                   File.Move(oldFilePath, newFilePath);
                     // this is the file name on the server where the file was saved 
                     return new HttpResponseMessage()
-                    {
-                        StatusCode = HttpStatusCode.OK
-                    };
-                }
-            );
+                   {
+                       StatusCode = HttpStatusCode.OK
+                   };
+               }
+           );
             return task;
         }
 
-        [Route("api/KendoVessels/GetPhoto")]
+        [Route("api/KendoEngines/GetPhoto")]
         [AllowAnonymous]
         public string GetPhoto(string fileName)
         {
-            string root = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/VesselPhotos");
+            string root = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/EnginePhotos");
             string path = root + @"\" + fileName;
             string content = "R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
-            if (File.Exists(path)) {
+            if (File.Exists(path))
+            {
                 byte[] b = System.IO.File.ReadAllBytes(path);
                 content = Convert.ToBase64String(b);
             }
-            
+
             return "data:image/png;base64," + content;
         }
 
@@ -245,9 +251,9 @@ namespace REMAXAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool VesselExists(Guid id)
+        private bool EngineExists(Guid id)
         {
-            return db.Vessels.Count(e => e.Id == id) > 0;
+            return db.Engines.Count(e => e.Id == id) > 0;
         }
     }
 }

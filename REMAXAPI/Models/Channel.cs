@@ -31,7 +31,10 @@ namespace REMAXAPI.Models
         public System.DateTime CreatedOn { get; set; }
         public System.Guid ModifiedBy { get; set; }
         public System.DateTime ModifiedOn { get; set; }
+        public Nullable<bool> DashboardDisplay { get; set; }
+        public Nullable<System.Guid> ChartTypeID { get; set; }
     
         public virtual Model Model { get; set; }
+        public virtual ChartType ChartType { get; set; }
     }
 }

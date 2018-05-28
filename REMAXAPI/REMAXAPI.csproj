@@ -160,6 +160,8 @@
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\DropDownController.cs" />
     <Compile Include="Controllers\KendoAccountsController.cs" />
+    <Compile Include="Controllers\KendoChannelsController.cs" />
+    <Compile Include="Controllers\KendoEnginesController.cs" />
     <Compile Include="Controllers\KendoUsersController.cs" />
     <Compile Include="Controllers\KendoVesselsController.cs" />
     <Compile Include="Controllers\ModelsController.cs" />
@@ -169,13 +171,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\Audit.cs" />
     <Compile Include="Models\Account.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AlternatorMaker.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\Audit.cs" />
     <Compile Include="Models\Channel.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
@@ -283,6 +285,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\EnginePhotos\" />
     <Folder Include="App_Data\VesselPhotos\" />
   </ItemGroup>
   <PropertyGroup>
