@@ -1,0 +1,34 @@
+﻿var vesObj = result.data[index];
+            var vesPanel = panelRoot.append("<div class='panel panel-default'>").find('div'); // panel
+
+            var vesPanelHead = vesPanel.append("<div class='panel-heading' role='tab'></div>").find('div.panel-heading'); //panel head
+            vesPanelHead.append("<h4 class='panel-title'>");
+            vesPanelHead.append("<a role='button' data-toggle='collapse' data-parent='#accordion - "
+                + (index + 1)
+                + "' aria-expanded='true' href='#accordion-1 .item-"
+                + (index + 1)
+                + "'>"
+                + (vesObj.imO_No.toString() + " " + vesObj.vesselName)
+                + "</a>");
+            vesPanelHead.append("</h4></a>");
+
+            var vesPanelBody = vesPanel.append("<div class='panel-collapse collapse in item-" + (index + 1) + "' role='tabpanel'><div class='panel-body'></div></div>").find('div.panel-body');
+            var vesPanelBodyRow = vesPanelBody.append("<div class='row'></div>").find("div.row");
+            vesPanelBodyRow.appendTo("<div class='col-lg-6 col-md-6 ymw-v-middle'>");
+            vesPanelBodyRow.appendTo("<div style='ymw-v-middle'>");
+            vesPanelBodyRow.appendTo("<dl class='dl-horizontal'>");
+            vesPanelBodyRow.appendTo("<dt>IMO<dt>").append("<dd>" + (vesObj.imO_No ? vesObj.imO_No.toString():"") + "</dd>");
+            vesPanelBodyRow.appendTo("<dt>Ship Type<dt>").append("<dd>" + (vessel.shipType && vessel.shipType.name ? vessel.shipType.name:"") + "</dd>");
+            vesPanelBodyRow.appendTo("<dt>Ship Class<dt>").append("<dd>" + (vessel.shipClass && vessel.shipClass.name ? vessel.shipClass.name : "") + "</dd>");
+            vesPanelBodyRow.appendTo("<dt>Shipyard Name<dt>").append("<dd>" + (vesObj.shipyardName ? vesObj.shipyardName:"") + "</dd>");
+            vesPanelBodyRow.appendTo("<dt>Country<dt>").append("<dd>" + (vesObj.shipyardCountry ? vesObj.shipyardCountry:"") + "</dd>");
+            vesPanelBodyRow.appendTo("<dt>Built Year<dt>").append("<dd>" + (vesObj.buildYear ? vesObj.buildYear:"") + "</dd>");
+            vesPanelBodyRow.appendTo("<dt>Owner<dt>").append("<dd>" + (vesObj.ownerAccount && vesObj.ownerAccount.name ? vesObj.ownerAccount.name:"") + "</dd>");
+            vesPanelBodyRow.appendTo("<dt>Operator<dt>").append("<dd>" + (vesObj.operatorAccount && vesObj.operatorAccount.name ? vesObj.operatorAccount.name : "") + "</dd>");
+            vesPanelBodyRow.appendTo("</dl>");
+            vesPanelBodyRow.appendTo("</div>");
+            vesPanelBodyRow.appendTo("</div>");
+            // image
+            vesPanelBodyRow.appendTo("<div class='col-md-6 col-sm-12 col-xs-12'>");
+            vesPanelBodyRow.appendTo("<img src='assets/img/8502391.jpg' class='img-responsive shadow-depth-2' style='max-width:100%'>");
+            vesPanelBodyRow.appendTo("</div>");
