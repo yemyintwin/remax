@@ -31,7 +31,7 @@ namespace REMAXAPI.Controllers
         [Route("api/User/GetCurrentUser")]
         public object GetCurrentUser()
         {
-            Object user = null;
+            User user = null;
             ClaimsPrincipal currentClaim = HttpContext.Current.GetOwinContext().Authentication.User;
             if (currentClaim != null && currentClaim.Claims != null && currentClaim.Claims.Count() > 1)
             {
@@ -42,7 +42,12 @@ namespace REMAXAPI.Controllers
                 //var user_found = db.Users.Where(u => u.Id.ToString() == sid.Value).FirstOrDefault();
                 var user_found = (from u in db.Users
                                   where u.Id.ToString() == sid.Value
-                                  select u).FirstOrDefault();
+                                  select u)
+                                  .Include("Account")
+                                  .Include("UserRoles")
+                                  .Include("UserLogins")
+                                  .Include("UserClaims")
+                                  .FirstOrDefault();
                 if (user_found != null) user = user_found; 
             }
             return user;

@@ -4,8 +4,12 @@ var userprofile = {
     onload: function () {
         //get current token;
         if (!token) {
-            if (localStorage.getItem(Settings.TokenKey)) token = localStorage.getItem(Settings.TokenKey).toString();
-            else if ($.cookie(Settings.TokenKey)) token = $.cookie(Settings.TokenKey);
+            //if (localStorage.getItem(Settings.TokenKey)) token = localStorage.getItem(Settings.TokenKey).toString();
+            //else if ($.cookie(Settings.TokenKey)) token = $.cookie(Settings.TokenKey);
+
+            if (Settings.Token && Settings.Token.access_token) {
+                token = Settings.Token.access_token;
+            }
         }
 
         // showing current user name

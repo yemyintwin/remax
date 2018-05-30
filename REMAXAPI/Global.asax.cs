@@ -22,6 +22,8 @@ namespace REMAXAPI
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
             };
             formatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+            GlobalConfiguration.Configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
         }
     }
 }

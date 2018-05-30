@@ -18,7 +18,7 @@ using REMAXAPI.Models.Kendo;
 
 namespace REMAXAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class KendoUsersController : ApiController
     {
         private Remax_Entities db = new Remax_Entities();
@@ -38,21 +38,14 @@ namespace REMAXAPI.Controllers
             User currentUser = Util.GetCurrentUser();
 
             IQueryable<Object> users = from u in db.Users
-                                       join a in db.Accounts on u.AccountID equals a.Id into ua
-                                       from a in ua.DefaultIfEmpty()
-                                       where (u.AccountID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own) || readLevel == Util.AccessLevel.All
-                                       // do not remove above where caluse, this is for access permission
-                                       select new {
-                                           u.Id,
-                                           u.Email,
-                                           u.PhoneNumber,
-                                           u.FullName,
-                                           u.AccountID,
-                                           a.Name,
-                                           u.JobTitle,
-                                           u.BusinessPhoneNumber
-                                       };
+                                        join a in db.Accounts on u.AccountID equals a.Id into ua
+                                        from a in ua.DefaultIfEmpty()
+                                        where (u.AccountID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own) || readLevel == Util.AccessLevel.All
+                                        // do not remove above where caluse, this is for access permission
+                                        select u;
 
+            //loading related entites
+            users = users.Include("Account");
 
             // total count
             var total = users.Count();

@@ -1355,7 +1355,7 @@ var registration = {
                 }
             },
             schema: {
-            // describe the result format
+                // describe the result format
                 data: "data", // records are returned in the "data" field of the response
                 total: "total" // total number of records is in the "total" field of the response
             },
@@ -1461,7 +1461,7 @@ var registration = {
                 width: 100,
             },
             {
-                field: "AlternatorSrNo",
+                field: "alternatorSrNo",
                 title: "Alternator Sr. No.",
                 filterable: false,
                 width: 100,

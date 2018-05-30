@@ -20,6 +20,7 @@ namespace REMAXAPI.Models
         public Remax_Entities()
             : base("name=Remax_Entities")
         {
+            Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

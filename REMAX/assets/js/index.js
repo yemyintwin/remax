@@ -74,9 +74,5 @@
         $(window).resize(function () {
             $("#chart1").data("kendoChart").refresh();
         });
-
-        if (Settings.CurrentUser && Settings.CurrentUser.fullName) {
-            $('#welcome').text('Welcome ' + Settings.CurrentUser.fullName);
-        }
     }
 }

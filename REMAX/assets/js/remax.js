@@ -1,6 +1,6 @@
 // Settings
 var Settings = {
-    WebApiUrl: 'http://localhost:56376/',
+    WebApiUrl: 'http://localhost:56376/', 
     Token: null,
     CurrentUser: null,
     PageSize: 5,
@@ -102,6 +102,10 @@ $(document).ready(function () {
         }
     }
 
+    if (Settings.CurrentUser && Settings.CurrentUser.fullName) {
+        $('#welcome').text('Welcome ' + Settings.CurrentUser.fullName);
+    }
+
     if (!found) $('#nav_registration').hide();
 
     // vessels list
@@ -121,11 +125,11 @@ $(document).ready(function () {
                 // vessels
                 for (var i = 0; i < result.data.length; i++) {
                     var ves = result.data[i];
-                    var vesMenu = root.append("<li></li>").find("li");
+                    var vesMenu = root.append("<li id='ves_" + ves.imO_No + "'></li>").find("#ves_" + ves.imO_No);
                     vesMenu.append("<a href='#'>" + ves.vesselName + "<span class='fa arrow'/></a>");
 
                     // engines
-                    var engMenu = vesMenu.append("<ul class='nav nav-third-level collapse'></ul>").find("ul");
+                    var engMenu = vesMenu.append("<ul id='vesEng_" + ves.imO_No + "' class='nav nav-third-level collapse'></ul>").find("#vesEng_" + ves.imO_No);
 
                     for (var j = 0; j < ves.engines.length; j++) {
                         var eng = ves.engines[j];

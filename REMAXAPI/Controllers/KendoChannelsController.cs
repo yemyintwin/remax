@@ -30,11 +30,14 @@ namespace REMAXAPI.Controllers
             int readLevel = Util.GetResourcePermission("Channel", Util.ReourceOperations.Read);
             if (readLevel == 0) return new KendoResponse(0, null);
 
-            User currentUser = Util.GetCurrentUser();
+            //User currentUser = Util.GetCurrentUser();
 
-            IQueryable<Object> channels = from v in db.Channels
-                                         select v;
+            IQueryable<Object> channels = from c in db.Channels
+                                          select c;
 
+            //loading related entites
+            channels = channels.Include("Model")
+                        .Include("ChartType");
 
             // total count
             var total = channels.Count();

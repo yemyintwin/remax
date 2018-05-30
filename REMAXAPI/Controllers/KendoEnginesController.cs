@@ -32,10 +32,9 @@ namespace REMAXAPI.Controllers
 
             User currentUser = Util.GetCurrentUser();
 
-            IQueryable<Object> engines = from v in db.Vessels
-                                         join e in db.Engines
-                                            on v.Id equals e.VesselID into VesselEngines
-                                         from eng in VesselEngines.DefaultIfEmpty()
+            IQueryable<Object> engines = from e in db.Engines
+                                         join v in db.Vessels
+                                            on e.VesselID equals v.Id 
                                          where
                                           // Login user is from Owing company
                                           ((v.OwnerID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own))
@@ -45,8 +44,13 @@ namespace REMAXAPI.Controllers
                                           ||
                                           // Admin user
                                           readLevel == Util.AccessLevel.All
-                                         select eng;
+                                         select e;
 
+            //loading related entites
+            engines = engines.Include("AlternatorMaker")
+                        .Include("EngineType")
+                        .Include("Model")
+                        .Include("Vessel");
 
             // total count
             var total = engines.Count();

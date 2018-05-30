@@ -33,17 +33,24 @@ namespace REMAXAPI.Controllers
             User currentUser = Util.GetCurrentUser();
 
             IQueryable<Object> vessels = from v in db.Vessels
-                                       where
-                                        // Login user is from Owing company
-                                        ((v.OwnerID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own))
-                                        ||
-                                        // Login user is from Operating company
-                                        ((v.OperatorID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own))
-                                        ||
-                                        // Admin user
-                                        readLevel == Util.AccessLevel.All
-                                       select v;
+                                          where
+                                           // Login user is from Owing company
+                                           ((v.OwnerID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own))
+                                           ||
+                                           // Login user is from Operating company
+                                           ((v.OperatorID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own))
+                                           ||
+                                           // Admin user
+                                           readLevel == Util.AccessLevel.All
+                                          select v;
 
+            //loading related entites
+            vessels = vessels.Include("OwnerAccount")
+                            .Include("OperatorAccount")
+                            .Include("ShipType")
+                            .Include("ShipClass")
+                            .Include("Country")
+                            .Include("Engines");
 
             // total count
             var total = vessels.Count();
