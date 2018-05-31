@@ -31,87 +31,44 @@ var vessel = {
     formatHtml: function (result) {
         var panelRoot = $('#accordionPanel'); // accordion root element
 
-        var divTemplateBak = `
-            <div class='panel panel-default'>
-                <div class='panel-heading' role='tab'>
-                    <h4 class='panel-title'>
-                        <a role='button' data-parent='#accordion-1' aria-expanded='true' href='#accordion-1.item-{{index}}'>{{imO_No}} - {{vesselName}}</a>
-                    </h4>
-                </div>
-                <div class='panel-collapse collapse in item-{{index}}' role='tabpanel'>
-                    <div class='panel-body'>
-                        <div class='row'>
-                            <div class='col-lg-6 col-md-6 ymw-v-middle'>
-                                <div style='ymw-v-middle'>
-                                    <dl class='dl-horizontal'>
-                                        <dt>IMO</dt>
-                                        <dd>{{imO_No}}</dd>
-                                        <dt>Ship Type</dt>
-                                        <dd>{{shipType.name}}</dd>
-                                        <dt>Ship Class</dt>
-                                        <dd>{{shipClass.name}}</dd>
-                                        <dt>Shipyard</dt>
-                                        <dd>{{shipyardName}}</dd>
-                                        <dt>Shipyard Country</dt>
-                                        <dd>{{shipyardCountry}}</dd>
-                                        <dt>Build Year</dt>
-                                        <dd>{{buildYear}}</dd>
-                                        <dt>Owner</dt>
-                                        <dd>{{ownerAccount.name}}</dd>
-                                        <dt>Operator</dt>
-                                        <dd>{{operatorAccount.name}}</dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <div class='col-md-6 col-sm-12 col-xs-12'>
-                                <div><img src='{{image}}' class='img-responsive shadow-depth-2' style='max-width:100%'></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        var divTemplate = `
-            <div class="panel panel-default">
-                <div class="panel-heading" id="heading{{id}}">
-                  <h5 class='panel-title'>
-                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{id}}" aria-expanded="false" aria-controls="collapseTwo">
-                      {{imO_No}} - {{vesselName}}
-                    </button>
-                  </h5>
-                </div>
-                <div id="collapse{{id}}" class="collapse" aria-labelledby="heading{{id}}" data-parent="#accordionPanel" role='tabpanel'>
-                  <div class="panel-body">
-                    <div class='col-lg-6 col-md-6 ymw-v-middle'>
-                                <div style='ymw-v-middle'>
-                                    <dl class='dl-horizontal'>
-                                        <dt>IMO</dt>
-                                        <dd>{{imO_No}}</dd>
-                                        <dt>Ship Type</dt>
-                                        <dd>{{shipType.name}}</dd>
-                                        <dt>Ship Class</dt>
-                                        <dd>{{shipClass.name}}</dd>
-                                        <dt>Shipyard</dt>
-                                        <dd>{{shipyardName}}</dd>
-                                        <dt>Shipyard Country</dt>
-                                        <dd>{{shipyardCountry}}</dd>
-                                        <dt>Build Year</dt>
-                                        <dd>{{buildYear}}</dd>
-                                        <dt>Owner</dt>
-                                        <dd>{{ownerAccount.name}}</dd>
-                                        <dt>Operator</dt>
-                                        <dd>{{operatorAccount.name}}</dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <div class='col-md-6 col-sm-12 col-xs-12'>
-                                <div><img src='{{image}}' class='img-responsive shadow-depth-2' style='max-width:100%'></div>
-                            </div>
-                  </div>
-                </div>
-            </div>
-        `;
+        var divTemplate = '<div class="panel panel-default">' +
+            '                <div class="panel-heading" id="heading{{id}}">' +
+            '                  <h5 class=\'panel-title\'>' +
+            '                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{id}}" aria-expanded="false" aria-controls="collapseTwo">' +
+            '                      {{imO_No}} - {{vesselName}}' +
+            '                    </button>' +
+            '                  </h5>' +
+            '                </div>' +
+            '                <div id="collapse{{id}}" class="collapse" aria-labelledby="heading{{id}}" data-parent="#accordionPanel" role=\'tabpanel\'>' +
+            '                  <div class="panel-body">' +
+            '                    <div class=\'col-lg-6 col-md-6 ymw-v-middle\'>' +
+            '                                <div style=\'ymw-v-middle\'>' +
+            '                                    <dl class=\'dl-horizontal\'>' +
+            '                                        <dt>IMO</dt>' +
+            '                                        <dd>{{imO_No}}</dd>' +
+            '                                        <dt>Ship Type</dt>' +
+            '                                        <dd>{{shipType.name}}</dd>' +
+            '                                        <dt>Ship Class</dt>' +
+            '                                        <dd>{{shipClass.name}}</dd>' +
+            '                                        <dt>Shipyard</dt>' +
+            '                                        <dd>{{shipyardName}}</dd>' +
+            '                                        <dt>Shipyard Country</dt>' +
+            '                                        <dd>{{shipyardCountry}}</dd>' +
+            '                                        <dt>Build Year</dt>' +
+            '                                        <dd>{{buildYear}}</dd>' +
+            '                                        <dt>Owner</dt>' +
+            '                                        <dd>{{ownerAccount.name}}</dd>' +
+            '                                        <dt>Operator</dt>' +
+            '                                        <dd>{{operatorAccount.name}}</dd>' +
+            '                                    </dl>' +
+            '                                </div>' +
+            '                            </div>' +
+            '                            <div class=\'col-md-6 col-sm-12 col-xs-12\'>' +
+            '                                <div><img src=\'{{image}}\' class=\'img-responsive shadow-depth-2\' style=\'max-width:100%\'></div>' +
+            '                            </div>' +
+            '                  </div>' +
+            '                </div>' +
+            '            </div>';
 
         $.each(result.data, function (index) {
             var vesObj = result.data[index];
