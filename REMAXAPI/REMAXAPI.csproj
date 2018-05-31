@@ -142,6 +142,9 @@
     </Content>
     <Content Include="SQL\Channels.sql" />
     <Content Include="SQL\Data Setup.sql" />
+    <Content Include="SQL\New Environment Setup\01. Database Setup.sql" />
+    <Content Include="SQL\New Environment Setup\03. Master Data Setup.sql" />
+    <Content Include="SQL\New Environment Setup\02. Root Setup.sql" />
     <Content Include="SQL\sp_ResourcePermission.sql" />
     <Content Include="SQL\User.sql" />
     <Content Include="Web.config" />

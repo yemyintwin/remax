@@ -488,7 +488,7 @@ var registration = {
                 filterable: false
             },
             {
-                field: "name",
+                field: "account.name",
                 title: "Company Name",
                 filterable: {
                     extra: false
