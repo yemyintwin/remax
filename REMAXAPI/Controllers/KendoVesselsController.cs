@@ -50,7 +50,8 @@ namespace REMAXAPI.Controllers
                             .Include("ShipType")
                             .Include("ShipClass")
                             .Include("Country")
-                            .Include("Engines");
+                            .Include("Engines")
+                            .Include("Engines.EngineType");
 
             // total count
             var total = vessels.Count();

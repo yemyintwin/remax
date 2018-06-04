@@ -68,6 +68,16 @@
 
     onload: function () {
 
+        // Values set inside remax.js
+        if (Settings.Counts && Settings.Counts.vessel) $("count_vessels").html(Settings.Counts.vessel)
+        else $("count_vessels").html(0);
+
+        if (Settings.Counts && Settings.Counts.engine) $("count_engines").html(Settings.Counts.vessel)
+        else $("count_engines").html(0);
+
+        if (Settings.Counts && Settings.Counts.generator) $("count_generators").html(Settings.Counts.vessel)
+        else $("count_generators").html(0);
+
         index.createChart();
         $(document).bind("kendo:skinChange", index.createChart);
 

@@ -1,12 +1,12 @@
 // Settings
 var Settings = {
-    WebApiUrl: 'http://localhost:56376/', 
+    WebApiUrl: 'http://hiroodaikai-001-site1.atempurl.com/', 
     Token: null,
     CurrentUser: null,
     PageSize: 5,
     TokenKey: 'currentToken',
     UserKey: 'currentUser',
-    MessageLevel: 'info' // info, debug
+    MessageLevel: 'info', // info, debug
 }
 // Utility functions
 var Util = {
@@ -118,15 +118,20 @@ $(document).ready(function () {
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'bearer ' + Settings.Token.access_token);
             },
-            success: function (result, textStatus, jqXHR ) {
+            success: function (result, textStatus, jqXHR) {
                 //Process data retrieved
                 var root = $("#nav_vessel_list");
 
+                var vesselsCount, enginesCount, generatorsCount;
+                vesselsCount = enginesCount = generatorsCount = 0;
+
                 // vessels
                 for (var i = 0; i < result.data.length; i++) {
+                    vesselsCount++;
+
                     var ves = result.data[i];
                     var vesMenu = root.append("<li id='ves_" + ves.imO_No + "'></li>").find("#ves_" + ves.imO_No);
-                    vesMenu.append("<a href='#'>" + ves.vesselName + "<span class='fa arrow'/></a>");
+                    vesMenu.append("<a href='#'>" + ves.vesselName.toUpperCase() + "<span class='fa arrow'/></a>");
 
                     // engines
                     var engMenu = vesMenu.append("<ul id='vesEng_" + ves.imO_No + "' class='nav nav-third-level collapse'></ul>").find("#vesEng_" + ves.imO_No);
@@ -135,9 +140,21 @@ $(document).ready(function () {
                         var eng = ves.engines[j];
                         var engineUrl = "engine.html?engine=" + eng.id;
                         engMenu.append("<li><a href='" + engineUrl + "'>" + eng.serialNo + "</a></li>");
+
+                        if (eng.engineType && eng.engineType.name) {
+                            if (eng.engineType.name == "Engine") enginesCount++;
+                            else if (eng.engineType.name == "Generator") generatorsCount++;
+                        }
                     }
                 }
-            }
+
+                if (window.location.pathname == '/' || window.location.pathname == '/index.html' || window.location.pathname == '/index.htm') {
+                    // Index (home) page
+                    $("#count_vessels").html(vesselsCount);
+                    $("#count_engines").html(enginesCount);
+                    $("#count_generators").html(generatorsCount);
+                }
+            },//end of success function
         });
     }
     

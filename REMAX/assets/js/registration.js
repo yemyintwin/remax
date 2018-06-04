@@ -1485,7 +1485,7 @@ var registration = {
                 width: 100,
             },
             {
-                field: "iPRating",
+                field: "ipRating",
                 title: "IP Rating",
                 filterable: false,
                 width: 100,
@@ -1788,7 +1788,7 @@ var registration = {
             $('#engine_alternatorOutput').val(selectedItem.alternatorOutput);
             $('#engine_powerSupplySystem').val(selectedItem.powerSupplySystem);
             $('#engine_insulation').val(selectedItem.insulationTempRise);
-            $('#engine_iprRate').val(selectedItem.iprRating);
+            $('#engine_iprRate').val(selectedItem.ipRating);
             $('#engine_mounting').val(selectedItem.mounting);
         }
         else {
