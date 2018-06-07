@@ -5,6 +5,7 @@ using System.Web;
 using Microsoft.Owin.Cors;
 using Owin;
 
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "Web.config", Watch = true)]
 namespace REMAXAPI
 {
     public partial class Startup
@@ -16,3 +17,4 @@ namespace REMAXAPI
         }
     }
 }
+

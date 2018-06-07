@@ -37,10 +37,10 @@ namespace REMAXAPI.Controllers
                                             on e.VesselID equals v.Id 
                                          where
                                           // Login user is from Owing company
-                                          ((v.OwnerID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own))
+                                          ((v.OwnerID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
                                           ||
                                           // Login user is from Operating company
-                                          ((v.OperatorID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own))
+                                          ((v.OperatorID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
                                           ||
                                           // Admin user
                                           readLevel == Util.AccessLevel.All
@@ -171,7 +171,6 @@ namespace REMAXAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
 
             db.Engines.Add(engine);
             await db.SaveChangesAsync();

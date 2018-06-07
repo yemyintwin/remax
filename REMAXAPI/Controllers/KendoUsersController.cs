@@ -40,7 +40,7 @@ namespace REMAXAPI.Controllers
             IQueryable<Object> users = from u in db.Users
                                         join a in db.Accounts on u.AccountID equals a.Id into ua
                                         from a in ua.DefaultIfEmpty()
-                                        where (u.AccountID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own) || readLevel == Util.AccessLevel.All
+                                        where (u.AccountID == currentUser.AccountID && readLevel == Util.AccessLevel.Own) || readLevel == Util.AccessLevel.All
                                         // do not remove above where caluse, this is for access permission
                                         select u;
 

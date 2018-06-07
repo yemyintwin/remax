@@ -92,17 +92,17 @@ namespace REMAXAPI.Controllers
                                     from v in db.Vessels
                                     where
                                         // Login user is from Owing company
-                                        ((v.OwnerID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own))
+                                        ((v.OwnerID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
                                         ||
                                         // Login user is from Operating company
-                                        ((v.OperatorID == currentUser.AccountID.Value && readLevel == Util.AccessLevel.Own))
+                                        ((v.OperatorID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
                                         ||
                                         // Admin user
                                         readLevel == Util.AccessLevel.All
                                     select new
                                     {
                                         v.Id,
-                                        Name =  v.VesselName + ( string.IsNullOrEmpty(v.IMO_No)?"":v.IMO_No )
+                                        Name =  v.VesselName + ( string.IsNullOrEmpty(v.IMO_No)?"":" - " + v.IMO_No )
                                     }
                                 ).ToArray<object>();
             return objects;
@@ -117,7 +117,8 @@ namespace REMAXAPI.Controllers
                                 select new
                                 {
                                     m.Id,
-                                    m.Name
+                                    m.Name,
+                                    m.EngineTypeID
                                 }).ToArray<object>();
             return objects;
         }

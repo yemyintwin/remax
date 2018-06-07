@@ -4,166 +4,170 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DB_A38003_DEVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="REMAXAPI.Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="AccountID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" />
-          <Property Name="PrimaryContact" Type="nvarchar" MaxLength="100" />
-          <Property Name="MainPhone" Type="nvarchar" MaxLength="100" />
-          <Property Name="Fax" Type="nvarchar" MaxLength="100" />
-          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="AccountID" Nullable="false" MaxLength="50" Type="nvarchar" />
+          <Property Name="Name" MaxLength="100" Type="nvarchar" />
+          <Property Name="PrimaryContact" MaxLength="100" Type="nvarchar" />
+          <Property Name="MainPhone" MaxLength="100" Type="nvarchar" />
+          <Property Name="Fax" MaxLength="100" Type="nvarchar" />
+          <Property Name="Email" MaxLength="100" Type="nvarchar" />
           <Property Name="Status" Type="int" />
-          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+          <Property Name="ModifiedBy" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Nullable="false" Type="datetime" />
         </EntityType>
         <EntityType Name="AlternatorMaker">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Channel">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="ChannelNo" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="ChannelNo" Nullable="false" Type="int" />
+          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
           <Property Name="ModelID" Type="uniqueidentifier" />
           <Property Name="DashboardDisplay" Type="bit" />
           <Property Name="ChartTypeID" Type="uniqueidentifier" />
-          <Property Name="MinRange" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="MaxRange" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Scale" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="DisplayUnit" Type="nvarchar" MaxLength="50" />
-          <Property Name="LowerLimit" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="UpperLimit" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="MonitoringTimer" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MinRange" Precision="18" Scale="2" Type="decimal" />
+          <Property Name="MaxRange" Precision="18" Scale="2" Type="decimal" />
+          <Property Name="Scale" Precision="18" Scale="2" Type="decimal" />
+          <Property Name="DisplayUnit" MaxLength="50" Type="nvarchar" />
+          <Property Name="LowerLimit" Precision="18" Scale="2" Type="decimal" />
+          <Property Name="UpperLimit" Precision="18" Scale="2" Type="decimal" />
+          <Property Name="MonitoringTimer" Precision="18" Scale="2" Type="decimal" />
           <Property Name="DataTypeNo" Type="int" />
           <Property Name="Status" Type="int" />
-          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+          <Property Name="ModifiedBy" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Nullable="false" Type="datetime" />
         </EntityType>
         <EntityType Name="ChartType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Name" MaxLength="100" Type="nvarchar" />
         </EntityType>
         <EntityType Name="DashboardSetting">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="ModelNo" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ChannelNo" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="ModelNo" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="ChannelNo" Nullable="false" Type="uniqueidentifier" />
           <Property Name="DisplayOnDashboard" Type="bit" />
-          <Property Name="ChartType" Type="int" Nullable="false" />
+          <Property Name="ChartType" Nullable="false" Type="int" />
           <Property Name="ChartGroupNo" Type="int" />
         </EntityType>
         <EntityType Name="Engine">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="VesselID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="VesselID" Nullable="false" Type="uniqueidentifier" />
           <Property Name="EngineTypeID" Type="uniqueidentifier" />
           <Property Name="EngineModelID" Type="uniqueidentifier" />
-          <Property Name="SerialNo" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="OutputPower" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="GearBoxModel" Type="nvarchar" MaxLength="100" />
-          <Property Name="GearBoxSerialNo" Type="nvarchar" MaxLength="100" />
-          <Property Name="GearRatio" Type="nvarchar" MaxLength="100" />
+          <Property Name="SerialNo" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="OutputPower" Precision="18" Scale="2" Type="decimal" />
+          <Property Name="GearBoxModel" MaxLength="100" Type="nvarchar" />
+          <Property Name="GearBoxSerialNo" MaxLength="100" Type="nvarchar" />
+          <Property Name="GearRatio" MaxLength="100" Type="nvarchar" />
           <Property Name="AlternatorMakerID" Type="uniqueidentifier" />
-          <Property Name="AlternatorMakerModel" Type="nvarchar" MaxLength="100" />
-          <Property Name="AlternatorSrNo" Type="nvarchar" MaxLength="100" />
-          <Property Name="AlternatorOutput" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="PowerSupplySystem" Type="nvarchar" MaxLength="100" />
-          <Property Name="InsulationTempRise" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="IPRating" Type="nvarchar" MaxLength="100" />
-          <Property Name="Mounting" Type="nvarchar" MaxLength="100" />
+          <Property Name="AlternatorMakerModel" MaxLength="100" Type="nvarchar" />
+          <Property Name="AlternatorSrNo" MaxLength="100" Type="nvarchar" />
+          <Property Name="AlternatorOutput" Precision="18" Scale="2" Type="decimal" />
+          <Property Name="PowerSupplySystem" MaxLength="100" Type="nvarchar" />
+          <Property Name="InsulationTempRise" Precision="18" Scale="2" Type="decimal" />
+          <Property Name="IPRating" MaxLength="100" Type="nvarchar" />
+          <Property Name="Mounting" MaxLength="100" Type="nvarchar" />
           <Property Name="Status" Type="int" />
-          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+          <Property Name="ModifiedBy" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Nullable="false" Type="datetime" />
         </EntityType>
         <EntityType Name="EngineType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Name" MaxLength="100" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Model">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
           <Property Name="EngineTypeID" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="Monitoring">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="IMO_No" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="SerialNo" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ChannelNo" Type="int" Nullable="false" />
-          <Property Name="ChannelDescription" Type="nvarchar" MaxLength="100" />
-          <Property Name="TimeStamp" Type="datetime" Nullable="false" />
-          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Unit" Type="nvarchar" MaxLength="50" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="IMO_No" Nullable="false" MaxLength="50" Type="nvarchar" />
+          <Property Name="SerialNo" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="ChannelNo" Nullable="false" Type="int" />
+          <Property Name="ChannelDescription" MaxLength="100" Type="nvarchar" />
+          <Property Name="TimeStamp" Nullable="false" Type="datetime" />
+          <Property Name="Value" Nullable="false" MaxLength="500" Type="nvarchar" />
+          <Property Name="Unit" MaxLength="50" Type="nvarchar" />
+          <Property Name="CreatedBy" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+          <Property Name="ModifiedBy" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Nullable="false" Type="datetime" />
         </EntityType>
         <EntityType Name="OptionSet">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="GroupId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Value" Type="int" Nullable="false" />
-          <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="GroupId" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="Value" Nullable="false" Type="int" />
+          <Property Name="SortOrder" Nullable="false" Type="int" />
         </EntityType>
         <EntityType Name="OptionSetGroup">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Name" MaxLength="100" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Resource">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Id" Nullable="false" Type="int" />
+          <Property Name="Name" MaxLength="100" Type="nvarchar" />
         </EntityType>
         <EntityType Name="ResourcePermission">
           <Key>
             <PropertyRef Name="RoleId" />
             <PropertyRef Name="ResourceId" />
           </Key>
-          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ResourceId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="ResourceId" Nullable="false" Type="int" />
           <Property Name="ReadPermission" Type="tinyint" />
           <Property Name="WritePermission" Type="tinyint" />
           <Property Name="DeletePermission" Type="tinyint" />
@@ -173,102 +177,745 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
         </EntityType>
         <EntityType Name="ShipType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
-          <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" />
-          <Property Name="SecurityStamp" Type="nvarchar" MaxLength="100" />
-          <Property Name="ConcurrencyStamp" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
-          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Email" Nullable="false" MaxLength="256" Type="nvarchar" />
+          <Property Name="EmailConfirmed" Type="bit" />
+          <Property Name="PasswordHash" MaxLength="100" Type="nvarchar" />
+          <Property Name="SecurityStamp" MaxLength="100" Type="nvarchar" />
+          <Property Name="ConcurrencyStamp" Type="uniqueidentifier" />
+          <Property Name="PhoneNumber" MaxLength="50" Type="nvarchar" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" />
+          <Property Name="TwoFactorEnabled" Type="bit" />
           <Property Name="LockoutEnd" Type="datetime" />
-          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="smallint" Nullable="false" />
-          <Property Name="FullName" Type="nvarchar" MaxLength="100" />
-          <Property Name="AccountID" Type="uniqueidentifier" />
-          <Property Name="JobTitle" Type="nvarchar" MaxLength="100" />
-          <Property Name="BusinessPhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="LockoutEnabled" Type="bit" />
+          <Property Name="AccessFailedCount" Type="smallint" />
+          <Property Name="FullName" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="AccountID" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="JobTitle" MaxLength="100" Type="nvarchar" />
+          <Property Name="BusinessPhoneNumber" MaxLength="50" Type="nvarchar" />
           <Property Name="IsRootUser" Type="bit" />
           <Property Name="Status" Type="int" />
-          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+          <Property Name="ModifiedBy" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Nullable="false" Type="datetime" />
         </EntityType>
         <EntityType Name="UserClaim">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Type" Type="nvarchar" MaxLength="256" />
-          <Property Name="Value" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="UserId" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Type" MaxLength="256" Type="nvarchar" />
+          <Property Name="Value" MaxLength="4000" Type="nvarchar" />
         </EntityType>
         <EntityType Name="UserLogin">
           <Key>
             <PropertyRef Name="Name" />
             <PropertyRef Name="Key" />
           </Key>
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Nullable="false" MaxLength="50" Type="nvarchar" />
+          <Property Name="Key" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="UserId" Nullable="false" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Name" Nullable="false" MaxLength="256" Type="nvarchar" />
         </EntityType>
         <EntityType Name="UserUserRole">
           <Key>
             <PropertyRef Name="UserId" />
             <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="RoleId" Nullable="false" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="Vessel">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="IMO_No" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="VesselName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="OwnerID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="OperatorID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="IMO_No" Nullable="false" MaxLength="50" Type="nvarchar" />
+          <Property Name="VesselName" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="OwnerID" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="OperatorID" Nullable="false" Type="uniqueidentifier" />
           <Property Name="ShipTypeID" Type="uniqueidentifier" />
-          <Property Name="ShipyardName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ShipyardName" MaxLength="100" Type="nvarchar" />
           <Property Name="ShipyardCountry" Type="uniqueidentifier" />
           <Property Name="BuildYear" Type="date" />
           <Property Name="DeliveryToOwner" Type="date" />
           <Property Name="ShipClassID" Type="uniqueidentifier" />
-          <Property Name="DWT" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="TotalPropulsionPower" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="TotalGeneratorPower" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DWT" Precision="18" Scale="2" Type="decimal" />
+          <Property Name="TotalPropulsionPower" Precision="18" Scale="2" Type="decimal" />
+          <Property Name="TotalGeneratorPower" Precision="18" Scale="2" Type="decimal" />
           <Property Name="Status" Type="int" />
-          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+          <Property Name="ModifiedBy" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Nullable="false" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="FilteredAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="AccountID" Nullable="false" MaxLength="50" Type="nvarchar" />
+          <Property Name="Name" MaxLength="100" Type="nvarchar" />
+          <Property Name="PrimaryContact" MaxLength="100" Type="nvarchar" />
+          <Property Name="MainPhone" MaxLength="100" Type="nvarchar" />
+          <Property Name="Fax" MaxLength="100" Type="nvarchar" />
+          <Property Name="Email" MaxLength="100" Type="nvarchar" />
         </EntityType>
         <Association Name="FK_Account_User">
-          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Type="Self.Account" Multiplicity="1" Role="Account" />
+          <End Type="Self.User" Multiplicity="*" Role="User" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Channel_ChartType">
+          <End Type="Self.ChartType" Multiplicity="0..1" Role="ChartType" />
+          <End Type="Self.Channel" Multiplicity="*" Role="Channel" />
+          <ReferentialConstraint>
+            <Principal Role="ChartType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Channel">
+              <PropertyRef Name="ChartTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Channel_Model">
+          <End Type="Self.Model" Multiplicity="0..1" Role="Model" />
+          <End Type="Self.Channel" Multiplicity="*" Role="Channel" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Channel">
+              <PropertyRef Name="ModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Engine_AlternatorMaker">
+          <End Type="Self.AlternatorMaker" Multiplicity="0..1" Role="AlternatorMaker" />
+          <End Type="Self.Engine" Multiplicity="*" Role="Engine" />
+          <ReferentialConstraint>
+            <Principal Role="AlternatorMaker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Engine">
+              <PropertyRef Name="AlternatorMakerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Engine_EngineType">
+          <End Type="Self.EngineType" Multiplicity="0..1" Role="EngineType" />
+          <End Type="Self.Engine" Multiplicity="*" Role="Engine" />
+          <ReferentialConstraint>
+            <Principal Role="EngineType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Engine">
+              <PropertyRef Name="EngineTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Engine_Model">
+          <End Type="Self.Model" Multiplicity="0..1" Role="Model" />
+          <End Type="Self.Engine" Multiplicity="*" Role="Engine" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Engine">
+              <PropertyRef Name="EngineModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Engine_Vessel">
+          <End Type="Self.Vessel" Multiplicity="1" Role="Vessel" />
+          <End Type="Self.Engine" Multiplicity="*" Role="Engine" />
+          <ReferentialConstraint>
+            <Principal Role="Vessel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Engine">
+              <PropertyRef Name="VesselID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Model_EngineType">
+          <End Type="Self.EngineType" Multiplicity="0..1" Role="EngineType" />
+          <End Type="Self.Model" Multiplicity="*" Role="Model" />
+          <ReferentialConstraint>
+            <Principal Role="EngineType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Model">
+              <PropertyRef Name="EngineTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaim_User">
+          <End Type="Self.User" Multiplicity="1" Role="User">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Self.UserClaim" Multiplicity="*" Role="UserClaim" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLogin_User">
+          <End Type="Self.User" Multiplicity="1" Role="User">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Self.UserLogin" Multiplicity="*" Role="UserLogin" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserUserRole_User">
+          <End Type="Self.User" Multiplicity="1" Role="User">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Self.UserUserRole" Multiplicity="*" Role="UserUserRole" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserUserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserUserRole_UserRole">
+          <End Type="Self.UserRole" Multiplicity="1" Role="UserRole">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Self.UserUserRole" Multiplicity="*" Role="UserUserRole" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserUserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vessel_Country">
+          <End Type="Self.Country" Multiplicity="0..1" Role="Country" />
+          <End Type="Self.Vessel" Multiplicity="*" Role="Vessel" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vessel">
+              <PropertyRef Name="ShipyardCountry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vessel_OperatorAccount">
+          <End Type="Self.Account" Multiplicity="1" Role="Account" />
+          <End Type="Self.Vessel" Multiplicity="*" Role="Vessel" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vessel">
+              <PropertyRef Name="OperatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vessel_OwnerAccount">
+          <End Type="Self.Account" Multiplicity="1" Role="Account" />
+          <End Type="Self.Vessel" Multiplicity="*" Role="Vessel" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vessel">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vessel_ShipClass">
+          <End Type="Self.ShipClass" Multiplicity="0..1" Role="ShipClass" />
+          <End Type="Self.Vessel" Multiplicity="*" Role="Vessel" />
+          <ReferentialConstraint>
+            <Principal Role="ShipClass">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vessel">
+              <PropertyRef Name="ShipClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vessel_ShipType">
+          <End Type="Self.ShipType" Multiplicity="0..1" Role="ShipType" />
+          <End Type="Self.Vessel" Multiplicity="*" Role="Vessel" />
+          <ReferentialConstraint>
+            <Principal Role="ShipType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vessel">
+              <PropertyRef Name="ShipTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_ResourcePermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="resource_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="operation_type" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="REMAXAPIModelsStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlternatorMaker" EntityType="Self.AlternatorMaker" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Channel" EntityType="Self.Channel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChartType" EntityType="Self.ChartType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DashboardSetting" EntityType="Self.DashboardSetting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Engine" EntityType="Self.Engine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EngineType" EntityType="Self.EngineType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Model" EntityType="Self.Model" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Monitoring" EntityType="Self.Monitoring" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OptionSet" EntityType="Self.OptionSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OptionSetGroup" EntityType="Self.OptionSetGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resource" EntityType="Self.Resource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResourcePermission" EntityType="Self.ResourcePermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShipClass" EntityType="Self.ShipClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShipType" EntityType="Self.ShipType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserClaim" EntityType="Self.UserClaim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLogin" EntityType="Self.UserLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserUserRole" EntityType="Self.UserUserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vessel" EntityType="Self.Vessel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FilteredAccount" EntityType="Self.FilteredAccount" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [FilteredAccount].[Id] AS [Id], 
+    [FilteredAccount].[AccountID] AS [AccountID], 
+    [FilteredAccount].[Name] AS [Name], 
+    [FilteredAccount].[PrimaryContact] AS [PrimaryContact], 
+    [FilteredAccount].[MainPhone] AS [MainPhone], 
+    [FilteredAccount].[Fax] AS [Fax], 
+    [FilteredAccount].[Email] AS [Email]
+    FROM [dbo].[FilteredAccount] AS [FilteredAccount]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Account_User" Association="Self.FK_Account_User">
+            <End EntitySet="Account" Role="Account" />
+            <End EntitySet="User" Role="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Channel_ChartType" Association="Self.FK_Channel_ChartType">
+            <End EntitySet="ChartType" Role="ChartType" />
+            <End EntitySet="Channel" Role="Channel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Channel_Model" Association="Self.FK_Channel_Model">
+            <End EntitySet="Model" Role="Model" />
+            <End EntitySet="Channel" Role="Channel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Engine_AlternatorMaker" Association="Self.FK_Engine_AlternatorMaker">
+            <End EntitySet="AlternatorMaker" Role="AlternatorMaker" />
+            <End EntitySet="Engine" Role="Engine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Engine_EngineType" Association="Self.FK_Engine_EngineType">
+            <End EntitySet="EngineType" Role="EngineType" />
+            <End EntitySet="Engine" Role="Engine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Engine_Model" Association="Self.FK_Engine_Model">
+            <End EntitySet="Model" Role="Model" />
+            <End EntitySet="Engine" Role="Engine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Engine_Vessel" Association="Self.FK_Engine_Vessel">
+            <End EntitySet="Vessel" Role="Vessel" />
+            <End EntitySet="Engine" Role="Engine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Model_EngineType" Association="Self.FK_Model_EngineType">
+            <End EntitySet="EngineType" Role="EngineType" />
+            <End EntitySet="Model" Role="Model" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaim_User" Association="Self.FK_UserClaim_User">
+            <End EntitySet="User" Role="User" />
+            <End EntitySet="UserClaim" Role="UserClaim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLogin_User" Association="Self.FK_UserLogin_User">
+            <End EntitySet="User" Role="User" />
+            <End EntitySet="UserLogin" Role="UserLogin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserUserRole_User" Association="Self.FK_UserUserRole_User">
+            <End EntitySet="User" Role="User" />
+            <End EntitySet="UserUserRole" Role="UserUserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserUserRole_UserRole" Association="Self.FK_UserUserRole_UserRole">
+            <End EntitySet="UserRole" Role="UserRole" />
+            <End EntitySet="UserUserRole" Role="UserUserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vessel_Country" Association="Self.FK_Vessel_Country">
+            <End EntitySet="Country" Role="Country" />
+            <End EntitySet="Vessel" Role="Vessel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vessel_OperatorAccount" Association="Self.FK_Vessel_OperatorAccount">
+            <End EntitySet="Account" Role="Account" />
+            <End EntitySet="Vessel" Role="Vessel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vessel_OwnerAccount" Association="Self.FK_Vessel_OwnerAccount">
+            <End EntitySet="Account" Role="Account" />
+            <End EntitySet="Vessel" Role="Vessel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vessel_ShipClass" Association="Self.FK_Vessel_ShipClass">
+            <End EntitySet="ShipClass" Role="ShipClass" />
+            <End EntitySet="Vessel" Role="Vessel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vessel_ShipType" Association="Self.FK_Vessel_ShipType">
+            <End EntitySet="ShipType" Role="ShipType" />
+            <End EntitySet="Vessel" Role="Vessel" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="REMAXAPI.Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="AccountID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PrimaryContact" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MainPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Account_User" FromRole="Account" ToRole="User" />
+          <NavigationProperty Name="OperatorVessels" Relationship="Self.FK_Vessel_OperatorAccount" FromRole="Account" ToRole="Vessel" />
+          <NavigationProperty Name="OwnVessels" Relationship="Self.FK_Vessel_OwnerAccount" FromRole="Account" ToRole="Vessel" />
+        </EntityType>
+        <EntityType Name="AlternatorMaker">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Engines" Relationship="Self.FK_Engine_AlternatorMaker" FromRole="AlternatorMaker" ToRole="Engine" />
+        </EntityType>
+        <EntityType Name="Channel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ChannelNo" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ModelID" Type="Guid" />
+          <Property Name="DashboardDisplay" Type="Boolean" />
+          <Property Name="ChartTypeID" Type="Guid" />
+          <Property Name="MinRange" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MaxRange" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Scale" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DisplayUnit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LowerLimit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UpperLimit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MonitoringTimer" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DataTypeNo" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ChartType" Relationship="Self.FK_Channel_ChartType" FromRole="Channel" ToRole="ChartType" />
+          <NavigationProperty Name="Model" Relationship="Self.FK_Channel_Model" FromRole="Channel" ToRole="Model" />
+        </EntityType>
+        <EntityType Name="ChartType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Channels" Relationship="Self.FK_Channel_ChartType" FromRole="ChartType" ToRole="Channel" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Vessels" Relationship="Self.FK_Vessel_Country" FromRole="Country" ToRole="Vessel" />
+        </EntityType>
+        <EntityType Name="DashboardSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ModelNo" Type="Guid" Nullable="false" />
+          <Property Name="ChannelNo" Type="Guid" Nullable="false" />
+          <Property Name="DisplayOnDashboard" Type="Boolean" />
+          <Property Name="ChartType" Type="Int32" Nullable="false" />
+          <Property Name="ChartGroupNo" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Engine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="VesselID" Type="Guid" Nullable="false" />
+          <Property Name="EngineTypeID" Type="Guid" />
+          <Property Name="EngineModelID" Type="Guid" />
+          <Property Name="SerialNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OutputPower" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="GearBoxModel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GearBoxSerialNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GearRatio" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AlternatorMakerID" Type="Guid" />
+          <Property Name="AlternatorMakerModel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AlternatorSrNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AlternatorOutput" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PowerSupplySystem" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="InsulationTempRise" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IPRating" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Mounting" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AlternatorMaker" Relationship="Self.FK_Engine_AlternatorMaker" FromRole="Engine" ToRole="AlternatorMaker" />
+          <NavigationProperty Name="EngineType" Relationship="Self.FK_Engine_EngineType" FromRole="Engine" ToRole="EngineType" />
+          <NavigationProperty Name="Model" Relationship="Self.FK_Engine_Model" FromRole="Engine" ToRole="Model" />
+          <NavigationProperty Name="Vessel" Relationship="Self.FK_Engine_Vessel" FromRole="Engine" ToRole="Vessel" />
+        </EntityType>
+        <EntityType Name="EngineType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Engines" Relationship="Self.FK_Engine_EngineType" FromRole="EngineType" ToRole="Engine" />
+          <NavigationProperty Name="Models" Relationship="Self.FK_Model_EngineType" FromRole="EngineType" ToRole="Model" />
+        </EntityType>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EngineTypeID" Type="Guid" />
+          <NavigationProperty Name="Channels" Relationship="Self.FK_Channel_Model" FromRole="Model" ToRole="Channel" />
+          <NavigationProperty Name="Engines" Relationship="Self.FK_Engine_Model" FromRole="Model" ToRole="Engine" />
+          <NavigationProperty Name="EngineType" Relationship="Self.FK_Model_EngineType" FromRole="Model" ToRole="EngineType" />
+        </EntityType>
+        <EntityType Name="Monitoring">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="IMO_No" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SerialNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ChannelNo" Type="Int32" Nullable="false" />
+          <Property Name="ChannelDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TimeStamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="OptionSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="GroupId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OptionSetGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Resource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ResourcePermission">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="ResourceId" />
+          </Key>
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="ResourceId" Type="Int32" Nullable="false" />
+          <Property Name="ReadPermission" Type="Byte" />
+          <Property Name="WritePermission" Type="Byte" />
+          <Property Name="DeletePermission" Type="Byte" />
+          <Property Name="ExecutePermission" Type="Byte" />
+        </EntityType>
+        <EntityType Name="ShipClass">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Vessels" Relationship="Self.FK_Vessel_ShipClass" FromRole="ShipClass" ToRole="Vessel" />
+        </EntityType>
+        <EntityType Name="ShipType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Vessels" Relationship="Self.FK_Vessel_ShipType" FromRole="ShipType" ToRole="Vessel" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailConfirmed" Type="Boolean" />
+          <Property Name="PasswordHash" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ConcurrencyStamp" Type="Guid" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" />
+          <Property Name="LockoutEnd" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" />
+          <Property Name="AccessFailedCount" Type="Int16" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AccountID" Type="Guid" Nullable="false" />
+          <Property Name="JobTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BusinessPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsRootUser" Type="Boolean" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Account_User" FromRole="User" ToRole="Account" />
+          <NavigationProperty Name="UserClaims" Relationship="Self.FK_UserClaim_User" FromRole="User" ToRole="UserClaim" />
+          <NavigationProperty Name="UserLogins" Relationship="Self.FK_UserLogin_User" FromRole="User" ToRole="UserLogin" />
+          <NavigationProperty Name="UserRoles" Relationship="Self.UserUserRole" FromRole="User" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserClaim_User" FromRole="UserClaim" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Key" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Key" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserLogin_User" FromRole="UserLogin" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.UserUserRole" FromRole="UserRole" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Vessel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="IMO_No" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VesselName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OwnerID" Type="Guid" Nullable="false" />
+          <Property Name="OperatorID" Type="Guid" Nullable="false" />
+          <Property Name="ShipTypeID" Type="Guid" />
+          <Property Name="ShipyardName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ShipyardCountry" Type="Guid" />
+          <Property Name="BuildYear" Type="DateTime" Precision="0" />
+          <Property Name="DeliveryToOwner" Type="DateTime" Precision="0" />
+          <Property Name="ShipClassID" Type="Guid" />
+          <Property Name="DWT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalPropulsionPower" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalGeneratorPower" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="OperatorAccount" Relationship="Self.FK_Vessel_OperatorAccount" FromRole="Vessel" ToRole="Account" />
+          <NavigationProperty Name="OwnerAccount" Relationship="Self.FK_Vessel_OwnerAccount" FromRole="Vessel" ToRole="Account" />
+          <NavigationProperty Name="Country" Relationship="Self.FK_Vessel_Country" FromRole="Vessel" ToRole="Country" />
+          <NavigationProperty Name="Engines" Relationship="Self.FK_Engine_Vessel" FromRole="Vessel" ToRole="Engine" />
+          <NavigationProperty Name="ShipClass" Relationship="Self.FK_Vessel_ShipClass" FromRole="Vessel" ToRole="ShipClass" />
+          <NavigationProperty Name="ShipType" Relationship="Self.FK_Vessel_ShipType" FromRole="Vessel" ToRole="ShipType" />
+        </EntityType>
+        <EntityType Name="FilteredAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="AccountID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PrimaryContact" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MainPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Account_User">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
@@ -276,6 +923,42 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vessel_OperatorAccount">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vessel">
+              <PropertyRef Name="OperatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vessel_OwnerAccount">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vessel">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Engine_AlternatorMaker">
+          <End Role="AlternatorMaker" Type="Self.AlternatorMaker" Multiplicity="0..1" />
+          <End Role="Engine" Type="Self.Engine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AlternatorMaker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Engine">
+              <PropertyRef Name="AlternatorMakerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -303,15 +986,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Engine_AlternatorMaker">
-          <End Role="AlternatorMaker" Type="Self.AlternatorMaker" Multiplicity="0..1" />
-          <End Role="Engine" Type="Self.Engine" Multiplicity="*" />
+        <Association Name="FK_Vessel_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AlternatorMaker">
+            <Principal Role="Country">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Engine">
-              <PropertyRef Name="AlternatorMakerID" />
+            <Dependent Role="Vessel">
+              <PropertyRef Name="ShipyardCountry" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -363,98 +1046,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserClaim_User">
-          <End Role="User" Type="Self.User" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UserClaim" Type="Self.UserClaim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserClaim">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserLogin_User">
-          <End Role="User" Type="Self.User" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserLogin">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserUserRole_User">
-          <End Role="User" Type="Self.User" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UserUserRole" Type="Self.UserUserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserUserRole">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserUserRole_UserRole">
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UserUserRole" Type="Self.UserUserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserRole">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserUserRole">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Vessel_Country">
-          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
-          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Vessel">
-              <PropertyRef Name="ShipyardCountry" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Vessel_OperatorAccount">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Vessel">
-              <PropertyRef Name="OperatorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Vessel_OwnerAccount">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Vessel">
-              <PropertyRef Name="OwnerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Vessel_ShipClass">
           <End Role="ShipClass" Type="Self.ShipClass" Multiplicity="0..1" />
           <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
@@ -479,166 +1070,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="sp_ResourcePermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="userid" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="resource_name" Type="nvarchar" Mode="In" />
-          <Parameter Name="operation_type" Type="int" Mode="In" />
-        </Function>
-        <EntityContainer Name="DB_A38003_DEVModelStoreContainer">
-          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AlternatorMaker" EntityType="Self.AlternatorMaker" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Channel" EntityType="Self.Channel" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ChartType" EntityType="Self.ChartType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DashboardSetting" EntityType="Self.DashboardSetting" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Engine" EntityType="Self.Engine" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EngineType" EntityType="Self.EngineType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Model" EntityType="Self.Model" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Monitoring" EntityType="Self.Monitoring" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OptionSet" EntityType="Self.OptionSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OptionSetGroup" EntityType="Self.OptionSetGroup" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Resource" EntityType="Self.Resource" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ResourcePermission" EntityType="Self.ResourcePermission" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ShipClass" EntityType="Self.ShipClass" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ShipType" EntityType="Self.ShipType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserClaim" EntityType="Self.UserClaim" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserLogin" EntityType="Self.UserLogin" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserUserRole" EntityType="Self.UserUserRole" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Vessel" EntityType="Self.Vessel" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Account_User" Association="Self.FK_Account_User">
-            <End Role="Account" EntitySet="Account" />
-            <End Role="User" EntitySet="User" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Channel_ChartType" Association="Self.FK_Channel_ChartType">
-            <End Role="ChartType" EntitySet="ChartType" />
-            <End Role="Channel" EntitySet="Channel" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Channel_Model" Association="Self.FK_Channel_Model">
-            <End Role="Model" EntitySet="Model" />
-            <End Role="Channel" EntitySet="Channel" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Engine_AlternatorMaker" Association="Self.FK_Engine_AlternatorMaker">
-            <End Role="AlternatorMaker" EntitySet="AlternatorMaker" />
-            <End Role="Engine" EntitySet="Engine" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Engine_EngineType" Association="Self.FK_Engine_EngineType">
-            <End Role="EngineType" EntitySet="EngineType" />
-            <End Role="Engine" EntitySet="Engine" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Engine_Model" Association="Self.FK_Engine_Model">
-            <End Role="Model" EntitySet="Model" />
-            <End Role="Engine" EntitySet="Engine" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Engine_Vessel" Association="Self.FK_Engine_Vessel">
-            <End Role="Vessel" EntitySet="Vessel" />
-            <End Role="Engine" EntitySet="Engine" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Model_EngineType" Association="Self.FK_Model_EngineType">
-            <End Role="EngineType" EntitySet="EngineType" />
-            <End Role="Model" EntitySet="Model" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserClaim_User" Association="Self.FK_UserClaim_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="UserClaim" EntitySet="UserClaim" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserLogin_User" Association="Self.FK_UserLogin_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="UserLogin" EntitySet="UserLogin" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserUserRole_User" Association="Self.FK_UserUserRole_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="UserUserRole" EntitySet="UserUserRole" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserUserRole_UserRole" Association="Self.FK_UserUserRole_UserRole">
-            <End Role="UserRole" EntitySet="UserRole" />
-            <End Role="UserUserRole" EntitySet="UserUserRole" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vessel_Country" Association="Self.FK_Vessel_Country">
-            <End Role="Country" EntitySet="Country" />
-            <End Role="Vessel" EntitySet="Vessel" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vessel_OperatorAccount" Association="Self.FK_Vessel_OperatorAccount">
-            <End Role="Account" EntitySet="Account" />
-            <End Role="Vessel" EntitySet="Vessel" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vessel_OwnerAccount" Association="Self.FK_Vessel_OwnerAccount">
-            <End Role="Account" EntitySet="Account" />
-            <End Role="Vessel" EntitySet="Vessel" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vessel_ShipClass" Association="Self.FK_Vessel_ShipClass">
-            <End Role="ShipClass" EntitySet="ShipClass" />
-            <End Role="Vessel" EntitySet="Vessel" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vessel_ShipType" Association="Self.FK_Vessel_ShipType">
-            <End Role="ShipType" EntitySet="ShipType" />
-            <End Role="Vessel" EntitySet="Vessel" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
-    <!-- CSDL content -->
-    <edmx:ConceptualModels>
-      <Schema Namespace="DB_A38003_DEVModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityStamp" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ConcurrencyStamp" Type="Guid" Nullable="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="LockoutEnd" Type="DateTime" Precision="3" />
-          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="Int16" Nullable="false" />
-          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserClaims" Relationship="Self.FK_UserClaim_User" FromRole="User" ToRole="UserClaim" />
-          <NavigationProperty Name="UserLogins" Relationship="Self.FK_UserLogin_User" FromRole="User" ToRole="UserLogin" />
-          <NavigationProperty Name="UserRoles" Relationship="Self.UserUserRole" FromRole="User" ToRole="UserRole" />
-          <Property Name="AccountID" Type="Guid" />
-          <Property Name="JobTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="BusinessPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsRootUser" Type="Boolean" />
-          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
-          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Account" Relationship="DB_A38003_DEVModel.FK_Account_User" FromRole="User" ToRole="Account" />
-          <Property Name="Status" Type="Int32" />
-        </EntityType>
-        <EntityType Name="UserClaim">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Guid" Nullable="false" />
-          <Property Name="Type" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Value" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="User" Relationship="Self.FK_UserClaim_User" FromRole="UserClaim" ToRole="User" />
-        </EntityType>
-        <EntityType Name="UserLogin">
-          <Key>
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="Key" />
-          </Key>
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Key" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserId" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="Self.FK_UserLogin_User" FromRole="UserLogin" ToRole="User" />
-        </EntityType>
-        <EntityType Name="UserRole">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="Self.UserUserRole" FromRole="UserRole" ToRole="User" />
-        </EntityType>
         <Association Name="FK_UserClaim_User">
           <End Role="User" Type="Self.User" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -672,10 +1103,80 @@
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
         </Association>
         <EntityContainer Name="Remax_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="AlternatorMakers" EntityType="Self.AlternatorMaker" />
+          <EntitySet Name="Channels" EntityType="Self.Channel" />
+          <EntitySet Name="ChartTypes" EntityType="Self.ChartType" />
+          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="DashboardSettings" EntityType="Self.DashboardSetting" />
+          <EntitySet Name="Engines" EntityType="Self.Engine" />
+          <EntitySet Name="EngineTypes" EntityType="Self.EngineType" />
+          <EntitySet Name="Models" EntityType="Self.Model" />
+          <EntitySet Name="Monitorings" EntityType="Self.Monitoring" />
+          <EntitySet Name="OptionSets" EntityType="Self.OptionSet" />
+          <EntitySet Name="OptionSetGroups" EntityType="Self.OptionSetGroup" />
+          <EntitySet Name="Resources" EntityType="Self.Resource" />
+          <EntitySet Name="ResourcePermissions" EntityType="Self.ResourcePermission" />
+          <EntitySet Name="ShipClasses" EntityType="Self.ShipClass" />
+          <EntitySet Name="ShipTypes" EntityType="Self.ShipType" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserClaims" EntityType="Self.UserClaim" />
           <EntitySet Name="UserLogins" EntityType="Self.UserLogin" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <EntitySet Name="Vessels" EntityType="Self.Vessel" />
+          <EntitySet Name="FilteredAccounts" EntityType="Self.FilteredAccount" />
+          <AssociationSet Name="FK_Account_User" Association="Self.FK_Account_User">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vessel_OperatorAccount" Association="Self.FK_Vessel_OperatorAccount">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Vessel" EntitySet="Vessels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vessel_OwnerAccount" Association="Self.FK_Vessel_OwnerAccount">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Vessel" EntitySet="Vessels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Engine_AlternatorMaker" Association="Self.FK_Engine_AlternatorMaker">
+            <End Role="AlternatorMaker" EntitySet="AlternatorMakers" />
+            <End Role="Engine" EntitySet="Engines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Channel_ChartType" Association="Self.FK_Channel_ChartType">
+            <End Role="ChartType" EntitySet="ChartTypes" />
+            <End Role="Channel" EntitySet="Channels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Channel_Model" Association="Self.FK_Channel_Model">
+            <End Role="Model" EntitySet="Models" />
+            <End Role="Channel" EntitySet="Channels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vessel_Country" Association="Self.FK_Vessel_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Vessel" EntitySet="Vessels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Engine_EngineType" Association="Self.FK_Engine_EngineType">
+            <End Role="EngineType" EntitySet="EngineTypes" />
+            <End Role="Engine" EntitySet="Engines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Engine_Model" Association="Self.FK_Engine_Model">
+            <End Role="Model" EntitySet="Models" />
+            <End Role="Engine" EntitySet="Engines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Engine_Vessel" Association="Self.FK_Engine_Vessel">
+            <End Role="Vessel" EntitySet="Vessels" />
+            <End Role="Engine" EntitySet="Engines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Model_EngineType" Association="Self.FK_Model_EngineType">
+            <End Role="EngineType" EntitySet="EngineTypes" />
+            <End Role="Model" EntitySet="Models" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vessel_ShipClass" Association="Self.FK_Vessel_ShipClass">
+            <End Role="ShipClass" EntitySet="ShipClasses" />
+            <End Role="Vessel" EntitySet="Vessels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vessel_ShipType" Association="Self.FK_Vessel_ShipType">
+            <End Role="ShipType" EntitySet="ShipTypes" />
+            <End Role="Vessel" EntitySet="Vessels" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserClaim_User" Association="Self.FK_UserClaim_User">
             <End Role="User" EntitySet="Users" />
             <End Role="UserClaim" EntitySet="UserClaims" />
@@ -688,266 +1189,12 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-          <EntitySet Name="AlternatorMakers" EntityType="DB_A38003_DEVModel.AlternatorMaker" />
-          <EntitySet Name="Channels" EntityType="DB_A38003_DEVModel.Channel" />
-          <EntitySet Name="ChartTypes" EntityType="DB_A38003_DEVModel.ChartType" />
-          <EntitySet Name="Countries" EntityType="DB_A38003_DEVModel.Country" />
-          <EntitySet Name="DashboardSettings" EntityType="DB_A38003_DEVModel.DashboardSetting" />
-          <EntitySet Name="EngineTypes" EntityType="DB_A38003_DEVModel.EngineType" />
-          <EntitySet Name="Monitorings" EntityType="DB_A38003_DEVModel.Monitoring" />
-          <EntitySet Name="OptionSets" EntityType="DB_A38003_DEVModel.OptionSet" />
-          <EntitySet Name="OptionSetGroups" EntityType="DB_A38003_DEVModel.OptionSetGroup" />
-          <EntitySet Name="ShipClasses" EntityType="DB_A38003_DEVModel.ShipClass" />
-          <EntitySet Name="ShipTypes" EntityType="DB_A38003_DEVModel.ShipType" />
-          <EntitySet Name="Vessels" EntityType="DB_A38003_DEVModel.Vessel" />
-          <EntitySet Name="Accounts" EntityType="DB_A38003_DEVModel.Account" />
-          <EntitySet Name="Resources" EntityType="DB_A38003_DEVModel.Resource" />
-          <EntitySet Name="ResourcePermissions" EntityType="DB_A38003_DEVModel.ResourcePermission" />
-          <FunctionImport Name="sp_ResourcePermission" ReturnType="Collection(DB_A38003_DEVModel.sp_ResourcePermission_Result)">
-            <Parameter Name="userid" Mode="In" Type="Guid" />
-            <Parameter Name="resource_name" Mode="In" Type="String" />
-            <Parameter Name="operation_type" Mode="In" Type="Int32" />
+          <FunctionImport Name="sp_ResourcePermission" ReturnType="Collection(REMAXAPI.Models.sp_ResourcePermission_Result)">
+            <Parameter Name="userid" Type="Guid" Mode="In" />
+            <Parameter Name="resource_name" Type="String" Mode="In" />
+            <Parameter Name="operation_type" Type="Int32" Mode="In" />
           </FunctionImport>
-          <AssociationSet Name="FK_Account_User" Association="DB_A38003_DEVModel.FK_Account_User">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vessel_OperatorAccount" Association="DB_A38003_DEVModel.FK_Vessel_OperatorAccount">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Vessel" EntitySet="Vessels" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vessel_OwnerAccount" Association="DB_A38003_DEVModel.FK_Vessel_OwnerAccount">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Vessel" EntitySet="Vessels" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vessel_ShipClass" Association="DB_A38003_DEVModel.FK_Vessel_ShipClass">
-            <End Role="ShipClass" EntitySet="ShipClasses" />
-            <End Role="Vessel" EntitySet="Vessels" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vessel_ShipType" Association="DB_A38003_DEVModel.FK_Vessel_ShipType">
-            <End Role="ShipType" EntitySet="ShipTypes" />
-            <End Role="Vessel" EntitySet="Vessels" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vessel_Country" Association="DB_A38003_DEVModel.FK_Vessel_Country">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="Vessel" EntitySet="Vessels" />
-          </AssociationSet>
-          <EntitySet Name="Models" EntityType="DB_A38003_DEVModel.Model" />
-          <AssociationSet Name="FK_Channel_Model" Association="DB_A38003_DEVModel.FK_Channel_Model">
-            <End Role="Model" EntitySet="Models" />
-            <End Role="Channel" EntitySet="Channels" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Model_EngineType" Association="DB_A38003_DEVModel.FK_Model_EngineType">
-            <End Role="EngineType" EntitySet="EngineTypes" />
-            <End Role="Model" EntitySet="Models" />
-          </AssociationSet>
-          <EntitySet Name="Engines" EntityType="DB_A38003_DEVModel.Engine" />
-          <AssociationSet Name="FK_Engine_AlternatorMaker" Association="DB_A38003_DEVModel.FK_Engine_AlternatorMaker">
-            <End Role="AlternatorMaker" EntitySet="AlternatorMakers" />
-            <End Role="Engine" EntitySet="Engines" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Engine_EngineType" Association="DB_A38003_DEVModel.FK_Engine_EngineType">
-            <End Role="EngineType" EntitySet="EngineTypes" />
-            <End Role="Engine" EntitySet="Engines" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Engine_Model" Association="DB_A38003_DEVModel.FK_Engine_Model">
-            <End Role="Model" EntitySet="Models" />
-            <End Role="Engine" EntitySet="Engines" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Engine_Vessel" Association="DB_A38003_DEVModel.FK_Engine_Vessel">
-            <End Role="Vessel" EntitySet="Vessels" />
-            <End Role="Engine" EntitySet="Engines" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Channel_ChartType" Association="DB_A38003_DEVModel.FK_Channel_ChartType">
-            <End Role="ChartType" EntitySet="ChartTypes" />
-            <End Role="Channel" EntitySet="Channels" />
-          </AssociationSet>
-          </EntityContainer>
-        <EntityType Name="AlternatorMaker">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Engines" Relationship="DB_A38003_DEVModel.FK_Engine_AlternatorMaker" FromRole="AlternatorMaker" ToRole="Engine" />
-          </EntityType>
-        <EntityType Name="Channel">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ChannelNo" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="MinRange" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="MaxRange" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Scale" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="DisplayUnit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LowerLimit" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="UpperLimit" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="MonitoringTimer" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="DataTypeNo" Type="Int32" />
-          <Property Name="ModelID" Type="Guid" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
-          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Model" Relationship="DB_A38003_DEVModel.FK_Channel_Model" FromRole="Channel" ToRole="Model" />
-          <Property Name="DashboardDisplay" Type="Boolean" />
-          <Property Name="ChartTypeID" Type="Guid" />
-          <NavigationProperty Name="ChartType" Relationship="DB_A38003_DEVModel.FK_Channel_ChartType" FromRole="Channel" ToRole="ChartType" />
-        </EntityType>
-        <EntityType Name="ChartType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Channels" Relationship="DB_A38003_DEVModel.FK_Channel_ChartType" FromRole="ChartType" ToRole="Channel" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Country">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Vessels" Relationship="DB_A38003_DEVModel.FK_Vessel_Country" FromRole="Country" ToRole="Vessel" />
-        </EntityType>
-        <EntityType Name="DashboardSetting">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ModelNo" Type="Guid" Nullable="false" />
-          <Property Name="ChannelNo" Type="Guid" Nullable="false" />
-          <Property Name="DisplayOnDashboard" Type="Boolean" />
-          <Property Name="ChartType" Type="Int32" Nullable="false" />
-          <Property Name="ChartGroupNo" Type="Int32" />
-        </EntityType>
-        <EntityType Name="EngineType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Models" Relationship="DB_A38003_DEVModel.FK_Model_EngineType" FromRole="EngineType" ToRole="Model" />
-          <NavigationProperty Name="Engines" Relationship="DB_A38003_DEVModel.FK_Engine_EngineType" FromRole="EngineType" ToRole="Engine" />
-        </EntityType>
-        <EntityType Name="Monitoring">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IMO_No" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SerialNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ChannelNo" Type="Int32" Nullable="false" />
-          <Property Name="ChannelDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="TimeStamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Value" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="OptionSet">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GroupId" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Value" Type="Int32" Nullable="false" />
-          <Property Name="SortOrder" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="OptionSetGroup">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="ShipClass">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Vessels" Relationship="DB_A38003_DEVModel.FK_Vessel_ShipClass" FromRole="ShipClass" ToRole="Vessel" />
-        </EntityType>
-        <EntityType Name="ShipType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Vessels" Relationship="DB_A38003_DEVModel.FK_Vessel_ShipType" FromRole="ShipType" ToRole="Vessel" />
-        </EntityType>
-        <EntityType Name="Vessel">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IMO_No" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="VesselName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OwnerID" Type="Guid" Nullable="false" />
-          <Property Name="OperatorID" Type="Guid" Nullable="false" />
-          <Property Name="ShipTypeID" Type="Guid" />
-          <Property Name="ShipyardName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="BuildYear" Type="DateTime" Precision="0" />
-          <Property Name="DeliveryToOwner" Type="DateTime" Precision="0" />
-          <Property Name="ShipClassID" Type="Guid" />
-          <Property Name="DWT" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="TotalPropulsionPower" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="TotalGeneratorPower" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="OperatorAccount" Relationship="DB_A38003_DEVModel.FK_Vessel_OperatorAccount" FromRole="Vessel" ToRole="Account" />
-          <NavigationProperty Name="OwnerAccount" Relationship="DB_A38003_DEVModel.FK_Vessel_OwnerAccount" FromRole="Vessel" ToRole="Account" />
-          <NavigationProperty Name="ShipClass" Relationship="DB_A38003_DEVModel.FK_Vessel_ShipClass" FromRole="Vessel" ToRole="ShipClass" />
-          <NavigationProperty Name="ShipType" Relationship="DB_A38003_DEVModel.FK_Vessel_ShipType" FromRole="Vessel" ToRole="ShipType" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
-          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" ConcurrencyMode="None" />
-          <Property Name="ShipyardCountry" Type="Guid" />
-          <NavigationProperty Name="Country" Relationship="DB_A38003_DEVModel.FK_Vessel_Country" FromRole="Vessel" ToRole="Country" />
-          <NavigationProperty Name="Engines" Relationship="DB_A38003_DEVModel.FK_Engine_Vessel" FromRole="Vessel" ToRole="Engine" />
-        </EntityType>
-        <EntityType Name="Account">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AccountID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PrimaryContact" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="MainPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Fax" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="DB_A38003_DEVModel.FK_Account_User" FromRole="Account" ToRole="User" />
-          <NavigationProperty Name="VesselsOperate" Relationship="DB_A38003_DEVModel.FK_Vessel_OperatorAccount" FromRole="Account" ToRole="Vessel" />
-          <NavigationProperty Name="VesselsOwn" Relationship="DB_A38003_DEVModel.FK_Vessel_OwnerAccount" FromRole="Account" ToRole="Vessel" />
-          <Property Name="Status" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Resource">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="ResourcePermission">
-          <Key>
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="ResourceId" />
-          </Key>
-          <Property Name="RoleId" Type="Guid" Nullable="false" />
-          <Property Name="ResourceId" Type="Int32" Nullable="false" />
-          <Property Name="ReadPermission" Type="Byte" />
-          <Property Name="WritePermission" Type="Byte" />
-          <Property Name="DeletePermission" Type="Byte" />
-          <Property Name="ExecutePermission" Type="Byte" />
-        </EntityType>
+        </EntityContainer>
         <ComplexType Name="sp_ResourcePermission_Result">
           <Property Type="Guid" Name="User_Id" Nullable="true" />
           <Property Type="String" Name="User_Name" Nullable="true" MaxLength="100" />
@@ -957,222 +1204,212 @@
           <Property Type="String" Name="Resource_Name" Nullable="true" MaxLength="100" />
           <Property Type="Byte" Name="Resource_Permission" Nullable="true" />
         </ComplexType>
-        <Association Name="FK_Account_User">
-          <End Type="DB_A38003_DEVModel.Account" Role="Account" Multiplicity="0..1" />
-          <End Type="DB_A38003_DEVModel.User" Role="User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="AccountID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Vessel_OperatorAccount">
-          <End Type="DB_A38003_DEVModel.Account" Role="Account" Multiplicity="1" />
-          <End Type="DB_A38003_DEVModel.Vessel" Role="Vessel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Vessel">
-              <PropertyRef Name="OperatorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Vessel_OwnerAccount">
-          <End Type="DB_A38003_DEVModel.Account" Role="Account" Multiplicity="1" />
-          <End Type="DB_A38003_DEVModel.Vessel" Role="Vessel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Vessel">
-              <PropertyRef Name="OwnerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Vessel_ShipClass">
-          <End Type="DB_A38003_DEVModel.ShipClass" Role="ShipClass" Multiplicity="0..1" />
-          <End Type="DB_A38003_DEVModel.Vessel" Role="Vessel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ShipClass">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Vessel">
-              <PropertyRef Name="ShipClassID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Vessel_ShipType">
-          <End Type="DB_A38003_DEVModel.ShipType" Role="ShipType" Multiplicity="0..1" />
-          <End Type="DB_A38003_DEVModel.Vessel" Role="Vessel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ShipType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Vessel">
-              <PropertyRef Name="ShipTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Vessel_Country">
-          <End Type="DB_A38003_DEVModel.Country" Role="Country" Multiplicity="0..1" />
-          <End Type="DB_A38003_DEVModel.Vessel" Role="Vessel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Vessel">
-              <PropertyRef Name="ShipyardCountry" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Model">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="EngineTypeID" Type="Guid" />
-          <NavigationProperty Name="Channels" Relationship="DB_A38003_DEVModel.FK_Channel_Model" FromRole="Model" ToRole="Channel" />
-          <NavigationProperty Name="EngineType" Relationship="DB_A38003_DEVModel.FK_Model_EngineType" FromRole="Model" ToRole="EngineType" />
-          <NavigationProperty Name="Engines" Relationship="DB_A38003_DEVModel.FK_Engine_Model" FromRole="Model" ToRole="Engine" />
-        </EntityType>
-        <Association Name="FK_Channel_Model">
-          <End Type="DB_A38003_DEVModel.Model" Role="Model" Multiplicity="0..1" />
-          <End Type="DB_A38003_DEVModel.Channel" Role="Channel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Model">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Channel">
-              <PropertyRef Name="ModelID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Model_EngineType">
-          <End Type="DB_A38003_DEVModel.EngineType" Role="EngineType" Multiplicity="0..1" />
-          <End Type="DB_A38003_DEVModel.Model" Role="Model" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EngineType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Model">
-              <PropertyRef Name="EngineTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Engine">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="VesselID" Type="Guid" Nullable="false" />
-          <Property Name="EngineTypeID" Type="Guid" />
-          <Property Name="EngineModelID" Type="Guid" />
-          <Property Name="SerialNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OutputPower" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="GearBoxModel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="GearBoxSerialNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="GearRatio" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AlternatorMakerID" Type="Guid" />
-          <Property Name="AlternatorMakerModel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AlternatorSrNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AlternatorOutput" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="PowerSupplySystem" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="InsulationTempRise" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="IPRating" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Mounting" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
-          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="AlternatorMaker" Relationship="DB_A38003_DEVModel.FK_Engine_AlternatorMaker" FromRole="Engine" ToRole="AlternatorMaker" />
-          <NavigationProperty Name="EngineType" Relationship="DB_A38003_DEVModel.FK_Engine_EngineType" FromRole="Engine" ToRole="EngineType" />
-          <NavigationProperty Name="Model" Relationship="DB_A38003_DEVModel.FK_Engine_Model" FromRole="Engine" ToRole="Model" />
-          <NavigationProperty Name="Vessel" Relationship="DB_A38003_DEVModel.FK_Engine_Vessel" FromRole="Engine" ToRole="Vessel" />
-        </EntityType>
-        <Association Name="FK_Engine_AlternatorMaker">
-          <End Type="DB_A38003_DEVModel.AlternatorMaker" Role="AlternatorMaker" Multiplicity="0..1" />
-          <End Type="DB_A38003_DEVModel.Engine" Role="Engine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AlternatorMaker">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Engine">
-              <PropertyRef Name="AlternatorMakerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Engine_EngineType">
-          <End Type="DB_A38003_DEVModel.EngineType" Role="EngineType" Multiplicity="0..1" />
-          <End Type="DB_A38003_DEVModel.Engine" Role="Engine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EngineType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Engine">
-              <PropertyRef Name="EngineTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Engine_Model">
-          <End Type="DB_A38003_DEVModel.Model" Role="Model" Multiplicity="0..1" />
-          <End Type="DB_A38003_DEVModel.Engine" Role="Engine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Model">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Engine">
-              <PropertyRef Name="EngineModelID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Engine_Vessel">
-          <End Type="DB_A38003_DEVModel.Vessel" Role="Vessel" Multiplicity="1" />
-          <End Type="DB_A38003_DEVModel.Engine" Role="Engine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Vessel">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Engine">
-              <PropertyRef Name="VesselID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Channel_ChartType">
-          <End Type="DB_A38003_DEVModel.ChartType" Role="ChartType" Multiplicity="0..1" />
-          <End Type="DB_A38003_DEVModel.Channel" Role="Channel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ChartType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Channel">
-              <PropertyRef Name="ChartTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        </Schema>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DB_A38003_DEVModelStoreContainer" CdmEntityContainer="Remax_Entities">
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsRootUser" ColumnName="IsRootUser" />
-                <ScalarProperty Name="BusinessPhoneNumber" ColumnName="BusinessPhoneNumber" />
-                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+        <EntityContainerMapping StorageEntityContainer="REMAXAPIModelsStoreContainer" CdmEntityContainer="Remax_Entities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PrimaryContact" ColumnName="PrimaryContact" />
+                <ScalarProperty Name="MainPhone" ColumnName="MainPhone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlternatorMakers">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.AlternatorMaker">
+              <MappingFragment StoreEntitySet="AlternatorMaker">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Channels">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.Channel">
+              <MappingFragment StoreEntitySet="Channel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ChannelNo" ColumnName="ChannelNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ModelID" ColumnName="ModelID" />
+                <ScalarProperty Name="DashboardDisplay" ColumnName="DashboardDisplay" />
+                <ScalarProperty Name="ChartTypeID" ColumnName="ChartTypeID" />
+                <ScalarProperty Name="MinRange" ColumnName="MinRange" />
+                <ScalarProperty Name="MaxRange" ColumnName="MaxRange" />
+                <ScalarProperty Name="Scale" ColumnName="Scale" />
+                <ScalarProperty Name="DisplayUnit" ColumnName="DisplayUnit" />
+                <ScalarProperty Name="LowerLimit" ColumnName="LowerLimit" />
+                <ScalarProperty Name="UpperLimit" ColumnName="UpperLimit" />
+                <ScalarProperty Name="MonitoringTimer" ColumnName="MonitoringTimer" />
+                <ScalarProperty Name="DataTypeNo" ColumnName="DataTypeNo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChartTypes">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.ChartType">
+              <MappingFragment StoreEntitySet="ChartType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DashboardSettings">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.DashboardSetting">
+              <MappingFragment StoreEntitySet="DashboardSetting">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ModelNo" ColumnName="ModelNo" />
+                <ScalarProperty Name="ChannelNo" ColumnName="ChannelNo" />
+                <ScalarProperty Name="DisplayOnDashboard" ColumnName="DisplayOnDashboard" />
+                <ScalarProperty Name="ChartType" ColumnName="ChartType" />
+                <ScalarProperty Name="ChartGroupNo" ColumnName="ChartGroupNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Engines">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.Engine">
+              <MappingFragment StoreEntitySet="Engine">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="VesselID" ColumnName="VesselID" />
+                <ScalarProperty Name="EngineTypeID" ColumnName="EngineTypeID" />
+                <ScalarProperty Name="EngineModelID" ColumnName="EngineModelID" />
+                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+                <ScalarProperty Name="OutputPower" ColumnName="OutputPower" />
+                <ScalarProperty Name="GearBoxModel" ColumnName="GearBoxModel" />
+                <ScalarProperty Name="GearBoxSerialNo" ColumnName="GearBoxSerialNo" />
+                <ScalarProperty Name="GearRatio" ColumnName="GearRatio" />
+                <ScalarProperty Name="AlternatorMakerID" ColumnName="AlternatorMakerID" />
+                <ScalarProperty Name="AlternatorMakerModel" ColumnName="AlternatorMakerModel" />
+                <ScalarProperty Name="AlternatorSrNo" ColumnName="AlternatorSrNo" />
+                <ScalarProperty Name="AlternatorOutput" ColumnName="AlternatorOutput" />
+                <ScalarProperty Name="PowerSupplySystem" ColumnName="PowerSupplySystem" />
+                <ScalarProperty Name="InsulationTempRise" ColumnName="InsulationTempRise" />
+                <ScalarProperty Name="IPRating" ColumnName="IPRating" />
+                <ScalarProperty Name="Mounting" ColumnName="Mounting" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EngineTypes">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.EngineType">
+              <MappingFragment StoreEntitySet="EngineType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Models">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.Model">
+              <MappingFragment StoreEntitySet="Model">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EngineTypeID" ColumnName="EngineTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Monitorings">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.Monitoring">
+              <MappingFragment StoreEntitySet="Monitoring">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IMO_No" ColumnName="IMO_No" />
+                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+                <ScalarProperty Name="ChannelNo" ColumnName="ChannelNo" />
+                <ScalarProperty Name="ChannelDescription" ColumnName="ChannelDescription" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OptionSets">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.OptionSet">
+              <MappingFragment StoreEntitySet="OptionSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OptionSetGroups">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.OptionSetGroup">
+              <MappingFragment StoreEntitySet="OptionSetGroup">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resources">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.Resource">
+              <MappingFragment StoreEntitySet="Resource">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResourcePermissions">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.ResourcePermission">
+              <MappingFragment StoreEntitySet="ResourcePermission">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
+                <ScalarProperty Name="ReadPermission" ColumnName="ReadPermission" />
+                <ScalarProperty Name="WritePermission" ColumnName="WritePermission" />
+                <ScalarProperty Name="DeletePermission" ColumnName="DeletePermission" />
+                <ScalarProperty Name="ExecutePermission" ColumnName="ExecutePermission" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShipClasses">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.ShipClass">
+              <MappingFragment StoreEntitySet="ShipClass">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShipTypes">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.ShipType">
+              <MappingFragment StoreEntitySet="ShipType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.User">
+              <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
@@ -1186,11 +1423,20 @@
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="BusinessPhoneNumber" ColumnName="BusinessPhoneNumber" />
+                <ScalarProperty Name="IsRootUser" ColumnName="IsRootUser" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserClaims">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.UserClaim">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.UserClaim">
               <MappingFragment StoreEntitySet="UserClaim">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1200,7 +1446,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserLogins">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.UserLogin">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.UserLogin">
               <MappingFragment StoreEntitySet="UserLogin">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Key" ColumnName="Key" />
@@ -1209,14 +1455,52 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.UserRole">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.UserRole">
               <MappingFragment StoreEntitySet="UserRole">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="UserUserRole" TypeName="DB_A38003_DEVModel.UserUserRole" StoreEntitySet="UserUserRole">
+          <EntitySetMapping Name="Vessels">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.Vessel">
+              <MappingFragment StoreEntitySet="Vessel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IMO_No" ColumnName="IMO_No" />
+                <ScalarProperty Name="VesselName" ColumnName="VesselName" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
+                <ScalarProperty Name="ShipTypeID" ColumnName="ShipTypeID" />
+                <ScalarProperty Name="ShipyardName" ColumnName="ShipyardName" />
+                <ScalarProperty Name="ShipyardCountry" ColumnName="ShipyardCountry" />
+                <ScalarProperty Name="BuildYear" ColumnName="BuildYear" />
+                <ScalarProperty Name="DeliveryToOwner" ColumnName="DeliveryToOwner" />
+                <ScalarProperty Name="ShipClassID" ColumnName="ShipClassID" />
+                <ScalarProperty Name="DWT" ColumnName="DWT" />
+                <ScalarProperty Name="TotalPropulsionPower" ColumnName="TotalPropulsionPower" />
+                <ScalarProperty Name="TotalGeneratorPower" ColumnName="TotalGeneratorPower" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FilteredAccounts">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.FilteredAccount">
+              <MappingFragment StoreEntitySet="FilteredAccount">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PrimaryContact" ColumnName="PrimaryContact" />
+                <ScalarProperty Name="MainPhone" ColumnName="MainPhone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UserUserRole" TypeName="REMAXAPI.Models.UserUserRole" StoreEntitySet="UserUserRole">
             <EndProperty Name="User">
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
@@ -1224,190 +1508,9 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="AlternatorMakers">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.AlternatorMaker">
-              <MappingFragment StoreEntitySet="AlternatorMaker">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Channels">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.Channel">
-              <MappingFragment StoreEntitySet="Channel">
-                <ScalarProperty Name="ChartTypeID" ColumnName="ChartTypeID" />
-                <ScalarProperty Name="DashboardDisplay" ColumnName="DashboardDisplay" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ModelID" ColumnName="ModelID" />
-                <ScalarProperty Name="DataTypeNo" ColumnName="DataTypeNo" />
-                <ScalarProperty Name="MonitoringTimer" ColumnName="MonitoringTimer" />
-                <ScalarProperty Name="UpperLimit" ColumnName="UpperLimit" />
-                <ScalarProperty Name="LowerLimit" ColumnName="LowerLimit" />
-                <ScalarProperty Name="DisplayUnit" ColumnName="DisplayUnit" />
-                <ScalarProperty Name="Scale" ColumnName="Scale" />
-                <ScalarProperty Name="MaxRange" ColumnName="MaxRange" />
-                <ScalarProperty Name="MinRange" ColumnName="MinRange" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ChannelNo" ColumnName="ChannelNo" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ChartTypes">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.ChartType">
-              <MappingFragment StoreEntitySet="ChartType">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Countries">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.Country">
-              <MappingFragment StoreEntitySet="Country">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DashboardSettings">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.DashboardSetting">
-              <MappingFragment StoreEntitySet="DashboardSetting">
-                <ScalarProperty Name="ChartGroupNo" ColumnName="ChartGroupNo" />
-                <ScalarProperty Name="ChartType" ColumnName="ChartType" />
-                <ScalarProperty Name="DisplayOnDashboard" ColumnName="DisplayOnDashboard" />
-                <ScalarProperty Name="ChannelNo" ColumnName="ChannelNo" />
-                <ScalarProperty Name="ModelNo" ColumnName="ModelNo" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EngineTypes">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.EngineType">
-              <MappingFragment StoreEntitySet="EngineType">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Monitorings">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.Monitoring">
-              <MappingFragment StoreEntitySet="Monitoring">
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
-                <ScalarProperty Name="ChannelDescription" ColumnName="ChannelDescription" />
-                <ScalarProperty Name="ChannelNo" ColumnName="ChannelNo" />
-                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
-                <ScalarProperty Name="IMO_No" ColumnName="IMO_No" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OptionSets">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.OptionSet">
-              <MappingFragment StoreEntitySet="OptionSet">
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OptionSetGroups">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.OptionSetGroup">
-              <MappingFragment StoreEntitySet="OptionSetGroup">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ShipClasses">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.ShipClass">
-              <MappingFragment StoreEntitySet="ShipClass">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ShipTypes">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.ShipType">
-              <MappingFragment StoreEntitySet="ShipType">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Vessels">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.Vessel">
-              <MappingFragment StoreEntitySet="Vessel">
-                <ScalarProperty Name="ShipyardCountry" ColumnName="ShipyardCountry" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="TotalGeneratorPower" ColumnName="TotalGeneratorPower" />
-                <ScalarProperty Name="TotalPropulsionPower" ColumnName="TotalPropulsionPower" />
-                <ScalarProperty Name="DWT" ColumnName="DWT" />
-                <ScalarProperty Name="ShipClassID" ColumnName="ShipClassID" />
-                <ScalarProperty Name="DeliveryToOwner" ColumnName="DeliveryToOwner" />
-                <ScalarProperty Name="BuildYear" ColumnName="BuildYear" />
-                <ScalarProperty Name="ShipyardName" ColumnName="ShipyardName" />
-                <ScalarProperty Name="ShipTypeID" ColumnName="ShipTypeID" />
-                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-                <ScalarProperty Name="VesselName" ColumnName="VesselName" />
-                <ScalarProperty Name="IMO_No" ColumnName="IMO_No" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Accounts">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.Account">
-              <MappingFragment StoreEntitySet="Account">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Fax" ColumnName="Fax" />
-                <ScalarProperty Name="MainPhone" ColumnName="MainPhone" />
-                <ScalarProperty Name="PrimaryContact" ColumnName="PrimaryContact" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Resources">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.Resource">
-              <MappingFragment StoreEntitySet="Resource">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ResourcePermissions">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.ResourcePermission">
-              <MappingFragment StoreEntitySet="ResourcePermission">
-                <ScalarProperty Name="ExecutePermission" ColumnName="ExecutePermission" />
-                <ScalarProperty Name="DeletePermission" ColumnName="DeletePermission" />
-                <ScalarProperty Name="WritePermission" ColumnName="WritePermission" />
-                <ScalarProperty Name="ReadPermission" ColumnName="ReadPermission" />
-                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_ResourcePermission" FunctionName="DB_A38003_DEVModel.Store.sp_ResourcePermission">
+          <FunctionImportMapping FunctionImportName="sp_ResourcePermission" FunctionName="REMAXAPI.Models.Store.sp_ResourcePermission">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DB_A38003_DEVModel.sp_ResourcePermission_Result">
+              <ComplexTypeMapping TypeName="REMAXAPI.Models.sp_ResourcePermission_Result">
                 <ScalarProperty Name="User_Id" ColumnName="User Id" />
                 <ScalarProperty Name="User_Name" ColumnName="User Name" />
                 <ScalarProperty Name="Role_Id" ColumnName="Role Id" />
@@ -1418,43 +1521,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Models">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.Model">
-              <MappingFragment StoreEntitySet="Model">
-                <ScalarProperty Name="EngineTypeID" ColumnName="EngineTypeID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Engines">
-            <EntityTypeMapping TypeName="DB_A38003_DEVModel.Engine">
-              <MappingFragment StoreEntitySet="Engine">
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Mounting" ColumnName="Mounting" />
-                <ScalarProperty Name="IPRating" ColumnName="IPRating" />
-                <ScalarProperty Name="InsulationTempRise" ColumnName="InsulationTempRise" />
-                <ScalarProperty Name="PowerSupplySystem" ColumnName="PowerSupplySystem" />
-                <ScalarProperty Name="AlternatorOutput" ColumnName="AlternatorOutput" />
-                <ScalarProperty Name="AlternatorSrNo" ColumnName="AlternatorSrNo" />
-                <ScalarProperty Name="AlternatorMakerModel" ColumnName="AlternatorMakerModel" />
-                <ScalarProperty Name="AlternatorMakerID" ColumnName="AlternatorMakerID" />
-                <ScalarProperty Name="GearRatio" ColumnName="GearRatio" />
-                <ScalarProperty Name="GearBoxSerialNo" ColumnName="GearBoxSerialNo" />
-                <ScalarProperty Name="GearBoxModel" ColumnName="GearBoxModel" />
-                <ScalarProperty Name="OutputPower" ColumnName="OutputPower" />
-                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
-                <ScalarProperty Name="EngineModelID" ColumnName="EngineModelID" />
-                <ScalarProperty Name="EngineTypeID" ColumnName="EngineTypeID" />
-                <ScalarProperty Name="VesselID" ColumnName="VesselID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -20,7 +20,11 @@ namespace REMAXAPI.Models
         public int ChannelNo { get; set; }
         public string ChannelDescription { get; set; }
         public System.DateTime TimeStamp { get; set; }
-        public string Unit { get; set; }
         public string Value { get; set; }
+        public string Unit { get; set; }
+        public System.Guid CreatedBy { get; set; }
+        public System.DateTime CreatedOn { get; set; }
+        public System.Guid ModifiedBy { get; set; }
+        public System.DateTime ModifiedOn { get; set; }
     }
 }

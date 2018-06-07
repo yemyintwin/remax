@@ -28,27 +28,28 @@ namespace REMAXAPI.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserClaim> UserClaims { get; set; }
-        public virtual DbSet<UserLogin> UserLogins { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<AlternatorMaker> AlternatorMakers { get; set; }
         public virtual DbSet<Channel> Channels { get; set; }
         public virtual DbSet<ChartType> ChartTypes { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<DashboardSetting> DashboardSettings { get; set; }
+        public virtual DbSet<Engine> Engines { get; set; }
         public virtual DbSet<EngineType> EngineTypes { get; set; }
+        public virtual DbSet<Model> Models { get; set; }
         public virtual DbSet<Monitoring> Monitorings { get; set; }
         public virtual DbSet<OptionSet> OptionSets { get; set; }
         public virtual DbSet<OptionSetGroup> OptionSetGroups { get; set; }
-        public virtual DbSet<ShipClass> ShipClasses { get; set; }
-        public virtual DbSet<ShipType> ShipTypes { get; set; }
-        public virtual DbSet<Vessel> Vessels { get; set; }
-        public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Resource> Resources { get; set; }
         public virtual DbSet<ResourcePermission> ResourcePermissions { get; set; }
-        public virtual DbSet<Model> Models { get; set; }
-        public virtual DbSet<Engine> Engines { get; set; }
+        public virtual DbSet<ShipClass> ShipClasses { get; set; }
+        public virtual DbSet<ShipType> ShipTypes { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserClaim> UserClaims { get; set; }
+        public virtual DbSet<UserLogin> UserLogins { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<Vessel> Vessels { get; set; }
+        public virtual DbSet<FilteredAccount> FilteredAccounts { get; set; }
     
         public virtual ObjectResult<sp_ResourcePermission_Result> sp_ResourcePermission(Nullable<System.Guid> userid, string resource_name, Nullable<int> operation_type)
         {

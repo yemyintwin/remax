@@ -1530,10 +1530,6 @@ var registration = {
                     method: 'ListAllVessels'
                 },
                 {
-                    ctrl: 'engine_model',
-                    method: 'ListAllModels'
-                },
-                {
                     ctrl: 'engine_type',
                     method: 'ListAllEngineTypes'
                 },
@@ -1559,7 +1555,7 @@ var registration = {
                 success: function (data) {
                     //Process data retrieved
                     $.each(data, function (key, entry) {
-                        drop.append($('<option></option>').attr('value', entry.id).text(entry.name));
+                            drop.append($('<option></option>').attr('value', entry.id).text(entry.name));
                     });
                 }
             });
@@ -1569,6 +1565,9 @@ var registration = {
     SubmitEngine: function () {
 
         registration.SubmitEngineInitControls();
+
+        registration.engine_type_OnChange();
+        $('#engine_type').trigger('change');
 
         // validation
         $(registration.modules.engine.formId).bootstrapValidator({
@@ -1712,7 +1711,7 @@ var registration = {
                 alternatorOutput: $('#engine_alternatorOutput').val(),
                 powerSupplySystem: $('#engine_powerSupplySystem').val(),
                 insulationTempRise: $('#engine_insulation').val(),
-                iprRating: $('#engine_iprRate').val(),
+                ipRating: $('#engine_iprRate').val(),
                 mounting: $('#engine_mounting').val(),
             };
             var requestType = "POST"; // Create
@@ -1883,6 +1882,44 @@ var registration = {
         });
     },
 
+    engine_type_OnChange: function () {
+        $('#engine_type').change(function () {
+            var selectedEngineType = $('#engine_type').val();
+            var selectedEngineTypeName = $('#engine_type option:selected').text();
+
+            var drop = $('#engine_model')
+            drop.empty();
+            url = Settings.WebApiUrl + "/api/DropDown/ListAllModels";
+            $.ajax({
+                type: 'GET',
+                url: url,
+                dataType: 'json',
+                async: true,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
+                success: function (data) {
+                    //Process data retrieved
+                    $.each(data, function (key, entry) {
+                        if (entry.engineTypeID == selectedEngineType) drop.append($('<option></option>').attr('value', entry.id).text(entry.name));
+                    });
+                }
+            });
+
+            if (selectedEngineTypeName === 'Engine') {
+                $('#engine_alternatorMaker').parent().parent().hide();
+                $('#engine_alternatorMakerModel').parent().parent().hide();
+                $('#engine_alternatorSrNo').parent().parent().hide();
+                $('#engine_alternatorOutput').parent().parent().hide();
+            }
+            else {
+                $('#engine_alternatorMaker').parent().parent().show();
+                $('#engine_alternatorMakerModel').parent().parent().show();
+                $('#engine_alternatorSrNo').parent().parent().show();
+                $('#engine_alternatorOutput').parent().parent().show();
+            }
+        });
+    },
 
     /* ----------------------------------------------------------------- Channel -----------------------------------------------------------------*/
 

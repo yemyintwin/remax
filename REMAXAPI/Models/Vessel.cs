@@ -27,6 +27,7 @@ namespace REMAXAPI.Models
         public System.Guid OperatorID { get; set; }
         public Nullable<System.Guid> ShipTypeID { get; set; }
         public string ShipyardName { get; set; }
+        public Nullable<System.Guid> ShipyardCountry { get; set; }
         public Nullable<System.DateTime> BuildYear { get; set; }
         public Nullable<System.DateTime> DeliveryToOwner { get; set; }
         public Nullable<System.Guid> ShipClassID { get; set; }
@@ -38,14 +39,13 @@ namespace REMAXAPI.Models
         public System.DateTime CreatedOn { get; set; }
         public System.Guid ModifiedBy { get; set; }
         public System.DateTime ModifiedOn { get; set; }
-        public Nullable<System.Guid> ShipyardCountry { get; set; }
     
         public virtual Account OperatorAccount { get; set; }
         public virtual Account OwnerAccount { get; set; }
-        public virtual ShipClass ShipClass { get; set; }
-        public virtual ShipType ShipType { get; set; }
         public virtual Country Country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Engine> Engines { get; set; }
+        public virtual ShipClass ShipClass { get; set; }
+        public virtual ShipType ShipType { get; set; }
     }
 }

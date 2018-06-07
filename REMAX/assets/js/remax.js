@@ -1,6 +1,7 @@
 // Settings
 var Settings = {
-    WebApiUrl: 'http://hiroodaikai-001-site1.atempurl.com/', 
+    WebApiUrl: 'http://localhost:56376/', // DEV
+    //WebApiUrl: 'http://hiroodaikai-001-site1.atempurl.com/', // UAT
     Token: null,
     CurrentUser: null,
     PageSize: 5,
@@ -49,9 +50,9 @@ includeHTML = function () {
             /*make an HTTP request using the attribute value as the file name:*/
             xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
-                if (this.readyState == 4) {
-                    if (this.status == 200) { elmnt.innerHTML = this.responseText; }
-                    if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
+                if (this.readyState === 4) {
+                    if (this.status === 200) { elmnt.innerHTML = this.responseText; }
+                    if (this.status === 404) { elmnt.innerHTML = "Page not found."; }
                     /*remove the attribute, and call this function once more:*/
                     elmnt.removeAttribute("w3-include-html");
                     includeHTML();
@@ -96,7 +97,7 @@ $(document).ready(function () {
     if (Settings.CurrentUser && Settings.CurrentUser.userRoles) {
         var roles = Settings.CurrentUser.userRoles;
         for (var i = 0; i < roles.length; i++) {
-            if (roles[i].name.toLowerCase() == 'admin' || roles[i].name.toLowerCase() == 'root') {
+            if (roles[i].name.toLowerCase() === 'admin' || roles[i].name.toLowerCase() === 'root') {
                 found = true; break;
             }
         }
@@ -142,13 +143,13 @@ $(document).ready(function () {
                         engMenu.append("<li><a href='" + engineUrl + "'>" + eng.serialNo + "</a></li>");
 
                         if (eng.engineType && eng.engineType.name) {
-                            if (eng.engineType.name == "Engine") enginesCount++;
-                            else if (eng.engineType.name == "Generator") generatorsCount++;
+                            if (eng.engineType.name === "Engine") enginesCount++;
+                            else if (eng.engineType.name === "Generator") generatorsCount++;
                         }
                     }
                 }
 
-                if (window.location.pathname == '/' || window.location.pathname == '/index.html' || window.location.pathname == '/index.htm') {
+                if (window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '/index.htm') {
                     // Index (home) page
                     $("#count_vessels").html(vesselsCount);
                     $("#count_engines").html(enginesCount);

@@ -4,45 +4,46 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="29066d7392184da68939e9d1dcd719e8" Name="Diagram1">
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.User" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.UserClaim" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.UserLogin" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.UserRole" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_UserClaim_User" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_UserLogin_User" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_A38003_DEVModel.UserUserRole" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.AlternatorMaker" Width="1.5" PointX="5.75" PointY="4.75" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.Channel" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.ChartType" Width="1.5" PointX="7.375" PointY="7.375" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.Country" Width="1.5" PointX="0.75" PointY="8.75" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.DashboardSetting" Width="1.5" PointX="2.75" PointY="8.75" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.EngineType" Width="1.5" PointX="4.875" PointY="9.75" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.Monitoring" Width="1.5" PointX="9.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.OptionSet" Width="1.5" PointX="9.75" PointY="4.75" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.OptionSetGroup" Width="1.5" PointX="10.75" PointY="7.75" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.ShipClass" Width="1.5" PointX="10.75" PointY="10.75" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.ShipType" Width="1.5" PointX="11.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.Vessel" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.Account" Width="1.5" PointX="7.375" PointY="11.75" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.Resource" Width="1.5" PointX="12.375" PointY="3.75" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.ResourcePermission" Width="1.5" PointX="3" PointY="13.75" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_Account_User" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_Vessel_OperatorAccount" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_Vessel_OwnerAccount" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_Vessel_ShipClass" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_Vessel_ShipType" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_Vessel_Country" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.Model" Width="1.5" PointX="9" PointY="16.5" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_Channel_Model" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_Model_EngineType" />
-        <EntityTypeShape EntityType="DB_A38003_DEVModel.Engine" Width="1.5" PointX="13.25" PointY="8.75" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_Engine_AlternatorMaker" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_Engine_EngineType" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_Engine_Model" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_Engine_Vessel" />
-        <AssociationConnector Association="DB_A38003_DEVModel.FK_Channel_ChartType" />
-        </Diagram>
+      <Diagram DiagramId="717854d135c046e39b67716907fcadc7" Name="Diagram1">
+        <EntityTypeShape EntityType="REMAXAPI.Models.Account" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.AlternatorMaker" Width="1.5" PointX="8" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.Channel" Width="1.5" PointX="10.25" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.ChartType" Width="1.5" PointX="8" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.Country" Width="1.5" PointX="5.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.DashboardSetting" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.Engine" Width="1.5" PointX="10.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.EngineType" Width="1.5" PointX="8" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.Model" Width="1.5" PointX="8" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.Monitoring" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.OptionSet" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.OptionSetGroup" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.Resource" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.ResourcePermission" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.ShipClass" Width="1.5" PointX="5.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.ShipType" Width="1.5" PointX="5.75" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.User" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.UserClaim" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.UserLogin" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.UserRole" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.Vessel" Width="1.5" PointX="8" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.FilteredAccount" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Account_User" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Vessel_OperatorAccount" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Vessel_OwnerAccount" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Engine_AlternatorMaker" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Channel_ChartType" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Channel_Model" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Vessel_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Engine_EngineType" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Engine_Model" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Engine_Vessel" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Model_EngineType" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Vessel_ShipClass" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Vessel_ShipType" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_UserClaim_User" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_UserLogin_User" ManuallyRouted="false" />
+        <AssociationConnector Association="REMAXAPI.Models.UserUserRole" ManuallyRouted="false" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

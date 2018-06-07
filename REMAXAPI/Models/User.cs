@@ -24,33 +24,33 @@ namespace REMAXAPI.Models
     
         public System.Guid Id { get; set; }
         public string Email { get; set; }
-        public bool EmailConfirmed { get; set; }
+        public Nullable<bool> EmailConfirmed { get; set; }
         public string PasswordHash { get; set; }
         public string SecurityStamp { get; set; }
-        public System.Guid ConcurrencyStamp { get; set; }
+        public Nullable<System.Guid> ConcurrencyStamp { get; set; }
         public string PhoneNumber { get; set; }
-        public bool PhoneNumberConfirmed { get; set; }
-        public bool TwoFactorEnabled { get; set; }
+        public Nullable<bool> PhoneNumberConfirmed { get; set; }
+        public Nullable<bool> TwoFactorEnabled { get; set; }
         public Nullable<System.DateTime> LockoutEnd { get; set; }
-        public bool LockoutEnabled { get; set; }
-        public short AccessFailedCount { get; set; }
+        public Nullable<bool> LockoutEnabled { get; set; }
+        public Nullable<short> AccessFailedCount { get; set; }
         public string FullName { get; set; }
-        public Nullable<System.Guid> AccountID { get; set; }
+        public System.Guid AccountID { get; set; }
         public string JobTitle { get; set; }
         public string BusinessPhoneNumber { get; set; }
         public Nullable<bool> IsRootUser { get; set; }
+        public Nullable<int> Status { get; set; }
         public System.Guid CreatedBy { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.Guid ModifiedBy { get; set; }
         public System.DateTime ModifiedOn { get; set; }
-        public Nullable<int> Status { get; set; }
     
+        public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserClaim> UserClaims { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserLogin> UserLogins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRoles { get; set; }
-        public virtual Account Account { get; set; }
     }
 }
