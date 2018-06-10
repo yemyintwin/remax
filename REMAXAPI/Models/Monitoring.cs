@@ -22,9 +22,9 @@ namespace REMAXAPI.Models
         public System.DateTime TimeStamp { get; set; }
         public string Value { get; set; }
         public string Unit { get; set; }
-        public System.Guid CreatedBy { get; set; }
-        public System.DateTime CreatedOn { get; set; }
-        public System.Guid ModifiedBy { get; set; }
-        public System.DateTime ModifiedOn { get; set; }
+        public Nullable<System.Guid> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public Nullable<System.Guid> ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedOn { get; set; }
     }
 }

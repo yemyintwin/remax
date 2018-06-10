@@ -20,6 +20,7 @@ namespace REMAXAPI.Models
         public Nullable<System.Guid> EngineModelID { get; set; }
         public string SerialNo { get; set; }
         public Nullable<decimal> OutputPower { get; set; }
+        public Nullable<decimal> RPM { get; set; }
         public string GearBoxModel { get; set; }
         public string GearBoxSerialNo { get; set; }
         public string GearRatio { get; set; }

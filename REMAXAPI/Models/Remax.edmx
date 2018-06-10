@@ -4,170 +4,171 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="REMAXAPI.Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
+    <Schema Namespace="REMAXAPI.Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="AccountID" Nullable="false" MaxLength="50" Type="nvarchar" />
-          <Property Name="Name" MaxLength="100" Type="nvarchar" />
-          <Property Name="PrimaryContact" MaxLength="100" Type="nvarchar" />
-          <Property Name="MainPhone" MaxLength="100" Type="nvarchar" />
-          <Property Name="Fax" MaxLength="100" Type="nvarchar" />
-          <Property Name="Email" MaxLength="100" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AccountID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="PrimaryContact" Type="nvarchar" MaxLength="100" />
+          <Property Name="MainPhone" Type="nvarchar" MaxLength="100" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
           <Property Name="Status" Type="int" />
-          <Property Name="CreatedBy" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="CreatedOn" Nullable="false" Type="datetime" />
-          <Property Name="ModifiedBy" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="ModifiedOn" Nullable="false" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="AlternatorMaker">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Channel">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="ChannelNo" Nullable="false" Type="int" />
-          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ChannelNo" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ModelID" Type="uniqueidentifier" />
           <Property Name="DashboardDisplay" Type="bit" />
           <Property Name="ChartTypeID" Type="uniqueidentifier" />
-          <Property Name="MinRange" Precision="18" Scale="2" Type="decimal" />
-          <Property Name="MaxRange" Precision="18" Scale="2" Type="decimal" />
-          <Property Name="Scale" Precision="18" Scale="2" Type="decimal" />
-          <Property Name="DisplayUnit" MaxLength="50" Type="nvarchar" />
-          <Property Name="LowerLimit" Precision="18" Scale="2" Type="decimal" />
-          <Property Name="UpperLimit" Precision="18" Scale="2" Type="decimal" />
-          <Property Name="MonitoringTimer" Precision="18" Scale="2" Type="decimal" />
+          <Property Name="MinRange" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MaxRange" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Scale" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DisplayUnit" Type="nvarchar" MaxLength="50" />
+          <Property Name="LowerLimit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="UpperLimit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MonitoringTimer" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DataTypeNo" Type="int" />
           <Property Name="Status" Type="int" />
-          <Property Name="CreatedBy" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="CreatedOn" Nullable="false" Type="datetime" />
-          <Property Name="ModifiedBy" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="ModifiedOn" Nullable="false" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ChartType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="Name" MaxLength="100" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="DashboardSetting">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="ModelNo" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="ChannelNo" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModelNo" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ChannelNo" Type="uniqueidentifier" Nullable="false" />
           <Property Name="DisplayOnDashboard" Type="bit" />
-          <Property Name="ChartType" Nullable="false" Type="int" />
+          <Property Name="ChartType" Type="int" Nullable="false" />
           <Property Name="ChartGroupNo" Type="int" />
         </EntityType>
         <EntityType Name="Engine">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="VesselID" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="VesselID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="EngineTypeID" Type="uniqueidentifier" />
           <Property Name="EngineModelID" Type="uniqueidentifier" />
-          <Property Name="SerialNo" Nullable="false" MaxLength="100" Type="nvarchar" />
-          <Property Name="OutputPower" Precision="18" Scale="2" Type="decimal" />
-          <Property Name="GearBoxModel" MaxLength="100" Type="nvarchar" />
-          <Property Name="GearBoxSerialNo" MaxLength="100" Type="nvarchar" />
-          <Property Name="GearRatio" MaxLength="100" Type="nvarchar" />
+          <Property Name="SerialNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="OutputPower" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="RPM" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="GearBoxModel" Type="nvarchar" MaxLength="100" />
+          <Property Name="GearBoxSerialNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="GearRatio" Type="nvarchar" MaxLength="100" />
           <Property Name="AlternatorMakerID" Type="uniqueidentifier" />
-          <Property Name="AlternatorMakerModel" MaxLength="100" Type="nvarchar" />
-          <Property Name="AlternatorSrNo" MaxLength="100" Type="nvarchar" />
-          <Property Name="AlternatorOutput" Precision="18" Scale="2" Type="decimal" />
-          <Property Name="PowerSupplySystem" MaxLength="100" Type="nvarchar" />
-          <Property Name="InsulationTempRise" Precision="18" Scale="2" Type="decimal" />
-          <Property Name="IPRating" MaxLength="100" Type="nvarchar" />
-          <Property Name="Mounting" MaxLength="100" Type="nvarchar" />
+          <Property Name="AlternatorMakerModel" Type="nvarchar" MaxLength="100" />
+          <Property Name="AlternatorSrNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="AlternatorOutput" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PowerSupplySystem" Type="nvarchar" MaxLength="100" />
+          <Property Name="InsulationTempRise" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IPRating" Type="nvarchar" MaxLength="100" />
+          <Property Name="Mounting" Type="nvarchar" MaxLength="100" />
           <Property Name="Status" Type="int" />
-          <Property Name="CreatedBy" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="CreatedOn" Nullable="false" Type="datetime" />
-          <Property Name="ModifiedBy" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="ModifiedOn" Nullable="false" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="EngineType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="Name" MaxLength="100" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Model">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="EngineTypeID" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="Monitoring">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="IMO_No" Nullable="false" MaxLength="50" Type="nvarchar" />
-          <Property Name="SerialNo" Nullable="false" MaxLength="100" Type="nvarchar" />
-          <Property Name="ChannelNo" Nullable="false" Type="int" />
-          <Property Name="ChannelDescription" MaxLength="100" Type="nvarchar" />
-          <Property Name="TimeStamp" Nullable="false" Type="datetime" />
-          <Property Name="Value" Nullable="false" MaxLength="500" Type="nvarchar" />
-          <Property Name="Unit" MaxLength="50" Type="nvarchar" />
-          <Property Name="CreatedBy" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="CreatedOn" Nullable="false" Type="datetime" />
-          <Property Name="ModifiedBy" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="ModifiedOn" Nullable="false" Type="datetime" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IMO_No" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SerialNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ChannelNo" Type="int" Nullable="false" />
+          <Property Name="ChannelDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="TimeStamp" Type="datetime" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Type="datetime" />
         </EntityType>
         <EntityType Name="OptionSet">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="GroupId" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
-          <Property Name="Value" Nullable="false" Type="int" />
-          <Property Name="SortOrder" Nullable="false" Type="int" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GroupId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="OptionSetGroup">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="Name" MaxLength="100" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Resource">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="int" />
-          <Property Name="Name" MaxLength="100" Type="nvarchar" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="ResourcePermission">
           <Key>
             <PropertyRef Name="RoleId" />
             <PropertyRef Name="ResourceId" />
           </Key>
-          <Property Name="RoleId" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="ResourceId" Nullable="false" Type="int" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ResourceId" Type="int" Nullable="false" />
           <Property Name="ReadPermission" Type="tinyint" />
           <Property Name="WritePermission" Type="tinyint" />
           <Property Name="DeletePermission" Type="tinyint" />
@@ -177,99 +178,99 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="ShipType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="Name" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="Email" Nullable="false" MaxLength="256" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="EmailConfirmed" Type="bit" />
-          <Property Name="PasswordHash" MaxLength="100" Type="nvarchar" />
-          <Property Name="SecurityStamp" MaxLength="100" Type="nvarchar" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" />
+          <Property Name="SecurityStamp" Type="nvarchar" MaxLength="100" />
           <Property Name="ConcurrencyStamp" Type="uniqueidentifier" />
-          <Property Name="PhoneNumber" MaxLength="50" Type="nvarchar" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="PhoneNumberConfirmed" Type="bit" />
           <Property Name="TwoFactorEnabled" Type="bit" />
           <Property Name="LockoutEnd" Type="datetime" />
           <Property Name="LockoutEnabled" Type="bit" />
           <Property Name="AccessFailedCount" Type="smallint" />
-          <Property Name="FullName" Nullable="false" MaxLength="100" Type="nvarchar" />
-          <Property Name="AccountID" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="JobTitle" MaxLength="100" Type="nvarchar" />
-          <Property Name="BusinessPhoneNumber" MaxLength="50" Type="nvarchar" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AccountID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="JobTitle" Type="nvarchar" MaxLength="100" />
+          <Property Name="BusinessPhoneNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="IsRootUser" Type="bit" />
           <Property Name="Status" Type="int" />
-          <Property Name="CreatedBy" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="CreatedOn" Nullable="false" Type="datetime" />
-          <Property Name="ModifiedBy" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="ModifiedOn" Nullable="false" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="UserClaim">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="UserId" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="Type" MaxLength="256" Type="nvarchar" />
-          <Property Name="Value" MaxLength="4000" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="256" />
+          <Property Name="Value" Type="nvarchar" MaxLength="4000" />
         </EntityType>
         <EntityType Name="UserLogin">
           <Key>
             <PropertyRef Name="Name" />
             <PropertyRef Name="Key" />
           </Key>
-          <Property Name="Name" Nullable="false" MaxLength="50" Type="nvarchar" />
-          <Property Name="Key" Nullable="false" MaxLength="100" Type="nvarchar" />
-          <Property Name="UserId" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="Name" Nullable="false" MaxLength="256" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="UserUserRole">
           <Key>
             <PropertyRef Name="UserId" />
             <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="UserId" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="RoleId" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Vessel">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="IMO_No" Nullable="false" MaxLength="50" Type="nvarchar" />
-          <Property Name="VesselName" Nullable="false" MaxLength="100" Type="nvarchar" />
-          <Property Name="OwnerID" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="OperatorID" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IMO_No" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VesselName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="OwnerID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OperatorID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ShipTypeID" Type="uniqueidentifier" />
-          <Property Name="ShipyardName" MaxLength="100" Type="nvarchar" />
+          <Property Name="ShipyardName" Type="nvarchar" MaxLength="100" />
           <Property Name="ShipyardCountry" Type="uniqueidentifier" />
           <Property Name="BuildYear" Type="date" />
           <Property Name="DeliveryToOwner" Type="date" />
           <Property Name="ShipClassID" Type="uniqueidentifier" />
-          <Property Name="DWT" Precision="18" Scale="2" Type="decimal" />
-          <Property Name="TotalPropulsionPower" Precision="18" Scale="2" Type="decimal" />
-          <Property Name="TotalGeneratorPower" Precision="18" Scale="2" Type="decimal" />
+          <Property Name="DWT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalPropulsionPower" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalGeneratorPower" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Status" Type="int" />
-          <Property Name="CreatedBy" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="CreatedOn" Nullable="false" Type="datetime" />
-          <Property Name="ModifiedBy" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="ModifiedOn" Nullable="false" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -278,17 +279,17 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
             <PropertyRef Name="Id" />
             <PropertyRef Name="AccountID" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="AccountID" Nullable="false" MaxLength="50" Type="nvarchar" />
-          <Property Name="Name" MaxLength="100" Type="nvarchar" />
-          <Property Name="PrimaryContact" MaxLength="100" Type="nvarchar" />
-          <Property Name="MainPhone" MaxLength="100" Type="nvarchar" />
-          <Property Name="Fax" MaxLength="100" Type="nvarchar" />
-          <Property Name="Email" MaxLength="100" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AccountID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="PrimaryContact" Type="nvarchar" MaxLength="100" />
+          <Property Name="MainPhone" Type="nvarchar" MaxLength="100" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <Association Name="FK_Account_User">
-          <End Type="Self.Account" Multiplicity="1" Role="Account" />
-          <End Type="Self.User" Multiplicity="*" Role="User" />
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="Id" />
@@ -299,8 +300,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Channel_ChartType">
-          <End Type="Self.ChartType" Multiplicity="0..1" Role="ChartType" />
-          <End Type="Self.Channel" Multiplicity="*" Role="Channel" />
+          <End Role="ChartType" Type="Self.ChartType" Multiplicity="0..1" />
+          <End Role="Channel" Type="Self.Channel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChartType">
               <PropertyRef Name="Id" />
@@ -311,8 +312,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Channel_Model">
-          <End Type="Self.Model" Multiplicity="0..1" Role="Model" />
-          <End Type="Self.Channel" Multiplicity="*" Role="Channel" />
+          <End Role="Model" Type="Self.Model" Multiplicity="0..1" />
+          <End Role="Channel" Type="Self.Channel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Model">
               <PropertyRef Name="Id" />
@@ -323,8 +324,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Engine_AlternatorMaker">
-          <End Type="Self.AlternatorMaker" Multiplicity="0..1" Role="AlternatorMaker" />
-          <End Type="Self.Engine" Multiplicity="*" Role="Engine" />
+          <End Role="AlternatorMaker" Type="Self.AlternatorMaker" Multiplicity="0..1" />
+          <End Role="Engine" Type="Self.Engine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AlternatorMaker">
               <PropertyRef Name="Id" />
@@ -335,8 +336,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Engine_EngineType">
-          <End Type="Self.EngineType" Multiplicity="0..1" Role="EngineType" />
-          <End Type="Self.Engine" Multiplicity="*" Role="Engine" />
+          <End Role="EngineType" Type="Self.EngineType" Multiplicity="0..1" />
+          <End Role="Engine" Type="Self.Engine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EngineType">
               <PropertyRef Name="Id" />
@@ -347,8 +348,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Engine_Model">
-          <End Type="Self.Model" Multiplicity="0..1" Role="Model" />
-          <End Type="Self.Engine" Multiplicity="*" Role="Engine" />
+          <End Role="Model" Type="Self.Model" Multiplicity="0..1" />
+          <End Role="Engine" Type="Self.Engine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Model">
               <PropertyRef Name="Id" />
@@ -359,8 +360,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Engine_Vessel">
-          <End Type="Self.Vessel" Multiplicity="1" Role="Vessel" />
-          <End Type="Self.Engine" Multiplicity="*" Role="Engine" />
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="1" />
+          <End Role="Engine" Type="Self.Engine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Vessel">
               <PropertyRef Name="Id" />
@@ -371,8 +372,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Model_EngineType">
-          <End Type="Self.EngineType" Multiplicity="0..1" Role="EngineType" />
-          <End Type="Self.Model" Multiplicity="*" Role="Model" />
+          <End Role="EngineType" Type="Self.EngineType" Multiplicity="0..1" />
+          <End Role="Model" Type="Self.Model" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EngineType">
               <PropertyRef Name="Id" />
@@ -383,10 +384,10 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserClaim_User">
-          <End Type="Self.User" Multiplicity="1" Role="User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="Self.UserClaim" Multiplicity="*" Role="UserClaim" />
+          <End Role="UserClaim" Type="Self.UserClaim" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
@@ -397,10 +398,10 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserLogin_User">
-          <End Type="Self.User" Multiplicity="1" Role="User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="Self.UserLogin" Multiplicity="*" Role="UserLogin" />
+          <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
@@ -411,10 +412,10 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserUserRole_User">
-          <End Type="Self.User" Multiplicity="1" Role="User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="Self.UserUserRole" Multiplicity="*" Role="UserUserRole" />
+          <End Role="UserUserRole" Type="Self.UserUserRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
@@ -425,10 +426,10 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserUserRole_UserRole">
-          <End Type="Self.UserRole" Multiplicity="1" Role="UserRole">
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="Self.UserUserRole" Multiplicity="*" Role="UserUserRole" />
+          <End Role="UserUserRole" Type="Self.UserUserRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserRole">
               <PropertyRef Name="Id" />
@@ -439,8 +440,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Vessel_Country">
-          <End Type="Self.Country" Multiplicity="0..1" Role="Country" />
-          <End Type="Self.Vessel" Multiplicity="*" Role="Vessel" />
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Country">
               <PropertyRef Name="Id" />
@@ -451,8 +452,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Vessel_OperatorAccount">
-          <End Type="Self.Account" Multiplicity="1" Role="Account" />
-          <End Type="Self.Vessel" Multiplicity="*" Role="Vessel" />
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="Id" />
@@ -463,8 +464,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Vessel_OwnerAccount">
-          <End Type="Self.Account" Multiplicity="1" Role="Account" />
-          <End Type="Self.Vessel" Multiplicity="*" Role="Vessel" />
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="Id" />
@@ -475,8 +476,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Vessel_ShipClass">
-          <End Type="Self.ShipClass" Multiplicity="0..1" Role="ShipClass" />
-          <End Type="Self.Vessel" Multiplicity="*" Role="Vessel" />
+          <End Role="ShipClass" Type="Self.ShipClass" Multiplicity="0..1" />
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ShipClass">
               <PropertyRef Name="Id" />
@@ -487,8 +488,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Vessel_ShipType">
-          <End Type="Self.ShipType" Multiplicity="0..1" Role="ShipType" />
-          <End Type="Self.Vessel" Multiplicity="*" Role="Vessel" />
+          <End Role="ShipType" Type="Self.ShipType" Multiplicity="0..1" />
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ShipType">
               <PropertyRef Name="Id" />
@@ -538,76 +539,75 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
     FROM [dbo].[FilteredAccount] AS [FilteredAccount]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Account_User" Association="Self.FK_Account_User">
-            <End EntitySet="Account" Role="Account" />
-            <End EntitySet="User" Role="User" />
+            <End Role="Account" EntitySet="Account" />
+            <End Role="User" EntitySet="User" />
           </AssociationSet>
           <AssociationSet Name="FK_Channel_ChartType" Association="Self.FK_Channel_ChartType">
-            <End EntitySet="ChartType" Role="ChartType" />
-            <End EntitySet="Channel" Role="Channel" />
+            <End Role="ChartType" EntitySet="ChartType" />
+            <End Role="Channel" EntitySet="Channel" />
           </AssociationSet>
           <AssociationSet Name="FK_Channel_Model" Association="Self.FK_Channel_Model">
-            <End EntitySet="Model" Role="Model" />
-            <End EntitySet="Channel" Role="Channel" />
+            <End Role="Model" EntitySet="Model" />
+            <End Role="Channel" EntitySet="Channel" />
           </AssociationSet>
           <AssociationSet Name="FK_Engine_AlternatorMaker" Association="Self.FK_Engine_AlternatorMaker">
-            <End EntitySet="AlternatorMaker" Role="AlternatorMaker" />
-            <End EntitySet="Engine" Role="Engine" />
+            <End Role="AlternatorMaker" EntitySet="AlternatorMaker" />
+            <End Role="Engine" EntitySet="Engine" />
           </AssociationSet>
           <AssociationSet Name="FK_Engine_EngineType" Association="Self.FK_Engine_EngineType">
-            <End EntitySet="EngineType" Role="EngineType" />
-            <End EntitySet="Engine" Role="Engine" />
+            <End Role="EngineType" EntitySet="EngineType" />
+            <End Role="Engine" EntitySet="Engine" />
           </AssociationSet>
           <AssociationSet Name="FK_Engine_Model" Association="Self.FK_Engine_Model">
-            <End EntitySet="Model" Role="Model" />
-            <End EntitySet="Engine" Role="Engine" />
+            <End Role="Model" EntitySet="Model" />
+            <End Role="Engine" EntitySet="Engine" />
           </AssociationSet>
           <AssociationSet Name="FK_Engine_Vessel" Association="Self.FK_Engine_Vessel">
-            <End EntitySet="Vessel" Role="Vessel" />
-            <End EntitySet="Engine" Role="Engine" />
+            <End Role="Vessel" EntitySet="Vessel" />
+            <End Role="Engine" EntitySet="Engine" />
           </AssociationSet>
           <AssociationSet Name="FK_Model_EngineType" Association="Self.FK_Model_EngineType">
-            <End EntitySet="EngineType" Role="EngineType" />
-            <End EntitySet="Model" Role="Model" />
+            <End Role="EngineType" EntitySet="EngineType" />
+            <End Role="Model" EntitySet="Model" />
           </AssociationSet>
           <AssociationSet Name="FK_UserClaim_User" Association="Self.FK_UserClaim_User">
-            <End EntitySet="User" Role="User" />
-            <End EntitySet="UserClaim" Role="UserClaim" />
+            <End Role="User" EntitySet="User" />
+            <End Role="UserClaim" EntitySet="UserClaim" />
           </AssociationSet>
           <AssociationSet Name="FK_UserLogin_User" Association="Self.FK_UserLogin_User">
-            <End EntitySet="User" Role="User" />
-            <End EntitySet="UserLogin" Role="UserLogin" />
+            <End Role="User" EntitySet="User" />
+            <End Role="UserLogin" EntitySet="UserLogin" />
           </AssociationSet>
           <AssociationSet Name="FK_UserUserRole_User" Association="Self.FK_UserUserRole_User">
-            <End EntitySet="User" Role="User" />
-            <End EntitySet="UserUserRole" Role="UserUserRole" />
+            <End Role="User" EntitySet="User" />
+            <End Role="UserUserRole" EntitySet="UserUserRole" />
           </AssociationSet>
           <AssociationSet Name="FK_UserUserRole_UserRole" Association="Self.FK_UserUserRole_UserRole">
-            <End EntitySet="UserRole" Role="UserRole" />
-            <End EntitySet="UserUserRole" Role="UserUserRole" />
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="UserUserRole" EntitySet="UserUserRole" />
           </AssociationSet>
           <AssociationSet Name="FK_Vessel_Country" Association="Self.FK_Vessel_Country">
-            <End EntitySet="Country" Role="Country" />
-            <End EntitySet="Vessel" Role="Vessel" />
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Vessel" EntitySet="Vessel" />
           </AssociationSet>
           <AssociationSet Name="FK_Vessel_OperatorAccount" Association="Self.FK_Vessel_OperatorAccount">
-            <End EntitySet="Account" Role="Account" />
-            <End EntitySet="Vessel" Role="Vessel" />
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Vessel" EntitySet="Vessel" />
           </AssociationSet>
           <AssociationSet Name="FK_Vessel_OwnerAccount" Association="Self.FK_Vessel_OwnerAccount">
-            <End EntitySet="Account" Role="Account" />
-            <End EntitySet="Vessel" Role="Vessel" />
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Vessel" EntitySet="Vessel" />
           </AssociationSet>
           <AssociationSet Name="FK_Vessel_ShipClass" Association="Self.FK_Vessel_ShipClass">
-            <End EntitySet="ShipClass" Role="ShipClass" />
-            <End EntitySet="Vessel" Role="Vessel" />
+            <End Role="ShipClass" EntitySet="ShipClass" />
+            <End Role="Vessel" EntitySet="Vessel" />
           </AssociationSet>
           <AssociationSet Name="FK_Vessel_ShipType" Association="Self.FK_Vessel_ShipType">
-            <End EntitySet="ShipType" Role="ShipType" />
-            <End EntitySet="Vessel" Role="Vessel" />
+            <End Role="ShipType" EntitySet="ShipType" />
+            <End Role="Vessel" EntitySet="Vessel" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="REMAXAPI.Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -702,6 +702,7 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <Property Name="EngineModelID" Type="Guid" />
           <Property Name="SerialNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="OutputPower" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RPM" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="GearBoxModel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="GearBoxSerialNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="GearRatio" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -755,10 +756,10 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <Property Name="TimeStamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="Guid" Nullable="false" />
-          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="OptionSet">
           <Key>
@@ -1190,9 +1191,9 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
           <FunctionImport Name="sp_ResourcePermission" ReturnType="Collection(REMAXAPI.Models.sp_ResourcePermission_Result)">
-            <Parameter Name="userid" Type="Guid" Mode="In" />
-            <Parameter Name="resource_name" Type="String" Mode="In" />
-            <Parameter Name="operation_type" Type="Int32" Mode="In" />
+            <Parameter Name="userid" Mode="In" Type="Guid" />
+            <Parameter Name="resource_name" Mode="In" Type="String" />
+            <Parameter Name="operation_type" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_ResourcePermission_Result">
@@ -1292,6 +1293,7 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <EntitySetMapping Name="Engines">
             <EntityTypeMapping TypeName="REMAXAPI.Models.Engine">
               <MappingFragment StoreEntitySet="Engine">
+                <ScalarProperty Name="RPM" ColumnName="RPM" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VesselID" ColumnName="VesselID" />
                 <ScalarProperty Name="EngineTypeID" ColumnName="EngineTypeID" />

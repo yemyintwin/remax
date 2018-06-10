@@ -1429,9 +1429,13 @@ var registration = {
                 field: "outputPower",
                 title: "Output Power",
                 width: 100,
-                filterable: {
-                    extra: false
-                },
+                filterable: false,
+            },
+            {
+                field: "rpm",
+                title: "RPM",
+                width: 100,
+                filterable: false,
             },
             {
                 field: "gearBoxModel",
@@ -1615,6 +1619,11 @@ var registration = {
                         message: 'The value is not an integer'
                     }
                 },
+                engine_rpm: {
+                    integer: {
+                        message: 'The value is not an integer'
+                    }
+                },
                 engine_gearboxModel: {
                     validators: {
                         stringLength: {
@@ -1702,6 +1711,7 @@ var registration = {
                 engineModelID: $('#engine_model').val(),
                 serialNo: $('#engine_sno').val(),
                 outputPower: $('#engine_outputPower').val(),
+                rpm: $('#engine_rpm').val(),
                 gearBoxModel: $('#engine_gearboxModel').val(),
                 gearBoxSerialNo: $('#engine_gearboxSrNo').val(),
                 gearRatio: $('#engine_gearboxRatio').val(),
@@ -1778,6 +1788,7 @@ var registration = {
             $('#engine_model').val(selectedItem.engineModelID);
             $('#engine_sno').val(selectedItem.serialNo);
             $('#engine_outputPower').val(selectedItem.outputPower);
+            $('#engine_rpm').val(selectedItem.rpm);
             $('#engine_gearboxModel').val(selectedItem.gearBoxModel);
             $('#engine_gearboxSrNo').val(selectedItem.gearBoxSerialNo);
             $('#engine_gearboxRatio').val(selectedItem.gearRatio);
