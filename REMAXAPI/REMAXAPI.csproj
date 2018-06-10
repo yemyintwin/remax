@@ -299,7 +299,6 @@
     <Folder Include="App_Data\Incoming\Archive\" />
     <Folder Include="App_Data\Incoming\Error\" />
     <Folder Include="App_Data\Incoming\Processing\" />
-    <Folder Include="App_Data\Logs\" />
     <Folder Include="App_Data\VesselPhotos\" />
   </ItemGroup>
   <PropertyGroup>

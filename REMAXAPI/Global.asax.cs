@@ -25,7 +25,6 @@ namespace REMAXAPI
             formatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             GlobalConfiguration.Configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
-
             log4net.Config.XmlConfigurator.Configure(new FileInfo(Server.MapPath("~/Web.config")));
         }
     }

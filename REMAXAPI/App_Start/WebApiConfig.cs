@@ -29,8 +29,6 @@ namespace REMAXAPI
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
-            //config.Services.Add(typeof(IExceptionLogger), new ElmahExceptionLogger());
         }
     }
 }

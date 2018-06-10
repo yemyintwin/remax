@@ -1,0 +1,6 @@
+INFO  2018-06-10 21:34:54,149 12239ms ScheduleJobController  ProcessFiles       - Process start at 06/10/2018 21:34:54
+INFO  2018-06-10 21:35:00,936 19026ms ScheduleJobController  ProcessFiles       - Process end at 06/10/2018 21:35:00
+INFO  2018-06-10 21:35:02,954 21044ms ScheduleJobController  ProcessFiles       - --------------------------------------------------
+INFO  2018-06-10 21:36:10,169  3026ms ScheduleJobController  ProcessFiles       - Process start at 06/10/2018 21:36:10
+INFO  2018-06-10 21:36:10,783  3640ms ScheduleJobController  ProcessFiles       - Process end at 06/10/2018 21:36:10
+INFO  2018-06-10 21:36:10,785  3642ms ScheduleJobController  ProcessFiles       - --------------------------------------------------

@@ -61,7 +61,14 @@ namespace REMAXAPI.Controllers
                     }
 
                     if (configError) {
-                        throw new Exception("Configuration Error");
+                        string strError = string.Format("Configuration Error {0} Incoming : {1} {0}Processing : {2}, {0}Error : {3} {0}Archive : {4}{0}",
+                            Environment.NewLine,
+                            IncomingFilePath,
+                            ProcessingFilePath,
+                            ErrorFilePath,
+                            ArchiveFilePath
+                        );
+                        throw new Exception(strError);
                     }
                 }
             }
@@ -70,6 +77,7 @@ namespace REMAXAPI.Controllers
         [Route("api/ScheduleJob/ProcessFiles")]
         [HttpGet]
         public void ProcessFiles() {
+            logger.InfoFormat("Process start at {0}", DateTime.Now);
             // Process the list of files found in the directory.
             string[] fileEntries = Directory.GetFiles(this.IncomingFilePath);
             foreach (string fileName in fileEntries)
@@ -114,6 +122,8 @@ namespace REMAXAPI.Controllers
                     logger.Error(ex.Message, ex);
                 }
             }
+            logger.InfoFormat("Process end at {0}", DateTime.Now);
+            logger.InfoFormat(new string('-', 50));
         }
 
         protected bool ProcessSingleFile(string fileNamePath, out List<string> errorList, out FileProcessSummary summary) {
