@@ -1,11 +1,9 @@
 ﻿<!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remax - Vessel</title>
-
+    <title>Master Data Setup</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrapValidator.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
@@ -35,42 +33,26 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/bootstrap/js/bootstrapValidator.min.js"></script>
     <script src="assets/bootstrap_datetime/js/bootstrap-datepicker.min.js"></script>
+    <!--<script src="assets/datatables-responsive/dataTables.responsive.js"></script>-->
 
     <script src="assets/js/remax.js?v=180610_1205"></script>
-    <script src="assets/js/vessel.js?v=180610_1205"></script>
+    <script src="assets/js/registration.js?v=180610_1205"></script>
 </head>
-
 <body>
     <div id="wrapper">
         <div w3-include-html="nav.html"></div>
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="min-height: 731px;">
             <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <div class="page-header">
-                        <h1>Vessels</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="panel-group" role="tablist" aria-multiselectable="false" id="accordionPanel">
-
+                        <h1>Master Data Setup</h1>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div w3-include-html="footer.html"></div>
-
-    <script>
-        includeHTML();
-
-        $(document).ready(function () {
-            vessel.onload();
-        });
-    </script>
 </body>
-
 </html>

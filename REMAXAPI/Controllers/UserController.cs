@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using com.ymw.security;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Configuration;
 
 namespace REMAXAPI.Controllers
 {
@@ -61,19 +62,26 @@ namespace REMAXAPI.Controllers
             User user = db.Users.Where(u => u.Id == id).FirstOrDefault();
             if (user != null)
             {
+                string emailHost = ConfigurationManager.AppSettings["EmailHost"];
+                string emailPort = ConfigurationManager.AppSettings["EmailPort"];
+                string emailSSL = ConfigurationManager.AppSettings["EmailSSL"];
+                string emailAddr = ConfigurationManager.AppSettings["EmailAddress"];
+                string emailName = ConfigurationManager.AppSettings["EmailName"];
+                string emailPwd = ConfigurationManager.AppSettings["EmailPwd"];
+
                 string pwd = System.Web.Security.Membership.GeneratePassword(8, 3);
 
-                var fromAddress = new MailAddress("yemyintwin@gmail.com", "Ye Myint Win");
+                var fromAddress = new MailAddress(emailAddr, emailName);
                 var toAddress = new MailAddress(user.Email, user.FullName);
-                string fromPassword = "Ros3_215u2018";
-                string subject = "Security Update";
-                string body = string.Format("This is your new password. {0}", pwd);
+                string fromPassword = emailPwd;
+                string subject = "Security Update - Password Reset";
+                string body = string.Format("This is your new password >>>> \t {0}", pwd);
 
                 var smtp = new SmtpClient
                 {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    EnableSsl = true,
+                    Host = emailHost,
+                    Port = int.Parse(emailPort),
+                    EnableSsl = bool.Parse(emailSSL),
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
                     Credentials = new NetworkCredential(fromAddress.Address, fromPassword)

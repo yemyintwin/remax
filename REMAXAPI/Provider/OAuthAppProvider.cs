@@ -32,6 +32,8 @@ namespace REMAXAPI.Provider
 
                     ClaimsIdentity oAuthIdentity = new ClaimsIdentity(claims, Startup.OAuthOptions.AuthenticationType);
                     AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, new AuthenticationProperties() { AllowRefresh = true });
+                    Util.MemoryCacher memoryCacher = new Util.MemoryCacher();
+                    memoryCacher.Add(user.Id.ToString(), user, DateTime.Now.AddHours(8));
                     context.Validated(ticket);
                 }
                 else {

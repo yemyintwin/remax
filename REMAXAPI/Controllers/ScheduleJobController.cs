@@ -6,9 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-
+using System.Web.Http.Description;
 using REMAXAPI.Models;
 
 namespace REMAXAPI.Controllers
@@ -28,6 +29,8 @@ namespace REMAXAPI.Controllers
         public string ErrorFilePath { get; set; }
 
         public ScheduleJobController() {
+            
+
             if (string.IsNullOrWhiteSpace(IncomingFilePath)) {
                 if (ConfigurationManager.AppSettings.AllKeys.Contains(INCOMING_DIR)) {
                     string relativePath = ConfigurationManager.AppSettings.Get(INCOMING_DIR);
@@ -74,9 +77,10 @@ namespace REMAXAPI.Controllers
             }
         }
 
-        [Route("api/ScheduleJob/ProcessFiles")]
         [HttpGet]
-        public void ProcessFiles() {
+        [ResponseType(typeof(void))]
+        [Route("api/ScheduleJob/ProcessFiles")]
+        public async Task<IHttpActionResult> ProcessFiles() {
             logger.InfoFormat("Process start at {0}", DateTime.Now);
             // Process the list of files found in the directory.
             string[] fileEntries = Directory.GetFiles(this.IncomingFilePath);
@@ -88,31 +92,35 @@ namespace REMAXAPI.Controllers
                     string processingFile = string.Format(@"{0}\{1}", this.ProcessingFilePath, fileNameWithoutPath);
                     string archiveFile = string.Format(@"{0}\{1}", this.ArchiveFilePath, fileNameWithoutPath);
                     string errorFile = string.Format(@"{0}\{1}", this.ErrorFilePath, fileNameWithoutPath);
-                    List<string> errorList = new List<string>();
-                    FileProcessSummary summary = new FileProcessSummary();
 
                     // Move file to processing folder
+                    if (File.Exists(processingFile)) File.Delete(processingFile);
                     File.Move(fileName, processingFile);
 
                     // Process file
-                    bool hasError = ProcessSingleFile(processingFile, out errorList, out summary);
+                    FileProcessSummary summary = await ProcessSingleFile(processingFile);
+
                     logger.DebugFormat("File Name : {0}", fileNameWithoutPath);
                     logger.DebugFormat("Summary - Start Time: {0}", summary.StartTime);
                     logger.DebugFormat("Summary - End Time: {0}", summary.EndTime);
                     logger.DebugFormat("Summary - Total Line: {0}", summary.Total);
                     logger.DebugFormat("Summary - Success: {0}", summary.Success);
                     logger.DebugFormat("Summary - Failure: {0}", summary.Failure);
-                    logger.DebugFormat("{0}", new string('-',50));
 
                     // Archive file
+                    if (File.Exists(archiveFile)) {
+                        archiveFile = GetFileName(archiveFile);
+                    }
+
                     File.Move(processingFile, archiveFile);
 
                     // Error file
-                    if (hasError) {
+                    if (!summary.SuccessfullyProcessed) {
+                        errorFile = GetFileName(errorFile);
                         StreamWriter sw = File.CreateText(errorFile);
-                        foreach (var errLine in errorList)
+                        foreach (var errLine in summary.ErrorList)
                         {
-                            sw.WriteLine(errLine);
+                            await sw.WriteLineAsync(errLine);
                         }
                         sw.Close();
                     }
@@ -124,9 +132,12 @@ namespace REMAXAPI.Controllers
             }
             logger.InfoFormat("Process end at {0}", DateTime.Now);
             logger.InfoFormat(new string('-', 50));
+            logger.InfoFormat(Environment.NewLine);
+            return StatusCode(HttpStatusCode.OK);
         }
 
-        protected bool ProcessSingleFile(string fileNamePath, out List<string> errorList, out FileProcessSummary summary) {
+        protected async Task<FileProcessSummary> ProcessSingleFile(string fileNamePath) {
+            FileProcessSummary summary = new FileProcessSummary();
             string[] lines = File.ReadAllLines(fileNamePath);
             bool hasError = false;
             long totalLine = lines.Length;
@@ -140,10 +151,9 @@ namespace REMAXAPI.Controllers
                 throw new FileProcessingException(Consts.INTEGRATION_FILE_HEADER_LENGTH, FileProcessingException.ErrorType.File);
             }
 
-            errorList = new List<string>();
-            errorList.Add(headerLine);
+            summary.ErrorList = new List<string>();
+            summary.ErrorList.Add(headerLine);
 
-            summary = new FileProcessSummary();
             summary.Total = lines.Length - 1;
             summary.StartTime = DateTime.Now;
 
@@ -190,7 +200,7 @@ namespace REMAXAPI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    errorList.Add(string.Format("{0},{1},{2}", line, i.ToString(), ex.Message));
+                    summary.ErrorList.Add(string.Format("{0},{1},{2}", line, i.ToString(), ex.Message));
                     hasError = true;
                     summary.Failure = summary.Failure++;
                     continue;
@@ -204,15 +214,36 @@ namespace REMAXAPI.Controllers
             int recordAffected = 0;
             try
             {
-                recordAffected = remax_Entities.SaveChanges();
+                recordAffected = await remax_Entities.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 hasError = true;
                 logger.Error(ex.Message, ex);
+
+                summary.Failure += summary.Total - recordAffected;
             }
             summary.DatabaseInsert = recordAffected;
-            return hasError;
+            summary.SuccessfullyProcessed = !hasError;
+            return summary;
+        }
+
+        protected string GetFileName(string fullPath)
+        {
+            int count = 1;
+
+            string fileNameOnly = Path.GetFileNameWithoutExtension(fullPath);
+            string extension = Path.GetExtension(fullPath);
+            string path = Path.GetDirectoryName(fullPath);
+            string newFullPath = fullPath;
+
+            while (File.Exists(newFullPath))
+            {
+                string tempFileName = string.Format("{0}({1})", fileNameOnly, count++);
+                newFullPath = Path.Combine(path, tempFileName + extension);
+            }
+
+            return newFullPath;
         }
 
         private string RemoveDoubleQuotes(string str)
@@ -250,5 +281,7 @@ namespace REMAXAPI.Controllers
         public int DatabaseInsert { get; set; } = 0;
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public List<string> ErrorList { get; set; }
+        public bool SuccessfullyProcessed { get; set; }
     }
 }

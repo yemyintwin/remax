@@ -13,11 +13,11 @@ using REMAXAPI.Models;
 
 namespace REMAXAPI.Controllers
 {
-    public class ModelsController : ApiController
+    public class KendoModelsController : ApiController
     {
         private Remax_Entities db = new Remax_Entities();
 
-        // GET: api/Models
+        // GET: api/KendoModels
         [HttpGet]
         public IQueryable<Object> GetModels([FromUri]PageParameterModel page)
         {
@@ -35,7 +35,7 @@ namespace REMAXAPI.Controllers
             return models;
         }
 
-        // GET: api/Models/5
+        // GET: api/KendoModels/5
         [ResponseType(typeof(Model))]
         public async Task<IHttpActionResult> GetModel(Guid id)
         {
@@ -48,10 +48,16 @@ namespace REMAXAPI.Controllers
             return Ok(model);
         }
 
-        // PUT: api/Models/5
+        // PUT: api/KendoModels/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutModel(Guid id, Model model)
         {
+            int deleteLevel = Util.GetResourcePermission("Master Data", Util.ReourceOperations.Write);
+            if (deleteLevel != 2)
+            {
+                ModelState.AddModelError("Access Level", "Unauthorized write access.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -83,10 +89,19 @@ namespace REMAXAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Models
+        // POST: api/KendoModels
         [ResponseType(typeof(Model))]
         public async Task<IHttpActionResult> PostModel(Model model)
         {
+            int writeLevel = Util.GetResourcePermission("Master Data", Util.ReourceOperations.Write);
+            if (writeLevel != 2)
+            {
+                ModelState.AddModelError("Access Level", "Unauthorized create access.");
+            }
+
+            var em = db.Models.Where(m => m.Name == model.Name && m.EngineTypeID == model.EngineTypeID).FirstOrDefault();
+            if (em != null) ModelState.AddModelError("Duplicate", "Engine model already existed.");
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -113,10 +128,16 @@ namespace REMAXAPI.Controllers
             return CreatedAtRoute("DefaultApi", new { id = model.Id }, model);
         }
 
-        // DELETE: api/Models/5
+        // DELETE: api/KendoModels/5
         [ResponseType(typeof(Model))]
         public async Task<IHttpActionResult> DeleteModel(Guid id)
         {
+            int deleteLevel = Util.GetResourcePermission("Master Data", Util.ReourceOperations.Delete);
+            if (deleteLevel != 2)
+            {
+                ModelState.AddModelError("Access Level", "Unauthorized delete access.");
+            }
+
             Model model = await db.Models.FindAsync(id);
             if (model == null)
             {

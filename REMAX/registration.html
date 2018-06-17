@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prototype</title>
+    <title>Remax - Registration</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrapValidator.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
@@ -408,7 +408,12 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="vessel_shipType">Ship Type</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control" id="vessel_shipType" name="vessel_shipType"></select>
+                                        <div class="input-group">
+                                            <select class="form-control" id="vessel_shipType" name="vessel_shipType"></select>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#inputModal" id="btnAddShipType" onclick="registration.btnAddShipType_OnClick()">+</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -426,19 +431,42 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="vessel_builtYear">Built Year</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="vessel_builtYear" name="vessel_builtYear" placeholder="Built Year" data-provide="datepicker" />
+                                        <div class="input-append date" data-date-format="yyyy">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="vessel_builtYear" name="vessel_builtYear" placeholder="Built Year" data-provide="datepicker" readonly />
+                                                <label class="input-group-btn" for="vessel_builtYear">
+                                                    <span class="btn btn-default">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="vessel_ownYear">Delivery to Owner</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="vessel_ownYear" name="vessel_ownYear" placeholder="Delivery to Owner" data-provide="datepicker" />
+                                        <div class="input-append date" data-date-format="yyyy">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="vessel_ownYear" name="vessel_ownYear" placeholder="Delivery to Owner" data-provide="datepicker" readonly />
+                                                <label class="input-group-btn" for="vessel_ownYear">
+                                                    <span class="btn btn-default">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="vessel_class">Ship Class</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control" id="vessel_class" name="vessel_class"></select>
+                                        <div class="input-group">
+                                            <select class="form-control" id="vessel_class" name="vessel_class"></select>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#inputModal" id="btnAddShipClass" onclick="registration.btnAddShipClass_OnClick()">+</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -459,7 +487,6 @@
                                         <input type="number" class="form-control" id="vessel_generator" name="vessel_generator" placeholder="Total Generator Power" />
                                     </div>
                                 </div>
-
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
@@ -490,9 +517,9 @@
                                 </div>
                             </div>
                             <!--<div class="modal-footer">
-                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" type="submit" id="btnVesselPhotoSubmit">Save</button>
-                            </div>-->
+                            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit" id="btnVesselPhotoSubmit">Save</button>
+                        </div>-->
                         </form>
                     </div>
                 </div>
@@ -521,13 +548,18 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="engine_type">Engine Type</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control" id="engine_type" name="engine_type" onchange=""></select>
+                                        <select class="form-control" id="engine_type" name="engine_type"></select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="engine_model">Engine Model</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control" id="engine_model" name="engine_model"></select>
+                                        <div class="input-group">
+                                            <select class="form-control" id="engine_model" name="engine_model"></select>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#inputModal" id="btnAddEngineModel" onclick="registration.btnAddEngineModel_OnClick()">+</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -566,32 +598,39 @@
                                         <input type="text" class="form-control" id="engine_gearboxRatio" name="engine_gearboxRatio" placeholder="Gear Ratio" />
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="engine_alternatorMaker_group">
                                     <label class="col-sm-4 control-label" for="engine_alternatorMaker">Alternator Maker</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control" id="engine_alternatorMaker" name="engine_alternatorMaker"></select>
+                                        <div class="input-group">
+                                            <select class="form-control" id="engine_alternatorMaker" name="engine_alternatorMaker"></select>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#inputModal" id="btnAddAlternatorMaker" onclick="registration.btnAddAlternatorMaker_OnClick()">+</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="engine_alternatorMakerModel_group">
                                     <label class="col-sm-4 control-label" for="engine_alternatorMakerModel">Alternator Maker Model</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="engine_alternatorMakerModel" name="engine_alternatorMakerModel" placeholder="Alternator Maker Model" />
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="engine_alternatorMakerModel" name="engine_alternatorMakerModel" placeholder="Alternator Maker Model" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="engine_alternatorSrNo_group">
                                     <label class="col-sm-4 control-label" for="engine_alternatorSrNo">Alternator Serial No.</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="engine_alternatorSrNo" name="engine_alternatorSrNo" placeholder="Alternator Serial No." />
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="engine_alternatorOutput_group">
                                     <label class="col-sm-4 control-label" for="engine_alternatorOutput">Alternator Output (kWe)</label>
                                     <div class="col-sm-8">
                                         <input type="number" class="form-control" id="engine_alternatorOutput" name="engine_alternatorOutput" placeholder="Alternator Output (kWe)" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="engine_powerSupplySystem">IP Rating</label>
+                                    <label class="col-sm-4 control-label" for="engine_powerSupplySystem">Power Supply System</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="engine_powerSupplySystem" name="engine_powerSupplySystem" placeholder="Power Supply System" />
                                     </div>
@@ -644,9 +683,9 @@
                                 </div>
                             </div>
                             <!--<div class="modal-footer">
-                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" type="submit" id="btnVesselPhotoSubmit">Save</button>
-                            </div>-->
+                            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit" id="btnVesselPhotoSubmit">Save</button>
+                        </div>-->
                         </form>
                     </div>
                 </div>
@@ -782,26 +821,49 @@
             </div>
         </div>
 
-        <!-- Modal for displaying the messages -->
-        <div class="modal fade" id="messageModal">
+        <!-- Modal for  ad-hoc master data entry -->
+        <div class="modal fade" id="inputModal">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                         <h4 class="modal-title">
-                            <em class="fa fa-warning fa-1x"> </em> Server Error(s)
+                            <em class="fa fa-pencil fa-1x"> </em> Add New <span id="masterdata_header"></span>
                         </h4>
                     </div>
                     <div class="modal-body">
                         <!-- The messages container -->
-                        <div id="errors"></div>
+                        <form class="form-horizontal" role="form" id="masterdata_form" method="post">
+                            <input type="hidden" class="form-control" id="master_url" name="master_url" />
+                            <input type="hidden" class="form-control" id="master_requestType" name="master_requestType" />
+                            <input type="hidden" class="form-control" id="master_targetDropDown" name="master_targetDropDown" />
+                            <input type="hidden" class="form-control" id="master_paretnModal" name="master_paretnModal" />
+
+                            <!-- Generic Master Data Name -->
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="master_name">Enter Value: </label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="master_name" name="master_name" placeholder="Name" />
+                                </div>
+                            </div>
+
+                            <!-- Only applicable for new engine model -->
+                            <!--<div class="form-group" id="master_engine_model_group">
+                                <label class="col-sm-4 control-label" for="master_engine_model">Engine Model: </label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="master_engine_type" name="master_engine_type"></select>
+                                </div>
+                            </div>-->
+                        </form>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                        <button class="btn btn-default" type="button" id="btnSaveMaster" onclick="registration.btnSaveMaster_OnClick()">Save</button>
+                        <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
     <script>

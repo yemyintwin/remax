@@ -116,6 +116,12 @@ namespace REMAXAPI.Controllers
                 ModelState.AddModelError("Access Level", "Unauthorized update access.");
             }
 
+            var duplicate = db.Users.Where(u => u.Email == user.Email && u.Id != user.Id).FirstOrDefault();
+            if (duplicate != null)
+            {
+                ModelState.AddModelError("Duplicate email found", "Email already exists in system. Please use another email address.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -166,7 +172,10 @@ namespace REMAXAPI.Controllers
             }
 
             var usr = db.Users.Where(u => u.Email == user.Email).FirstOrDefault();
-            if (usr != null) ModelState.AddModelError("Duplicate", "Duplicate IMO Number.");
+            if (usr != null)
+            {
+                ModelState.AddModelError("Duplicate email found", "Email already exists in system. Please use another email address.");
+            }
 
             if (!ModelState.IsValid)
             {

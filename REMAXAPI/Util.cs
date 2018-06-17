@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Caching;
 using System.Security.Claims;
 using System.Text;
 using System.Web;
@@ -63,6 +64,30 @@ namespace REMAXAPI
         //    return byteArray;
         //}
 
+        public class MemoryCacher
+        {
+            public object GetValue(string key)
+            {
+                MemoryCache memoryCache = MemoryCache.Default;
+                return memoryCache.Get(key);
+            }
+
+            public bool Add(string key, object value, DateTimeOffset absExpiration)
+            {
+                MemoryCache memoryCache = MemoryCache.Default;
+                return memoryCache.Add(key, value, absExpiration);
+            }
+
+            public void Delete(string key)
+            {
+                MemoryCache memoryCache = MemoryCache.Default;
+                if (memoryCache.Contains(key))
+                {
+                    memoryCache.Remove(key);
+                }
+            }
+        }
+
         public static User GetCurrentUser()
         {
             using (var db = new Remax_Entities()) {
@@ -74,11 +99,21 @@ namespace REMAXAPI
                                where c.Type.EndsWith("/sid")
                                select c).FirstOrDefault();
 
-                    var user_found = (from u in db.Users
+                    Util.MemoryCacher memoryCacher = new Util.MemoryCacher();
+                    var user_found_in_memory = memoryCacher.GetValue(sid.Value) as User;
+                    if (user_found_in_memory != null) {
+                        user = user_found_in_memory;
+                    }
+                    else { 
+                        var user_found = (from u in db.Users
                                       where u.Id.ToString() == sid.Value
                                       select u).FirstOrDefault();
-                    if (user_found != null) user = user_found;
-
+                        if (user_found != null)
+                        {
+                            user = user_found;
+                            memoryCacher.Add(user.Id.ToString(), user, DateTime.Now.AddHours(8));
+                        }
+                    }
                     //foreach (var u in db.Users)
                     //{
                     //    if (u.Id.ToString() == sid.Value)

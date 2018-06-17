@@ -12,6 +12,47 @@ var components = {
 var token;
 
 var registration = {
+
+    dropdownlist: 
+        [
+            {
+                ctrl: 'vessel_owner',
+                method: 'ListAllAccounts'
+            },
+            {
+                ctrl: 'vessel_operator',
+                method: 'ListAllAccounts'
+            },
+            {
+                ctrl: 'vessel_shipyardCountry',
+                method: 'ListAllCountry'
+            },
+            {
+                ctrl: 'vessel_shipType',
+                method: 'ListAllShipType'
+            },
+            {
+                ctrl: 'vessel_class',
+                method: 'ListAllShipClass'
+            },
+            {
+                ctrl: 'engine_vessel',
+                method: 'ListAllVessels'
+            },
+            {
+                ctrl: 'engine_type',
+                method: 'ListAllEngineTypes'
+            },
+            {
+                ctrl: 'engine_alternatorMaker',
+                method: 'ListAllAlternatorMakers'
+            },
+            {
+                ctrl: 'engine_model',
+                method: 'ListAllModels'
+            },
+        ],
+
     modules: {
         account: null,
         user: null,
@@ -35,9 +76,10 @@ var registration = {
             }
         }
 
-        // resetting for all modal dialogs
+        // Modal dialog hide event
         $('body').on('hidden.bs.modal', '.modal', function () {
-            $(this).find('form').bootstrapValidator("resetForm", true);
+            $(this).find('form').bootstrapValidator("resetForm", true); //reset forms
+            $('.modal:visible').length && $(document.body).addClass('modal-open'); //reset scrollbar setting
         });
 
         // initializing accounts related
@@ -114,6 +156,41 @@ var registration = {
             registration.SubmitChannel(); // Create, Update
         } catch (e) {
             console.log(e.message);
+        }
+
+        registration.engine_type_OnChange();
+
+        // Not in use
+        //registration.fetchMasterData();
+    },
+
+    fetchMasterData: function () {
+        var url = "/api/DropDown/";
+
+        // Populate dropdown with list of accounts
+        for (var i = 0; i < registration.dropdownlist.length; i++) {
+            var drop = $('#' + registration.dropdownlist[i].ctrl);
+            drop.empty();
+            url = Settings.WebApiUrl + "/api/DropDown/" + registration.dropdownlist[i].method;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                dataType: 'json',
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
+                success: function (data) {
+                    //Process data retrieved
+                    registration.dropdownlist[i].list = [];
+                    $.each(data, function (key, entry) {
+                        registration.dropdownlist[i].list.push({
+                            key: key,
+                            value: entry
+                        });
+                    });
+                }
+            });
         }
     },
 
@@ -929,7 +1006,7 @@ var registration = {
                 filterable: false,
                 width: 100,
                 template: function (dataItem) {
-                    return (dataItem.buildYear ? new Date(dataItem.buildYear).toLocaleDateString() : '');
+                    return (dataItem.buildYear ? new Date(dataItem.buildYear).getFullYear() : '');
                 }
             },
             {
@@ -938,7 +1015,7 @@ var registration = {
                 filterable: false,
                 width: 200,
                 template: function (dataItem) {
-                    return (dataItem.deliveryToOwner ? new Date(dataItem.deliveryToOwner).toLocaleDateString() : '');
+                    return (dataItem.deliveryToOwner ? new Date(dataItem.deliveryToOwner).getFullYear() : '');
                 }
             },
             {
@@ -1054,11 +1131,20 @@ var registration = {
             format: " yyyy", // Notice the Extra space at the beginning
             viewMode: "years",
             minViewMode: "years"
+        }).on('show', function (e) {
+            if ($(this).val().length > 0) {
+                $(this).datepicker('update', new Date($(this).val()));
+            }
         });
+
         $("#vessel_ownYear").datepicker({
             format: " yyyy", // Notice the Extra space at the beginning
             viewMode: "years",
             minViewMode: "years"
+        }).on('show', function (e) {
+            if ($(this).val().length > 0) {
+                $(this).datepicker('update', new Date($(this).val()));
+            }
         });
     },
 
@@ -1141,8 +1227,8 @@ var registration = {
                     shipTypeId: $('#vessel_shipType').val(),
                     shipyardName: $('#vessel_shipyard').val(),
                     shipyardCountry: $('#vessel_shipyardCountry').val(),
-                    buildYear: $('#vessel_builtYear').val() ? new Date($('#vessel_builtYear').val()) : null,
-                    deliveryToOwner: $('#vessel_ownYear').val() ? new Date($('#vessel_ownYear').val()) : null,
+                    buildYear: $('#vessel_builtYear').val() ? new Date($('#vessel_builtYear').val()).toLocaleDateString('en') : null,
+                    deliveryToOwner: $('#vessel_ownYear').val() ? new Date($('#vessel_ownYear').val()).toLocaleDateString('en') : null,
                     shipClassId: $('#vessel_class').val(),
                     dwt: $('#vessel_dwt').val(),
                     totalPropulsionPower: $('#vessel_propulsion').val(),
@@ -1214,8 +1300,16 @@ var registration = {
             $('#vessel_shipType').val(selectedItem.shipTypeID);
             $('#vessel_shipyard').val(selectedItem.shipyardName);
             $('#vessel_shipyardCountry').val(selectedItem.shipyardCountry);
-            $('#vessel_builtYear').val(selectedItem.buildYear);
-            $('#vessel_ownYear').val(selectedItem.deliveryToOwner);
+
+            var bYear = Date.parse(selectedItem.buildYear);
+            if (bYear) $('#vessel_builtYear').val(new Date(bYear).getFullYear());
+
+            var dYear = Date.parse(selectedItem.deliveryToOwner);
+            if (dYear) $('#vessel_ownYear').val(new Date(dYear).getFullYear());
+
+            //$('#vessel_builtYear').datepicker('update', selectedItem.buildYear);
+            //$('#vessel_ownYear').datepicker('update', selectedItem.deliveryToOwner);
+
             $('#vessel_class').val(selectedItem.shipClassID);
             $('#vessel_dwt').val(selectedItem.dwt);
             $('#vessel_propulsion').val(selectedItem.totalPropulsionPower);
@@ -1311,6 +1405,18 @@ var registration = {
                 registration.retrieveVessels();
             }
         });
+    },
+
+    btnAddShipType_OnClick: function () {
+        $('#masterdata_header').html("Ship Type");
+        $('#master_url').val('/api/KendoShipTypes');
+        $('#master_targetDropDown').val('vessel_shipType');
+    },
+
+    btnAddShipClass_OnClick: function () {
+        $('#masterdata_header').html("Ship Class");
+        $('#master_url').val('/api/KendoShipClasses');
+        $('#master_targetDropDown').val('vessel_class');
     },
 
     /* ----------------------------------------------------------------- Engine -----------------------------------------------------------------*/
@@ -1564,13 +1670,13 @@ var registration = {
                 }
             });
         }
+        $('#engine_type').trigger('change');
     },
 
     SubmitEngine: function () {
 
         registration.SubmitEngineInitControls();
 
-        registration.engine_type_OnChange();
         $('#engine_type').trigger('change');
 
         // validation
@@ -1715,15 +1821,25 @@ var registration = {
                 gearBoxModel: $('#engine_gearboxModel').val(),
                 gearBoxSerialNo: $('#engine_gearboxSrNo').val(),
                 gearRatio: $('#engine_gearboxRatio').val(),
-                alternatorMakerID: $('#engine_alternatorMaker').val(),
-                alternatorMakerModel: $('#engine_alternatorMakerModel').val(),
-                alternatorSrNo: $('#engine_alternatorSrNo').val(),
-                alternatorOutput: $('#engine_alternatorOutput').val(),
                 powerSupplySystem: $('#engine_powerSupplySystem').val(),
                 insulationTempRise: $('#engine_insulation').val(),
                 ipRating: $('#engine_iprRate').val(),
                 mounting: $('#engine_mounting').val(),
             };
+
+            if ($('#engine_type option:selected').text() != 'Engine') {
+                data.alternatorMakerID = $('#engine_alternatorMaker').val();
+                data.alternatorMakerModel = $('#engine_alternatorMakerModel').val();
+                data.alternatorSrNo = $('#engine_alternatorSrNo').val();
+                data.alternatorOutput = $('#engine_alternatorOutput').val();
+            }
+            else {
+                data.alternatorMakerID = null;
+                data.alternatorMakerModel = null;
+                data.alternatorSrNo = null;
+                data.alternatorOutput = null;
+            }
+
             var requestType = "POST"; // Create
 
             if (registration.modules.engine.state === 'update') {
@@ -1896,8 +2012,6 @@ var registration = {
     engine_type_OnChange: function () {
         $('#engine_type').change(function () {
             var selectedEngineType = $('#engine_type').val();
-            var selectedEngineTypeName = $('#engine_type option:selected').text();
-
             var drop = $('#engine_model')
             drop.empty();
             url = Settings.WebApiUrl + "/api/DropDown/ListAllModels";
@@ -1905,7 +2019,7 @@ var registration = {
                 type: 'GET',
                 url: url,
                 dataType: 'json',
-                async: true,
+                async: false,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'bearer ' + token);
                 },
@@ -1917,19 +2031,32 @@ var registration = {
                 }
             });
 
+            var selectedEngineTypeName = $('#engine_type option:selected').text();
             if (selectedEngineTypeName === 'Engine') {
-                $('#engine_alternatorMaker').parent().parent().hide();
-                $('#engine_alternatorMakerModel').parent().parent().hide();
-                $('#engine_alternatorSrNo').parent().parent().hide();
-                $('#engine_alternatorOutput').parent().parent().hide();
+                $('#engine_alternatorMaker_group').hide();
+                $('#engine_alternatorMakerModel_group').hide();
+                $('#engine_alternatorSrNo_group').hide();
+                $('#engine_alternatorOutput_group').hide();
             }
             else {
-                $('#engine_alternatorMaker').parent().parent().show();
-                $('#engine_alternatorMakerModel').parent().parent().show();
-                $('#engine_alternatorSrNo').parent().parent().show();
-                $('#engine_alternatorOutput').parent().parent().show();
+                $('#engine_alternatorMaker_group').show();
+                $('#engine_alternatorMakerModel_group').show();
+                $('#engine_alternatorSrNo_group').show();
+                $('#engine_alternatorOutput_group').show();
             }
         });
+    },
+
+    btnAddEngineModel_OnClick: function () {
+        $('#masterdata_header').html("Engine Model");
+        $('#master_url').val('/api/KendoModels');
+        $('#master_targetDropDown').val('engine_model');
+    },
+
+    btnAddAlternatorMaker_OnClick: function () {
+        $('#masterdata_header').html("Alternator Maker");
+        $('#master_url').val('/api/KendoAlternatorMakers');
+        $('#master_targetDropDown').val('engine_alternatorMaker');
     },
 
     /* ----------------------------------------------------------------- Channel -----------------------------------------------------------------*/
@@ -2365,5 +2492,51 @@ var registration = {
         else {
             $(registration.modules.channel.dialogId).modal('hide');
         }
+    },
+
+    /* ----------------------------------------------------------------- Master Data -----------------------------------------------------------------*/
+
+    btnSaveMaster_OnClick: function () {
+        var requestType = 'POST';
+        var url = $('#master_url').val();
+        var master_name = $('#master_name').val();
+        var dropdown = $('#master_targetDropDown').val();
+        var data = {
+            name: master_name
+        };
+
+        // Only for engine model master data adding
+        if (url.endsWith('KendoModels')) {
+            var engine_type = $('#engine_type').val();
+            if (engine_type) data.engineTypeID = engine_type;
+        }
+
+        $.ajax({
+            type: requestType,
+            url: Settings.WebApiUrl + url,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            // passing token
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'bearer ' + token);
+            },
+            success: function (d, textStatus, xhr) {
+                console.log(d);
+                $('#' + dropdown).append($('<option/>', {
+                    value: d.id,
+                    text: d.name,
+                    selected: 'selected',
+                }));
+
+                $('#master_name').val('');
+                $("#inputModal").modal('hide');
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $('#errors').html('');
+                $('#errors').append('Error creating master data.');
+                $('#messageModal').modal('show');
+            }
+        });
     },
 };
