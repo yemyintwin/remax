@@ -4,12 +4,14 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using REMAXAPI.Models;
+using REMAXAPI.Models.Kendo;
 
 namespace REMAXAPI.Controllers
 {
@@ -19,21 +21,57 @@ namespace REMAXAPI.Controllers
         private Remax_Entities db = new Remax_Entities();
 
         // GET: api/KendoAlternatorMakers
-        public IQueryable<AlternatorMaker> GetAlternatorMakers()
+        public KendoResponse GetAlternatorMakers([FromUri] KendoRequest kendoRequest)
         {
-            return db.AlternatorMakers;
+            IQueryable<AlternatorMaker> altMakers = db.AlternatorMakers;
+
+            // total count
+            var total = db.AlternatorMakers.Count();
+
+            // filtering
+            if (kendoRequest.filter != null && kendoRequest.filter.Filters != null && kendoRequest.filter.Filters.Count() > 0)
+            {
+                IEnumerable<DataFilter> filters = kendoRequest.filter.Filters;
+                string strWhere = string.Empty;
+                foreach (var f in filters)
+                {
+                    string whereFormat = DataFilterOperators.Operators[f.Operator];
+                    if (!string.IsNullOrEmpty(whereFormat))
+                    {
+                        altMakers = altMakers.Where(string.Format(whereFormat, f.Field, f.Value));
+                    }
+                }
+            }
+
+            // sorting
+            string strOrderBy = string.Empty;
+            if (kendoRequest.sort != null && kendoRequest.sort.Length > 0)
+            {
+                foreach (var s in kendoRequest.sort)
+                {
+                    strOrderBy += string.Format("{0} {1},", s.Field, s.Dir);
+                }
+
+                if (strOrderBy.Length > 0 && strOrderBy.EndsWith(","))
+                    strOrderBy = strOrderBy.Remove(strOrderBy.Length - 1); //Removing last comma
+            }
+            if (strOrderBy == string.Empty) strOrderBy = "1"; //Sort Noting
+
+            var sortedAccounts = altMakers.OrderBy(strOrderBy);
+
+            // filtereding
+
+            // take single page data
+            if (kendoRequest.take == 0) kendoRequest.take = total;
+            object[] data = sortedAccounts.Skip(kendoRequest.skip).Take(kendoRequest.take).ToArray<object>();
+
+            return new KendoResponse(total, data);
         }
 
         // GET: api/KendoAlternatorMakers/5
         [ResponseType(typeof(AlternatorMaker))]
         public async Task<IHttpActionResult> GetAlternatorMaker(Guid id)
         {
-            int deleteLevel = Util.GetResourcePermission("Master Data", Util.ReourceOperations.Write);
-            if (deleteLevel != 2)
-            {
-                ModelState.AddModelError("Access Level", "Unauthorized write access.");
-            }
-
             AlternatorMaker alternatorMaker = await db.AlternatorMakers.FindAsync(id);
             if (alternatorMaker == null)
             {
@@ -50,7 +88,7 @@ namespace REMAXAPI.Controllers
             int writeLevel = Util.GetResourcePermission("Master Data", Util.ReourceOperations.Write);
             if (writeLevel != 2)
             {
-                ModelState.AddModelError("Access Level", "Unauthorized create access.");
+                ModelState.AddModelError("Access Level", "Unauthorized write access.");
             }
             var am = db.AlternatorMakers.Where(a => a.Name == alternatorMaker.Name).FirstOrDefault();
             if (am != null) ModelState.AddModelError("Duplicate", "Alternator Maker already existed.");
@@ -90,10 +128,10 @@ namespace REMAXAPI.Controllers
         [ResponseType(typeof(AlternatorMaker))]
         public async Task<IHttpActionResult> PostAlternatorMaker(AlternatorMaker alternatorMaker)
         {
-            int deleteLevel = Util.GetResourcePermission("Master Data", Util.ReourceOperations.Delete);
-            if (deleteLevel != 2)
+            int writeLevel = Util.GetResourcePermission("Master Data", Util.ReourceOperations.Write);
+            if (writeLevel != 2)
             {
-                ModelState.AddModelError("Access Level", "Unauthorized delete access.");
+                ModelState.AddModelError("Access Level", "Unauthorized write access.");
             }
 
             if (!ModelState.IsValid)
@@ -126,6 +164,12 @@ namespace REMAXAPI.Controllers
         [ResponseType(typeof(AlternatorMaker))]
         public async Task<IHttpActionResult> DeleteAlternatorMaker(Guid id)
         {
+            int deleteLevel = Util.GetResourcePermission("Master Data", Util.ReourceOperations.Write);
+            if (deleteLevel != 2)
+            {
+                ModelState.AddModelError("Access Level", "Unauthorized write access.");
+            }
+
             AlternatorMaker alternatorMaker = await db.AlternatorMakers.FindAsync(id);
             if (alternatorMaker == null)
             {

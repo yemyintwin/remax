@@ -36,7 +36,7 @@
     <!--<script src="assets/datatables-responsive/dataTables.responsive.js"></script>-->
 
     <script src="assets/js/remax.js?v=180610_1205"></script>
-    <script src="assets/js/registration.js?v=180610_1205"></script>
+    <script src="assets/js/master.js?v=180610_1205"></script>
 </head>
 <body>
     <div id="wrapper">
@@ -50,9 +50,50 @@
                     </div>
                 </div>
             </div>
+
+            <!--- Account Registration -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Alternator Makers</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="table_altMakers"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_acc" id="btnNewAccount" onclick="registration.btnNewAccount_OnClick();">New</button>
+                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_acc" id="btnEditAccount" onclick="registration.btnEditAccount_OnClick();">Edit</button>
+                                <button class="btn btn-default" type="button" id="btnDelAccount" onclick="registration.btnDelAccount_OnClick();">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="height:20px"></div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div w3-include-html="footer.html"></div>
+
+    <script>
+        includeHTML();
+
+        $(document).ready(function () {
+            // Calling on load method from registration.js
+            master.onload();
+        });
+    </script>
 </body>
 </html>

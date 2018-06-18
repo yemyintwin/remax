@@ -111,6 +111,11 @@ namespace REMAXAPI.Models.Kendo
         }
     }
 
+    public class KendoRequestInline {
+        public int Skip { get; set; }
+        public int Take { get; set; }
+    }
+
     public class OptionResponse {
         public object[] Data { get; set; }
     }
