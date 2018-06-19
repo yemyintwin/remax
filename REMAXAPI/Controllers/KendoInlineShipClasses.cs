@@ -15,32 +15,32 @@ using System.Data.Entity;
 namespace REMAXAPI.Controllers
 {
     [Authorize]
-    public class KendoInlineAlternatorMakerController : ApiController
+    public class KendoInlineShipClassesController : ApiController
     {
         private Remax_Entities db = new Remax_Entities();
 
         [HttpGet]
-        [Route("api/KendoInlineAlternatorMakerTotal")]
-        // GET: api/KendoInlineAlternatorMakerTotal
-        public int GetKendoInlineAlternatorMakerTotal() {
-            return db.AlternatorMakers.Count();
+        [Route("api/KendoInlineShipClassesTotal")]
+        // GET: api/KendoInlineShipClassesTotal
+        public int GetKendoInlineShipClassesTotal() {
+            return db.ShipClasses.Count();
         }
 
         [HttpGet]
-        // GET: api/KendoInlineAlternatorMaker
-        public IHttpActionResult GetKendoInlineAlternatorMaker([FromUri]KendoRequestInline kendoRequestInline)
+        // GET: api/KendoInlineShipClasses
+        public IHttpActionResult GetKendoInlineShipClasses([FromUri]KendoRequestInline kendoRequestInline)
         {
-            IEnumerable<AlternatorMaker> result = db.AlternatorMakers.OrderBy(a => a.Name);
+            IEnumerable<ShipClass> result = db.ShipClasses.OrderBy(a => a.Name);
 
             result = result.Skip(kendoRequestInline.Skip).Take(kendoRequestInline.Take);
 
             return Ok(result);
         }
 
-        // POST: api/KendoInlineAlternatorMaker
+        // POST: api/KendoInlineShipClasses
         [HttpPost]
-        [ResponseType(typeof(AlternatorMaker))]
-        public async Task<IHttpActionResult> PostKendoInlineAlternatorMaker(AlternatorMaker alternatorMaker)
+        [ResponseType(typeof(ShipClass))]
+        public async Task<IHttpActionResult> PostKendoInlineShipClasses(ShipClass shipClass)
         {
             int deleteLevel = Util.GetResourcePermission("Master Data", Util.ReourceOperations.Write);
             if (deleteLevel != 2)
@@ -48,10 +48,10 @@ namespace REMAXAPI.Controllers
                 ModelState.AddModelError("Access Level", "Unauthorized write access.");
             }
 
-            var foundDup = db.AlternatorMakers.Where(a => a.Name == alternatorMaker.Name).FirstOrDefault();
+            var foundDup = db.ShipClasses.Where(a => a.Name == shipClass.Name).FirstOrDefault();
             if (foundDup != null)
             {
-                ModelState.AddModelError("Found Duplicate", "Duplicate alternator maker found.");
+                ModelState.AddModelError("Found Duplicate", "Duplicate ship class found.");
             }
 
             if (!ModelState.IsValid)
@@ -59,7 +59,7 @@ namespace REMAXAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.AlternatorMakers.Add(alternatorMaker);
+            db.ShipClasses.Add(shipClass);
 
             try
             {
@@ -67,7 +67,7 @@ namespace REMAXAPI.Controllers
             }
             catch (DbUpdateException)
             {
-                if (AlternatorMakerExists(alternatorMaker.Id))
+                if (ShipClassesExists(shipClass.Id))
                 {
                     return Conflict();
                 }
@@ -77,13 +77,13 @@ namespace REMAXAPI.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = alternatorMaker.Id }, alternatorMaker);
+            return CreatedAtRoute("DefaultApi", new { id = shipClass.Id }, shipClass);
         }
 
-        // PUT: api/KendoAlternatorMakers/5
+        // PUT: api/KendoShipClassess/5
         [HttpPut]
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutKendoInlineAlternatorMaker(Guid id, AlternatorMaker alternatorMaker)
+        public async Task<IHttpActionResult> PutKendoInlineShipClasses(Guid id, ShipClass shipClass)
         {
             int writeLevel = Util.GetResourcePermission("Master Data", Util.ReourceOperations.Write);
             if (writeLevel != 2)
@@ -96,12 +96,12 @@ namespace REMAXAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != alternatorMaker.Id)
+            if (id != shipClass.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(alternatorMaker).State = EntityState.Modified;
+            db.Entry(shipClass).State = EntityState.Modified;
 
             try
             {
@@ -109,7 +109,7 @@ namespace REMAXAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AlternatorMakerExists(id))
+                if (!ShipClassesExists(id))
                 {
                     return NotFound();
                 }
@@ -122,10 +122,10 @@ namespace REMAXAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // DELETE: api/KendoAlternatorMakers/5
+        // DELETE: api/KendoShipClassess/5
         [HttpDelete]
-        [ResponseType(typeof(AlternatorMaker))]
-        public async Task<IHttpActionResult> DeleteKendoInlineAlternatorMaker(Guid id)
+        [ResponseType(typeof(ShipClass))]
+        public async Task<IHttpActionResult> DeleteKendoInlineShipClasses(Guid id)
         {
             int deleteLevel = Util.GetResourcePermission("Master Data", Util.ReourceOperations.Delete);
             if (deleteLevel != 2)
@@ -133,22 +133,21 @@ namespace REMAXAPI.Controllers
                 ModelState.AddModelError("Access Level", "Unauthorized delete access.");
             }
 
-            AlternatorMaker alternatorMaker = await db.AlternatorMakers.FindAsync(id);
-            if (alternatorMaker == null)
+            ShipClass ShipClasses = await db.ShipClasses.FindAsync(id);
+            if (ShipClasses == null)
             {
                 return NotFound();
             }
 
-            db.AlternatorMakers.Remove(alternatorMaker);
+            db.ShipClasses.Remove(ShipClasses);
             await db.SaveChangesAsync();
 
-            return Ok(alternatorMaker);
+            return Ok(ShipClasses);
         }
 
-
-        private bool AlternatorMakerExists(Guid id)
+        private bool ShipClassesExists(Guid id)
         {
-            return db.AlternatorMakers.Count(e => e.Id == id) > 0;
+            return db.ShipClasses.Count(e => e.Id == id) > 0;
         }
     }
 }

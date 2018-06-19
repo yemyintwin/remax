@@ -168,7 +168,10 @@
     <Compile Include="Controllers\KendoAlternatorMakersController.cs" />
     <Compile Include="Controllers\KendoChannelsController.cs" />
     <Compile Include="Controllers\KendoEnginesController.cs" />
+    <Compile Include="Controllers\KendoInlineShipTypes.cs" />
+    <Compile Include="Controllers\KendoInlineShipClasses.cs" />
     <Compile Include="Controllers\KendoInlineAlternatorMakerController.cs" />
+    <Compile Include="Controllers\KendoInlineModelController.cs" />
     <Compile Include="Controllers\KendoShipClassesController.cs" />
     <Compile Include="Controllers\KendoShipTypesController.cs" />
     <Compile Include="Controllers\KendoUsersController.cs" />

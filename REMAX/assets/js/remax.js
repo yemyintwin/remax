@@ -107,7 +107,10 @@ $(document).ready(function () {
         $('#welcome').text('Welcome ' + Settings.CurrentUser.fullName);
     }
 
-    if (!found) $('#nav_registration').hide();
+    if (!found) {
+        $('#nav_registration').hide();
+        $('#nav_master').hide();
+    }
 
     // vessels list
     if (Settings.Token) {
