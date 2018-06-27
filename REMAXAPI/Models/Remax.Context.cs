@@ -20,7 +20,7 @@ namespace REMAXAPI.Models
         public Remax_Entities()
             : base("name=Remax_Entities")
         {
-            Configuration.LazyLoadingEnabled = false;
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -50,6 +50,7 @@ namespace REMAXAPI.Models
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vessel> Vessels { get; set; }
         public virtual DbSet<FilteredAccount> FilteredAccounts { get; set; }
+        public virtual DbSet<GearboxModel> GearboxModels { get; set; }
     
         public virtual ObjectResult<sp_ResourcePermission_Result> sp_ResourcePermission(Nullable<System.Guid> userid, string resource_name, Nullable<int> operation_type)
         {

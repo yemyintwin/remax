@@ -43,6 +43,8 @@
         <AssociationConnector Association="REMAXAPI.Models.FK_UserClaim_User" ManuallyRouted="false" />
         <AssociationConnector Association="REMAXAPI.Models.FK_UserLogin_User" ManuallyRouted="false" />
         <AssociationConnector Association="REMAXAPI.Models.UserUserRole" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.GearboxModel" Width="1.5" PointX="12.375" PointY="7.875" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Engine_GearboxModel" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

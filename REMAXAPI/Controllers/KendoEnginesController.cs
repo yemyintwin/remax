@@ -50,7 +50,8 @@ namespace REMAXAPI.Controllers
             engines = engines.Include("AlternatorMaker")
                         .Include("EngineType")
                         .Include("Model")
-                        .Include("Vessel");
+                        .Include("Vessel")
+                        .Include("GearboxModel");
 
             // total count
             var total = engines.Count();

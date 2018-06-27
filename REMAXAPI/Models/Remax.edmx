@@ -89,7 +89,7 @@
           <Property Name="SerialNo" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="OutputPower" Type="decimal" Precision="18" Scale="2" />
           <Property Name="RPM" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="GearBoxModel" Type="nvarchar" MaxLength="100" />
+          <Property Name="GearBoxModelID" Type="uniqueidentifier" />
           <Property Name="GearBoxSerialNo" Type="nvarchar" MaxLength="100" />
           <Property Name="GearRatio" Type="nvarchar" MaxLength="100" />
           <Property Name="AlternatorMakerID" Type="uniqueidentifier" />
@@ -112,6 +112,13 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="GearboxModel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Model">
           <Key>
@@ -347,6 +354,18 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Engine_GearboxModel">
+          <End Role="GearboxModel" Type="Self.GearboxModel" Multiplicity="0..1" />
+          <End Role="Engine" Type="Self.Engine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GearboxModel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Engine">
+              <PropertyRef Name="GearBoxModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Engine_Model">
           <End Role="Model" Type="Self.Model" Multiplicity="0..1" />
           <End Role="Engine" Type="Self.Engine" Multiplicity="*" />
@@ -513,6 +532,7 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <EntitySet Name="DashboardSetting" EntityType="Self.DashboardSetting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Engine" EntityType="Self.Engine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EngineType" EntityType="Self.EngineType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GearboxModel" EntityType="Self.GearboxModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Model" EntityType="Self.Model" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Monitoring" EntityType="Self.Monitoring" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OptionSet" EntityType="Self.OptionSet" Schema="dbo" store:Type="Tables" />
@@ -556,6 +576,10 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           </AssociationSet>
           <AssociationSet Name="FK_Engine_EngineType" Association="Self.FK_Engine_EngineType">
             <End Role="EngineType" EntitySet="EngineType" />
+            <End Role="Engine" EntitySet="Engine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Engine_GearboxModel" Association="Self.FK_Engine_GearboxModel">
+            <End Role="GearboxModel" EntitySet="GearboxModel" />
             <End Role="Engine" EntitySet="Engine" />
           </AssociationSet>
           <AssociationSet Name="FK_Engine_Model" Association="Self.FK_Engine_Model">
@@ -703,8 +727,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <Property Name="SerialNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="OutputPower" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="RPM" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="GearBoxModel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="GearBoxSerialNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GearBoxModelID" Type="Guid" />
           <Property Name="GearRatio" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AlternatorMakerID" Type="Guid" />
           <Property Name="AlternatorMakerModel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -723,6 +747,7 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <NavigationProperty Name="EngineType" Relationship="Self.FK_Engine_EngineType" FromRole="Engine" ToRole="EngineType" />
           <NavigationProperty Name="Model" Relationship="Self.FK_Engine_Model" FromRole="Engine" ToRole="Model" />
           <NavigationProperty Name="Vessel" Relationship="Self.FK_Engine_Vessel" FromRole="Engine" ToRole="Vessel" />
+          <NavigationProperty Name="GearboxModel" Relationship="REMAXAPI.Models.FK_Engine_GearboxModel" FromRole="Engine" ToRole="GearboxModel" />
         </EntityType>
         <EntityType Name="EngineType">
           <Key>
@@ -1103,7 +1128,7 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Remax_Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Remax_Entities" annotation:LazyLoadingEnabled="false">
           <EntitySet Name="Accounts" EntityType="Self.Account" />
           <EntitySet Name="AlternatorMakers" EntityType="Self.AlternatorMaker" />
           <EntitySet Name="Channels" EntityType="Self.Channel" />
@@ -1195,6 +1220,11 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
             <Parameter Name="resource_name" Mode="In" Type="String" />
             <Parameter Name="operation_type" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="GearboxModels" EntityType="REMAXAPI.Models.GearboxModel" />
+          <AssociationSet Name="FK_Engine_GearboxModel" Association="REMAXAPI.Models.FK_Engine_GearboxModel">
+            <End Role="GearboxModel" EntitySet="GearboxModels" />
+            <End Role="Engine" EntitySet="Engines" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_ResourcePermission_Result">
           <Property Type="Guid" Name="User_Id" Nullable="true" />
@@ -1205,6 +1235,26 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <Property Type="String" Name="Resource_Name" Nullable="true" MaxLength="100" />
           <Property Type="Byte" Name="Resource_Permission" Nullable="true" />
         </ComplexType>
+        <EntityType Name="GearboxModel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Engines" Relationship="REMAXAPI.Models.FK_Engine_GearboxModel" FromRole="GearboxModel" ToRole="Engine" />
+        </EntityType>
+        <Association Name="FK_Engine_GearboxModel">
+          <End Type="REMAXAPI.Models.GearboxModel" Role="GearboxModel" Multiplicity="0..1" />
+          <End Type="REMAXAPI.Models.Engine" Role="Engine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GearboxModel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Engine">
+              <PropertyRef Name="GearBoxModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1293,6 +1343,7 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <EntitySetMapping Name="Engines">
             <EntityTypeMapping TypeName="REMAXAPI.Models.Engine">
               <MappingFragment StoreEntitySet="Engine">
+                <ScalarProperty Name="GearBoxModelID" ColumnName="GearBoxModelID" />
                 <ScalarProperty Name="RPM" ColumnName="RPM" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VesselID" ColumnName="VesselID" />
@@ -1300,7 +1351,6 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
                 <ScalarProperty Name="EngineModelID" ColumnName="EngineModelID" />
                 <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
                 <ScalarProperty Name="OutputPower" ColumnName="OutputPower" />
-                <ScalarProperty Name="GearBoxModel" ColumnName="GearBoxModel" />
                 <ScalarProperty Name="GearBoxSerialNo" ColumnName="GearBoxSerialNo" />
                 <ScalarProperty Name="GearRatio" ColumnName="GearRatio" />
                 <ScalarProperty Name="AlternatorMakerID" ColumnName="AlternatorMakerID" />
@@ -1523,6 +1573,14 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="GearboxModels">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.GearboxModel">
+              <MappingFragment StoreEntitySet="GearboxModel">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

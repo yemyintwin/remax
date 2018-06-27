@@ -21,8 +21,8 @@ namespace REMAXAPI.Models
         public string SerialNo { get; set; }
         public Nullable<decimal> OutputPower { get; set; }
         public Nullable<decimal> RPM { get; set; }
-        public string GearBoxModel { get; set; }
         public string GearBoxSerialNo { get; set; }
+        public Nullable<System.Guid> GearBoxModelID { get; set; }
         public string GearRatio { get; set; }
         public Nullable<System.Guid> AlternatorMakerID { get; set; }
         public string AlternatorMakerModel { get; set; }
@@ -42,5 +42,6 @@ namespace REMAXAPI.Models
         public virtual EngineType EngineType { get; set; }
         public virtual Model Model { get; set; }
         public virtual Vessel Vessel { get; set; }
+        public virtual GearboxModel GearboxModel { get; set; }
     }
 }

@@ -1546,8 +1546,11 @@ var registration = {
             {
                 field: "gearBoxModel",
                 title: "Gearbox Model",
-                width: 100,
-                filterable: false
+                width: 150,
+                filterable: false,
+                template: function (dataItem) {
+                    return (dataItem.gearboxModel && dataItem.gearboxModel.name ? dataItem.gearboxModel.name : '');
+                }
             },
             {
                 field: "gearRatio",
@@ -1644,9 +1647,13 @@ var registration = {
                     method: 'ListAllEngineTypes'
                 },
                 {
+                    ctrl: 'engine_gearboxModel',
+                    method: 'ListAllGearboxModels'
+                },
+                {
                     ctrl: 'engine_alternatorMaker',
                     method: 'ListAllAlternatorMakers'
-                }            
+                }   
             ];
 
         // Populate dropdown with list of accounts
@@ -1730,14 +1737,7 @@ var registration = {
                         message: 'The value is not an integer'
                     }
                 },
-                engine_gearboxModel: {
-                    validators: {
-                        stringLength: {
-                            max: 100,
-                            message: 'Gear box model name must be less than 100 characters long'
-                        }
-                    }
-                },
+                engine_gearboxModel: {},
                 engine_gearboxSrNo: {
                     validators: {
                         stringLength: {
@@ -1818,7 +1818,7 @@ var registration = {
                 serialNo: $('#engine_sno').val(),
                 outputPower: $('#engine_outputPower').val(),
                 rpm: $('#engine_rpm').val(),
-                gearBoxModel: $('#engine_gearboxModel').val(),
+                gearBoxModelID: $('#engine_gearboxModel').val(),
                 gearBoxSerialNo: $('#engine_gearboxSrNo').val(),
                 gearRatio: $('#engine_gearboxRatio').val(),
                 powerSupplySystem: $('#engine_powerSupplySystem').val(),
@@ -1905,7 +1905,7 @@ var registration = {
             $('#engine_sno').val(selectedItem.serialNo);
             $('#engine_outputPower').val(selectedItem.outputPower);
             $('#engine_rpm').val(selectedItem.rpm);
-            $('#engine_gearboxModel').val(selectedItem.gearBoxModel);
+            $('#engine_gearboxModel').val(selectedItem.gearBoxModelID);
             $('#engine_gearboxSrNo').val(selectedItem.gearBoxSerialNo);
             $('#engine_gearboxRatio').val(selectedItem.gearRatio);
             $('#engine_alternatorMaker').val(selectedItem.alternatorMakerID);
@@ -2051,6 +2051,12 @@ var registration = {
         $('#masterdata_header').html("Engine Model");
         $('#master_url').val('/api/KendoModels');
         $('#master_targetDropDown').val('engine_model');
+    },
+
+    btnAddGearboxModel_OnClick: function () {
+        $('#masterdata_header').html("Gearbox Model");
+        $('#master_url').val('/api/KendoGearboxModels');
+        $('#master_targetDropDown').val('engine_gearboxModel');
     },
 
     btnAddAlternatorMaker_OnClick: function () {

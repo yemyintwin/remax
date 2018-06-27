@@ -138,6 +138,20 @@ namespace REMAXAPI.Controllers
         }
 
         [HttpGet]
+        [Route("api/DropDown/ListAllGearboxModels")]
+        public Object ListAllGearboxModels()
+        {
+            Object[] objects = (from g in db.GearboxModels
+                                orderby g.Name
+                                select new
+                                {
+                                    g.Id,
+                                    g.Name
+                                }).ToArray<object>();
+            return objects;
+        }
+
+        [HttpGet]
         [Route("api/DropDown/ListAllAlternatorMakers")]
         public Object ListAllAlternatorMakers()
         {
