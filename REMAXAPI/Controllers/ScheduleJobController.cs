@@ -355,11 +355,14 @@ namespace REMAXAPI.Controllers
 
                     if (monitor != null)
                     {
+                        monitor.ProcessedError = string.Empty;
+                        if (m.VesselName == null) monitor.ProcessedError += "IMO number not found.";
+                        if (m.EngineID == null) monitor.ProcessedError += "Engine not found. ";
+                        if (m.EngineModelID == null) monitor.ProcessedError += "Engine model not found. ";
 
-                        if (m.EngineID == null) monitor.ProcessedError = "Engine not found.";
-                        else if (m.EngineModelID == null) monitor.ProcessedError = "Engine model not found.";
+                        monitor.ProcessedError = monitor.ProcessedError.Trim();
 
-                        error = (m.EngineID == null || m.EngineModelID == null);
+                        error = (m.VesselName ==null || m.EngineID == null || m.EngineModelID == null);
 
                         monitor.Processed = true;
                         db.Entry(monitor).State = System.Data.Entity.EntityState.Modified;
