@@ -301,7 +301,6 @@ namespace REMAXAPI.Controllers
         public async Task<IHttpActionResult> ProcessStagingData()
         {
             Remax_Entities db = new Remax_Entities();
-            //string token = GetOAuthToken("root@daikai.com", "mypassword");
             
             try
             {
@@ -348,7 +347,9 @@ namespace REMAXAPI.Controllers
 
                 #region --------------------------- Creating channel if doesn't exists --------------------------- 
                 List<Channel> newChannels = new List<Channel>();
-                foreach (var m in monitoring)
+
+                // Do not remove ToList() in below line, it will trigger "There is already an open DataReader associated with this Command which must be closed first."
+                foreach (var m in monitoring.ToList()) 
                 {
                     var monitor = db.Monitorings.Where(mo => mo.Id == m.Id).FirstOrDefault();
                     bool error = false;
