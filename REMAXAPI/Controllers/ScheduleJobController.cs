@@ -300,7 +300,7 @@ namespace REMAXAPI.Controllers
         [Route("api/ScheduleJob/ProcessStagingData")]
         public async Task<IHttpActionResult> ProcessStagingData()
         {
-        Remax_Entities db = new Remax_Entities();
+            Remax_Entities db = new Remax_Entities();
             //string token = GetOAuthToken("root@daikai.com", "mypassword");
             
             try
@@ -312,14 +312,14 @@ namespace REMAXAPI.Controllers
                                  from m_v in mv.DefaultIfEmpty()
 
                                  join e in db.Engines on m.SerialNo equals e.SerialNo into me
-                                 from m_e in me.DefaultIfEmpty()
+                                 from m_e in me
 
                                  join ml in db.Models on m_e.EngineModelID equals ml.Id into mml
                                  from m_ml in mml.DefaultIfEmpty()
 
                                  join c in db.Channels on
                                      new { m.ChannelNo, ID = m_ml.Id } equals
-                                     new { c.ChannelNo, ID = c.ModelID == null ? Guid.Empty : c.ModelID.Value }
+                                     new { c.ChannelNo, ID = c.ModelID.HasValue ? c.ModelID.Value : Guid.Empty}
                                      into mch
                                  from m_ch in mch.DefaultIfEmpty()
 
