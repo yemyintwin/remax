@@ -148,6 +148,7 @@
     </Content>
     <Content Include="SQL\Channels.sql" />
     <Content Include="SQL\Data Setup.sql" />
+    <Content Include="SQL\Monitoring_Join.sql" />
     <Content Include="SQL\New Environment Setup\01. Database Setup.sql" />
     <Content Include="SQL\New Environment Setup\03. Master Data Setup.sql" />
     <Content Include="SQL\New Environment Setup\02. Root Setup.sql" />
@@ -297,6 +298,7 @@
     <Content Include="Models\Remax.edmx.diagram">
       <DependentUpon>Remax.edmx</DependentUpon>
     </Content>
+    <Content Include="App_Data\Codes.csv" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">

@@ -5,11 +5,14 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Newtonsoft.Json;
 using REMAXAPI.Models;
 
 namespace REMAXAPI.Controllers
@@ -178,7 +181,7 @@ namespace REMAXAPI.Controllers
                     // Engine Serial No.
                     if (!string.IsNullOrWhiteSpace(raw[1])) monitor.SerialNo = RemoveDoubleQuotes(raw[1]);
                     // Channel No
-                    if (!string.IsNullOrWhiteSpace(raw[2])) monitor.ChannelNo = int.Parse(raw[2]);
+                    if (!string.IsNullOrWhiteSpace(raw[2])) monitor.ChannelNo = RemoveDoubleQuotes(raw[2]);
                     // Channel Description
                     if (!string.IsNullOrWhiteSpace(raw[3])) monitor.ChannelDescription= RemoveDoubleQuotes(raw[3]);
                     // TimeStamp
@@ -188,12 +191,16 @@ namespace REMAXAPI.Controllers
                     // Unit of Measurement
                     if (!string.IsNullOrWhiteSpace(raw[6])) monitor.Unit = RemoveDoubleQuotes(raw[6]);
 
+#if DEBUG
+                    monitor.TimeStamp = DateTime.Now;
+#endif 
+
                     // System Info
-                    monitor.Id = Guid.NewGuid();
-                    monitor.CreatedBy = Guid.Empty;
-                    monitor.CreatedOn = DateTime.Now;
-                    monitor.ModifiedBy = Guid.Empty;
-                    monitor.ModifiedOn = DateTime.Now;
+                    //monitor.Id = Guid.NewGuid();
+                    //monitor.CreatedBy = Guid.Empty;
+                    //monitor.CreatedOn = DateTime.Now;
+                    //monitor.ModifiedBy = Guid.Empty;
+                    //monitor.ModifiedOn = DateTime.Now;
 
                     monitoringList.Add(monitor);
                     summary.Success = summary.Success++;
@@ -212,6 +219,12 @@ namespace REMAXAPI.Controllers
             remax_Entities.Monitorings.AddRange(monitoringList);
 
             int recordAffected = 0;
+            User serviceUser = (from u in remax_Entities.Users
+                                where (string.IsNullOrEmpty(u.FullName) ? "" : u.FullName).ToLower() == "service"
+                                select u).FirstOrDefault();
+
+            remax_Entities.ServiceUser = serviceUser;
+
             try
             {
                 recordAffected = await remax_Entities.SaveChangesAsync();
@@ -258,6 +271,156 @@ namespace REMAXAPI.Controllers
             }
 
             return str;
+        }
+
+        private string GetOAuthToken(string user, string pwd) {
+            WebRequest webRequest = WebRequest.Create(Url.Content("~/").ToString() + "/Token");
+            webRequest.Method = "POST";
+            webRequest.ContentType = "application/json;charset=UTF-8";
+            string strJson = JsonConvert.SerializeObject(new {
+                grant_type = "password",
+                username = user,
+                password = pwd
+            });
+
+            Stream s = webRequest.GetRequestStream();
+            byte[] bytes = Encoding.UTF8.GetBytes(strJson);
+            s.Write(bytes, 0, bytes.Length);
+
+            WebResponse webResponse = webRequest.GetResponse();
+            Stream rStream = webResponse.GetResponseStream();
+            StreamReader reader = new StreamReader(rStream);
+            string token = reader.ReadToEnd();
+
+            return token;
+        }
+
+        [HttpGet]
+        [ResponseType(typeof(void))]
+        [Route("api/ScheduleJob/ProcessStagingData")]
+        public async Task<IHttpActionResult> ProcessStagingData()
+        {
+        Remax_Entities db = new Remax_Entities();
+            //string token = GetOAuthToken("root@daikai.com", "mypassword");
+            
+            try
+            {
+                #region --------------------------- Data Extraction --------------------------- 
+                var monitoring = from m in db.Monitorings
+
+                                 join v in db.Vessels on m.IMO_No equals v.IMO_No into mv
+                                 from m_v in mv.DefaultIfEmpty()
+
+                                 join e in db.Engines on m.SerialNo equals e.SerialNo into me
+                                 from m_e in me.DefaultIfEmpty()
+
+                                 join ml in db.Models on m_e.EngineModelID equals ml.Id into mml
+                                 from m_ml in mml.DefaultIfEmpty()
+
+                                 join c in db.Channels on
+                                     new { m.ChannelNo, ID = m_ml.Id } equals
+                                     new { c.ChannelNo, ID = c.ModelID == null ? Guid.Empty : c.ModelID.Value }
+                                     into mch
+                                 from m_ch in mch.DefaultIfEmpty()
+
+                                 join ct in db.ChartTypes on m_ch.ChartTypeID equals ct.Id into mct
+                                 from m_ct in mct.DefaultIfEmpty()
+
+                                 where !(m.Processed.HasValue? m.Processed.Value : false)
+
+                                 select new
+                                 {
+                                     Id = m.Id,
+                                     IMONo = m.IMO_No,
+                                     VesselName = m_v.VesselName,
+                                     SerialNo = m.SerialNo,
+                                     EngineID = m_e.Id,
+                                     EngineModelID = m_e.EngineModelID,
+                                     ModelName = m_ml.Name,
+                                     ChannelNo = m.ChannelNo,
+                                     DisplayUnit = m.Unit,
+                                     IncomingChannelName = m.ChannelDescription,
+                                     ChannelName = m_ch.Name,
+                                     ChartType = m_ct.Name,
+                                     Processed = m.Processed
+                                 };
+                #endregion
+
+                #region --------------------------- Creating channel if doesn't exists --------------------------- 
+                List<Channel> newChannels = new List<Channel>();
+                foreach (var m in monitoring)
+                {
+                    var monitor = db.Monitorings.Where(mo => mo.Id == m.Id).FirstOrDefault();
+                    bool error = false;
+
+                    if (monitor != null)
+                    {
+
+                        if (m.EngineID == null) monitor.ProcessedError = "Engine not found.";
+                        else if (m.EngineModelID == null) monitor.ProcessedError = "Engine model not found.";
+
+                        error = (m.EngineID == null || m.EngineModelID == null);
+
+                        monitor.Processed = true;
+                        db.Entry(monitor).State = System.Data.Entity.EntityState.Modified;
+                    }
+
+                    // No channel name found but have incoming channel name and no error i.e. engine serial no. not found
+                    if (m.ChannelName == null && !string.IsNullOrEmpty(m.IncomingChannelName) && !error) // Consider new channel for related engine model
+                    {
+                        Channel c = new Channel()
+                        {
+                            ChannelNo = m.ChannelNo,
+                            Name = m.IncomingChannelName,
+                            ModelID = m.EngineModelID,
+                            DisplayUnit = m.DisplayUnit,
+                            //Id = Guid.NewGuid(),
+                            //CreatedBy = Guid.Empty,
+                            //CreatedOn = DateTime.Now,
+                            //ModifiedBy = Guid.Empty,
+                            //ModifiedOn = DateTime.Now
+                        };
+
+                        var checkChannelDB = db.Channels.Where(
+                                ch => ch.ChannelNo.ToLower() == (string.IsNullOrEmpty(c.ChannelNo) ? "" : c.ChannelNo.ToLower())
+                                    && ch.ModelID == m.EngineModelID
+                            ).FirstOrDefault();
+
+                        var checkChannelMemory = newChannels.Where(
+                                ch => ch.ChannelNo.ToLower() == (string.IsNullOrEmpty(c.ChannelNo) ? "" : c.ChannelNo.ToLower())
+                                    && ch.ModelID == m.EngineModelID
+                            ).FirstOrDefault();
+
+                        if (checkChannelDB == null && checkChannelMemory == null)
+                        {
+                            newChannels.Add(c);
+                            db.Channels.Add(c);
+                            db.Entry(c).State = System.Data.Entity.EntityState.Added;
+                        }
+                    }
+                }
+
+
+                User serviceUser = (from u in db.Users
+                                    where (string.IsNullOrEmpty(u.FullName) ? "" : u.FullName).ToLower() == "service"
+                                    select u).FirstOrDefault();
+
+                db.ServiceUser = serviceUser;
+
+                await db.SaveChangesAsync();
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null)
+                    logger.Error(ex.InnerException.Message, ex.InnerException);
+                else
+                    logger.Error(ex.Message, ex);
+
+                return StatusCode(HttpStatusCode.InternalServerError);
+            }
+
+            return StatusCode(HttpStatusCode.OK);
         }
     }
 

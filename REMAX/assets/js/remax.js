@@ -1,7 +1,7 @@
 // Settings
 var Settings = {
-    //WebApiUrl: 'http://localhost:56376/', // DEV
-    WebApiUrl: 'http://hiroodaikai-001-site1.atempurl.com/', // UAT
+    WebApiUrl: 'http://localhost:56376/', // DEV
+    //WebApiUrl: 'http://hiroodaikai-001-site1.atempurl.com/', // UAT
     Token: null,
     CurrentUser: null,
     PageSize: 5,

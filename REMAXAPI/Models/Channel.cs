@@ -15,7 +15,7 @@ namespace REMAXAPI.Models
     public partial class Channel
     {
         public System.Guid Id { get; set; }
-        public int ChannelNo { get; set; }
+        public string ChannelNo { get; set; }
         public string Name { get; set; }
         public Nullable<System.Guid> ModelID { get; set; }
         public Nullable<bool> DashboardDisplay { get; set; }

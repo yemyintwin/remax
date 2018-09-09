@@ -34,7 +34,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ChannelNo" Type="int" Nullable="false" />
+          <Property Name="ChannelNo" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ModelID" Type="uniqueidentifier" />
           <Property Name="DashboardDisplay" Type="bit" />
@@ -118,7 +118,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Model">
           <Key>
@@ -135,11 +135,13 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IMO_No" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SerialNo" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ChannelNo" Type="int" Nullable="false" />
+          <Property Name="ChannelNo" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="ChannelDescription" Type="nvarchar" MaxLength="100" />
           <Property Name="TimeStamp" Type="datetime" Nullable="false" />
           <Property Name="Value" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Unit" Type="nvarchar" MaxLength="50" />
+          <Property Name="Processed" Type="bit" />
+          <Property Name="ProcessedError" Type="nvarchar(max)" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="ModifiedBy" Type="uniqueidentifier" />
@@ -668,7 +670,7 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="ChannelNo" Type="Int32" Nullable="false" />
+          <Property Name="ChannelNo" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ModelID" Type="Guid" />
           <Property Name="DashboardDisplay" Type="Boolean" />
@@ -776,11 +778,13 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="IMO_No" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SerialNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ChannelNo" Type="Int32" Nullable="false" />
+          <Property Name="ChannelNo" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
           <Property Name="ChannelDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="TimeStamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Processed" Type="Boolean" />
+          <Property Name="ProcessedError" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="Guid" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Guid" />
@@ -1240,7 +1244,7 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Engines" Relationship="REMAXAPI.Models.FK_Engine_GearboxModel" FromRole="GearboxModel" ToRole="Engine" />
         </EntityType>
         <Association Name="FK_Engine_GearboxModel">
@@ -1389,6 +1393,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <EntitySetMapping Name="Monitorings">
             <EntityTypeMapping TypeName="REMAXAPI.Models.Monitoring">
               <MappingFragment StoreEntitySet="Monitoring">
+                <ScalarProperty Name="ProcessedError" ColumnName="ProcessedError" />
+                <ScalarProperty Name="Processed" ColumnName="Processed" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IMO_No" ColumnName="IMO_No" />
                 <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />

@@ -1,93 +1,79 @@
-INFO  2018-06-10 23:56:39,578   655ms ScheduleJobController  MoveNext           - Process start at 06/10/2018 23:56:39
-ERROR 2018-06-10 23:57:13,560 34638ms ScheduleJobController  MoveNext           - Cannot create a file when that file already exists.
-
-System.IO.IOException: Cannot create a file when that file already exists.
-
-   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
-   at System.IO.__Error.WinIOError()
-   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
-   at System.IO.File.Move(String sourceFileName, String destFileName)
-   at REMAXAPI.Controllers.ScheduleJobController.<ProcessFiles>d__22.MoveNext() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\ScheduleJobController.cs:line 95
-INFO  2018-06-10 23:57:13,618 34696ms ScheduleJobController  MoveNext           - Process end at 06/10/2018 23:57:13
-INFO  2018-06-10 23:57:13,619 34697ms ScheduleJobController  MoveNext           - --------------------------------------------------
-INFO  2018-06-10 23:57:13,619 34697ms ScheduleJobController  MoveNext           - 
-
-INFO  2018-06-11 00:00:05,741   519ms ScheduleJobController  MoveNext           - Process start at 06/11/2018 00:00:05
-ERROR 2018-06-11 00:00:09,177  3954ms ScheduleJobController  MoveNext           - Cannot create a file when that file already exists.
-
-System.IO.IOException: Cannot create a file when that file already exists.
-
-   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
-   at System.IO.__Error.WinIOError()
-   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
-   at System.IO.File.Move(String sourceFileName, String destFileName)
-   at REMAXAPI.Controllers.ScheduleJobController.<ProcessFiles>d__22.MoveNext() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\ScheduleJobController.cs:line 95
-INFO  2018-06-11 00:00:09,198  3975ms ScheduleJobController  MoveNext           - Process end at 06/11/2018 00:00:09
-INFO  2018-06-11 00:00:09,200  3977ms ScheduleJobController  MoveNext           - --------------------------------------------------
-INFO  2018-06-11 00:00:09,200  3977ms ScheduleJobController  MoveNext           - 
-
-INFO  2018-06-11 00:00:42,041 36818ms ScheduleJobController  MoveNext           - Process start at 06/11/2018 00:00:42
-INFO  2018-06-11 00:02:14,773   607ms ScheduleJobController  MoveNext           - Process start at 06/11/2018 00:02:14
-ERROR 2018-06-11 00:02:23,715  9549ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
+ERROR 2018-09-02 23:51:33,988  7462ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
 System.UnauthorizedAccessException: User login failed. Please login again.
-   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 92
+   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 127
    at REMAXAPI.Models.Remax_Entities.SaveChangesAsync() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\Audit.cs:line 25
-ERROR 2018-06-11 00:02:26,930 12764ms ScheduleJobController  MoveNext           - An error occurred while updating the entries. See the inner exception for details.
-System.Data.Entity.Infrastructure.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> System.Data.Entity.Core.UpdateException: An error occurred while updating the entries. See the inner exception for details. ---> System.Data.SqlClient.SqlException: Cannot insert duplicate key row in object 'dbo.Monitoring' with unique index 'IX_Unique'. The duplicate key value is (Jan 25 2018  9:29AM, 187655, D623Z455, 163).
-The statement has been terminated.
-   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
-   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
-   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
-   at System.Data.SqlClient.SqlCommand.CompleteAsyncExecuteReader(Boolean isInternal, Boolean forDescribeParameterEncryption)
-   at System.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, String endMethod, Boolean isInternal)
-   at System.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
-   at System.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
-   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at System.Data.Entity.Utilities.TaskExtensions.CultureAwaiter`1.GetResult()
-   at System.Data.Entity.Core.Mapping.Update.Internal.DynamicUpdateCommand.<ExecuteAsync>d__0.MoveNext()
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.<UpdateAsync>d__0.MoveNext()
-   --- End of inner exception stack trace ---
-   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.<UpdateAsync>d__0.MoveNext()
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at System.Data.Entity.Core.Objects.ObjectContext.<ExecuteInTransactionAsync>d__3d`1.MoveNext()
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStoreAsync>d__39.MoveNext()
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.<ExecuteAsyncImplementation>d__9`1.MoveNext()
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesInternalAsync>d__31.MoveNext()
-   --- End of inner exception stack trace ---
-   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   at REMAXAPI.Controllers.ScheduleJobController.<ProcessSingleFile>d__23.MoveNext() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\ScheduleJobController.cs:line 216
-DEBUG 2018-06-11 00:02:26,935 12769ms ScheduleJobController  MoveNext           - 
+ERROR 2018-09-02 23:51:52,229 25702ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
+System.UnauthorizedAccessException: User login failed. Please login again.
+   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 127
+   at REMAXAPI.Models.Remax_Entities.SaveChangesAsync() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\Audit.cs:line 25
+ERROR 2018-09-02 23:53:06,672  5823ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
+System.UnauthorizedAccessException: User login failed. Please login again.
+   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 127
+   at REMAXAPI.Models.Remax_Entities.SaveChangesAsync() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\Audit.cs:line 25
+ERROR 2018-09-02 23:53:08,004  7155ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
+System.UnauthorizedAccessException: User login failed. Please login again.
+   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 127
+   at REMAXAPI.Models.Remax_Entities.SaveChangesAsync() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\Audit.cs:line 25
+ERROR 2018-09-02 23:53:51,222 50373ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
+System.UnauthorizedAccessException: User login failed. Please login again.
+   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 127
+   at REMAXAPI.Models.Remax_Entities.SaveChangesAsync() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\Audit.cs:line 25
+ERROR 2018-09-02 23:54:41,118 100269ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
+System.UnauthorizedAccessException: User login failed. Please login again.
+   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 127
+   at REMAXAPI.Models.Remax_Entities.SaveChangesAsync() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\Audit.cs:line 25
+ERROR 2018-09-02 23:55:27,761 146912ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
+System.UnauthorizedAccessException: User login failed. Please login again.
+   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 127
+   at REMAXAPI.Models.Remax_Entities.SaveChangesAsync() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\Audit.cs:line 25
+ERROR 2018-09-02 23:59:47,681 29572ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
+System.UnauthorizedAccessException: User login failed. Please login again.
+   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 127
+   at REMAXAPI.Models.Remax_Entities.SaveChangesAsync() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\Audit.cs:line 25
+ERROR 2018-09-03 00:15:10,421 229330ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
+System.UnauthorizedAccessException: User login failed. Please login again.
+   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 127
+   at REMAXAPI.Models.Remax_Entities.SaveChangesAsync() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\Audit.cs:line 25
+ERROR 2018-09-03 00:15:44,281 263191ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
+System.UnauthorizedAccessException: User login failed. Please login again.
+   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 127
+   at REMAXAPI.Models.Remax_Entities.SaveChangesAsync() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\Audit.cs:line 25
+ERROR 2018-09-03 00:16:16,467 295377ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
+System.UnauthorizedAccessException: User login failed. Please login again.
+   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 127
+   at REMAXAPI.Models.Remax_Entities.SaveChangesAsync() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\Audit.cs:line 25
+ERROR 2018-09-03 00:17:54,018 21088ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
+System.UnauthorizedAccessException: User login failed. Please login again.
+   at REMAXAPI.Util.GetCurrentUser()
+   at REMAXAPI.Models.Remax_Entities.SaveChangesAsync()
+ERROR 2018-09-09 13:40:19,146 62591ms Remax_Entities         SaveChangesAsync   - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 128
+   at REMAXAPI.Models.Remax_Entities.SaveChangesAsync() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\Audit.cs:line 25
+ERROR 2018-09-09 14:03:25,641 150950ms Remax_Entities         SaveChangesAsync   - User login failed. Please login again.
+System.UnauthorizedAccessException: User login failed. Please login again.
+   at REMAXAPI.Util.GetCurrentUser() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Util.cs:line 128
+   at REMAXAPI.Models.Remax_Entities.SaveChangesAsync() in D:\Development\REMAX (Daikai)\Web App\REMAX\REMAXAPI\Controllers\Audit.cs:line 30
+INFO  2018-09-09 14:05:20,915 50349ms ScheduleJobController  MoveNext           - Process start at 09/09/2018 14:05:20
+DEBUG 2018-09-09 14:06:18,697 108130ms ScheduleJobController  MoveNext           - File Name : 201807060011.csv
+DEBUG 2018-09-09 14:06:18,702 108135ms ScheduleJobController  MoveNext           - Summary - Start Time: 09/09/2018 14:05:38
+DEBUG 2018-09-09 14:06:18,702 108135ms ScheduleJobController  MoveNext           - Summary - End Time: 09/09/2018 14:05:38
+DEBUG 2018-09-09 14:06:18,703 108136ms ScheduleJobController  MoveNext           - Summary - Total Line: 16
+DEBUG 2018-09-09 14:06:18,703 108136ms ScheduleJobController  MoveNext           - Summary - Success: 0
+DEBUG 2018-09-09 14:06:18,703 108136ms ScheduleJobController  MoveNext           - Summary - Failure: 0
+INFO  2018-09-09 14:06:18,724 108157ms ScheduleJobController  MoveNext           - Process end at 09/09/2018 14:06:18
+INFO  2018-09-09 14:06:18,726 108159ms ScheduleJobController  MoveNext           - --------------------------------------------------
+INFO  2018-09-09 14:06:18,727 108160ms ScheduleJobController  MoveNext           - 
 
-DEBUG 2018-06-11 00:02:26,936 12770ms ScheduleJobController  MoveNext           - File Name : 201807060011.csv
-DEBUG 2018-06-11 00:02:26,936 12770ms ScheduleJobController  MoveNext           - Summary - Start Time: 06/11/2018 00:02:16
-DEBUG 2018-06-11 00:02:26,937 12771ms ScheduleJobController  MoveNext           - Summary - End Time: 06/11/2018 00:02:16
-DEBUG 2018-06-11 00:02:26,937 12771ms ScheduleJobController  MoveNext           - Summary - Total Line: 16
-DEBUG 2018-06-11 00:02:26,937 12771ms ScheduleJobController  MoveNext           - Summary - Success: 0
-DEBUG 2018-06-11 00:02:26,937 12771ms ScheduleJobController  MoveNext           - Summary - Failure: 16
-DEBUG 2018-06-11 00:02:26,938 12772ms ScheduleJobController  MoveNext           - 
-
-INFO  2018-06-11 00:02:26,952 12786ms ScheduleJobController  MoveNext           - Process end at 06/11/2018 00:02:26
-INFO  2018-06-11 00:02:26,953 12787ms ScheduleJobController  MoveNext           - --------------------------------------------------
-INFO  2018-06-11 00:02:26,954 12788ms ScheduleJobController  MoveNext           - 
+INFO  2018-09-09 14:07:10,487 159920ms ScheduleJobController  MoveNext           - Process start at 09/09/2018 14:07:10
+INFO  2018-09-09 14:14:45,485 93959ms ScheduleJobController  MoveNext           - Process start at 09/09/2018 14:14:45
+DEBUG 2018-09-09 14:14:51,885 100359ms ScheduleJobController  MoveNext           - File Name : 201807060011.csv
+DEBUG 2018-09-09 14:14:51,887 100361ms ScheduleJobController  MoveNext           - Summary - Start Time: 09/09/2018 14:14:46
+DEBUG 2018-09-09 14:14:51,888 100362ms ScheduleJobController  MoveNext           - Summary - End Time: 09/09/2018 14:14:46
+DEBUG 2018-09-09 14:14:51,889 100363ms ScheduleJobController  MoveNext           - Summary - Total Line: 16
+DEBUG 2018-09-09 14:14:51,890 100364ms ScheduleJobController  MoveNext           - Summary - Success: 0
+DEBUG 2018-09-09 14:14:51,890 100364ms ScheduleJobController  MoveNext           - Summary - Failure: 0
+INFO  2018-09-09 14:14:51,919 100393ms ScheduleJobController  MoveNext           - Process end at 09/09/2018 14:14:51
+INFO  2018-09-09 14:14:51,920 100394ms ScheduleJobController  MoveNext           - --------------------------------------------------
+INFO  2018-09-09 14:14:51,921 100395ms ScheduleJobController  MoveNext           - 
 

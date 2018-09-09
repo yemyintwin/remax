@@ -14,19 +14,28 @@ namespace REMAXAPI.Models
     {
         readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        internal User ServiceUser { get; set; }
+
         public override Task<int> SaveChangesAsync()
         {
             var selectedEntityList = this.ChangeTracker.Entries()
                                     .Where(x => x.State == EntityState.Added || x.State == EntityState.Modified);
 
             User u = null;
-            try
+
+            if (ServiceUser == null)
             {
-                u = Util.GetCurrentUser();
+                try
+                {
+                    u = Util.GetCurrentUser();
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.Message, ex);
+                }
             }
-            catch (Exception ex)
-            {
-                logger.Error(ex.Message, ex);
+            else {
+                u = this.ServiceUser;
             }
             
             if (u != null && u.Id != null)
@@ -47,17 +56,25 @@ namespace REMAXAPI.Models
 
                         if (e.State == EntityState.Added)
                         {
-                            if (createdBy != null && createdBy.PropertyType == typeof(Guid)) createdBy.SetValue(entity, u.Id);
-                            if (createdOn != null && createdOn.PropertyType == typeof(DateTime)) createdOn.SetValue(entity, DateTime.Now);
-                            if (modifiedBy != null && modifiedBy.PropertyType == typeof(Guid)) modifiedBy.SetValue(entity, u.Id);
-                            if (modifiedOn != null && modifiedOn.PropertyType == typeof(DateTime)) modifiedOn.SetValue(entity, DateTime.Now);
+                            if (createdBy != null && (createdBy.PropertyType == typeof(Guid)|| createdBy.PropertyType == typeof(Guid?)))
+                                createdBy.SetValue(entity, u.Id);
+                            if (createdOn != null && (createdOn.PropertyType == typeof(DateTime) || createdOn.PropertyType == typeof(DateTime?)))
+                                createdOn.SetValue(entity, DateTime.Now);
+                            if (modifiedBy != null && (modifiedBy.PropertyType == typeof(Guid) || modifiedBy.PropertyType == typeof(Guid?)))
+                                modifiedBy.SetValue(entity, u.Id);
+                            if (modifiedOn != null && (modifiedOn.PropertyType == typeof(DateTime) || modifiedOn.PropertyType == typeof(DateTime?)))
+                                modifiedOn.SetValue(entity, DateTime.Now);
 
-                            if (id != null && id.PropertyType == typeof(Guid) && (Guid)id.GetValue(entity) == Guid.Empty) id.SetValue(entity, Guid.NewGuid());
+                            if (id != null && (id.PropertyType == typeof(Guid) || id.PropertyType == typeof(Guid?)) 
+                                && (Guid)id.GetValue(entity) == Guid.Empty)
+                                id.SetValue(entity, Guid.NewGuid());
                         }
                         else if (e.State == EntityState.Modified)
                         {
-                            if (modifiedBy != null && modifiedBy.PropertyType == typeof(Guid)) modifiedBy.SetValue(entity, u.Id);
-                            if (modifiedOn != null && modifiedOn.PropertyType == typeof(DateTime)) modifiedOn.SetValue(entity, DateTime.Now);
+                            if (modifiedBy != null && (modifiedBy.PropertyType == typeof(Guid) || modifiedBy.PropertyType == typeof(Guid?)))
+                                modifiedBy.SetValue(entity, u.Id);
+                            if (modifiedOn != null && (modifiedOn.PropertyType == typeof(DateTime) || modifiedOn.PropertyType == typeof(DateTime?)))
+                                modifiedOn.SetValue(entity, DateTime.Now);
                         }
                     }
                 }

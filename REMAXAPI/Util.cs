@@ -8,6 +8,7 @@ using System.Runtime.Caching;
 using System.Security.Claims;
 using System.Text;
 using System.Web;
+using System.Web.Http.Controllers;
 
 namespace REMAXAPI
 {

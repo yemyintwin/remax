@@ -16,6 +16,7 @@ using System.Web.Http.Description;
 using REMAXAPI;
 using REMAXAPI.Models;
 using REMAXAPI.Models.Kendo;
+using System.Text.RegularExpressions;
 
 namespace REMAXAPI.Controllers
 {
@@ -32,7 +33,7 @@ namespace REMAXAPI.Controllers
 
             //User currentUser = Util.GetCurrentUser();
 
-            IQueryable<Object> channels = from c in db.Channels
+            IQueryable<Channel> channels = from c in db.Channels
                                           select c;
 
             //loading related entites
@@ -52,6 +53,8 @@ namespace REMAXAPI.Controllers
                     string whereFormat = DataFilterOperators.Operators[f.Operator];
                     if (!string.IsNullOrEmpty(whereFormat))
                     {
+                        //if (Regex.IsMatch(f.Value, @"^\d+$")) whereFormat = whereFormat.Replace("\"", "");
+
                         channels = channels.Where(string.Format(whereFormat, f.Field, f.Value));
                     }
                 }
