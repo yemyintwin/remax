@@ -152,10 +152,10 @@ var vessel = {
                     }
                 });
                 
-                if (vesEng.engineType.name = "Engine") {
+                if (vesEng.engineType.name == "Engine") {
                     $(divHtmlEngine).appendTo(engineRoot);
                 }
-                else if (vesEng.engineType.name = "Engine") {
+                else if (vesEng.engineType.name == "Generator") {
                     $(divHtmlEngine).appendTo(generatorRoot);
                 }
             });

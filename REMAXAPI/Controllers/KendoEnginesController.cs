@@ -100,7 +100,35 @@ namespace REMAXAPI.Controllers
         [ResponseType(typeof(Engine))]
         public async Task<IHttpActionResult> GetEngine(Guid id)
         {
-            Engine engine = await db.Engines.FindAsync(id);
+            int readLevel = Util.GetResourcePermission("Engine", Util.ReourceOperations.Read);
+            if (readLevel == 0) return NotFound();
+
+            User currentUser = Util.GetCurrentUser();
+
+            IQueryable<Engine> engines = from e in db.Engines
+                                         join v in db.Vessels
+                                            on e.VesselID equals v.Id
+                                         where
+                                          // Login user is from Owing company
+                                          ((v.OwnerID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
+                                          ||
+                                          // Login user is from Operating company
+                                          ((v.OperatorID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
+                                          ||
+                                          // Admin user
+                                          readLevel == Util.AccessLevel.All
+                                          &&
+                                          e.Id == id
+                                         select e;
+
+            //loading related entites
+            engines = engines.Include("AlternatorMaker")
+                        .Include("EngineType")
+                        .Include("Model")
+                        .Include("Vessel")
+                        .Include("GearboxModel");
+
+            Engine engine = engines.FirstOrDefault();
             if (engine == null)
             {
                 return NotFound();

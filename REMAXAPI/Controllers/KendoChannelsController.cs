@@ -40,9 +40,6 @@ namespace REMAXAPI.Controllers
             channels = channels.Include("Model")
                         .Include("ChartType");
 
-            // total count
-            var total = channels.Count();
-
             // filtering
             if (kendoRequest.filter != null && kendoRequest.filter.Filters != null && kendoRequest.filter.Filters.Count() > 0)
             {
@@ -54,11 +51,13 @@ namespace REMAXAPI.Controllers
                     if (!string.IsNullOrEmpty(whereFormat))
                     {
                         //if (Regex.IsMatch(f.Value, @"^\d+$")) whereFormat = whereFormat.Replace("\"", "");
-
                         channels = channels.Where(string.Format(whereFormat, f.Field, f.Value));
                     }
                 }
             }
+
+            // total count
+            var total = channels.Count();
 
             // sorting
             string strOrderBy = string.Empty;
@@ -75,8 +74,6 @@ namespace REMAXAPI.Controllers
             if (strOrderBy == string.Empty) strOrderBy = "1"; //Sort Noting
 
             var sortedChannels = channels.OrderBy(strOrderBy);
-
-            // filtereding
 
             // take single page data
             if (kendoRequest.take == 0) kendoRequest.take = total;

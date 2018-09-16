@@ -1,19 +1,17 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using REMAXAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Newtonsoft.Json;
-using REMAXAPI.Models;
 
 namespace REMAXAPI.Controllers
 {
@@ -84,7 +82,7 @@ namespace REMAXAPI.Controllers
         [ResponseType(typeof(void))]
         [Route("api/ScheduleJob/ProcessFiles")]
         public async Task<IHttpActionResult> ProcessFiles() {
-            logger.InfoFormat("Process start at {0}", DateTime.Now);
+            logger.InfoFormat("Process File start at {0}", DateTime.Now);
             // Process the list of files found in the directory.
             string[] fileEntries = Directory.GetFiles(this.IncomingFilePath);
             foreach (string fileName in fileEntries)
@@ -133,8 +131,7 @@ namespace REMAXAPI.Controllers
                     logger.Error(ex.Message, ex);
                 }
             }
-            logger.InfoFormat("Process end at {0}", DateTime.Now);
-            logger.InfoFormat(new string('-', 50));
+            logger.InfoFormat("Process Files end at {0}", DateTime.Now);
             logger.InfoFormat(Environment.NewLine);
             return StatusCode(HttpStatusCode.OK);
         }
@@ -209,7 +206,7 @@ namespace REMAXAPI.Controllers
                 {
                     summary.ErrorList.Add(string.Format("{0},{1},{2}", line, i.ToString(), ex.Message));
                     hasError = true;
-                    summary.Failure = summary.Failure++;
+                    summary.Failure++;
                     continue;
                 }
             }
@@ -234,9 +231,10 @@ namespace REMAXAPI.Controllers
                 hasError = true;
                 logger.Error(ex.Message, ex);
 
-                summary.Failure += summary.Total - recordAffected;
+                summary.Failure += (summary.Total - summary.Failure) - recordAffected;
             }
             summary.DatabaseInsert = recordAffected;
+            summary.Success = recordAffected;
             summary.SuccessfullyProcessed = !hasError;
             return summary;
         }
@@ -301,54 +299,168 @@ namespace REMAXAPI.Controllers
         public async Task<IHttpActionResult> ProcessStagingData()
         {
             Remax_Entities db = new Remax_Entities();
+
+            #region --------------------------- Checking service user & root account ---------------------------
+
+            User serviceUser = (from u in db.Users
+                                where (string.IsNullOrEmpty(u.FullName) ? "" : u.FullName).ToLower() == "service"
+                                select u).FirstOrDefault();
+            if (serviceUser != null)
+            {
+                db.ServiceUser = serviceUser;
+            }    
+            else
+            {
+                logger.DebugFormat("Service user not found : Create \"Service\" user.");
+                return StatusCode(HttpStatusCode.InternalServerError);
+            }
+
+            Account rootAccount = (from a in db.Accounts
+                                where (string.IsNullOrEmpty(a.AccountID) ? "" : a.AccountID).ToLower() == "root"
+                                select a).FirstOrDefault();
+            if (rootAccount != null)
+            {
+                db.RootAccount = rootAccount;
+            }
+            else
+            {
+                logger.DebugFormat("Root account not found : Create new account with account ID \"Root\".");
+                return StatusCode(HttpStatusCode.InternalServerError);
+            }
+
+            #endregion
+
+            logger.InfoFormat("Process Staging Data start at {0}", DateTime.Now);
+            
             
             try
             {
+                #region --------------------------- Vessel & Engine Creation ---------------------------
+
+                // Vessel check and create
+                var vesselsCheck = from m in db.Monitorings
+                                   where !(m.Processed.HasValue ? m.Processed.Value : false)
+                                   group m.IMO_No by m.IMO_No into g
+                                   select new
+                                   {
+                                       g.Key
+                                   };
+
+                foreach (var imo in vesselsCheck.ToList())
+                {
+                    var found = (from v in db.Vessels
+                                 where v.IMO_No == imo.Key
+                                 select v).FirstOrDefault();
+                    if (found==null) {
+                        logger.DebugFormat("Creating new Vessel : {0}", imo.Key);
+
+                        Vessel v = new Vessel {
+                            IMO_No = imo.Key,
+                            VesselName = "No Name",
+                            OwnerID = db.RootAccount.Id,
+                            OperatorID = db.RootAccount.Id
+                        };
+
+                        db.Vessels.Add(v);
+                        db.Entry(v).State = System.Data.Entity.EntityState.Added;
+                        int rowAffected = await db.SaveChangesAsync();
+                        if (rowAffected==1)
+                        {
+                            logger.DebugFormat("New Vessel created : {0}", imo.Key);
+                        }
+                    }
+                }
+
+                // Engine check and create
+                var enginesCheck = from m in db.Monitorings
+                                   where !(m.Processed.HasValue ? m.Processed.Value : false)
+                                   group m by new { IMO_No = m.IMO_No, SerialNo = m.SerialNo } into g
+                                   select new
+                                   {
+                                       g.Key
+                                   };
+
+                foreach (var eng in enginesCheck.ToList())
+                {
+                    var vesselFound = (from v in db.Vessels
+                                    where v.IMO_No == eng.Key.IMO_No
+                                    select v).FirstOrDefault();
+
+                    if (vesselFound != null) {
+                        var engineFound = (from e in db.Engines
+                                           join v in db.Vessels on e.VesselID equals v.Id into ev
+                                           from e_v in ev.DefaultIfEmpty()
+                                           where new { e_v.IMO_No, e.SerialNo } == new { eng.Key.IMO_No, eng.Key.SerialNo } && 
+                                                e.EngineModelID != null
+                                           select e).FirstOrDefault();
+                        if (engineFound == null)
+                        {
+                            logger.DebugFormat("Creating new Engine : {0}", eng.Key);
+
+                            Engine e = new Engine
+                            {
+                                VesselID = vesselFound.Id,
+                                SerialNo = eng.Key.SerialNo
+                            };
+
+                            db.Engines.Add(e);
+                            db.Entry(e).State = System.Data.Entity.EntityState.Added;
+                            int rowAffected = await db.SaveChangesAsync();
+                            if (rowAffected == 1)
+                            {
+                                logger.DebugFormat("New Engine created : Vessel {0}, Serial No {1}", eng.Key.IMO_No, eng.Key.SerialNo);
+                            }
+                        }
+                    }
+                }
+                #endregion
+
                 #region --------------------------- Data Extraction --------------------------- 
                 var monitoring = from m in db.Monitorings
 
-                                 join v in db.Vessels on m.IMO_No equals v.IMO_No into mv
-                                 from m_v in mv.DefaultIfEmpty()
+                            join v in db.Vessels on m.IMO_No equals v.IMO_No into mv
+                            from m_v in mv
 
-                                 join e in db.Engines on m.SerialNo equals e.SerialNo into me
-                                 from m_e in me
+                            join e in db.Engines on m.SerialNo equals e.SerialNo into me
+                            from m_e in me
 
-                                 join ml in db.Models on m_e.EngineModelID equals ml.Id into mml
-                                 from m_ml in mml.DefaultIfEmpty()
+                            join ml in db.Models on m_e.EngineModelID equals ml.Id into mml
+                            from m_ml in mml.DefaultIfEmpty()
 
-                                 join c in db.Channels on
-                                     new { m.ChannelNo, ID = m_ml.Id } equals
-                                     new { c.ChannelNo, ID = c.ModelID.HasValue ? c.ModelID.Value : Guid.Empty}
-                                     into mch
-                                 from m_ch in mch.DefaultIfEmpty()
+                            join c in db.Channels on
+                                new { m.ChannelNo, ID = m_ml.Id } equals
+                                new { c.ChannelNo, ID = c.ModelID.HasValue ? c.ModelID.Value : Guid.Empty}
+                                into mch
+                            from m_ch in mch.DefaultIfEmpty()
 
-                                 join ct in db.ChartTypes on m_ch.ChartTypeID equals ct.Id into mct
-                                 from m_ct in mct.DefaultIfEmpty()
+                            join ct in db.ChartTypes on m_ch.ChartTypeID equals ct.Id into mct
+                            from m_ct in mct.DefaultIfEmpty()
 
-                                 where !(m.Processed.HasValue? m.Processed.Value : false)
+                            where !(m.Processed.HasValue? m.Processed.Value : false)
 
-                                 select new
-                                 {
-                                     Id = m.Id,
-                                     IMONo = m.IMO_No,
-                                     VesselName = m_v.VesselName,
-                                     SerialNo = m.SerialNo,
-                                     EngineID = m_e.Id,
-                                     EngineModelID = m_e.EngineModelID,
-                                     ModelName = m_ml.Name,
-                                     ChannelNo = m.ChannelNo,
-                                     DisplayUnit = m.Unit,
-                                     IncomingChannelName = m.ChannelDescription,
-                                     ChannelName = m_ch.Name,
-                                     ChartType = m_ct.Name,
-                                     Processed = m.Processed
-                                 };
+                            select new
+                            {
+                                Id = m.Id,
+                                IMONo = m.IMO_No,
+                                VesselName = m_v.VesselName,
+                                SerialNo = m.SerialNo,
+                                EngineID = m_e.Id,
+                                EngineModelID = m_e.EngineModelID,
+                                ModelName = m_ml.Name,
+                                ChannelNo = m.ChannelNo,
+                                DisplayUnit = m.Unit,
+                                IncomingChannelName = m.ChannelDescription,
+                                ChannelName = m_ch.Name,
+                                ChartType = m_ct.Name,
+                                Processed = m.Processed
+                            };
                 #endregion
 
                 #region --------------------------- Creating channel if doesn't exists --------------------------- 
                 List<Channel> newChannels = new List<Channel>();
 
                 // Do not remove ToList() in below line, it will trigger "There is already an open DataReader associated with this Command which must be closed first."
+                logger.DebugFormat("Total line to process : {0}", monitoring.ToList().Count());
                 foreach (var m in monitoring.ToList()) 
                 {
                     var monitor = db.Monitorings.Where(mo => mo.Id == m.Id).FirstOrDefault();
@@ -403,15 +515,10 @@ namespace REMAXAPI.Controllers
                         }
                     }
                 }
+                logger.DebugFormat("Total new Channels to be created : {0}", newChannels.ToList().Count());
 
-
-                User serviceUser = (from u in db.Users
-                                    where (string.IsNullOrEmpty(u.FullName) ? "" : u.FullName).ToLower() == "service"
-                                    select u).FirstOrDefault();
-
-                db.ServiceUser = serviceUser;
-
-                await db.SaveChangesAsync();
+                int recordAffected = await db.SaveChangesAsync();
+                logger.DebugFormat("Total new Channels created : {0}", recordAffected);
                 #endregion
             }
             catch (Exception ex)
@@ -424,6 +531,8 @@ namespace REMAXAPI.Controllers
                 return StatusCode(HttpStatusCode.InternalServerError);
             }
 
+            logger.InfoFormat("Process Staging Data end at {0}", DateTime.Now);
+            logger.InfoFormat(Environment.NewLine);
             return StatusCode(HttpStatusCode.OK);
         }
     }

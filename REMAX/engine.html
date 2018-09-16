@@ -36,8 +36,8 @@
     <script src="assets/bootstrap/js/bootstrapValidator.min.js"></script>
     <script src="assets/bootstrap_datetime/js/bootstrap-datepicker.min.js"></script>
 
-    <script src="assets/js/remax.js?v=180619_2302"></script>
-    <script src="assets/js/engine.js?v=180619_2302"></script>
+    <script src="assets/js/remax.js?v=180917_0035"></script>
+    <script src="assets/js/engine.js?v=180917_0035"></script>
 </head>
 
 <body>
@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <div class="page-header">
-                        <h2>Princess Seways (8502391) - Engine 1</h2>
+                        <h2 id="engine_no"></h2>
                     </div>
                 </div>
             </div>
@@ -149,105 +149,23 @@
                     <div style="height:20px"></div>
                 </div>
             </div>
+            <!--- Channel Data-->
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Engine Data&nbsp;</h3>
+                            <h3 class="panel-title">Channel Data</h3>
                         </div>
                         <div class="panel-body">
                             <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                                 <div class="row">
-                                    <div class="col-md-6 col-sm-6">
-                                        <div id="table_length" class="dataTables_length">
-                                            <span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
-                                                <option value="10" selected>10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div id="table_filter" class="dataTables_filter">
-                                            <label>
-                                                Search Channel No.:
-                                                <input type="search" class="form-control input-sm" placeholder aria-controls="dataTables-example" />
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-12">
-                                        <div class="table-responsive">
-                                            <table class="table table table-striped table-bordered table-hover dataTable no-footer dtr-inline">
-                                                <thead>
-                                                    <tr role="row">
-                                                        <th class="sorting" aria-controls="dataTables-example" aria-sort="ascending" aria-label="Account Name">Channel No.</th>
-                                                        <th class="sorting">Channel Name</th>
-                                                        <th class="sorting_desc">Time Stamp</th>
-                                                        <th class="sorting"><strong>Value</strong><br></th>
-                                                        <th class="sorting"><strong>Unit</strong><br></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr class="gradeA odd" role="row">
-                                                        <td>0161<br></td>
-                                                        <td>S M/E EXH No.1 CYL TEMP<br></td>
-                                                        <td>25/01/2018 09:29:09<br></td>
-                                                        <td>400</td>
-                                                        <td>℃<br></td>
-                                                    </tr>
-                                                    <tr class="gradeA odd" role="row">
-                                                        <td>0162<br></td>
-                                                        <td>S M/E EXH No.2 CYL TEMP<br></td>
-                                                        <td>25/01/2018 09:29:09<br></td>
-                                                        <td>398</td>
-                                                        <td>℃<br></td>
-                                                    </tr>
-                                                    <tr class="gradeA odd" role="row">
-                                                        <td>0163<br></td>
-                                                        <td>S M/E EXH No.3 CYL TEMP<br></td>
-                                                        <td>25/01/2018 09:29:09<br></td>
-                                                        <td>403</td>
-                                                        <td>℃<br></td>
-                                                    </tr>
-                                                    <tr class="gradeA odd" role="row">
-                                                        <td>0164<br></td>
-                                                        <td>S M/E EXH No.4 CYL TEMP<br></td>
-                                                        <td>25/01/2018 09:29:09<br></td>
-                                                        <td>390</td>
-                                                        <td>℃<br></td>
-                                                    </tr>
-                                                    <tr class="gradeA odd" role="row">
-                                                        <td>0165<br></td>
-                                                        <td>S M/E EXH No.5 CYL TEMP<br></td>
-                                                        <td>25/01/2018 09:29:09<br></td>
-                                                        <td>395</td>
-                                                        <td>℃<br></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 col-sm-12 col-xs-12">
-                                        <div class="dataTables_info"><span>Showing 1 to 5 of 1000+</span></div>
-                                    </div>
-                                    <div class="col-md-8 col-sm-12 col-xs-12">
-                                        <div class="dataTables_paginate paging_simple_numbers">
-                                            <ul class="pagination">
-                                                <li class="paginate_button previous disabled"><a href="#">Previous</a></li>
-                                                <li class="paginate_button active"><a href="#">1</a></li>
-                                                <li class="paginate_button"><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a></li>
-                                                <li class="paginate_button"></li>
-                                                <li class="paginate_button next"><a href="#">Next</a></li>
-                                            </ul>
-                                        </div>
+                                        <div id="table_Monitoring"></div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="panel-footer">
                         </div>
                     </div>
                 </div>
@@ -266,12 +184,14 @@
         includeHTML();
 
         $(document).ready(function () {
+            engine.onload();
+
             //hiding url querystring
-            var uri = window.location.toString();
-            if (uri.indexOf("?") > 0) {
-                var clean_uri = uri.substring(0, uri.indexOf("?"));
-                window.history.replaceState({}, document.title, clean_uri);
-            }
+            //var uri = window.location.toString();
+            //if (uri.indexOf("?") > 0) {
+            //    var clean_uri = uri.substring(0, uri.indexOf("?"));
+            //    window.history.replaceState({}, document.title, clean_uri);
+            //}
 
             // demo purpose
             $("#channel1").css({ width: "300px", height: "200px" }).kendoRadialGauge({

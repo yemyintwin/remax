@@ -175,6 +175,7 @@
     <Compile Include="Controllers\KendoInlineShipClasses.cs" />
     <Compile Include="Controllers\KendoInlineAlternatorMakerController.cs" />
     <Compile Include="Controllers\KendoInlineModelController.cs" />
+    <Compile Include="Controllers\KendoMonitoringsController.cs" />
     <Compile Include="Controllers\KendoShipClassesController.cs" />
     <Compile Include="Controllers\KendoShipTypesController.cs" />
     <Compile Include="Controllers\KendoUsersController.cs" />

@@ -15,6 +15,7 @@ namespace REMAXAPI.Models
         readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         internal User ServiceUser { get; set; }
+        internal Account RootAccount { get; set; }
 
         public override Task<int> SaveChangesAsync()
         {

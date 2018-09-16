@@ -27,7 +27,7 @@ namespace REMAXAPI.Models.Kendo
     {
         public string Field { get; set; }
         public string Operator { get; set; }
-        public string Value { get; set; }
+        public object Value { get; set; }
         public IEnumerable<DataFilter> Filters { get; set; }
 
     }
@@ -53,6 +53,21 @@ namespace REMAXAPI.Models.Kendo
                     { "doesnotcontain", "!{0}.Contains(\"{1}\")"},
                     { "isempty", "{0} == \"\""},
                     { "isnotempty", "{0} != \"\""}
+                };
+            }
+        }
+
+        public static Dictionary<string, string> OperatorsSymbol
+        {
+            get
+            {
+                return new Dictionary<string, string>() {
+                    { "eq", "=="},
+                    { "neq", "!="},
+                    { "lt", "<"},
+                    { "lte", "<= "},
+                    { "gt", ">"},
+                    { "gte", ">="}
                 };
             }
         }
@@ -96,6 +111,7 @@ namespace REMAXAPI.Models.Kendo
         public int Total { get; set; }
         public object[] Data { get; set; }
         public string ErrorMessage { get; set; }
+        public string[] Columns { get; set; }
 
         public KendoResponse(int total, object[] data)
         {
