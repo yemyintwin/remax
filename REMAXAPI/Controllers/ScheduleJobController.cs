@@ -84,7 +84,7 @@ namespace REMAXAPI.Controllers
         public async Task<IHttpActionResult> ProcessFiles() {
             logger.InfoFormat("Process File start at {0}", DateTime.Now);
             // Process the list of files found in the directory.
-            string[] fileEntries = Directory.GetFiles(this.IncomingFilePath);
+            string[] fileEntries = Directory.GetFiles(this.IncomingFilePath, "*.csv", SearchOption.TopDirectoryOnly);
             foreach (string fileName in fileEntries)
             {
                 try
@@ -187,10 +187,6 @@ namespace REMAXAPI.Controllers
                     if (!string.IsNullOrWhiteSpace(raw[5])) monitor.Value = RemoveDoubleQuotes(raw[5]);
                     // Unit of Measurement
                     if (!string.IsNullOrWhiteSpace(raw[6])) monitor.Unit = RemoveDoubleQuotes(raw[6]);
-
-#if DEBUG
-                    monitor.TimeStamp = DateTime.Now;
-#endif 
 
                     // System Info
                     //monitor.Id = Guid.NewGuid();

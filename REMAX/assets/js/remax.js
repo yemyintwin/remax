@@ -1,7 +1,7 @@
 // Settings
 var Settings = {
-    //WebApiUrl: 'http://localhost:56376/', // DEV
-    WebApiUrl: 'http://hiroodaikai-001-site1.atempurl.com/', // UAT
+    WebApiUrl: 'http://localhost:56376/', // DEV
+    //WebApiUrl: 'http://hiroodaikai-001-site1.atempurl.com/', // UAT
     Token: null,
     CurrentUser: null,
     PageSize: 5,
@@ -9,6 +9,8 @@ var Settings = {
     UserKey: 'currentUser',
     MessageLevel: 'info', // info, debug
 }
+
+
 // Utility functions
 var Util = {
 
@@ -56,6 +58,8 @@ includeHTML = function () {
                     /*remove the attribute, and call this function once more:*/
                     elmnt.removeAttribute("w3-include-html");
                     includeHTML();
+
+                    if (file == 'nav.html') loadMenu();
                 }
             }
             xhttp.open("GET", file, true);
@@ -66,7 +70,7 @@ includeHTML = function () {
     }
 };
 
-$(document).ready(function () {
+function loadMenu() {
     // debugger;
     var currentUser, currentToken;
 
@@ -114,6 +118,11 @@ $(document).ready(function () {
 
     // vessels list
     if (Settings.Token) {
+        /*
+         * if (vessel && vessel.data) {
+            vesselMenu(vessel, '', jqXHR);
+        }
+        */
         $.ajax({
             type: 'GET',
             url: Settings.WebApiUrl + '/api/KendoVessels',
@@ -122,51 +131,54 @@ $(document).ready(function () {
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'bearer ' + Settings.Token.access_token);
             },
-            success: function (result, textStatus, jqXHR) {
-                //Process data retrieved
-                var root = $("#nav_vessel_list");
-
-                var vesselsCount, enginesCount, generatorsCount;
-                vesselsCount = enginesCount = generatorsCount = 0;
-
-                // vessels
-                for (var i = 0; i < result.data.length; i++) {
-                    vesselsCount++;
-
-                    var ves = result.data[i];
-                    var vesMenu = root.append("<li id='ves_" + ves.imO_No + "'></li>").find("#ves_" + ves.imO_No);
-                    vesMenu.append("<a href='#'>" + ves.vesselName.toUpperCase() + "<span class='fa arrow'/></a>");
-
-                    // engines
-                    var engMenu = vesMenu.append("<ul id='vesEng_" + ves.imO_No + "' class='nav nav-third-level collapse'></ul>").find("#vesEng_" + ves.imO_No);
-
-                    for (var j = 0; j < ves.engines.length; j++) {
-                        var eng = ves.engines[j];
-                        var engineUrl = "engine.html?engine=" + eng.id;
-                        engMenu.append("<li><a href='" + engineUrl + "'>" + eng.serialNo + "</a></li>");
-
-                        if (eng.engineType && eng.engineType.name) {
-                            if (eng.engineType.name === "Engine") enginesCount++;
-                            else if (eng.engineType.name === "Generator") generatorsCount++;
-                        }
-                    }
-                }
-
-                if (window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '/index.htm') {
-                    // Index (home) page
-                    $("#count_vessels").html(vesselsCount);
-                    $("#count_engines").html(enginesCount);
-                    $("#count_generators").html(generatorsCount);
-                }
-            },//end of success function
+            success: vesselMenu
         });
     }
-    
-});
+}
 
-$(function() {
+vesselMenu = function (result, textStatus, jqXHR) {
+    //Process data retrieved
+    var root = $("#nav_vessel_list");
+
+    var vesselsCount, enginesCount, generatorsCount;
+    vesselsCount = enginesCount = generatorsCount = 0;
+
+    // vessels
+    for (var i = 0; i < result.data.length; i++) {
+        vesselsCount++;
+
+        var ves = result.data[i];
+        var vesMenu = root.append("<li id='ves_" + ves.imO_No + "'></li>").find("#ves_" + ves.imO_No);
+        vesMenu.append("<a href='#'>" + ves.vesselName.toUpperCase() + "<span class='fa arrow'/></a>");
+
+        // engines
+        var engMenu = vesMenu.append("<ul id='vesEng_" + ves.imO_No + "' class='nav nav-third-level collapse'></ul>").find("#vesEng_" + ves.imO_No);
+
+        for (var j = 0; j < ves.engines.length; j++) {
+            var eng = ves.engines[j];
+            var engineUrl = "engine.html?engine=" + eng.id;
+            engMenu.append("<li><a href='" + engineUrl + "'>" + eng.serialNo + "</a></li>");
+
+            if (eng.engineType && eng.engineType.name) {
+                if (eng.engineType.name === "Engine") enginesCount++;
+                else if (eng.engineType.name === "Generator") generatorsCount++;
+            }
+        }
+    }
+
+    if (window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '/index.htm') {
+        // Index (home) page
+        $("#count_vessels").html(vesselsCount);
+        $("#count_engines").html(enginesCount);
+        $("#count_generators").html(generatorsCount);
+    }
+
     $('#side-menu').metisMenu();
-});
+}
+
+//$(function () {
+//    $('#side-menu').metisMenu();
+//});
 
 //Loads the correct sidebar on window load,
 //collapses the sidebar on window resize.

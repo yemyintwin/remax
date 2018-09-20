@@ -964,35 +964,35 @@ var registration = {
                 width: 200
             },
             {
-                field: "ownerAccount.name",
+                field: "ownerAccountName",
                 title: "Owner",
                 filterable: {
                     extra: false
                 },
                 width: 200,
-                template: function (dataItem) {
-                    return (dataItem.ownerAccount && dataItem.ownerAccount.name ? dataItem.ownerAccount.name : '');
-                }
+                //template: function (dataItem) {
+                //    return (dataItem.ownerAccount && dataItem.ownerAccount.name ? dataItem.ownerAccount.name : '');
+                //}
             },
             {
-                field: "operatorAccount.name",
+                field: "operatorAccountName",
                 title: "Operator",
                 filterable: {
                     extra: false
                 },
                 width: 200,
-                template: function (dataItem) {
-                    return (dataItem.operatorAccount && dataItem.operatorAccount.name ? dataItem.operatorAccount.name : '');
-                }
+                //template: function (dataItem) {
+                //    return (dataItem.operatorAccount && dataItem.operatorAccount.name ? dataItem.operatorAccount.name : '');
+                //}
             },
             {
-                field: "shipType.name",
+                field: "shipTypeName",
                 title: "Ship Type",
                 width: 100,
                 filterable: false,
-                template: function (dataItem) {
-                    return (dataItem.shipType && dataItem.shipType.name ? dataItem.shipType.name : '');
-                }
+                //template: function (dataItem) {
+                //    return (dataItem.shipType && dataItem.shipType.name ? dataItem.shipType.name : '');
+                //}
             },
             {
                 field: "shipyardName",
@@ -1019,12 +1019,12 @@ var registration = {
                 }
             },
             {
-                field: "shipClass.name",
+                field: "shipClassName",
                 title: "Ship Class",
                 filterable: false,
-                template: function (dataItem) {
-                    return (dataItem.shipClass && dataItem.shipClass.name?dataItem.shipClass.name:'');
-                },
+                //template: function (dataItem) {
+                //    return (dataItem.shipClass && dataItem.shipClass.name?dataItem.shipClass.name:'');
+                //},
                 width: 100,
             },
             {
@@ -2129,6 +2129,17 @@ var registration = {
                 hidden: true
             },
             {
+                field: "model.name",
+                title: "Model",
+                filterable: {
+                    extra: false
+                },
+                width: 150,
+                template: function (dataItem) {
+                    return (dataItem.model && dataItem.model.name ? dataItem.model.name : '');
+                }
+            },
+            {
                 field: "channelNo",
                 title: "Channel No",
                 width: 150,
@@ -2142,18 +2153,7 @@ var registration = {
                 filterable: {
                     extra: false
                 },
-                width: 200
-            },
-            {
-                field: "model.name",
-                title: "Model",
-                filterable: {
-                    extra: false
-                },
-                width: 100,
-                template: function (dataItem) {
-                    return (dataItem.model && dataItem.model.name ? dataItem.model.name : '');
-                }
+                width: 250
             },
             {
                 field: "minRange",

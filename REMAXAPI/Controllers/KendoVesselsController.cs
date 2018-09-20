@@ -19,6 +19,46 @@ using REMAXAPI.Models.Kendo;
 
 namespace REMAXAPI.Controllers
 {
+    public class VesselView {
+        public System.Guid Id { get; set; }
+        public string IMO_No { get; set; }
+        public string VesselName { get; set; }
+        public System.Guid OwnerID { get; set; }
+        public System.Guid OperatorID { get; set; }
+        public Nullable<System.Guid> ShipTypeID { get; set; }
+        public string ShipyardName { get; set; }
+        public Nullable<System.Guid> ShipyardCountry { get; set; }
+        public Nullable<System.DateTime> BuildYear { get; set; }
+        public Nullable<System.DateTime> DeliveryToOwner { get; set; }
+        public Nullable<System.Guid> ShipClassID { get; set; }
+        public Nullable<decimal> DWT { get; set; }
+        public Nullable<decimal> TotalPropulsionPower { get; set; }
+        public Nullable<decimal> TotalGeneratorPower { get; set; }
+        public Nullable<int> Status { get; set; }
+        public System.Guid CreatedBy { get; set; }
+        public System.DateTime CreatedOn { get; set; }
+        public System.Guid ModifiedBy { get; set; }
+        public System.DateTime ModifiedOn { get; set; }
+
+        public string OperatorAccountName { get; set; }
+        public Guid OperatorAccountId { get; set; }
+        public string OwnerAccountName { get; set; }
+        public Guid OwnerAccountId { get; set; }
+        public string CountryName { get; set; }
+        public Guid CountryId { get; set; }
+        public List<EngineView> Engines { get; set; }
+        public string ShipClassName { get; set; }
+        public Guid ShipClassId { get; set; }
+        public string ShipTypeName { get; set; }
+        public Guid ShipTypeId { get; set; }
+    }
+
+    public class EngineView {
+        public Guid Id { get; set; }
+        public String SerialNo { get; set; }
+        public EngineType EngineType { get; set; }
+    }
+
     //[Authorize]
     public class KendoVesselsController : ApiController
     {
@@ -32,8 +72,14 @@ namespace REMAXAPI.Controllers
 
             User currentUser = Util.GetCurrentUser();
 
-            IQueryable<Object> vessels = from v in db.Vessels
-                                          where
+            List<VesselView> vessels = (from v in db.Vessels
+                                        join oa in db.Accounts on (v.OwnerAccount != null ? v.OwnerAccount.Id : Guid.Empty) equals oa.Id 
+                                        join opa in db.Accounts on (v.OperatorAccount != null ? v.OperatorAccount.Id : Guid.Empty) equals opa.Id 
+                                        join st in db.ShipTypes on (v.ShipType != null ? v.ShipType.Id : Guid.Empty) equals st.Id
+                                        join sc in db.ShipClasses on (v.ShipClass != null ? v.ShipClass.Id : Guid.Empty) equals sc.Id
+                                        join c in db.Countries on (v.Country != null ? v.Country.Id : Guid.Empty) equals c.Id
+
+                                         where
                                            // Login user is from Owing company
                                            ((v.OwnerID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
                                            ||
@@ -42,16 +88,61 @@ namespace REMAXAPI.Controllers
                                            ||
                                            // Admin user
                                            readLevel == Util.AccessLevel.All
-                                          select v;
+                                        orderby v.VesselName ascending
+                                        select new VesselView
+                                        {
+                                            Id = v.Id,
+                                            IMO_No = v.IMO_No,
+                                            VesselName = v.VesselName,
+                                            OwnerID = v.OwnerID,
+                                            OperatorID = v.OperatorID,
+                                            ShipTypeID = v.ShipTypeID,
+                                            ShipyardName = v.ShipyardName,
+                                            ShipyardCountry = v.ShipyardCountry,
+                                            BuildYear = v.BuildYear,
+                                            DeliveryToOwner = v.DeliveryToOwner,
+                                            ShipClassID = v.ShipTypeID,
+                                            DWT = v.DWT,
+                                            TotalPropulsionPower = v.TotalPropulsionPower,
+                                            TotalGeneratorPower = v.TotalGeneratorPower,
+                                            Status = v.Status,
+                                            CreatedBy = v.CreatedBy,
+                                            CreatedOn = v.CreatedOn,
+                                            ModifiedBy = v.ModifiedBy,
+                                            ModifiedOn = v.ModifiedOn,
+	                                        OperatorAccountId = (v.OperatorAccount!=null ? v.OperatorAccount.Id : Guid.Empty),
+	                                        OperatorAccountName = (v.OperatorAccount!=null ? v.OperatorAccount.Name : String.Empty),
+                                            OwnerAccountId = (v.OwnerAccount!=null ? v.OwnerAccount.Id : Guid.Empty),
+                                            OwnerAccountName = (v.OwnerAccount!=null ? v.OwnerAccount.Name : String.Empty),
+                                            CountryId = (v.Country!=null ? v.Country.Id : Guid.Empty),
+                                            CountryName = (v.Country!=null ? v.Country.Name : String.Empty),
+                                            ShipClassId = (v.ShipClass!=null ? v.ShipClass.Id : Guid.Empty),
+                                            ShipClassName = (v.ShipClass!=null ? v.ShipClass.Name : String.Empty),
+                                            ShipTypeId = (v.ShipType!=null ? v.ShipType.Id : Guid.Empty),
+                                            ShipTypeName = (v.ShipType!=null ? v.ShipType.Name : String.Empty)
+                                        }).ToList();
 
+            foreach (var item in vessels)
+            {
+                item.Engines = db.Engines
+                            .Include("EngineType")
+                            .Where(e => e.VesselID == item.Id)
+                            .Select(e=> new EngineView{
+                                Id = e.Id,
+                                SerialNo = e.SerialNo,
+                                EngineType = e.EngineType
+                            })
+                            .ToList();
+            }
+            
             //loading related entites
-            vessels = vessels.Include("OwnerAccount")
-                            .Include("OperatorAccount")
-                            .Include("ShipType")
-                            .Include("ShipClass")
-                            .Include("Country")
-                            .Include("Engines")
-                            .Include("Engines.EngineType");
+            //vessels = vessels.Include("OwnerAccount")
+            //                .Include("OperatorAccount")
+            //                .Include("ShipType")
+            //                .Include("ShipClass")
+            //                .Include("Country")
+            //                .Include("Engines")
+            //                .Include("Engines.EngineType");
 
             // total count
             var total = vessels.Count();
@@ -66,7 +157,7 @@ namespace REMAXAPI.Controllers
                     string whereFormat = DataFilterOperators.Operators[f.Operator];
                     if (!string.IsNullOrEmpty(whereFormat))
                     {
-                        vessels = vessels.Where(string.Format(whereFormat, f.Field, f.Value));
+                        vessels = vessels.Where(string.Format(whereFormat, f.Field, f.Value)).ToList();
                     }
                 }
             }

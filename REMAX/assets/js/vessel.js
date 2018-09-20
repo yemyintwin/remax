@@ -20,7 +20,7 @@ var vessel = {
             type: 'GET',
             url: Settings.WebApiUrl + '/api/KendoVessels',
             dataType: 'json',
-            async: false,
+            async: false, // Do not user async
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'bearer ' + token);
             },
@@ -49,9 +49,9 @@ var vessel = {
             '                           <dt>IMO</dt>' +
             '                           <dd>{{imO_No}}</dd>' +
             '                           <dt>Ship Type</dt>' +
-            '                           <dd>{{shipType.name}}</dd>' +
+            '                           <dd>{{shipTypeName}}</dd>' +
             '                           <dt>Ship Class</dt>' +
-            '                           <dd>{{shipClass.name}}</dd>' +
+            '                           <dd>{{shipClassName}}</dd>' +
             '                           <dt>Shipyard</dt>' +
             '                           <dd>{{shipyardName}}</dd>' +
             '                           <dt>Shipyard Country</dt>' +
@@ -59,9 +59,9 @@ var vessel = {
             '                           <dt>Build Year</dt>' +
             '                           <dd>{{buildYear}}</dd>' +
             '                           <dt>Owner</dt>' +
-            '                           <dd>{{ownerAccount.name}}</dd>' +
+            '                           <dd>{{ownerAccountName}}</dd>' +
             '                           <dt>Operator</dt>' +
-            '                           <dd>{{operatorAccount.name}}</dd>' +
+            '                           <dd>{{operatorAccountName}}</dd>' +
             '                           </dl>' +
             '                   </div>' +
             '               </div>' +
@@ -107,17 +107,17 @@ var vessel = {
             divHtml = divHtml.replace(/{{id}}/g, vesObj.id);
             divHtml = divHtml.replace(/{{imO_No}}/g, (vesObj.imO_No ? vesObj.imO_No : ""));
             divHtml = divHtml.replace(/{{vesselName}}/g, (vesObj.vesselName ? vesObj.vesselName.toUpperCase() :""));
-            divHtml = divHtml.replace(/{{shipType.name}}/g, (vesObj.shipType && vesObj.shipType.name ? vesObj.shipType.name : ""));
-            divHtml = divHtml.replace(/{{shipClass.name}}/g, (vesObj.shipClass && vesObj.shipClass.name ? vesObj.shipClass.name:""));
+            divHtml = divHtml.replace(/{{shipTypeName}}/g, (vesObj.shipTypeName ? vesObj.shipTypeName : ""));
+            divHtml = divHtml.replace(/{{shipClassName}}/g, (vesObj.shipClassName ? vesObj.shipClassName:""));
             divHtml = divHtml.replace(/{{shipyardName}}/g, (vesObj.shipyardName ? vesObj.shipyardName:""));
-            divHtml = divHtml.replace(/{{shipyardCountry}}/g, (vesObj.country && vesObj.country.name ? vesObj.country.name:""));
+            divHtml = divHtml.replace(/{{shipyardCountry}}/g, (vesObj.countryName ? vesObj.countryName:""));
             divHtml = divHtml.replace(/{{buildYear}}/g, (vesObj.buildYear ? new Date(vesObj.buildYear).getFullYear() :""));
-            divHtml = divHtml.replace(/{{ownerAccount.name}}/g, (vesObj.ownerAccount && vesObj.ownerAccount.name ? vesObj.ownerAccount.name : ""));
-            divHtml = divHtml.replace(/{{operatorAccount.name}}/g, (vesObj.operatorAccount && vesObj.operatorAccount.name ? vesObj.operatorAccount.name : ""));
+            divHtml = divHtml.replace(/{{ownerAccountName}}/g, (vesObj.ownerAccountName ? vesObj.ownerAccountName : ""));
+            divHtml = divHtml.replace(/{{operatorAccountName}}/g, (vesObj.operatorAccountName ? vesObj.operatorAccountName : ""));
 
             $.ajax({
                 url: Settings.WebApiUrl + "/api/KendoVessels/GetPhoto?fileName=" + vesObj.id,
-                async: false,
+                async: false, // Do not user async
                 success: function (imageData) {
                     if (!imageData || imageData == "data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=")
                         imageData = "assets/img/icons8-water-transportation-256.png";

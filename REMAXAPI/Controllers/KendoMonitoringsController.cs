@@ -67,7 +67,7 @@ namespace REMAXAPI.Controllers
                                                  join ct in db.ChartTypes on m_ch.ChartTypeID equals ct.Id into mct
                                                  from m_ct in mct.DefaultIfEmpty()
 
-                                                 where !(m.Processed.HasValue ? m.Processed.Value : false)
+                                                 where m.Processed.HasValue ? m.Processed.Value : false
 
                                                  select new MonitorView
                                                  {
