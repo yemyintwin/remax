@@ -1,71 +1,5 @@
 ﻿var index = {
-    createChart : function () {
-        var dateObj = new Date();
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-        ];
-
-        var month = dateObj.getMonth(); //months from 1-12
-        var day = dateObj.getDate();
-        var year = dateObj.getFullYear();
-
-        today = day + " " + monthNames[month] + " " + year;
-
-        $("#chart1").kendoChart({
-            title: {
-                text: today
-            },
-            legend: {
-                position: "bottom"
-            },
-            chartArea: {
-                background: ""
-            },
-            seriesDefaults: {
-                type: "column",
-                style: "smooth",
-                stack: true
-            },
-            series: [{
-                name: "PRINCESS SEAWAYS",
-                data: [100, 110, 120, 105, 100, 120, 110, 115, 100, 130],
-                style: "step"
-            }, {
-                name: "QUEEN ELIZABETH",
-                data: [150, 160, 170, 155, 145, 160, 165, 153, 149, 152],
-                style: "step"
-            }, {
-                name: "BITHIA",
-                data: [120, 130, 125, 130, 0, 0, 0, 0, 111, 128],
-                style: "step"
-            }
-            ],
-            valueAxis: {
-                labels: {
-                    format: "{0}"
-                },
-                line: {
-                    visible: false
-                },
-                axisCrossingValue: -10
-            },
-            categoryAxis: {
-                categories: ["18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30"],
-                majorGridLines: {
-                    visible: false
-                },
-                labels: {
-                    rotation: "auto"
-                }
-            },
-            tooltip: {
-                visible: true,
-                format: "{0}",
-                template: "#= series.name #: #= value #"
-            }
-        });
-    },
-
+    
     onload: function () {
 
         // Values set inside remax.js
@@ -84,5 +18,127 @@
         $(window).resize(function () {
             $("#chart1").data("kendoChart").refresh();
         });
-    }
+    },
+
+    createChart: function () {
+        var dateObj = new Date();
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+
+        var month = dateObj.getMonth(); //months from 1-12
+        var day = dateObj.getDate();
+        var year = dateObj.getFullYear();
+
+        today = day + " " + monthNames[month] + " " + year;
+
+        $.ajax({
+            type: 'GET',
+            url: Settings.WebApiUrl + 'api/KendoMonitorings/GetTodayData',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'bearer ' + Settings.Token.access_token);
+            },
+            success: function (data, textStatus, jqXHR) {
+                var d = data;
+
+                // finding unique vessel
+                var vessleNames = [];
+                $.each(data, function (key, value) {
+                    var vName = value.vesselName + "(" + value.imO_No + ")";
+                    if (jQuery.inArray(vName, vessleNames) == -1)
+                        vessleNames.push(vName);
+                });
+
+                // series data objects
+                var values = new Array(vessleNames.length); // first dimension (ship name)
+                for (var i = 0; i < values.length; i++) { //second dimension (hour)
+                    values[i] = new Array(24);
+                    for (var j = 0; j < values[i].length; j++) { // third dimension (half and hour)
+                        values[i][j] = new Array(2);
+                    }
+                }
+
+                $.each(data, function (key, value) {
+                    var vName = value.vesselName + "(" + value.imO_No + ")";
+                    var vIndex = jQuery.inArray(vName, vessleNames);
+                    var hIndex = value.hours - 1;
+                    var hhIndex = value.halfHours;
+
+                    values[vIndex][hIndex][hhIndex] = value.count;
+                    //values[vIndex][hIndex]
+                });
+
+                var series = [];
+                var categories = [];
+
+                for (var i = 0; i < 24; i++) {
+                    var hour = (i < 10 ? "0" : "") + i.toString();
+                    categories.push(hour);
+                }
+
+                for (var i = 0; i < vessleNames.length; i++) {
+                    var vName = vessleNames[i];
+                    var vData = new Array(24); // 24 hours 
+
+                    for (var j = 0; j < values[i].length; j++) {
+                        for (var k = 0; k < values[i][j].length; k++) {
+                            vData[j] = (vData[j] ? vData[j] : 0) + (values[i][j][k] ? values[i][j][k] : 0);
+                        }
+                    }
+
+                    vData.unshift(0);
+
+                    series.push({
+                        name: vName,
+                        data: vData,
+                        style: "step"
+                    });
+                }
+                
+                $("#dataChart").kendoChart({
+                    title: {
+                        text: today
+                    },
+                    legend: {
+                        position: "bottom"
+                    },
+                    chartArea: {
+                        background: ""
+                    },
+                    seriesDefaults: {
+                        type: "column",
+                        style: "smooth",
+                        stack: true
+                    },
+                    series: series,
+                    valueAxis: {
+                        labels: {
+                            format: "{0}"
+                        },
+                        line: {
+                            visible: false
+                        },
+                        axisCrossingValue: -10
+                    },
+                    categoryAxis: {
+                        categories: categories,
+                        majorGridLines: {
+                            visible: false
+                        },
+                        labels: {
+                            rotation: "auto"
+                        }
+                    },
+                    tooltip: {
+                        visible: true,
+                        format: "{0}",
+                        template: "#= series.name #: #= value #"
+                    }
+                });
+            }
+        });
+    },
+
+
 }

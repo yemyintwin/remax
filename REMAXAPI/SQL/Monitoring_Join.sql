@@ -5,3 +5,4 @@ from Monitoring m
 	left outer join Model ml on e.EngineModelID = ml.Id
 	left outer join Channel c on c.ChannelNo = m.ChannelNo and c.ModelID = ml.Id
 	left outer join ChartType ct on c.ChartTypeID = ct.Id
+order by m.CreatedOn desc

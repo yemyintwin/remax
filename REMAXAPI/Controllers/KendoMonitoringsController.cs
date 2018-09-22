@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Dynamic;
@@ -381,6 +382,36 @@ namespace REMAXAPI.Controllers
             }
 
             return Ok(gaugueViews);
+        }
+
+        [HttpGet]
+        [Route("api/KendoMonitorings/GetTodayData")]
+        public async Task<IHttpActionResult> GetTodayData() {
+            DateTime today = DateTime.Today;
+            DateTime endOfToday = today.AddDays(1);
+            var dataCounts = await (
+                                        from m in db.Monitorings
+                                        join v in db.Vessels on m.IMO_No equals v.IMO_No
+                                        where m.TimeStamp >= today && m.TimeStamp <= endOfToday
+                                        group m by new
+                                        {
+                                            IMO_No = m.IMO_No,
+                                            VesselName = v.VesselName,
+                                            Hours = SqlFunctions.DatePart("HOUR", m.TimeStamp),
+                                            HalfHours = SqlFunctions.DatePart("HOUR", m.TimeStamp) < 30 ? 0 : 1
+                                        }
+                                        into m1
+                                        orderby m1.Key.Hours, m1.Key.HalfHours
+                                        select new {
+                                            m1.Key.IMO_No,
+                                            m1.Key.VesselName,
+                                            m1.Key.Hours,
+                                            m1.Key.HalfHours,
+                                            Count = m1.Count()
+                                        }
+                                    ).ToListAsync();
+
+            return Ok(dataCounts);
         }
     }
 }

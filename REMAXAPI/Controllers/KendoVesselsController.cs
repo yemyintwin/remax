@@ -72,55 +72,57 @@ namespace REMAXAPI.Controllers
 
             User currentUser = Util.GetCurrentUser();
 
-            List<VesselView> vessels = await (from v in db.Vessels
-                                        join oa in db.Accounts on (v.OwnerAccount != null ? v.OwnerAccount.Id : Guid.Empty) equals oa.Id 
-                                        join opa in db.Accounts on (v.OperatorAccount != null ? v.OperatorAccount.Id : Guid.Empty) equals opa.Id 
-                                        join st in db.ShipTypes on (v.ShipType != null ? v.ShipType.Id : Guid.Empty) equals st.Id
-                                        join sc in db.ShipClasses on (v.ShipClass != null ? v.ShipClass.Id : Guid.Empty) equals sc.Id
-                                        join c in db.Countries on (v.Country != null ? v.Country.Id : Guid.Empty) equals c.Id
+            List<VesselView> vessels = await (
+                                                from v in db.Vessels
+                                                join oa in db.Accounts on (v.OwnerAccount != null ? v.OwnerAccount.Id : Guid.Empty) equals oa.Id into v_oa
+                                                join opa in db.Accounts on (v.OperatorAccount != null ? v.OperatorAccount.Id : Guid.Empty) equals opa.Id into v_opa
+                                                join st in db.ShipTypes on (v.ShipType != null ? v.ShipType.Id : Guid.Empty) equals st.Id into v_st
+                                                join sc in db.ShipClasses on (v.ShipClass != null ? v.ShipClass.Id : Guid.Empty) equals sc.Id into v_sc
+                                                join c in db.Countries on (v.Country != null ? v.Country.Id : Guid.Empty) equals c.Id into v_c
 
-                                         where
-                                           // Login user is from Owing company
-                                           ((v.OwnerID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
-                                           ||
-                                           // Login user is from Operating company
-                                           ((v.OperatorID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
-                                           ||
-                                           // Admin user
-                                           readLevel == Util.AccessLevel.All
-                                        orderby v.VesselName ascending
-                                        select new VesselView
-                                        {
-                                            Id = v.Id,
-                                            IMO_No = v.IMO_No,
-                                            VesselName = v.VesselName,
-                                            OwnerID = v.OwnerID,
-                                            OperatorID = v.OperatorID,
-                                            ShipTypeID = v.ShipTypeID,
-                                            ShipyardName = v.ShipyardName,
-                                            ShipyardCountry = v.ShipyardCountry,
-                                            BuildYear = v.BuildYear,
-                                            DeliveryToOwner = v.DeliveryToOwner,
-                                            ShipClassID = v.ShipTypeID,
-                                            DWT = v.DWT,
-                                            TotalPropulsionPower = v.TotalPropulsionPower,
-                                            TotalGeneratorPower = v.TotalGeneratorPower,
-                                            Status = v.Status,
-                                            CreatedBy = v.CreatedBy,
-                                            CreatedOn = v.CreatedOn,
-                                            ModifiedBy = v.ModifiedBy,
-                                            ModifiedOn = v.ModifiedOn,
-	                                        OperatorAccountId = (v.OperatorAccount!=null ? v.OperatorAccount.Id : Guid.Empty),
-	                                        OperatorAccountName = (v.OperatorAccount!=null ? v.OperatorAccount.Name : String.Empty),
-                                            OwnerAccountId = (v.OwnerAccount!=null ? v.OwnerAccount.Id : Guid.Empty),
-                                            OwnerAccountName = (v.OwnerAccount!=null ? v.OwnerAccount.Name : String.Empty),
-                                            CountryId = (v.Country!=null ? v.Country.Id : Guid.Empty),
-                                            CountryName = (v.Country!=null ? v.Country.Name : String.Empty),
-                                            ShipClassId = (v.ShipClass!=null ? v.ShipClass.Id : Guid.Empty),
-                                            ShipClassName = (v.ShipClass!=null ? v.ShipClass.Name : String.Empty),
-                                            ShipTypeId = (v.ShipType!=null ? v.ShipType.Id : Guid.Empty),
-                                            ShipTypeName = (v.ShipType!=null ? v.ShipType.Name : String.Empty)
-                                        }).ToListAsync();
+                                                where
+                                                // Login user is from Owing company
+                                                ((v.OwnerID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
+                                                ||
+                                                // Login user is from Operating company
+                                                ((v.OperatorID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
+                                                ||
+                                                // Admin user
+                                                readLevel == Util.AccessLevel.All
+                                                orderby v.VesselName ascending
+                                                select new VesselView
+                                                {
+                                                    Id = v.Id,
+                                                    IMO_No = v.IMO_No,
+                                                    VesselName = v.VesselName,
+                                                    OwnerID = v.OwnerID,
+                                                    OperatorID = v.OperatorID,
+                                                    ShipTypeID = v.ShipTypeID,
+                                                    ShipyardName = v.ShipyardName,
+                                                    ShipyardCountry = v.ShipyardCountry,
+                                                    BuildYear = v.BuildYear,
+                                                    DeliveryToOwner = v.DeliveryToOwner,
+                                                    ShipClassID = v.ShipTypeID,
+                                                    DWT = v.DWT,
+                                                    TotalPropulsionPower = v.TotalPropulsionPower,
+                                                    TotalGeneratorPower = v.TotalGeneratorPower,
+                                                    Status = v.Status,
+                                                    CreatedBy = v.CreatedBy,
+                                                    CreatedOn = v.CreatedOn,
+                                                    ModifiedBy = v.ModifiedBy,
+                                                    ModifiedOn = v.ModifiedOn,
+	                                                OperatorAccountId = (v.OperatorAccount!=null ? v.OperatorAccount.Id : Guid.Empty),
+	                                                OperatorAccountName = (v.OperatorAccount!=null ? v.OperatorAccount.Name : String.Empty),
+                                                    OwnerAccountId = (v.OwnerAccount!=null ? v.OwnerAccount.Id : Guid.Empty),
+                                                    OwnerAccountName = (v.OwnerAccount!=null ? v.OwnerAccount.Name : String.Empty),
+                                                    CountryId = (v.Country!=null ? v.Country.Id : Guid.Empty),
+                                                    CountryName = (v.Country!=null ? v.Country.Name : String.Empty),
+                                                    ShipClassId = (v.ShipClass!=null ? v.ShipClass.Id : Guid.Empty),
+                                                    ShipClassName = (v.ShipClass!=null ? v.ShipClass.Name : String.Empty),
+                                                    ShipTypeId = (v.ShipType!=null ? v.ShipType.Id : Guid.Empty),
+                                                    ShipTypeName = (v.ShipType!=null ? v.ShipType.Name : String.Empty)
+                                                }
+                                            ).ToListAsync();
 
             foreach (var item in vessels)
             {

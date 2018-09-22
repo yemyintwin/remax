@@ -256,7 +256,7 @@ var engine = {
             url: Settings.WebApiUrl + 'api/KendoMonitorings/GaugueViews',
             dataType: 'json',
             data: { id: engineId },
-            async: false,
+            //async: false,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'bearer ' + Settings.Token.access_token);
             },

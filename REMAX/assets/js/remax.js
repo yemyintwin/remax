@@ -68,6 +68,7 @@ includeHTML = function () {
             return;
         }
     }
+    $('#side-menu').metisMenu();
 };
 
 function loadMenu() {
@@ -127,7 +128,7 @@ function loadMenu() {
             type: 'GET',
             url: Settings.WebApiUrl + '/api/KendoVessels',
             dataType: 'json',
-            async: false,
+            //async: false,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'bearer ' + Settings.Token.access_token);
             },
@@ -140,10 +141,13 @@ vesselMenu = function (result, textStatus, jqXHR) {
     //Process data retrieved
     var root = $("#nav_vessel_list");
 
-    var vesselsCount, enginesCount, generatorsCount;
-    vesselsCount = enginesCount = generatorsCount = 0;
+    var vesselsCount, enginesCount, generatorsCount, alertCount;
+    vesselsCount = enginesCount = generatorsCount = alertCount = 0;
 
-    // vessels
+    // removing loading
+    $("#vesselLoading").remove();
+
+    // adding vessels menu
     for (var i = 0; i < result.data.length; i++) {
         vesselsCount++;
 
@@ -170,7 +174,8 @@ vesselMenu = function (result, textStatus, jqXHR) {
         // Index (home) page
         $("#count_vessels").html(vesselsCount);
         $("#count_engines").html(enginesCount);
-        $("#count_generators").html(generatorsCount);
+        $("#count_generators").html(generatorsCount); 
+        $("#count_alerts").html(alertCount); 
     }
 
     $('#side-menu').metisMenu();
@@ -183,6 +188,7 @@ vesselMenu = function (result, textStatus, jqXHR) {
 //Loads the correct sidebar on window load,
 //collapses the sidebar on window resize.
 // Sets the min-height of #page-wrapper to window size
+
 $(function() {
     $(window).bind("load resize", function() {
         var topOffset = 50;
