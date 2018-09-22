@@ -32,6 +32,34 @@ namespace REMAXAPI.Controllers
         public string ChannelName { get; set; }
         public string ChartType { get; set; }
         public bool? Processed { get; set; }
+        public bool? DashboardDisplay { get; set; }
+    }
+
+    public class ChannelView {
+        public System.Guid Id { get; set; }
+        public string ChannelNo { get; set; }
+        public string Name { get; set; }
+        public Nullable<System.Guid> ModelID { get; set; }
+        public Nullable<bool> DashboardDisplay { get; set; }
+        public Nullable<System.Guid> ChartTypeID { get; set; }
+        public Nullable<decimal> MinRange { get; set; }
+        public Nullable<decimal> MaxRange { get; set; }
+        public Nullable<decimal> Scale { get; set; }
+        public string DisplayUnit { get; set; }
+        public Nullable<decimal> LowerLimit { get; set; }
+        public Nullable<decimal> UpperLimit { get; set; }
+        public Nullable<decimal> MonitoringTimer { get; set; }
+        public Nullable<int> DataTypeNo { get; set; }
+        public Nullable<int> Status { get; set; }
+        public System.Guid CreatedBy { get; set; }
+        public System.DateTime CreatedOn { get; set; }
+        public System.Guid ModifiedBy { get; set; }
+        public System.DateTime ModifiedOn { get; set; }
+    }
+
+    public class GaugueView {
+        public ChannelView ChannelSetup { get; set; }
+        public Monitoring MonitoringLastValue { get; set; }
     }
 
     public class KendoMonitoringsController : ApiController
@@ -86,7 +114,8 @@ namespace REMAXAPI.Controllers
                                                      IncomingChannelName = m.ChannelDescription,
                                                      ChannelName = m_ch.Name,
                                                      ChartType = m_ct.Name,
-                                                     Processed = m.Processed
+                                                     Processed = m.Processed,
+                                                     DashboardDisplay = m_ch.DashboardDisplay
                                                  };
 
 
@@ -297,6 +326,61 @@ namespace REMAXAPI.Controllers
         private bool MonitoringExists(Guid id)
         {
             return db.Monitorings.Count(e => e.Id == id) > 0;
+        }
+
+        [HttpGet]
+        [Route("api/KendoMonitorings/GaugueViews")]
+        public async Task<IHttpActionResult> GaugeChannels(Guid id) {
+            db.Configuration.LazyLoadingEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
+
+            Engine engine = await db.Engines.FindAsync(id);
+            List<GaugueView> gaugueViews = new List<GaugueView>();
+            ChartType chartType = await db.ChartTypes.Where(ct => ct.Name.Contains("Gauge")).FirstOrDefaultAsync();
+            if (chartType != null) {
+                List<ChannelView> gaugeChannels = await(
+                                                from c in db.Channels
+                                                orderby c.Name ascending
+                                                where (c.ModelID.HasValue && engine.EngineModelID.HasValue && c.ModelID == engine.EngineModelID)
+                                                    && c.DashboardDisplay.HasValue ? c.DashboardDisplay.Value : false
+                                                    && (c.ChartTypeID.HasValue? c.ChartTypeID.Value:Guid.Empty) == chartType.Id
+                                                select new ChannelView{
+                                                    Id = c.Id,
+                                                    ChannelNo = c.ChannelNo,
+                                                    Name = c.Name ,
+                                                    ModelID = c.ModelID,
+                                                    DashboardDisplay = c.DashboardDisplay,
+                                                    ChartTypeID = c.ChartTypeID,
+                                                    MinRange = c.MinRange,
+                                                    MaxRange = c.MaxRange,
+                                                    Scale = c.Scale,
+                                                    DisplayUnit = c.DisplayUnit,
+                                                    LowerLimit = c.LowerLimit,
+                                                    UpperLimit = c.UpperLimit,
+                                                    MonitoringTimer = c.MonitoringTimer,
+                                                    DataTypeNo = c.DataTypeNo,
+                                                    Status = c.Status,
+                                                    CreatedBy = c.CreatedBy,
+                                                    CreatedOn = c.CreatedOn,
+                                                    ModifiedBy = c.ModifiedBy,
+                                                    ModifiedOn = c.ModifiedOn
+                                                }
+                                                ).ToListAsync();
+                foreach (var c in gaugeChannels)
+                {
+                    Monitoring lastValue = await (from m in db.Monitorings
+                                            where m.ChannelNo == c.ChannelNo
+                                            orderby m.TimeStamp descending
+                                            select m
+                                            ).FirstOrDefaultAsync();
+                    gaugueViews.Add(new GaugueView {
+                        ChannelSetup = c,
+                        MonitoringLastValue = lastValue
+                    });
+                }
+            }
+
+            return Ok(gaugueViews);
         }
     }
 }

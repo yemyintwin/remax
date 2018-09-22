@@ -65,14 +65,14 @@ namespace REMAXAPI.Controllers
         private Remax_Entities db = new Remax_Entities();
 
         // GET: api/KendoVessels
-        public KendoResponse GetVessels([FromUri] KendoRequest kendoRequest)
+        public async Task<KendoResponse> GetVessels([FromUri] KendoRequest kendoRequest)
         {
             int readLevel = Util.GetResourcePermission("Vessel", Util.ReourceOperations.Read);
             if (readLevel == 0) return new KendoResponse(0, null);
 
             User currentUser = Util.GetCurrentUser();
 
-            List<VesselView> vessels = (from v in db.Vessels
+            List<VesselView> vessels = await (from v in db.Vessels
                                         join oa in db.Accounts on (v.OwnerAccount != null ? v.OwnerAccount.Id : Guid.Empty) equals oa.Id 
                                         join opa in db.Accounts on (v.OperatorAccount != null ? v.OperatorAccount.Id : Guid.Empty) equals opa.Id 
                                         join st in db.ShipTypes on (v.ShipType != null ? v.ShipType.Id : Guid.Empty) equals st.Id
@@ -120,11 +120,11 @@ namespace REMAXAPI.Controllers
                                             ShipClassName = (v.ShipClass!=null ? v.ShipClass.Name : String.Empty),
                                             ShipTypeId = (v.ShipType!=null ? v.ShipType.Id : Guid.Empty),
                                             ShipTypeName = (v.ShipType!=null ? v.ShipType.Name : String.Empty)
-                                        }).ToList();
+                                        }).ToListAsync();
 
             foreach (var item in vessels)
             {
-                item.Engines = db.Engines
+                item.Engines = await db.Engines
                             .Include("EngineType")
                             .Where(e => e.VesselID == item.Id)
                             .Select(e=> new EngineView{
@@ -132,7 +132,7 @@ namespace REMAXAPI.Controllers
                                 SerialNo = e.SerialNo,
                                 EngineType = e.EngineType
                             })
-                            .ToList();
+                            .ToListAsync();
             }
             
             //loading related entites

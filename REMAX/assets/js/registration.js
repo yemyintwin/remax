@@ -2374,7 +2374,7 @@ var registration = {
                     channelNo: $('#channel_channelNo').val(),
                     name: $('#channel_channelName').val(),
                     modelID: $('#channel_model').val(),
-                    dashboardDisplay: $('#channel_dashboardDisplay').val(),
+                    dashboardDisplay: ($('#channel_dashboardDisplay').prop('checked')?1:0),
                     chartTypeID: $('#channel_chartType').val(),
                     minRange: $('#channel_minRange').val(),
                     maxRange: $('#channel_maxRange').val(),
@@ -2446,7 +2446,8 @@ var registration = {
             $('#channel_model').val(selectedItem.modelID);
             $('#channel_channelNo').val(selectedItem.channelNo);
             $('#channel_channelName').val(selectedItem.name);
-            $('#channel_dashboardDisplay').val(selectedItem.dashboardDisplay);
+            var isChecked = (selectedItem.dashboardDisplay == null ? 0 : selectedItem.dashboardDisplay);
+            $('#channel_dashboardDisplay').prop('checked', isChecked);
             $('#channel_chartType').val(selectedItem.chartTypeID);
             $('#channel_minRange').val(selectedItem.minRange);
             $('#channel_maxRange').val(selectedItem.maxRange);

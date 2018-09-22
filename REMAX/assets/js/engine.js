@@ -48,6 +48,7 @@ var engine = {
             // ChannelData
             if (result.id) engineId = result.id;
             engine.loadMonitoringGrid(engineId);
+            engine.loadGauges(engineId);
         }
     },
 
@@ -247,21 +248,81 @@ var engine = {
             }
         });
         
-    }
-}
+    },
 
-function getDateOnly(date) {
-    if (Date.parse(date) != NaN) {
-        var day = date.getDate();       // yields date
-        var month = date.getMonth() + 1;    // yields month (add one as '.getMonth()' is zero indexed)
-        var year = date.getFullYear();  // yields year
+    loadGauges: function (engineId) {
+        $.ajax({
+            type: 'GET',
+            url: Settings.WebApiUrl + 'api/KendoMonitorings/GaugueViews',
+            dataType: 'json',
+            data: { id: engineId },
+            async: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'bearer ' + Settings.Token.access_token);
+            },
+            success: engine.showGaugeDashboard
+        });
+    },
 
-        // After this construct a string with the above results as below
-        var time = day + "/" + month + "/" + year;
+    showGaugeDashboard: function (result, textStatus, jqXHR) {
+        var panelRoot = $('#gauges'); // accordion root element
 
-        return time;
-    }
-    else {
-        return date;
+        var divTemplate =
+            '<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">' +
+            '    <div class="panel panel-default">' +
+            '        <div class="panel-body">' +
+            '            <div>' +
+            '                <div id="channel_{{channelNo}}_Time" class="gauge"></div>' +
+            '                <div id="channel_{{channelNo}}" class="gauge"></div>' +
+            '            </div>' +
+            '        </div>' +
+            '        <div class="panel-footer">' +
+            '            <span class="pull-left">{{channelName}}</span>' +
+            '            <span class="pull-right"></span>' + //<i class="fa fa-arrow-circle-right"></i> //Arrow on right align
+            '            <div class="clearfix"></div>' +
+            '        </div>' +
+            '    </div>' +
+            '</div>';
+
+        $.each(result, function (index) {
+            var gaugeObj = result[index];
+
+            var divHtml = divTemplate;
+
+            var c = gaugeObj.channelSetup;
+            var v = gaugeObj.monitoringLastValue;
+
+            if (c) {
+                divHtml = divHtml.replace(/{{channelNo}}/g, c.channelNo);
+                divHtml = divHtml.replace(/{{channelName}}/g, c.channelNo + ' (' + c.name + ' - ' + c.displayUnit + ')');
+
+                $(divHtml).appendTo(panelRoot);
+
+                if (v) {
+                    var d = new Date(v.timeStamp);
+                    if (d) $("#channel_" + c.channelNo + "_Time").append("<span>" + d.toLocaleDateString() + " " + d.toLocaleTimeString()  + "</span>")
+
+                    // Draw gauge
+                    $("#channel_" + c.channelNo).css({ width: "300px", height: "200px" }).kendoRadialGauge({
+                        pointer: {
+                            value: v.value
+                        },
+                        scale: {
+                            minorUnit: c.scale,
+                            startAngle: -30,
+                            endAngle: 210,
+                            max: c.maxRange,
+                            ranges: [
+                                {
+                                    from: c.upperLimit,
+                                    to: c.maxRange,
+                                    color: "#c20000"
+                                }
+                            ]
+                        }
+                    });// end of gauge drawing
+                }// end of last value
+            } // check channel
+        });// end of for each
     }
 }
