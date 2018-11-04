@@ -177,6 +177,7 @@ var registration = {
                 url: url,
                 dataType: 'json',
                 async: false,
+                //data: Settings.ClientData,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'bearer ' + token);
                 },
@@ -211,6 +212,8 @@ var registration = {
 
                     // the data type of the returned result
                     dataType: "json",
+
+                    //data: Settings.ClientData,
 
                     // passing token
                     beforeSend: function (xhr) {
@@ -471,6 +474,7 @@ var registration = {
                 data: null,
                 dataType: 'json',
                 // passing token
+                //data: Settings.ClientData,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'bearer ' + token);
                 },
@@ -510,6 +514,8 @@ var registration = {
 
                     // the data type of the returned result
                     dataType: "json",
+
+                    //data: Settings.ClientData,
 
                     // passing token
                     beforeSend: function (xhr) {
@@ -628,6 +634,7 @@ var registration = {
             url: url,
             dataType: 'json',
             async: false,
+            //data: Settings.ClientData,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'bearer ' + token);
             },
@@ -809,9 +816,9 @@ var registration = {
                 type: 'DELETE',
                 url: url,
                 contentType: "application/json",
-                data: null,
                 dataType: 'json',
                 // passing token
+                //data: Settings.ClientData,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'bearer ' + token);
                 },
@@ -847,9 +854,9 @@ var registration = {
                 type: 'GET',
                 url: url,
                 contentType: "application/json",
-                data: null,
                 dataType: 'json',
                 // passing token
+                //data: Settings.ClientData,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'bearer ' + token);
                 },
@@ -886,6 +893,8 @@ var registration = {
 
                     // the data type of the returned result
                     dataType: "json",
+
+                    //data: Settings.ClientData,
 
                     // passing token
                     beforeSend: function (xhr) {
@@ -1113,6 +1122,7 @@ var registration = {
                 url: url,
                 dataType: 'json',
                 async: false,
+                //data: Settings.ClientData,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'bearer ' + token);
                 },
@@ -1336,6 +1346,7 @@ var registration = {
                 data: null,
                 dataType: 'json',
                 // passing token
+                //data: Settings.ClientData,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'bearer ' + token);
                 },
@@ -1437,6 +1448,8 @@ var registration = {
 
                     // the data type of the returned result
                     dataType: "json",
+
+                    //data: Settings.ClientData,
 
                     // passing token
                     beforeSend: function (xhr) {
@@ -1666,6 +1679,7 @@ var registration = {
                 url: url,
                 dataType: 'json',
                 async: false,
+                //data: Settings.ClientData,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'bearer ' + token);
                 },
@@ -1938,6 +1952,7 @@ var registration = {
                 data: null,
                 dataType: 'json',
                 // passing token
+                //data: Settings.ClientData,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'bearer ' + token);
                 },
@@ -2020,6 +2035,7 @@ var registration = {
                 url: url,
                 dataType: 'json',
                 async: false,
+                //data: Settings.ClientData,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'bearer ' + token);
                 },
@@ -2084,6 +2100,7 @@ var registration = {
                     // the data type of the returned result
                     dataType: "json",
 
+                    //data: Settings.ClientData,
                     // passing token
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
@@ -2265,6 +2282,7 @@ var registration = {
                 url: url,
                 dataType: 'json',
                 async: false,
+                //data: Settings.ClientData,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'bearer ' + token);
                 },
@@ -2476,9 +2494,9 @@ var registration = {
                 type: 'DELETE',
                 url: url,
                 contentType: "application/json",
-                data: null,
                 dataType: 'json',
                 // passing token
+                //data: Settings.ClientData,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'bearer ' + token);
                 },

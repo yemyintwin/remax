@@ -16,7 +16,7 @@
         $(document).bind("kendo:skinChange", index.createChart);
 
         $(window).resize(function () {
-            $("#chart1").data("kendoChart").refresh();
+            $("#dataChart").data("kendoChart").refresh();
         });
     },
 
@@ -32,10 +32,13 @@
 
         today = day + " " + monthNames[month] + " " + year;
 
+        //var data = { client_id: Settings.Token['as:client_id'], refresh_token : Settings.Token.refresh_token };
+
         $.ajax({
             type: 'GET',
             url: Settings.WebApiUrl + 'api/KendoMonitorings/GetTodayData',
             dataType: 'json',
+            //data: Settings.ClientData,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'bearer ' + Settings.Token.access_token);
             },

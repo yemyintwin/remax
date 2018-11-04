@@ -37,6 +37,7 @@ var userprofile = {
                 data: null,
                 dataType: 'json',
                 // passing token
+                //data: Settings.ClientData,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', 'bearer ' + token);
                 },

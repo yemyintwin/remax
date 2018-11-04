@@ -59,7 +59,7 @@ namespace REMAXAPI.Controllers
         public EngineType EngineType { get; set; }
     }
 
-    //[Authorize]
+    [Authorize]
     public class KendoVesselsController : ApiController
     {
         private Remax_Entities db = new Remax_Entities();

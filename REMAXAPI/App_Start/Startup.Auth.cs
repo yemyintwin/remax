@@ -21,11 +21,13 @@ namespace REMAXAPI
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/token"),
-                Provider = new OAuthAppProvider(),
+                //Provider = new OAuthAppProvider(),
+                Provider = new SimpleAuthorizationServerProvider(),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(2),
                 AllowInsecureHttp = true,
                 AuthorizationCodeExpireTimeSpan = new TimeSpan(1,0,0),
-                RefreshTokenProvider = new OAuthRefreshTokenProvider()
+                //RefreshTokenProvider = new OAuthRefreshTokenProvider()
+                RefreshTokenProvider = new SimpleRefreshTokenProvider()
             };
         }
 

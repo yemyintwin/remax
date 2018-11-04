@@ -473,7 +473,7 @@ namespace REMAXAPI.Controllers
 
                         error = (m.VesselName ==null || m.EngineID == null || m.EngineModelID == null);
 
-                        monitor.Processed = true;
+                        if (!error) monitor.Processed = true;
                         db.Entry(monitor).State = System.Data.Entity.EntityState.Modified;
                     }
 

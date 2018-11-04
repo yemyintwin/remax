@@ -8,7 +8,6 @@ using System.Runtime.Caching;
 using System.Security.Claims;
 using System.Text;
 using System.Web;
-using System.Web.Http.Controllers;
 
 namespace REMAXAPI
 {
@@ -93,8 +92,11 @@ namespace REMAXAPI
         {
             using (var db = new Remax_Entities()) {
                 User user = null;
+                var claimsIdentity = HttpContext.Current.User.Identity as ClaimsIdentity;
                 ClaimsPrincipal currentClaim = HttpContext.Current.GetOwinContext().Authentication.User;
-                if (currentClaim != null && currentClaim.Claims != null && currentClaim.Claims.Count() > 1)
+
+                //if (currentClaim != null && currentClaim.Claims != null && currentClaim.Claims.Count() > 1)
+                if (claimsIdentity != null && claimsIdentity.Claims != null && claimsIdentity.Claims.Count() > 1)
                 {
                     var sid = (from c in currentClaim.Claims.AsEnumerable()
                                where c.Type.EndsWith("/sid")
@@ -115,13 +117,6 @@ namespace REMAXAPI
                             memoryCacher.Add(user.Id.ToString(), user, DateTime.Now.AddHours(8));
                         }
                     }
-                    //foreach (var u in db.Users)
-                    //{
-                    //    if (u.Id.ToString() == sid.Value)
-                    //    {
-                    //        user = u; break;
-                    //    }
-                    //}
                 }
                 else
                 {

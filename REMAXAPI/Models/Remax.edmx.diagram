@@ -45,6 +45,8 @@
         <AssociationConnector Association="REMAXAPI.Models.UserUserRole" ManuallyRouted="false" />
         <EntityTypeShape EntityType="REMAXAPI.Models.GearboxModel" Width="1.5" PointX="12.375" PointY="7.875" />
         <AssociationConnector Association="REMAXAPI.Models.FK_Engine_GearboxModel" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.Client" Width="1.5" PointX="12.375" PointY="10.75" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.RefreshToken" Width="1.5" PointX="14.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

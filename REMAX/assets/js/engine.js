@@ -26,6 +26,7 @@ var engine = {
             type: 'GET',
             url: Settings.WebApiUrl + '/api/KendoEngines/' + engine.id,
             dataType: 'json',
+            //data: Settings.ClientData,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'bearer ' + token);
             },
@@ -78,6 +79,9 @@ var engine = {
 
                     // the data type of the returned result
                     dataType: "json",
+
+                    // Renew Token
+                    //data: Settings.ClientData,
 
                     // passing token
                     beforeSend: function (xhr) {
@@ -251,11 +255,13 @@ var engine = {
     },
 
     loadGauges: function (engineId) {
+        var data = Settings.ClientData;
+        data.id = engineId;
         $.ajax({
             type: 'GET',
             url: Settings.WebApiUrl + 'api/KendoMonitorings/GaugueViews',
             dataType: 'json',
-            data: { id: engineId },
+            data: data,
             //async: false,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'bearer ' + Settings.Token.access_token);

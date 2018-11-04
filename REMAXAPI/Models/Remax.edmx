@@ -60,6 +60,18 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Secret" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ApplicationType" Type="int" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="RefreshTokenLifeTime" Type="int" />
+          <Property Name="AllowedOrigin" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="Id" />
@@ -163,6 +175,17 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="RefreshToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClientId" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="IssuedUtc" Type="datetime" />
+          <Property Name="ExpiresUtc" Type="datetime" />
+          <Property Name="ProtectedTicket" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Resource">
           <Key>
@@ -530,6 +553,7 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <EntitySet Name="AlternatorMaker" EntityType="Self.AlternatorMaker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Channel" EntityType="Self.Channel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChartType" EntityType="Self.ChartType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DashboardSetting" EntityType="Self.DashboardSetting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Engine" EntityType="Self.Engine" Schema="dbo" store:Type="Tables" />
@@ -539,6 +563,7 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <EntitySet Name="Monitoring" EntityType="Self.Monitoring" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OptionSet" EntityType="Self.OptionSet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OptionSetGroup" EntityType="Self.OptionSetGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RefreshToken" EntityType="Self.RefreshToken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Resource" EntityType="Self.Resource" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ResourcePermission" EntityType="Self.ResourcePermission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShipClass" EntityType="Self.ShipClass" Schema="dbo" store:Type="Tables" />
@@ -1229,6 +1254,8 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
             <End Role="GearboxModel" EntitySet="GearboxModels" />
             <End Role="Engine" EntitySet="Engines" />
           </AssociationSet>
+          <EntitySet Name="Clients" EntityType="REMAXAPI.Models.Client" />
+          <EntitySet Name="RefreshTokens" EntityType="REMAXAPI.Models.RefreshToken" />
         </EntityContainer>
         <ComplexType Name="sp_ResourcePermission_Result">
           <Property Type="Guid" Name="User_Id" Nullable="true" />
@@ -1259,6 +1286,29 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Secret" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationType" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="RefreshTokenLifeTime" Type="Int32" />
+          <Property Name="AllowedOrigin" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RefreshToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientId" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IssuedUtc" Type="DateTime" Precision="3" />
+          <Property Name="ExpiresUtc" Type="DateTime" Precision="3" />
+          <Property Name="ProtectedTicket" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1583,6 +1633,31 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
             <EntityTypeMapping TypeName="REMAXAPI.Models.GearboxModel">
               <MappingFragment StoreEntitySet="GearboxModel">
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="AllowedOrigin" ColumnName="AllowedOrigin" />
+                <ScalarProperty Name="RefreshTokenLifeTime" ColumnName="RefreshTokenLifeTime" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ApplicationType" ColumnName="ApplicationType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Secret" ColumnName="Secret" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RefreshTokens">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.RefreshToken">
+              <MappingFragment StoreEntitySet="RefreshToken">
+                <ScalarProperty Name="ProtectedTicket" ColumnName="ProtectedTicket" />
+                <ScalarProperty Name="ExpiresUtc" ColumnName="ExpiresUtc" />
+                <ScalarProperty Name="IssuedUtc" ColumnName="IssuedUtc" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -21,6 +21,7 @@ var vessel = {
             url: Settings.WebApiUrl + '/api/KendoVessels',
             dataType: 'json',
             async: false, // Do not user async
+            //data: Settings.ClientData,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'bearer ' + token);
             },

@@ -73,7 +73,7 @@ includeHTML = function () {
 
 function loadMenu() {
     // debugger;
-    var currentUser, currentToken;
+    var currentUser, currentToken, clientId;
 
     if (window.location.href.indexOf('/login.html') > 0) return;
 
@@ -89,11 +89,42 @@ function loadMenu() {
     else {
         Settings.Token = JSON.parse(currentToken);
         Settings.CurrentUser = JSON.parse(currentUser);
+        Settings.ClientData = { client_id: Settings.Token['as:client_id'], refresh_token: Settings.Token.refresh_token };
+        if (new Date(Settings.Token['.expires']) < new Date()) {
+            // Check current refresh toekn and call to refresh token
+            if (Settings.Token.refresh_token && Settings.Token['as:client_id']) {
+                var loginData = {
+                    grant_type: 'refresh_token',
+                    refresh_token: Settings.Token.refresh_token,
+                    client_id: Settings.Token['as:client_id'],
+                    client_secret: null,
+                    scope: null
+                };
 
-        if (new Date(Settings.Token.expires_in_date) < new Date()) {
-            // To Do
-            // Call renew token service or redirect to login page
-            document.location = "/login.html?callbackurl=" + window.location.href;
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    async: false,
+                    url: Settings.WebApiUrl + '/Token',
+                    data: loginData,
+                    success: function (data) {
+                        var sData = JSON.stringify(data);
+                        try {
+                            $.cookie('currentToken', sData);
+                        } catch (e) {
+                            console.assert(e.message);
+                        }
+                        localStorage.setItem('currentToken', sData);
+                        Settings.Token = data;
+                    },
+                    error: function (xhr) {
+                        document.location = "/login.html?callbackurl=" + window.location.href;
+                    }
+                });
+            }
+            else {
+                document.location = "/login.html?callbackurl=" + window.location.href;
+            }
         }
     }
 
@@ -128,11 +159,19 @@ function loadMenu() {
             type: 'GET',
             url: Settings.WebApiUrl + '/api/KendoVessels',
             dataType: 'json',
-            //async: false,
+            async: false,
+            //data: Settings.ClientData,
+            //headers: {
+            //    "Authorization": 'bearer ' + Settings.Token.access_token
+            //},
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'bearer ' + Settings.Token.access_token);
             },
-            success: vesselMenu
+            success: vesselMenu,
+            error: function (xhr, status, error) {
+                document.location = "/login.html?callbackurl=" + window.location.href;
+            }
+            
         });
     }
 }

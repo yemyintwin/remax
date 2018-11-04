@@ -23,6 +23,7 @@ var master = {
                     url: Settings.WebApiUrl + "/api/KendoInlineAlternatorMaker",
                     type: "get",
                     dataType: "json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -33,6 +34,7 @@ var master = {
                     },
                     type: "put",
                     dataType: "json",
+                    //data: Settings.ClientData,
                     contentType: "application/json",
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
@@ -45,6 +47,7 @@ var master = {
                     type: "delete",
                     dataType: "json",
                     contentType: "application/json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -59,6 +62,7 @@ var master = {
                     type: "post",
                     dataType: "json",
                     contentType: "application/json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -102,6 +106,7 @@ var master = {
                         dataType: 'json',
                         async: false,
                         // passing token
+                        //data: Settings.ClientData,
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader('Authorization', 'bearer ' + token);
                         },
@@ -150,6 +155,7 @@ var master = {
                     url: Settings.WebApiUrl + "/api/KendoInlineModel",
                     type: "get",
                     dataType: "json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -160,6 +166,7 @@ var master = {
                     },
                     type: "put",
                     dataType: "json",
+                    //data: Settings.ClientData,
                     contentType: "application/json",
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
@@ -171,6 +178,7 @@ var master = {
                     },
                     type: "delete",
                     dataType: "json",
+                    //data: Settings.ClientData,
                     contentType: "application/json",
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
@@ -185,6 +193,7 @@ var master = {
                     url: Settings.WebApiUrl + "/api/KendoInlineModel",
                     type: "post",
                     dataType: "json",
+                    //data: Settings.ClientData,
                     contentType: "application/json",
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
@@ -232,6 +241,7 @@ var master = {
                         dataType: 'json',
                         async: false,
                         // passing token
+                        data: Settings.ClientData,
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader('Authorization', 'bearer ' + token);
                         },
@@ -309,6 +319,7 @@ var master = {
                     url: Settings.WebApiUrl + "/api/KendoInlineGearboxModels",
                     type: "get",
                     dataType: "json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -319,6 +330,7 @@ var master = {
                     },
                     type: "put",
                     dataType: "json",
+                    //data: Settings.ClientData,
                     contentType: "application/json",
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
@@ -331,6 +343,7 @@ var master = {
                     type: "delete",
                     dataType: "json",
                     contentType: "application/json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -345,6 +358,7 @@ var master = {
                     type: "post",
                     dataType: "json",
                     contentType: "application/json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -388,6 +402,7 @@ var master = {
                         dataType: 'json',
                         async: false,
                         // passing token
+                        //data: Settings.ClientData,
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader('Authorization', 'bearer ' + token);
                         },
@@ -430,6 +445,7 @@ var master = {
                     url: Settings.WebApiUrl + "/api/KendoInlineShipClasses",
                     type: "get",
                     dataType: "json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -440,6 +456,7 @@ var master = {
                     },
                     type: "put",
                     dataType: "json",
+                    //data: Settings.ClientData,
                     contentType: "application/json",
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
@@ -452,6 +469,7 @@ var master = {
                     type: "delete",
                     dataType: "json",
                     contentType: "application/json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -466,6 +484,7 @@ var master = {
                     type: "post",
                     dataType: "json",
                     contentType: "application/json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -509,6 +528,7 @@ var master = {
                         dataType: 'json',
                         async: false,
                         // passing token
+                        //data: Settings.ClientData,
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader('Authorization', 'bearer ' + token);
                         },
@@ -551,6 +571,7 @@ var master = {
                     url: Settings.WebApiUrl + "/api/KendoInlineShipTypes",
                     type: "get",
                     dataType: "json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -562,6 +583,7 @@ var master = {
                     type: "put",
                     dataType: "json",
                     contentType: "application/json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -573,6 +595,7 @@ var master = {
                     type: "delete",
                     dataType: "json",
                     contentType: "application/json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -587,6 +610,7 @@ var master = {
                     type: "post",
                     dataType: "json",
                     contentType: "application/json",
+                    //data: Settings.ClientData,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('Authorization', 'bearer ' + token);
                     },
@@ -630,6 +654,7 @@ var master = {
                         dataType: 'json',
                         async: false,
                         // passing token
+                        //data: Settings.ClientData,
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader('Authorization', 'bearer ' + token);
                         },

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Data.Entity.Validation;
 
 namespace REMAXAPI.Models
 {
@@ -66,9 +67,12 @@ namespace REMAXAPI.Models
                             if (modifiedOn != null && (modifiedOn.PropertyType == typeof(DateTime) || modifiedOn.PropertyType == typeof(DateTime?)))
                                 modifiedOn.SetValue(entity, DateTime.Now);
 
-                            if (id != null && (id.PropertyType == typeof(Guid) || id.PropertyType == typeof(Guid?)) 
-                                && (Guid)id.GetValue(entity) == Guid.Empty)
-                                id.SetValue(entity, Guid.NewGuid());
+                            if (typeOfObject != typeof(Client))
+                            { 
+                                if (id != null && (id.PropertyType == typeof(Guid) || id.PropertyType == typeof(Guid?)) 
+                                    && (Guid)id.GetValue(entity) == Guid.Empty)
+                                    id.SetValue(entity, Guid.NewGuid());
+                            }
                         }
                         else if (e.State == EntityState.Modified)
                         {
@@ -81,7 +85,14 @@ namespace REMAXAPI.Models
                 }
             }
 
-            return base.SaveChangesAsync();
+            try
+            {
+                return base.SaveChangesAsync();
+            }
+            catch (DbEntityValidationException e)
+            {
+                throw e;
+            }
         }
     }
 }
