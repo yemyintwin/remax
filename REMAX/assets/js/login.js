@@ -2,6 +2,39 @@
     tokenKey: 'currentToken',
     userKey: 'currentUser',
 
+    performLogOut: function () {
+        var currentUser, currentToken, clientId;
+
+        debugger;
+
+        if (localStorage.getItem('currentToken')) currentToken = localStorage.getItem('currentToken').toString();
+        else if ($.cookie('currentToken')) currentToken = $.cookie('currentToken');
+
+        if (localStorage.getItem('currentUser')) currentUser = localStorage.getItem('currentUser').toString();
+        else if ($.cookie('currentUser')) currentUser = $.cookie('currentUser');
+
+        if (currentToken) {
+            Settings.Token = JSON.parse(currentToken);
+
+            if (Settings.Token.refresh_token && Settings.Token['as:client_id']) {
+                var clientId = Settings.Token['as:client_id'];
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: Settings.WebApiUrl + '/api/Clients/' + clientId,
+                    dataType: 'json',
+                    async: false,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'bearer ' + Settings.Token.access_token);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            }
+        }
+    },
+
     performLogin: function () {
         localStorage.removeItem(login.tokenKey); 
         localStorage.removeItem(login.userKey); 

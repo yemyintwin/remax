@@ -386,8 +386,7 @@ namespace REMAXAPI.Controllers
                         var engineFound = (from e in db.Engines
                                            join v in db.Vessels on e.VesselID equals v.Id into ev
                                            from e_v in ev.DefaultIfEmpty()
-                                           where new { e_v.IMO_No, e.SerialNo } == new { eng.Key.IMO_No, eng.Key.SerialNo } && 
-                                                e.EngineModelID != null
+                                           where new { e_v.IMO_No, e.SerialNo } == new { eng.Key.IMO_No, eng.Key.SerialNo }
                                            select e).FirstOrDefault();
                         if (engineFound == null)
                         {

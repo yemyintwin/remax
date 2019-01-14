@@ -152,12 +152,14 @@ var vessel = {
                         divHtmlEngine = divHtmlEngine.replace(/{{engineImage}}/g, imageData);
                     }
                 });
-                
-                if (vesEng.engineType.name == "Engine") {
-                    $(divHtmlEngine).appendTo(engineRoot);
-                }
-                else if (vesEng.engineType.name == "Generator") {
-                    $(divHtmlEngine).appendTo(generatorRoot);
+
+                if (vesEng && vesEng.engineType && vesEng.engineType.name) {
+                    if (vesEng.engineType.name == "Engine") {
+                        $(divHtmlEngine).appendTo(engineRoot);
+                    }
+                    else if (vesEng.engineType.name == "Generator") {
+                        $(divHtmlEngine).appendTo(generatorRoot);
+                    }
                 }
             });
         });
