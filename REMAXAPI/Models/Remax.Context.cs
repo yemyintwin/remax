@@ -49,7 +49,6 @@ namespace REMAXAPI.Models
         public virtual DbSet<UserLogin> UserLogins { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vessel> Vessels { get; set; }
-        public virtual DbSet<FilteredAccount> FilteredAccounts { get; set; }
         public virtual DbSet<GearboxModel> GearboxModels { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }

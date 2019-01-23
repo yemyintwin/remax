@@ -32,6 +32,7 @@ namespace REMAXAPI.Models
         public Nullable<decimal> InsulationTempRise { get; set; }
         public string IPRating { get; set; }
         public string Mounting { get; set; }
+        public Nullable<int> AlertEmail { get; set; }
         public Nullable<int> Status { get; set; }
         public System.Guid CreatedBy { get; set; }
         public System.DateTime CreatedOn { get; set; }

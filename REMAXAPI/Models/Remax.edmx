@@ -112,6 +112,7 @@
           <Property Name="InsulationTempRise" Type="decimal" Precision="18" Scale="2" />
           <Property Name="IPRating" Type="nvarchar" MaxLength="100" />
           <Property Name="Mounting" Type="nvarchar" MaxLength="100" />
+          <Property Name="AlertEmail" Type="int" />
           <Property Name="Status" Type="int" />
           <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -303,21 +304,6 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="FilteredAccount">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="AccountID" />
-          </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="AccountID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" />
-          <Property Name="PrimaryContact" Type="nvarchar" MaxLength="100" />
-          <Property Name="MainPhone" Type="nvarchar" MaxLength="100" />
-          <Property Name="Fax" Type="nvarchar" MaxLength="100" />
-          <Property Name="Email" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <Association Name="FK_Account_User">
           <End Role="Account" Type="Self.Account" Multiplicity="1" />
@@ -574,17 +560,6 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserUserRole" EntityType="Self.UserUserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vessel" EntityType="Self.Vessel" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FilteredAccount" EntityType="Self.FilteredAccount" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [FilteredAccount].[Id] AS [Id], 
-    [FilteredAccount].[AccountID] AS [AccountID], 
-    [FilteredAccount].[Name] AS [Name], 
-    [FilteredAccount].[PrimaryContact] AS [PrimaryContact], 
-    [FilteredAccount].[MainPhone] AS [MainPhone], 
-    [FilteredAccount].[Fax] AS [Fax], 
-    [FilteredAccount].[Email] AS [Email]
-    FROM [dbo].[FilteredAccount] AS [FilteredAccount]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Account_User" Association="Self.FK_Account_User">
             <End Role="Account" EntitySet="Account" />
             <End Role="User" EntitySet="User" />
@@ -765,6 +740,7 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <Property Name="InsulationTempRise" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="IPRating" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Mounting" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AlertEmail" Type="Int32" />
           <Property Name="Status" Type="Int32" />
           <Property Name="CreatedBy" Type="Guid" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
@@ -955,19 +931,6 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <NavigationProperty Name="Engines" Relationship="Self.FK_Engine_Vessel" FromRole="Vessel" ToRole="Engine" />
           <NavigationProperty Name="ShipClass" Relationship="Self.FK_Vessel_ShipClass" FromRole="Vessel" ToRole="ShipClass" />
           <NavigationProperty Name="ShipType" Relationship="Self.FK_Vessel_ShipType" FromRole="Vessel" ToRole="ShipType" />
-        </EntityType>
-        <EntityType Name="FilteredAccount">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="AccountID" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="AccountID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PrimaryContact" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="MainPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Fax" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Account_User">
           <End Role="Account" Type="Self.Account" Multiplicity="1" />
@@ -1179,7 +1142,6 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <EntitySet Name="UserLogins" EntityType="Self.UserLogin" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
           <EntitySet Name="Vessels" EntityType="Self.Vessel" />
-          <EntitySet Name="FilteredAccounts" EntityType="Self.FilteredAccount" />
           <AssociationSet Name="FK_Account_User" Association="Self.FK_Account_User">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="User" EntitySet="Users" />
@@ -1397,6 +1359,7 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
           <EntitySetMapping Name="Engines">
             <EntityTypeMapping TypeName="REMAXAPI.Models.Engine">
               <MappingFragment StoreEntitySet="Engine">
+                <ScalarProperty Name="AlertEmail" ColumnName="AlertEmail" />
                 <ScalarProperty Name="GearBoxModelID" ColumnName="GearBoxModelID" />
                 <ScalarProperty Name="RPM" ColumnName="RPM" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1592,19 +1555,6 @@ warning 6002: The table/view 'DB_A38003_DEV.dbo.FilteredAccount' does not have a
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FilteredAccounts">
-            <EntityTypeMapping TypeName="REMAXAPI.Models.FilteredAccount">
-              <MappingFragment StoreEntitySet="FilteredAccount">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="PrimaryContact" ColumnName="PrimaryContact" />
-                <ScalarProperty Name="MainPhone" ColumnName="MainPhone" />
-                <ScalarProperty Name="Fax" ColumnName="Fax" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

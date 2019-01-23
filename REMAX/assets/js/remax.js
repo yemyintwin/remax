@@ -7,7 +7,7 @@ var Settings = {
     PageSize: 5,
     TokenKey: 'currentToken',
     UserKey: 'currentUser',
-    MessageLevel: 'info', // info, debug
+    MessageLevel: 'info', // info, debug    
 }
 
 
@@ -37,6 +37,11 @@ var Util = {
     isEmail: function (email) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         return regex.test(email);
+    },
+
+    displayLoading: function(target, show) {
+        var element = $(target);
+        kendo.ui.progress(element, show);
     }
 }
 

@@ -26,7 +26,6 @@
         <EntityTypeShape EntityType="REMAXAPI.Models.UserLogin" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="REMAXAPI.Models.UserRole" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="REMAXAPI.Models.Vessel" Width="1.5" PointX="8" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="REMAXAPI.Models.FilteredAccount" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
         <AssociationConnector Association="REMAXAPI.Models.FK_Account_User" ManuallyRouted="false" />
         <AssociationConnector Association="REMAXAPI.Models.FK_Vessel_OperatorAccount" ManuallyRouted="false" />
         <AssociationConnector Association="REMAXAPI.Models.FK_Vessel_OwnerAccount" ManuallyRouted="false" />

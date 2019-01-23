@@ -221,9 +221,6 @@
     <Compile Include="Models\EngineType.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FilteredAccount.cs">
-      <DependentUpon>Remax.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\GearboxModel.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>

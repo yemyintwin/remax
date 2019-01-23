@@ -9,11 +9,16 @@ var master = {
             }
         }
 
-        master.configure_altMakerGird();
-        master.configure_modelGird();
-        master.configure_gearboxModelGird();
-        master.configure_shipClassesGird();
-        master.configure_shipTypesGird();
+        Util.displayLoading(document.body, true); //show loading and hide afer shipType loaded
+
+        setTimeout(function () {
+            master.configure_altMakerGird();
+            master.configure_modelGird();
+            master.configure_gearboxModelGird();
+            master.configure_shipClassesGird();
+            master.configure_shipTypesGird();
+        }, 100);
+        
     },
 
     configure_altMakerGird: function () {
@@ -675,6 +680,9 @@ var master = {
                         name: { validation: { required: true } }
                     }
                 }
+            },
+            change: function (e) {
+                Util.displayLoading(document.body, false);
             }
         });
 

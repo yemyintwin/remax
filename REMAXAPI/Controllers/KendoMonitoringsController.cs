@@ -168,7 +168,7 @@ namespace REMAXAPI.Controllers
                             try
                             {
                                 DateTime parsedDateTime = DateTime.ParseExact(dateFilter.Value.ToString(), "ddd MMM dd yyyy HH:mm:ss 'GMT'zzz", System.Globalization.CultureInfo.InvariantCulture);
-                                parsedDateTime = parsedDateTime.Date;
+                                parsedDateTime = parsedDateTime.Date.ToUniversalTime();
 
                                 if (f.Operator.ToLower()=="eq")
                                     monitorings = monitorings.Where(m => m.TimeStampDateOnly.HasValue ? m.TimeStampDateOnly == parsedDateTime : false);
@@ -370,10 +370,13 @@ namespace REMAXAPI.Controllers
                 foreach (var c in gaugeChannels)
                 {
                     Monitoring lastValue = await (from m in db.Monitorings
-                                            where m.ChannelNo == c.ChannelNo
+                                            where m.ChannelNo == c.ChannelNo && m.SerialNo == engine.SerialNo
                                             orderby m.TimeStamp descending
                                             select m
                                             ).FirstOrDefaultAsync();
+
+                    if (lastValue == null) continue;
+
                     gaugueViews.Add(new GaugueView {
                         ChannelSetup = c,
                         MonitoringLastValue = lastValue
@@ -403,6 +406,38 @@ namespace REMAXAPI.Controllers
                                         into m1
                                         orderby m1.Key.Hours, m1.Key.HalfHours
                                         select new {
+                                            m1.Key.IMO_No,
+                                            m1.Key.VesselName,
+                                            m1.Key.Hours,
+                                            m1.Key.HalfHours,
+                                            Count = m1.Count()
+                                        }
+                                    ).ToListAsync();
+
+            return Ok(dataCounts);
+        }
+
+        [HttpGet]
+        [Route("api/KendoMonitorings/GetData")]
+        public async Task<IHttpActionResult> GetData(DateTime date)
+        {
+            DateTime today = DateTime.Today;
+            DateTime endOfToday = today.AddDays(1);
+            var dataCounts = await (
+                                        from m in db.Monitorings
+                                        join v in db.Vessels on m.IMO_No equals v.IMO_No
+                                        where m.TimeStamp >= today && m.TimeStamp <= endOfToday
+                                        group m by new
+                                        {
+                                            IMO_No = m.IMO_No,
+                                            VesselName = v.VesselName,
+                                            Hours = SqlFunctions.DatePart("HOUR", m.TimeStamp),
+                                            HalfHours = SqlFunctions.DatePart("HOUR", m.TimeStamp) < 30 ? 0 : 1
+                                        }
+                                        into m1
+                                        orderby m1.Key.Hours, m1.Key.HalfHours
+                                        select new
+                                        {
                                             m1.Key.IMO_No,
                                             m1.Key.VesselName,
                                             m1.Key.Hours,

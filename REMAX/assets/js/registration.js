@@ -82,83 +82,87 @@ var registration = {
             $('.modal:visible').length && $(document.body).addClass('modal-open'); //reset scrollbar setting
         });
 
-        // initializing accounts related
-        try {
-            registration.modules.account = {
-                gridId: '#table_accounts',
-                formId: '#form_acc',
-                dialogId: '#registration_acc',
-                webApiUrl: Settings.WebApiUrl + '/api/KendoAccounts',
-            };
-            registration.retrieveAccounts(); // kendo grid id
-            registration.SubmitAccount(); // Create, Update
-        } catch (e) {
-            console.log(e.message);
-        }
+        Util.displayLoading(document.body, true); //show loading and hide when all channels are loaded
 
-        // initializing users related
-        try {
-            registration.modules.user = {
-                gridId: '#table_users',
-                formId: '#form_user',
-                dialogId: '#registration_user',
-                webApiUrl: Settings.WebApiUrl + '/api/KendoUsers',
-            };
-            registration.retrieveUsers(); // kendo grid id
-            registration.SubmitUser(); // Create, Update
-        } catch (e) {
-            console.log(e.message);
-        }
+        setTimeout(function () {
+            // initializing accounts related
+            try {
+                registration.modules.account = {
+                    gridId: '#table_accounts',
+                    formId: '#form_acc',
+                    dialogId: '#registration_acc',
+                    webApiUrl: Settings.WebApiUrl + '/api/KendoAccounts',
+                };
+                registration.retrieveAccounts(); // kendo grid id
+                registration.SubmitAccount(); // Create, Update
+            } catch (e) {
+                console.log(e.message);
+            }
 
-        // initializing vessel related
-        try {
-            registration.modules.vessel = {
-                gridId: '#table_vessels',
-                formId: '#form_vessel',
-                dialogId: '#registration_vessel',
-                photoFormId: '#form_vessel_photo',
-                photoDialogId:'#registration_vessel_photo',
-                webApiUrl: Settings.WebApiUrl + '/api/KendoVessels',
-            };
-            registration.retrieveVessels(); // kendo grid id
-            registration.SubmitVessel(); // Create, Update
-            registration.VesselPhotoSubmit();
-        } catch (e) {
-            console.log(e.message);
-        }
+            // initializing users related
+            try {
+                registration.modules.user = {
+                    gridId: '#table_users',
+                    formId: '#form_user',
+                    dialogId: '#registration_user',
+                    webApiUrl: Settings.WebApiUrl + '/api/KendoUsers',
+                };
+                registration.retrieveUsers(); // kendo grid id
+                registration.SubmitUser(); // Create, Update
+            } catch (e) {
+                console.log(e.message);
+            }
 
-        // initializing engine related
-        try {
-            registration.modules.engine = {
-                gridId: '#table_engines',
-                formId: '#form_engine',
-                dialogId: '#registration_engine',
-                photoFormId: '#form_engine_photo',
-                photoDialogId: '#registration_engine_photo',
-                webApiUrl: Settings.WebApiUrl + '/api/KendoEngines',
-            };
-            registration.retrieveEngines(); // kendo grid id
-            registration.SubmitEngine(); // Create, Update
-            registration.EnginePhotoSubmit();
-        } catch (e) {
-            console.log(e.message);
-        }
+            // initializing vessel related
+            try {
+                registration.modules.vessel = {
+                    gridId: '#table_vessels',
+                    formId: '#form_vessel',
+                    dialogId: '#registration_vessel',
+                    photoFormId: '#form_vessel_photo',
+                    photoDialogId: '#registration_vessel_photo',
+                    webApiUrl: Settings.WebApiUrl + '/api/KendoVessels',
+                };
+                registration.retrieveVessels(); // kendo grid id
+                registration.SubmitVessel(); // Create, Update
+                registration.VesselPhotoSubmit();
+            } catch (e) {
+                console.log(e.message);
+            }
 
-        // initializing channel related
-        try {
-            registration.modules.channel = {
-                gridId: '#table_channels',
-                formId: '#form_channel',
-                dialogId: '#registration_channel',
-                webApiUrl: Settings.WebApiUrl + '/api/KendoChannels',
-            };
-            registration.retrieveChannels(); // kendo grid id
-            registration.SubmitChannel(); // Create, Update
-        } catch (e) {
-            console.log(e.message);
-        }
+            // initializing engine related
+            try {
+                registration.modules.engine = {
+                    gridId: '#table_engines',
+                    formId: '#form_engine',
+                    dialogId: '#registration_engine',
+                    photoFormId: '#form_engine_photo',
+                    photoDialogId: '#registration_engine_photo',
+                    webApiUrl: Settings.WebApiUrl + '/api/KendoEngines',
+                };
+                registration.retrieveEngines(); // kendo grid id
+                registration.SubmitEngine(); // Create, Update
+                registration.EnginePhotoSubmit();
+            } catch (e) {
+                console.log(e.message);
+            }
 
-        registration.engine_type_OnChange();
+            // initializing channel related
+            try {
+                registration.modules.channel = {
+                    gridId: '#table_channels',
+                    formId: '#form_channel',
+                    dialogId: '#registration_channel',
+                    webApiUrl: Settings.WebApiUrl + '/api/KendoChannels',
+                };
+                registration.retrieveChannels(); // kendo grid id
+                registration.SubmitChannel(); // Create, Update
+            } catch (e) {
+                console.log(e.message);
+            }
+
+            registration.engine_type_OnChange();
+        }, 100);
 
         // Not in use
         //registration.fetchMasterData();
@@ -1082,6 +1086,8 @@ var registration = {
         $('#btnEditVessel').prop('disabled', true);
         $('#btnDelVessel').prop('disabled', true);
         $('#btnUploadVesselPhoto').prop('disabled', true);
+
+        Util.displayLoading(document.body, false); //hide loading
     },
 
     SubmitVesselInitControls: function () {
@@ -1622,6 +1628,23 @@ var registration = {
                 filterable: false,
                 width: 100,
             },
+            {
+                field: "alertEmail",
+                title: "Alert Email",
+                filterable: false,
+                width: 100,
+                template: function (dataItem) {
+                    var display;
+                    switch (dataItem.dataTypeNo) {
+                        case 0: display = "None"; break;
+                        case 1: display = "Owner"; break;
+                        case 2: display = "Operator"; break;
+                        case 3: display = "Both"; break;
+                        default: display = "";
+                    }
+                    return display;
+                }
+            },
         ];
 
         // initialize grid
@@ -1666,7 +1689,11 @@ var registration = {
                 {
                     ctrl: 'engine_alternatorMaker',
                     method: 'ListAllAlternatorMakers'
-                }   
+                },
+                {
+                    ctrl: 'engine_alertEmail',
+                    method: 'ListAllOptionSetByName?groupname=AlertEmails'
+                }
             ];
 
         // Populate dropdown with list of accounts
@@ -1818,7 +1845,7 @@ var registration = {
                             message: 'Mounting must be less than 100 characters long'
                         }
                     }
-                }, 
+                }
             }
         })
         .on('success.form.bv', function (e) {
@@ -1839,6 +1866,7 @@ var registration = {
                 insulationTempRise: $('#engine_insulation').val(),
                 ipRating: $('#engine_iprRate').val(),
                 mounting: $('#engine_mounting').val(),
+                alertEmail: $('#engine_alertEmail').val()
             };
 
             if ($('#engine_type option:selected').text() != 'Engine') {
@@ -1930,6 +1958,7 @@ var registration = {
             $('#engine_insulation').val(selectedItem.insulationTempRise);
             $('#engine_iprRate').val(selectedItem.ipRating);
             $('#engine_mounting').val(selectedItem.mounting);
+            $('#engine_alertEmail').val(selectedItem.alertEmail);
         }
         else {
             $(registration.modules.engine.dialogId).modal('hide');
@@ -2135,7 +2164,10 @@ var registration = {
             sort: [
                 { field: "model.name", dir: "asc" },
                 { field: "channelNo", dir: "asc" }
-            ]
+            ],
+            change: function (e) {
+                Util.displayLoading(document.body, false);
+            }
         });
 
         // column settings

@@ -68,6 +68,7 @@
                     var hIndex = value.hours - 1;
                     var hhIndex = value.halfHours;
 
+                    if (hIndex == -1) hIndex = 0;  // Mid night
                     values[vIndex][hIndex][hhIndex] = value.count;
                     //values[vIndex][hIndex]
                 });

@@ -11,8 +11,11 @@ var vessel = {
                 token = Settings.Token.access_token;
             }
         }
-
-        vessel.retrieveVessels();
+        Util.displayLoading(document.body, true); //show loading
+        setTimeout(function () {
+            vessel.retrieveVessels();
+        }, 100);
+        
     },
 
     retrieveVessels: function () {
@@ -25,7 +28,9 @@ var vessel = {
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'bearer ' + token);
             },
-            success: vessel.formatHtml
+            success: function (result) {
+                vessel.formatHtml(result);
+            }
         });
     },
 
@@ -69,6 +74,9 @@ var vessel = {
             '               <div class=\'col-md-6 col-sm-12 col-xs-12\'>' +
             '                       <div><img src=\'{{image}}\' class=\'img-responsive shadow-depth-2\' style=\'max-width:100%\'></div>' +
             '               </div>' +
+            '           </div>' +
+            '           <div class="row" style="height:20px;"></div>' + // Seperator Row
+            '           <div class="row" id="engines_msg_{{imO_No}}">' +    // Message area (i.e. Error Message)
             '           </div>' +
             '           <div class="row" style="height:20px;"></div>' + // Seperator Row
             '           <div class="row">' +
@@ -130,6 +138,7 @@ var vessel = {
             $(divHtml).appendTo(panelRoot);
 
             // Populating Engines 
+            var msgRoot = $('#engines_msg_' + vesObj.imO_No); // Message area
             var engineRoot = $('#engines_' + vesObj.imO_No); // Engines display root div
             var generatorRoot = $('#generators_' + vesObj.imO_No); // Generators display root div
 
@@ -161,7 +170,14 @@ var vessel = {
                         $(divHtmlEngine).appendTo(generatorRoot);
                     }
                 }
+                else {
+                    var msg = '<div class="col-lg-2 col-md-3 col-sm-6 col-xs-6"><p>Define engine type under registration. Engine serial number : <strong>'
+                        + vesEng.serialNo + '</strong>.</p></div>';
+                    $(msg).appendTo(msgRoot);
+                }
             });
         });
+
+        Util.displayLoading(document.body, false); //hide loading
     }
 }
