@@ -26,10 +26,44 @@ var userprofile = {
     },
 
     getCurrentUser: function () {
-        var url = Settings.WebApiUrl + '/api/User/GetCurrentUser' ;
+        var url = "/api/DropDown/";
+        var dropdownlist =
+            [
+                {
+                    ctrl: 'userParent',
+                    method: 'ListAllAccounts'
+                },
+                {
+                    ctrl: 'userCountry',
+                    method: 'ListAllCountry'
+                }
+            ];
 
+        // Populate dropdown with list of accounts
+        for (var i = 0; i < dropdownlist.length; i++) {
+            var drop = $('#' + dropdownlist[i].ctrl);
+            drop.empty();
+            url = Settings.WebApiUrl + "/api/DropDown/" + dropdownlist[i].method;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                dataType: 'json',
+                async: false,
+                //data: Settings.ClientData,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
+                success: function (data) {
+                    //Process data retrieved
+                    $.each(data, function (key, entry) {
+                        drop.append($('<option></option>').attr('value', entry.id).text(entry.name));
+                    });
+                }
+            });
+        }
+
+        var url = Settings.WebApiUrl + '/api/User/GetCurrentUser' ;
         if (Settings.CurrentUser) {
-            
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -44,11 +78,12 @@ var userprofile = {
                 success: function (d, textStatus, xhr) {
                     $('#id').val(d.id);
                     $('#userName').val(d.fullName);
-                    $('#userParent').val(d.account.name);
+                    $('#userParent').val(d.account.id);
                     $('#userTitle').val(d.jobTitle);
                     $('#userPhone').val(d.businessPhoneNumber);
                     $('#userMobile').val(d.phoneNumber);
                     $('#userEmail').val(d.email);
+                    $('#userCountry').val(d.country);
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     $('#errors').html('');
@@ -139,9 +174,12 @@ var userprofile = {
                 var data = {
                     id: id,
                     fullName: $('#userName').val(),
+                    accountID: $('#userParent').val(),
                     jobTitle: $('#userTitle').val(),
-                    businessPhoneNumber: $('#userPhone').val(),
-                    phoneNumber: $('#userMobile').val()
+                    businessPhoneNumber: $('#userPhone').val(), 
+                    phoneNumber: $('#userMobile').val(),
+                    email: $('#userEmail').val(),
+                    country: $('#userCountry').val(),
                 };
 
                 $.ajax({

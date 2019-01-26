@@ -47,6 +47,7 @@
           <Property Name="UpperLimit" Type="decimal" Precision="18" Scale="2" />
           <Property Name="MonitoringTimer" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DataTypeNo" Type="int" />
+          <Property Name="DocumentURL" Type="nvarchar" MaxLength="2083" />
           <Property Name="Status" Type="int" />
           <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -77,8 +78,19 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Code" Type="char" MaxLength="2" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="CountryTimezone">
+          <Property Name="CountryCode" Type="varchar" MaxLength="2" />
+          <Property Name="CountryName" Type="varchar" MaxLength="100" />
+          <Property Name="TimeZone" Type="varchar" MaxLength="100" />
+          <Property Name="GMTOffset" Type="varchar" MaxLength="50" />
+          <Property Name="EastWest" Type="varchar" MaxLength="1" />
+          <Property Name="Offset" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>-->
         <EntityType Name="DashboardSetting">
           <Key>
             <PropertyRef Name="Id" />
@@ -151,6 +163,7 @@
           <Property Name="ChannelNo" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="ChannelDescription" Type="nvarchar" MaxLength="100" />
           <Property Name="TimeStamp" Type="datetime" Nullable="false" />
+          <Property Name="TimeStampOriginal" Type="nvarchar" MaxLength="100" />
           <Property Name="Value" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Unit" Type="nvarchar" MaxLength="50" />
           <Property Name="Processed" Type="bit" />
@@ -241,6 +254,7 @@
           <Property Name="AccountID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="JobTitle" Type="nvarchar" MaxLength="100" />
           <Property Name="BusinessPhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="uniqueidentifier" />
           <Property Name="IsRootUser" Type="bit" />
           <Property Name="Status" Type="int" />
           <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
@@ -690,6 +704,7 @@
           <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ChartType" Relationship="Self.FK_Channel_ChartType" FromRole="Channel" ToRole="ChartType" />
           <NavigationProperty Name="Model" Relationship="Self.FK_Channel_Model" FromRole="Channel" ToRole="Model" />
+          <Property Name="DocumentURL" Type="String" MaxLength="2083" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ChartType">
           <Key>
@@ -706,6 +721,7 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Vessels" Relationship="Self.FK_Vessel_Country" FromRole="Country" ToRole="Vessel" />
+          <Property Name="Code" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="DashboardSetting">
           <Key>
@@ -790,6 +806,7 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Guid" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="TimeStampOriginal" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OptionSet">
           <Key>
@@ -873,6 +890,7 @@
           <NavigationProperty Name="UserClaims" Relationship="Self.FK_UserClaim_User" FromRole="User" ToRole="UserClaim" />
           <NavigationProperty Name="UserLogins" Relationship="Self.FK_UserLogin_User" FromRole="User" ToRole="UserLogin" />
           <NavigationProperty Name="UserRoles" Relationship="Self.UserUserRole" FromRole="User" ToRole="UserRole" />
+          <Property Name="Country" Type="Guid" />
         </EntityType>
         <EntityType Name="UserClaim">
           <Key>
@@ -1306,6 +1324,7 @@
           <EntitySetMapping Name="Channels">
             <EntityTypeMapping TypeName="REMAXAPI.Models.Channel">
               <MappingFragment StoreEntitySet="Channel">
+                <ScalarProperty Name="DocumentURL" ColumnName="DocumentURL" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ChannelNo" ColumnName="ChannelNo" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1339,6 +1358,7 @@
           <EntitySetMapping Name="Countries">
             <EntityTypeMapping TypeName="REMAXAPI.Models.Country">
               <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
@@ -1406,6 +1426,7 @@
           <EntitySetMapping Name="Monitorings">
             <EntityTypeMapping TypeName="REMAXAPI.Models.Monitoring">
               <MappingFragment StoreEntitySet="Monitoring">
+                <ScalarProperty Name="TimeStampOriginal" ColumnName="TimeStampOriginal" />
                 <ScalarProperty Name="ProcessedError" ColumnName="ProcessedError" />
                 <ScalarProperty Name="Processed" ColumnName="Processed" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1481,6 +1502,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="REMAXAPI.Models.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />

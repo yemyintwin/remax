@@ -33,6 +33,7 @@ namespace REMAXAPI.Models
         public System.DateTime CreatedOn { get; set; }
         public System.Guid ModifiedBy { get; set; }
         public System.DateTime ModifiedOn { get; set; }
+        public string DocumentURL { get; set; }
     
         public virtual ChartType ChartType { get; set; }
         public virtual Model Model { get; set; }

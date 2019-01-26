@@ -621,6 +621,8 @@ var registration = {
     },
 
     SubmitUserInitControls: function () {
+        /*
+        
         // initailize dropdown
         var dropdownParent = $('#userParent');
         dropdownParent.empty();
@@ -649,7 +651,43 @@ var registration = {
                 });
             }
         });
+        */
 
+        var url = "/api/DropDown/";
+        var dropdownlist =
+            [
+                {
+                    ctrl: 'userParent',
+                    method: 'ListAllAccounts'
+                },
+                {
+                    ctrl: 'userCountry',
+                    method: 'ListAllCountry'
+                }
+            ];
+
+        // Populate dropdown with list of accounts
+        for (var i = 0; i < dropdownlist.length; i++) {
+            var drop = $('#' + dropdownlist[i].ctrl);
+            drop.empty();
+            url = Settings.WebApiUrl + "/api/DropDown/" + dropdownlist[i].method;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                dataType: 'json',
+                async: false,
+                //data: Settings.ClientData,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                },
+                success: function (data) {
+                    //Process data retrieved
+                    $.each(data, function (key, entry) {
+                        drop.append($('<option></option>').attr('value', entry.id).text(entry.name));
+                    });
+                }
+            });
+        }
     },
 
     SubmitUser: function () {
@@ -734,7 +772,8 @@ var registration = {
                 jobTitle: $('#userTitle').val(),
                 businessPhoneNumber: $('#userPhone').val(),
                 phoneNumber: $('#userMobile').val(),
-                email: $('#userEmail').val()
+                email: $('#userEmail').val(),
+                country: $('#userCountry').val(),
             };
             var requestType = "POST"; // Create
 
@@ -801,6 +840,7 @@ var registration = {
             $('#userPhone').val(selectedItem.businessPhoneNumber);
             $('#userMobile').val(selectedItem.phoneNumber);
             $('#userEmail').val(selectedItem.email);
+            $('#userCountry').val(selectedItem.country);
         }
         else {
             $(registration.modules.user.dialogId).modal('hide');
@@ -2262,6 +2302,20 @@ var registration = {
                     return display;
                 }
             },
+            {
+                field: "documentURL",
+                title: "Document URL",
+                filterable: false,
+                width: 150,
+                template: function (dataItem) {
+                    if (dataItem && dataItem.documentURL) {
+                        return "<a href='" + kendo.htmlEncode(dataItem.documentURL) + "' target='_blank'>Open document...</a>";
+                    }
+                    else {
+                        return '';
+                    } 
+                }
+            },
         ];
 
         // initialize grid
@@ -2434,6 +2488,7 @@ var registration = {
                     upperLimit: $('#channel_upperLimit').val(),
                     monitoringTimer: $('#channel_monitor').val(),
                     dataTypeNo: $('#channel_dataType').val(),
+                    documentURL: $('#channel_documentUrl').val(),
                 };
                 var requestType = "POST"; // Create
 

@@ -28,5 +28,6 @@ namespace REMAXAPI.Models
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.Guid> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
+        public string TimeStampOriginal { get; set; }
     }
 }

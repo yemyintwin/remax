@@ -12,12 +12,16 @@
         if (Settings.Counts && Settings.Counts.generator) $("count_generators").html(Settings.Counts.vessel)
         else $("count_generators").html(0);
 
-        index.createChart();
-        $(document).bind("kendo:skinChange", index.createChart);
+        setTimeout(function () {
+            if (Settings && Settings.Token && Settings.Token.access_token) {
+                index.createChart();
+                $(document).bind("kendo:skinChange", index.createChart);
 
-        $(window).resize(function () {
-            $("#dataChart").data("kendoChart").refresh();
-        });
+                $(window).resize(function () {
+                    $("#dataChart").data("kendoChart").refresh();
+                });
+            }
+        }, 3000);        
     },
 
     createChart: function () {
