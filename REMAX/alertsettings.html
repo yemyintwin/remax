@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prototype</title>
+    <title>Alerts and Settings</title>
 
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrapValidator.min.css">
@@ -37,9 +37,13 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/bootstrap/js/bootstrapValidator.min.js"></script>
     <script src="assets/bootstrap_datetime/js/bootstrap-datepicker.min.js"></script>
+
+    <script src="assets/js/remax.js?v=190220_1827"></script>
+    <script src="assets/js/alertsettings.js?v=190220_1827"></script>
 </head>
 
 <body>
+
     <div id="wrapper">
         <div w3-include-html="nav.html"></div>
         <div id="page-wrapper" style="min-height: 731px;">
@@ -51,6 +55,7 @@
                 </div>
             </div>
             <div class="row">
+
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -59,103 +64,23 @@
                         <div class="panel-body">
                             <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                                 <div class="row">
-                                    <div class="col-md-6 col-sm-6">
-                                        <div id="table_length" class="dataTables_length">
-                                            <span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
-                                                <option value="10" selected>10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div id="table_filter" class="dataTables_filter">
-                                            <label>
-                                                Search Engine Model:
-                                                <input type="search" class="form-control input-sm" placeholder aria-controls="dataTables-example" />
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-12">
-                                        <div class="table-responsive">
-                                            <table class="table table table-striped table-bordered table-hover dataTable no-footer dtr-inline">
-                                                <thead>
-                                                    <tr role="row">
-                                                        <th class="sorting_asc" aria-controls="dataTables-example" aria-sort="ascending" aria-label="Account Name">Engine Model</th>
-                                                        <th class="sorting">Channel No.</th>
-                                                        <th class="sorting">Condition</th>
-                                                        <th class="sorting">Value</th>
-                                                        <th class="sorting">Alert Level</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr class="gradeA odd" role="row">
-                                                        <td>DK620E301<br></td>
-                                                        <td>0106</td>
-                                                        <td>Greater Than Or Equal</td>
-                                                        <td>1300</td>
-                                                        <td>Critical</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>DK620E301<br></td>
-                                                        <td>0106<br></td>
-                                                        <td>Greater Than<br></td>
-                                                        <td>1200</td>
-                                                        <td>Warning</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>DK620E301<br></td>
-                                                        <td>0161</td>
-                                                        <td>Greater Than Or Equal<br></td>
-                                                        <td>480</td>
-                                                        <td>Warning</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>DK620E301<br></td>
-                                                        <td>0162</td>
-                                                        <td>Greater Than Or Equal<br></td>
-                                                        <td>480</td>
-                                                        <td>Warning</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>DK620E301<br></td>
-                                                        <td>0163</td>
-                                                        <td>Greater Than Or Equal<br></td>
-                                                        <td>480</td>
-                                                        <td>Warning</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 col-sm-12 col-xs-12">
-                                        <div class="dataTables_info"><span>Showing 1 to 5 of 12</span></div>
-                                    </div>
-                                    <div class="col-md-8 col-sm-12 col-xs-12">
-                                        <div class="dataTables_paginate paging_simple_numbers">
-                                            <ul class="pagination">
-                                                <li class="paginate_button previous disabled"><a href="#">Previous</a></li>
-                                                <li class="paginate_button active"><a href="#">1</a></li>
-                                                <li class="paginate_button"><a href="#">2</a></li>
-                                                <li class="paginate_button"><a href="#">3</a></li>
-                                                <li class="paginate_button next"><a href="#">Next</a></li>
-                                            </ul>
-                                        </div>
+                                        <div id="table_alert_setting"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="panel-footer">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_alert_setting" id="btnNewSetting" onclick="alertSettings.btnNewSetting_OnClick();">New</button>
+                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_alert_setting" id="btnEditSetting" onclick="alertSettings.btnEditSetting_OnClick();">Edit</button>
+                                <button class="btn btn-default" type="button" id="btnDelSetting" onclick="alertSettings.btnDelSetting_OnClick();">Delete</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="btn-group" role="group"><button class="btn btn-default" type="button" data-toggle="modal" data-target="#registration_alert">New</button><button class="btn btn-default" type="button">Edit</button><button class="btn btn-default" type="button">Delete</button></div>
-                </div>
             </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <div style="height:20px"></div>
@@ -273,363 +198,38 @@
             </div>
         </div>
     </div>
+    
+
+    <!--Model dialog-->
     <div>
-        <div class="modal fade" role="dialog" tabindex="-1" id="registration_alert" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal fade" role="dialog" tabindex="-1" id="registration_alert_setting" aria-labelledby="registrationLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
-                            <em class="fa fa-cog fa-1x"></em>
-                            Add alert setting
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal" role="form">
+                    <form class="form-horizontal" role="form" id="form_alertSetting" method="post">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
+                                <em class="fa fa-cog fa-1x"></em>
+                                Add alert setting
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="id" name="id" />
                             <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="engineModal">Engine Modal</label>
+                                <label class="col-sm-4 control-label" for="engineModal">Engine Modal</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="engineModel">
-                                        <option>DE618EXXXX</option>
-                                        <option>DK620ZXXXX</option>
-                                        <option>DE623ZXXXX</option>
-                                        <option>DK626ZXXXX</option>
-                                        <option>DK628ZXXXX</option>
-                                        <option>DK828ZXXXX</option>
-                                        <option>DC632ZXXXX</option>
-                                        <option>DE633ZXXXX</option>
-                                        <option>DE833ZXXXX</option>
-                                        <option>DK636ZXXXX</option>
-                                        <option>DK1236ZXXXX</option>
-                                        <option>DC1632ZXXXX</option>
-                                        <option>DE628ZXXXX</option>
-                                        <option>DE828ZXXXX</option>
-                                    </select>
+                                    <select class="form-control" id="engineModel"></select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="channelNo">Channel No.</label>
+                                <label class="col-sm-4 control-label" for="channelNo">Channel No.</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="channelNo">
-                                        <option>101</option>
-                                        <option>102</option>
-                                        <option>103</option>
-                                        <option>104</option>
-                                        <option>105</option>
-                                        <option>106</option>
-                                        <option>107</option>
-                                        <option>108</option>
-                                        <option>109</option>
-                                        <option>110</option>
-                                        <option>111</option>
-                                        <option>112</option>
-                                        <option>113</option>
-                                        <option>114</option>
-                                        <option>115</option>
-                                        <option>116</option>
-                                        <option>117</option>
-                                        <option>118</option>
-                                        <option>119</option>
-                                        <option>120</option>
-                                        <option>121</option>
-                                        <option>122</option>
-                                        <option>123</option>
-                                        <option>124</option>
-                                        <option>125</option>
-                                        <option>126</option>
-                                        <option>127</option>
-                                        <option>128</option>
-                                        <option>129</option>
-                                        <option>130</option>
-                                        <option>131</option>
-                                        <option>132</option>
-                                        <option>133</option>
-                                        <option>134</option>
-                                        <option>135</option>
-                                        <option>136</option>
-                                        <option>137</option>
-                                        <option>138</option>
-                                        <option>139</option>
-                                        <option>140</option>
-                                        <option>141</option>
-                                        <option>142</option>
-                                        <option>143</option>
-                                        <option>144</option>
-                                        <option>145</option>
-                                        <option>146</option>
-                                        <option>147</option>
-                                        <option>148</option>
-                                        <option>149</option>
-                                        <option>150</option>
-                                        <option>151</option>
-                                        <option>152</option>
-                                        <option>153</option>
-                                        <option>154</option>
-                                        <option>155</option>
-                                        <option>156</option>
-                                        <option>157</option>
-                                        <option>158</option>
-                                        <option>159</option>
-                                        <option>160</option>
-                                        <option>161</option>
-                                        <option>162</option>
-                                        <option>163</option>
-                                        <option>164</option>
-                                        <option>165</option>
-                                        <option>166</option>
-                                        <option>167</option>
-                                        <option>168</option>
-                                        <option>169</option>
-                                        <option>170</option>
-                                        <option>171</option>
-                                        <option>172</option>
-                                        <option>173</option>
-                                        <option>174</option>
-                                        <option>175</option>
-                                        <option>176</option>
-                                        <option>177</option>
-                                        <option>178</option>
-                                        <option>179</option>
-                                        <option>180</option>
-                                        <option>181</option>
-                                        <option>182</option>
-                                        <option>183</option>
-                                        <option>184</option>
-                                        <option>185</option>
-                                        <option>186</option>
-                                        <option>187</option>
-                                        <option>188</option>
-                                        <option>189</option>
-                                        <option>190</option>
-                                        <option>191</option>
-                                        <option>192</option>
-                                        <option>193</option>
-                                        <option>194</option>
-                                        <option>195</option>
-                                        <option>196</option>
-                                        <option>197</option>
-                                        <option>198</option>
-                                        <option>199</option>
-                                        <option>201</option>
-                                        <option>202</option>
-                                        <option>203</option>
-                                        <option>204</option>
-                                        <option>205</option>
-                                        <option>206</option>
-                                        <option>207</option>
-                                        <option>208</option>
-                                        <option>209</option>
-                                        <option>210</option>
-                                        <option>211</option>
-                                        <option>212</option>
-                                        <option>213</option>
-                                        <option>214</option>
-                                        <option>215</option>
-                                        <option>216</option>
-                                        <option>217</option>
-                                        <option>218</option>
-                                        <option>219</option>
-                                        <option>220</option>
-                                        <option>221</option>
-                                        <option>222</option>
-                                        <option>223</option>
-                                        <option>224</option>
-                                        <option>225</option>
-                                        <option>226</option>
-                                        <option>227</option>
-                                        <option>228</option>
-                                        <option>229</option>
-                                        <option>230</option>
-                                        <option>231</option>
-                                        <option>232</option>
-                                        <option>233</option>
-                                        <option>234</option>
-                                        <option>235</option>
-                                        <option>236</option>
-                                        <option>237</option>
-                                        <option>238</option>
-                                        <option>239</option>
-                                        <option>240</option>
-                                        <option>241</option>
-                                        <option>242</option>
-                                        <option>243</option>
-                                        <option>244</option>
-                                        <option>245</option>
-                                        <option>246</option>
-                                        <option>247</option>
-                                        <option>248</option>
-                                        <option>249</option>
-                                        <option>250</option>
-                                        <option>251</option>
-                                        <option>252</option>
-                                        <option>253</option>
-                                        <option>254</option>
-                                        <option>255</option>
-                                        <option>256</option>
-                                        <option>257</option>
-                                        <option>258</option>
-                                        <option>259</option>
-                                        <option>260</option>
-                                        <option>261</option>
-                                        <option>262</option>
-                                        <option>263</option>
-                                        <option>264</option>
-                                        <option>265</option>
-                                        <option>266</option>
-                                        <option>267</option>
-                                        <option>268</option>
-                                        <option>269</option>
-                                        <option>270</option>
-                                        <option>271</option>
-                                        <option>272</option>
-                                        <option>273</option>
-                                        <option>274</option>
-                                        <option>275</option>
-                                        <option>276</option>
-                                        <option>277</option>
-                                        <option>278</option>
-                                        <option>279</option>
-                                        <option>280</option>
-                                        <option>281</option>
-                                        <option>282</option>
-                                        <option>283</option>
-                                        <option>284</option>
-                                        <option>285</option>
-                                        <option>286</option>
-                                        <option>287</option>
-                                        <option>288</option>
-                                        <option>289</option>
-                                        <option>290</option>
-                                        <option>291</option>
-                                        <option>292</option>
-                                        <option>293</option>
-                                        <option>294</option>
-                                        <option>295</option>
-                                        <option>296</option>
-                                        <option>297</option>
-                                        <option>298</option>
-                                        <option>299</option>
-                                        <option>301</option>
-                                        <option>302</option>
-                                        <option>303</option>
-                                        <option>304</option>
-                                        <option>305</option>
-                                        <option>306</option>
-                                        <option>307</option>
-                                        <option>308</option>
-                                        <option>309</option>
-                                        <option>310</option>
-                                        <option>311</option>
-                                        <option>312</option>
-                                        <option>313</option>
-                                        <option>314</option>
-                                        <option>315</option>
-                                        <option>401</option>
-                                        <option>402</option>
-                                        <option>403</option>
-                                        <option>404</option>
-                                        <option>405</option>
-                                        <option>406</option>
-                                        <option>407</option>
-                                        <option>408</option>
-                                        <option>409</option>
-                                        <option>410</option>
-                                        <option>411</option>
-                                        <option>412</option>
-                                        <option>413</option>
-                                        <option>414</option>
-                                        <option>415</option>
-                                        <option>501</option>
-                                        <option>502</option>
-                                        <option>503</option>
-                                        <option>504</option>
-                                        <option>505</option>
-                                        <option>506</option>
-                                        <option>507</option>
-                                        <option>508</option>
-                                        <option>509</option>
-                                        <option>510</option>
-                                        <option>511</option>
-                                        <option>512</option>
-                                        <option>513</option>
-                                        <option>514</option>
-                                        <option>515</option>
-                                        <option>601</option>
-                                        <option>602</option>
-                                        <option>603</option>
-                                        <option>604</option>
-                                        <option>605</option>
-                                        <option>606</option>
-                                        <option>607</option>
-                                        <option>608</option>
-                                        <option>609</option>
-                                        <option>610</option>
-                                        <option>611</option>
-                                        <option>612</option>
-                                        <option>613</option>
-                                        <option>614</option>
-                                        <option>615</option>
-                                        <option>616</option>
-                                        <option>617</option>
-                                        <option>618</option>
-                                        <option>619</option>
-                                        <option>620</option>
-                                        <option>621</option>
-                                        <option>622</option>
-                                        <option>623</option>
-                                        <option>624</option>
-                                        <option>625</option>
-                                        <option>626</option>
-                                        <option>627</option>
-                                        <option>628</option>
-                                        <option>629</option>
-                                        <option>630</option>
-                                        <option>701</option>
-                                        <option>702</option>
-                                        <option>703</option>
-                                        <option>704</option>
-                                        <option>705</option>
-                                        <option>706</option>
-                                        <option>707</option>
-                                        <option>708</option>
-                                        <option>709</option>
-                                        <option>710</option>
-                                        <option>711</option>
-                                        <option>712</option>
-                                        <option>713</option>
-                                        <option>714</option>
-                                        <option>715</option>
-                                        <option>716</option>
-                                        <option>717</option>
-                                        <option>718</option>
-                                        <option>719</option>
-                                        <option>720</option>
-                                        <option>721</option>
-                                        <option>722</option>
-                                        <option>723</option>
-                                        <option>724</option>
-                                        <option>725</option>
-                                        <option>726</option>
-                                        <option>727</option>
-                                        <option>728</option>
-                                        <option>729</option>
-                                        <option>730</option>
-                                    </select>
+                                    <select class="form-control" id="channelNo"></select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="condition">Condition</label>
+                                <label class="col-sm-4 control-label" for="condition">Condition</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="condition">
-                                        <option>Equal</option>
-                                        <option>Note Equal</option>
-                                        <option>Less Than</option>
-                                        <option>Less Than Or Equal</option>
-                                        <option>Greater Than</option>
-                                        <option>Greater Than or Equal</option>
-                                    </select>
+                                    <select class="form-control" id="condition"></select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -641,33 +241,34 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label"
-                                       for="level">Alert Level</label>
+                                <label class="col-sm-4 control-label" for="level">Alert Level</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="level">
-                                        <option>Information</option>
-                                        <option>Warning</option>
-                                        <option>Error</option>
-                                        <option>Critical</option>
-                                    </select>
+                                    <select class="form-control" id="level"></select>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button" data-dismiss="modal">Save</button></div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit" id="btnSettingSubmit">Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div><div class="footer-basic footer-remax">
+    </div>
+    
+    <div class="footer-basic footer-remax">
         <footer>
             <div w3-include-html="footer.html"></div>
         </footer>
     </div>
+
     <script>
         includeHTML();
 
         $(document).ready(function () {
-            
+            alertSettings.onload();
         });
     </script>
 </body>

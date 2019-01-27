@@ -22,6 +22,17 @@
           <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="AlertSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EngineModelID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ChannelID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Condition" Type="int" />
+          <Property Name="Value" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AlertLevel" Type="int" />
+        </EntityType>
         <EntityType Name="AlternatorMaker">
           <Key>
             <PropertyRef Name="Id" />
@@ -81,16 +92,18 @@
           <Property Name="Code" Type="char" MaxLength="2" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
         <EntityType Name="CountryTimezone">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CountryCode" Type="varchar" MaxLength="2" />
           <Property Name="CountryName" Type="varchar" MaxLength="100" />
           <Property Name="TimeZone" Type="varchar" MaxLength="100" />
           <Property Name="GMTOffset" Type="varchar" MaxLength="50" />
           <Property Name="EastWest" Type="varchar" MaxLength="1" />
           <Property Name="Offset" Type="numeric" Precision="18" Scale="0" />
-        </EntityType>-->
+        </EntityType>
         <EntityType Name="DashboardSetting">
           <Key>
             <PropertyRef Name="Id" />
@@ -168,6 +181,8 @@ warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a
           <Property Name="Unit" Type="nvarchar" MaxLength="50" />
           <Property Name="Processed" Type="bit" />
           <Property Name="ProcessedError" Type="nvarchar(max)" />
+          <Property Name="DataRecord" Type="nvarchar" MaxLength="2000" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="256" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="ModifiedBy" Type="uniqueidentifier" />
@@ -328,6 +343,30 @@ warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlertSetting_Channel">
+          <End Role="Channel" Type="Self.Channel" Multiplicity="1" />
+          <End Role="AlertSetting" Type="Self.AlertSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Channel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlertSetting">
+              <PropertyRef Name="ChannelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlertSetting_Model">
+          <End Role="Model" Type="Self.Model" Multiplicity="1" />
+          <End Role="AlertSetting" Type="Self.AlertSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlertSetting">
+              <PropertyRef Name="EngineModelID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -550,11 +589,13 @@ warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a
         </Function>
         <EntityContainer Name="REMAXAPIModelsStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlertSetting" EntityType="Self.AlertSetting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlternatorMaker" EntityType="Self.AlternatorMaker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Channel" EntityType="Self.Channel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChartType" EntityType="Self.ChartType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CountryTimezone" EntityType="Self.CountryTimezone" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DashboardSetting" EntityType="Self.DashboardSetting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Engine" EntityType="Self.Engine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EngineType" EntityType="Self.EngineType" Schema="dbo" store:Type="Tables" />
@@ -577,6 +618,14 @@ warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a
           <AssociationSet Name="FK_Account_User" Association="Self.FK_Account_User">
             <End Role="Account" EntitySet="Account" />
             <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlertSetting_Channel" Association="Self.FK_AlertSetting_Channel">
+            <End Role="Channel" EntitySet="Channel" />
+            <End Role="AlertSetting" EntitySet="AlertSetting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlertSetting_Model" Association="Self.FK_AlertSetting_Model">
+            <End Role="Model" EntitySet="Model" />
+            <End Role="AlertSetting" EntitySet="AlertSetting" />
           </AssociationSet>
           <AssociationSet Name="FK_Channel_ChartType" Association="Self.FK_Channel_ChartType">
             <End Role="ChartType" EntitySet="ChartType" />
@@ -705,6 +754,7 @@ warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a
           <NavigationProperty Name="ChartType" Relationship="Self.FK_Channel_ChartType" FromRole="Channel" ToRole="ChartType" />
           <NavigationProperty Name="Model" Relationship="Self.FK_Channel_Model" FromRole="Channel" ToRole="Model" />
           <Property Name="DocumentURL" Type="String" MaxLength="2083" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AlertSettings" Relationship="REMAXAPI.Models.FK_AlertSetting_Channel" FromRole="Channel" ToRole="AlertSetting" />
         </EntityType>
         <EntityType Name="ChartType">
           <Key>
@@ -787,6 +837,7 @@ warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a
           <NavigationProperty Name="Channels" Relationship="Self.FK_Channel_Model" FromRole="Model" ToRole="Channel" />
           <NavigationProperty Name="Engines" Relationship="Self.FK_Engine_Model" FromRole="Model" ToRole="Engine" />
           <NavigationProperty Name="EngineType" Relationship="Self.FK_Model_EngineType" FromRole="Model" ToRole="EngineType" />
+          <NavigationProperty Name="AlertSettings" Relationship="REMAXAPI.Models.FK_AlertSetting_Model" FromRole="Model" ToRole="AlertSetting" />
         </EntityType>
         <EntityType Name="Monitoring">
           <Key>
@@ -798,15 +849,17 @@ warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a
           <Property Name="ChannelNo" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
           <Property Name="ChannelDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="TimeStamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeStampOriginal" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Processed" Type="Boolean" />
           <Property Name="ProcessedError" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DataRecord" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="FileName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="Guid" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Guid" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
-          <Property Name="TimeStampOriginal" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OptionSet">
           <Key>
@@ -881,6 +934,7 @@ warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a
           <Property Name="JobTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="BusinessPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsRootUser" Type="Boolean" />
+          <Property Name="Country" Type="Guid" />
           <Property Name="Status" Type="Int32" />
           <Property Name="CreatedBy" Type="Guid" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
@@ -890,7 +944,6 @@ warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a
           <NavigationProperty Name="UserClaims" Relationship="Self.FK_UserClaim_User" FromRole="User" ToRole="UserClaim" />
           <NavigationProperty Name="UserLogins" Relationship="Self.FK_UserLogin_User" FromRole="User" ToRole="UserLogin" />
           <NavigationProperty Name="UserRoles" Relationship="Self.UserUserRole" FromRole="User" ToRole="UserRole" />
-          <Property Name="Country" Type="Guid" />
         </EntityType>
         <EntityType Name="UserClaim">
           <Key>
@@ -1236,6 +1289,16 @@ warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a
           </AssociationSet>
           <EntitySet Name="Clients" EntityType="REMAXAPI.Models.Client" />
           <EntitySet Name="RefreshTokens" EntityType="REMAXAPI.Models.RefreshToken" />
+          <EntitySet Name="AlertSettings" EntityType="REMAXAPI.Models.AlertSetting" />
+          <AssociationSet Name="FK_AlertSetting_Channel" Association="REMAXAPI.Models.FK_AlertSetting_Channel">
+            <End Role="Channel" EntitySet="Channels" />
+            <End Role="AlertSetting" EntitySet="AlertSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlertSetting_Model" Association="REMAXAPI.Models.FK_AlertSetting_Model">
+            <End Role="Model" EntitySet="Models" />
+            <End Role="AlertSetting" EntitySet="AlertSettings" />
+          </AssociationSet>
+          <EntitySet Name="CountryTimezones" EntityType="REMAXAPI.Models.CountryTimezone" />
         </EntityContainer>
         <ComplexType Name="sp_ResourcePermission_Result">
           <Property Type="Guid" Name="User_Id" Nullable="true" />
@@ -1288,6 +1351,55 @@ warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a
           <Property Name="IssuedUtc" Type="DateTime" Precision="3" />
           <Property Name="ExpiresUtc" Type="DateTime" Precision="3" />
           <Property Name="ProtectedTicket" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AlertSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="EngineModelID" Type="Guid" Nullable="false" />
+          <Property Name="ChannelID" Type="Guid" Nullable="false" />
+          <Property Name="Condition" Type="Int32" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Channel" Relationship="REMAXAPI.Models.FK_AlertSetting_Channel" FromRole="AlertSetting" ToRole="Channel" />
+          <NavigationProperty Name="Model" Relationship="REMAXAPI.Models.FK_AlertSetting_Model" FromRole="AlertSetting" ToRole="Model" />
+          <Property Name="AlertLevel" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_AlertSetting_Channel">
+          <End Type="REMAXAPI.Models.Channel" Role="Channel" Multiplicity="1" />
+          <End Type="REMAXAPI.Models.AlertSetting" Role="AlertSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Channel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlertSetting">
+              <PropertyRef Name="ChannelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlertSetting_Model">
+          <End Type="REMAXAPI.Models.Model" Role="Model" Multiplicity="1" />
+          <End Type="REMAXAPI.Models.AlertSetting" Role="AlertSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlertSetting">
+              <PropertyRef Name="EngineModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CountryTimezone">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="CountryCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CountryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TimeZone" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GMTOffset" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EastWest" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Offset" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1426,6 +1538,8 @@ warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a
           <EntitySetMapping Name="Monitorings">
             <EntityTypeMapping TypeName="REMAXAPI.Models.Monitoring">
               <MappingFragment StoreEntitySet="Monitoring">
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="DataRecord" ColumnName="DataRecord" />
                 <ScalarProperty Name="TimeStampOriginal" ColumnName="TimeStampOriginal" />
                 <ScalarProperty Name="ProcessedError" ColumnName="ProcessedError" />
                 <ScalarProperty Name="Processed" ColumnName="Processed" />
@@ -1630,6 +1744,31 @@ warning 6013: The table/view 'DB_A38003_DEV.dbo.CountryTimezone' does not have a
                 <ScalarProperty Name="IssuedUtc" ColumnName="IssuedUtc" />
                 <ScalarProperty Name="ClientId" ColumnName="ClientId" />
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlertSettings">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.AlertSetting">
+              <MappingFragment StoreEntitySet="AlertSetting">
+                <ScalarProperty Name="AlertLevel" ColumnName="AlertLevel" />
+                <ScalarProperty Name="Condition" ColumnName="Condition" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="ChannelID" ColumnName="ChannelID" />
+                <ScalarProperty Name="EngineModelID" ColumnName="EngineModelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CountryTimezones">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.CountryTimezone">
+              <MappingFragment StoreEntitySet="CountryTimezone">
+                <ScalarProperty Name="Offset" ColumnName="Offset" />
+                <ScalarProperty Name="EastWest" ColumnName="EastWest" />
+                <ScalarProperty Name="GMTOffset" ColumnName="GMTOffset" />
+                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

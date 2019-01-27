@@ -20,14 +20,16 @@ namespace REMAXAPI.Models
         public string ChannelNo { get; set; }
         public string ChannelDescription { get; set; }
         public System.DateTime TimeStamp { get; set; }
+        public string TimeStampOriginal { get; set; }
         public string Value { get; set; }
         public string Unit { get; set; }
         public Nullable<bool> Processed { get; set; }
         public string ProcessedError { get; set; }
+        public string DataRecord { get; set; }
+        public string FileName { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.Guid> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
-        public string TimeStampOriginal { get; set; }
     }
 }

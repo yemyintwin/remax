@@ -122,7 +122,25 @@ namespace REMAXAPI.Controllers
                                 }).ToArray<object>();
             return objects;
         }
-        
+
+        [HttpGet]
+        [Route("api/DropDown/ListAllChannelByEngineModelId")]
+        public Object ListAllChannelByEngineModelId(Guid engineModelid)
+        {
+            if (engineModelid == null) engineModelid = Guid.Empty;
+            Guid? modelId = engineModelid;
+
+            Object[] objects = (from ch in db.Channels
+                                where ch.ModelID == modelId
+                                orderby ch.Name
+                                select new
+                                {
+                                    Id = ch.Id,
+                                    Name = ch.Name
+                                }).ToArray<object>();
+            return objects;
+        }
+
         [HttpGet]
         [Route("api/DropDown/ListAllEngineTypes")]
         public Object ListAllEngineTypes()

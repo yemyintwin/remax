@@ -14,6 +14,12 @@ namespace REMAXAPI.Models
     
     public partial class Channel
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Channel()
+        {
+            this.AlertSettings = new HashSet<AlertSetting>();
+        }
+    
         public System.Guid Id { get; set; }
         public string ChannelNo { get; set; }
         public string Name { get; set; }
@@ -37,5 +43,7 @@ namespace REMAXAPI.Models
     
         public virtual ChartType ChartType { get; set; }
         public virtual Model Model { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlertSetting> AlertSettings { get; set; }
     }
 }

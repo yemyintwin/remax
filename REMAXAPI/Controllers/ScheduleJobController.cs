@@ -182,7 +182,7 @@ namespace REMAXAPI.Controllers
                     // Channel Description
                     if (!string.IsNullOrWhiteSpace(raw[3])) monitor.ChannelDescription= RemoveDoubleQuotes(raw[3]);
                     // TimeStamp
-                    if (!string.IsNullOrWhiteSpace(raw[4])) monitor.TimeStamp = DateTime.Parse(raw[4]);
+                    if (!string.IsNullOrWhiteSpace(raw[4])) monitor.TimeStamp = DateTime.Parse(raw[4]).ToUniversalTime();
                     // Data Value
                     if (!string.IsNullOrWhiteSpace(raw[5])) monitor.Value = RemoveDoubleQuotes(raw[5]);
                     // Unit of Measurement
@@ -194,6 +194,10 @@ namespace REMAXAPI.Controllers
                     //monitor.CreatedOn = DateTime.Now;
                     //monitor.ModifiedBy = Guid.Empty;
                     //monitor.ModifiedOn = DateTime.Now;
+
+                    monitor.DataRecord = line;
+                    monitor.FileName = Path.GetFileName(fileNamePath);
+                    monitor.TimeStampOriginal = raw[4];
 
                     monitoringList.Add(monitor);
                     summary.Success = summary.Success++;

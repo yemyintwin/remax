@@ -19,6 +19,7 @@ namespace REMAXAPI.Models
         {
             this.Channels = new HashSet<Channel>();
             this.Engines = new HashSet<Engine>();
+            this.AlertSettings = new HashSet<AlertSetting>();
         }
     
         public System.Guid Id { get; set; }
@@ -30,5 +31,7 @@ namespace REMAXAPI.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Engine> Engines { get; set; }
         public virtual EngineType EngineType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlertSetting> AlertSettings { get; set; }
     }
 }

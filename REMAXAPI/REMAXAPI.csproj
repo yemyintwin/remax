@@ -152,6 +152,7 @@
     <Content Include="SQL\New Environment Setup\01. Database Setup.sql" />
     <Content Include="SQL\New Environment Setup\03. Master Data Setup.sql" />
     <Content Include="SQL\New Environment Setup\02. Root Setup.sql" />
+    <Content Include="SQL\OptionSet.sql" />
     <Content Include="SQL\sp_ResourcePermission.sql" />
     <Content Include="SQL\User.sql" />
     <Content Include="Web.config" />
@@ -167,6 +168,7 @@
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\DropDownController.cs" />
     <Compile Include="Controllers\KendoAccountsController.cs" />
+    <Compile Include="Controllers\KendoAlertSettingsController.cs" />
     <Compile Include="Controllers\KendoAlternatorMakersController.cs" />
     <Compile Include="Controllers\KendoChannelsController.cs" />
     <Compile Include="Controllers\KendoEnginesController.cs" />
@@ -193,6 +195,9 @@
     <Compile Include="Models\Account.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AlertSetting.cs">
+      <DependentUpon>Remax.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AlternatorMaker.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
@@ -208,6 +213,9 @@
     </Compile>
     <Compile Include="Models\Consts.cs" />
     <Compile Include="Models\Country.cs">
+      <DependentUpon>Remax.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CountryTimezone.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DashboardSetting.cs">
