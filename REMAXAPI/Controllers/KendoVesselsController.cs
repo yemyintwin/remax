@@ -129,6 +129,7 @@ namespace REMAXAPI.Controllers
                 item.Engines = await db.Engines
                             .Include("EngineType")
                             .Where(e => e.VesselID == item.Id)
+                            .OrderBy(e=> e.SerialNo)
                             .Select(e=> new EngineView{
                                 Id = e.Id,
                                 SerialNo = e.SerialNo,

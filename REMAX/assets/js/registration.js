@@ -1558,6 +1558,14 @@ var registration = {
                 filterable: false,
             },
             {
+                field: "serialNo",
+                title: "Serial No.",
+                filterable: {
+                    extra: false
+                },
+                width: 200
+            },
+            {
                 field: "vessel.vesselName",
                 title: "Vessel",
                 filterable: {

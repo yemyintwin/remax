@@ -22,6 +22,18 @@
           <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Alerts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MonitoringId" Type="uniqueidentifier" />
+          <Property Name="AlertSettingId" Type="uniqueidentifier" />
+          <Property Name="AlertLevel" Type="int" />
+          <Property Name="Recipients" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="1000" />
+          <Property Name="AlertMessage" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="AlertSetting">
           <Key>
             <PropertyRef Name="Id" />
@@ -29,9 +41,10 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="EngineModelID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ChannelID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Condition" Type="int" />
+          <Property Name="Condition" Type="int" Nullable="false" />
           <Property Name="Value" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="AlertLevel" Type="int" />
+          <Property Name="AlertLevel" Type="int" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="AlternatorMaker">
           <Key>
@@ -115,6 +128,14 @@
           <Property Name="ChartType" Type="int" Nullable="false" />
           <Property Name="ChartGroupNo" Type="int" />
         </EntityType>
+        <EntityType Name="EmailTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Template" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Engine">
           <Key>
             <PropertyRef Name="Id" />
@@ -181,6 +202,7 @@
           <Property Name="Unit" Type="nvarchar" MaxLength="50" />
           <Property Name="Processed" Type="bit" />
           <Property Name="ProcessedError" Type="nvarchar(max)" />
+          <Property Name="AlertId" Type="uniqueidentifier" />
           <Property Name="DataRecord" Type="nvarchar" MaxLength="2000" />
           <Property Name="FileName" Type="nvarchar" MaxLength="256" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -589,6 +611,7 @@
         </Function>
         <EntityContainer Name="REMAXAPIModelsStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Alerts" EntityType="Self.Alerts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlertSetting" EntityType="Self.AlertSetting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlternatorMaker" EntityType="Self.AlternatorMaker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Channel" EntityType="Self.Channel" Schema="dbo" store:Type="Tables" />
@@ -597,6 +620,7 @@
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CountryTimezone" EntityType="Self.CountryTimezone" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DashboardSetting" EntityType="Self.DashboardSetting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailTemplate" EntityType="Self.EmailTemplate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Engine" EntityType="Self.Engine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EngineType" EntityType="Self.EngineType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GearboxModel" EntityType="Self.GearboxModel" Schema="dbo" store:Type="Tables" />
@@ -860,6 +884,7 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Guid" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="AlertId" Type="Guid" />
         </EntityType>
         <EntityType Name="OptionSet">
           <Key>
@@ -1299,6 +1324,8 @@
             <End Role="AlertSetting" EntitySet="AlertSettings" />
           </AssociationSet>
           <EntitySet Name="CountryTimezones" EntityType="REMAXAPI.Models.CountryTimezone" />
+          <EntitySet Name="Alerts" EntityType="REMAXAPI.Models.Alert" />
+          <EntitySet Name="EmailTemplates" EntityType="REMAXAPI.Models.EmailTemplate" />
         </EntityContainer>
         <ComplexType Name="sp_ResourcePermission_Result">
           <Property Type="Guid" Name="User_Id" Nullable="true" />
@@ -1359,11 +1386,12 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="EngineModelID" Type="Guid" Nullable="false" />
           <Property Name="ChannelID" Type="Guid" Nullable="false" />
-          <Property Name="Condition" Type="Int32" />
+          <Property Name="Condition" Type="Int32" Nullable="false" />
           <Property Name="Value" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Channel" Relationship="REMAXAPI.Models.FK_AlertSetting_Channel" FromRole="AlertSetting" ToRole="Channel" />
           <NavigationProperty Name="Model" Relationship="REMAXAPI.Models.FK_AlertSetting_Model" FromRole="AlertSetting" ToRole="Model" />
-          <Property Name="AlertLevel" Type="Int32" />
+          <Property Name="AlertLevel" Type="Int32" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_AlertSetting_Channel">
           <End Type="REMAXAPI.Models.Channel" Role="Channel" Multiplicity="1" />
@@ -1400,6 +1428,26 @@
           <Property Name="GMTOffset" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EastWest" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Offset" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Alert">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="MonitoringId" Type="Guid" />
+          <Property Name="AlertSettingId" Type="Guid" />
+          <Property Name="AlertLevel" Type="Int32" />
+          <Property Name="Recipients" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="AlertMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="EmailTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Template" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1538,6 +1586,7 @@
           <EntitySetMapping Name="Monitorings">
             <EntityTypeMapping TypeName="REMAXAPI.Models.Monitoring">
               <MappingFragment StoreEntitySet="Monitoring">
+                <ScalarProperty Name="AlertId" ColumnName="AlertId" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="DataRecord" ColumnName="DataRecord" />
                 <ScalarProperty Name="TimeStampOriginal" ColumnName="TimeStampOriginal" />
@@ -1751,6 +1800,7 @@
           <EntitySetMapping Name="AlertSettings">
             <EntityTypeMapping TypeName="REMAXAPI.Models.AlertSetting">
               <MappingFragment StoreEntitySet="AlertSetting">
+                <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="AlertLevel" ColumnName="AlertLevel" />
                 <ScalarProperty Name="Condition" ColumnName="Condition" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1769,6 +1819,28 @@
                 <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
                 <ScalarProperty Name="CountryName" ColumnName="CountryName" />
                 <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alerts">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.Alert">
+              <MappingFragment StoreEntitySet="Alerts">
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="AlertMessage" ColumnName="AlertMessage" />
+                <ScalarProperty Name="Recipients" ColumnName="Recipients" />
+                <ScalarProperty Name="AlertLevel" ColumnName="AlertLevel" />
+                <ScalarProperty Name="AlertSettingId" ColumnName="AlertSettingId" />
+                <ScalarProperty Name="MonitoringId" ColumnName="MonitoringId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailTemplates">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.EmailTemplate">
+              <MappingFragment StoreEntitySet="EmailTemplate">
+                <ScalarProperty Name="Template" ColumnName="Template" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

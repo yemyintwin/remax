@@ -69,6 +69,12 @@ var alertSettings = {
                     $.each(data, function (key, entry) {
                         $('#channelNo').append($('<option></option>').attr('value', entry.id).text(entry.name));
                     });
+
+                    var grid = alertSettings.modules.settings.grid;
+                    var selectedItem = grid.dataItem(grid.select());
+                    if (selectedItem && selectedItem.channelID) {
+                        $('#channelNo').val(selectedItem.channelID);
+                    }
                 }
             });
         });
@@ -193,6 +199,11 @@ var alertSettings = {
                     }
                     return display;
                 }
+            },
+            {
+                field: "message",
+                title: "Message",
+                filterable: false
             },
         ];
 

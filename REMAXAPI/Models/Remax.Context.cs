@@ -54,6 +54,8 @@ namespace REMAXAPI.Models
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
         public virtual DbSet<AlertSetting> AlertSettings { get; set; }
         public virtual DbSet<CountryTimezone> CountryTimezones { get; set; }
+        public virtual DbSet<Alert> Alerts { get; set; }
+        public virtual DbSet<EmailTemplate> EmailTemplates { get; set; }
     
         public virtual ObjectResult<sp_ResourcePermission_Result> sp_ResourcePermission(Nullable<System.Guid> userid, string resource_name, Nullable<int> operation_type)
         {

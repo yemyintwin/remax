@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using REMAXAPI.Models;
 using System;
+using System.Data;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -12,6 +14,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Net;
+using System.Net.Mail;
 
 namespace REMAXAPI.Controllers
 {
@@ -23,6 +27,7 @@ namespace REMAXAPI.Controllers
         private const string PROCESSING_DIR = "Processing";
         private const string ARCHIVE_DIR = "Archive";
         private const string ERROR_DIR = "Error";
+        private const string EMAIL_ALERT_TEMPLATE_NAME = "EmailAlert";
 
         public string IncomingFilePath { get; set; }
         public string ProcessingFilePath { get; set; }
@@ -30,7 +35,7 @@ namespace REMAXAPI.Controllers
         public string ErrorFilePath { get; set; }
 
         public ScheduleJobController() {
-            
+
 
             if (string.IsNullOrWhiteSpace(IncomingFilePath)) {
                 if (ConfigurationManager.AppSettings.AllKeys.Contains(INCOMING_DIR)) {
@@ -159,7 +164,7 @@ namespace REMAXAPI.Controllers
 
             List<Monitoring> monitoringList = new List<Monitoring>();
 
-            for (long i = 1; i < lines.Length; i++)
+            for (long i = 0; i < lines.Length; i++)
             {
                 long currentLine = i;
                 string line = lines[i];
@@ -180,7 +185,7 @@ namespace REMAXAPI.Controllers
                     // Channel No
                     if (!string.IsNullOrWhiteSpace(raw[2])) monitor.ChannelNo = RemoveDoubleQuotes(raw[2]);
                     // Channel Description
-                    if (!string.IsNullOrWhiteSpace(raw[3])) monitor.ChannelDescription= RemoveDoubleQuotes(raw[3]);
+                    if (!string.IsNullOrWhiteSpace(raw[3])) monitor.ChannelDescription = RemoveDoubleQuotes(raw[3]);
                     // TimeStamp
                     if (!string.IsNullOrWhiteSpace(raw[4])) monitor.TimeStamp = DateTime.Parse(raw[4]).ToUniversalTime();
                     // Data Value
@@ -299,6 +304,9 @@ namespace REMAXAPI.Controllers
         public async Task<IHttpActionResult> ProcessStagingData()
         {
             Remax_Entities db = new Remax_Entities();
+            List<Channel> newChannels = new List<Channel>();
+            List<Monitoring> monitoringList = new List<Monitoring>();
+            List<Alert> alertList = new List<Alert>();
 
             #region --------------------------- Checking service user & root account ---------------------------
 
@@ -308,7 +316,7 @@ namespace REMAXAPI.Controllers
             if (serviceUser != null)
             {
                 db.ServiceUser = serviceUser;
-            }    
+            }
             else
             {
                 logger.DebugFormat("Service user not found : Create \"Service\" user.");
@@ -316,8 +324,8 @@ namespace REMAXAPI.Controllers
             }
 
             Account rootAccount = (from a in db.Accounts
-                                where (string.IsNullOrEmpty(a.AccountID) ? "" : a.AccountID).ToLower() == "root"
-                                select a).FirstOrDefault();
+                                   where (string.IsNullOrEmpty(a.AccountID) ? "" : a.AccountID).ToLower() == "root"
+                                   select a).FirstOrDefault();
             if (rootAccount != null)
             {
                 db.RootAccount = rootAccount;
@@ -331,8 +339,8 @@ namespace REMAXAPI.Controllers
             #endregion
 
             logger.InfoFormat("Process Staging Data start at {0}", DateTime.Now);
-            
-            
+
+
             try
             {
                 #region --------------------------- Vessel & Engine Creation ---------------------------
@@ -351,7 +359,7 @@ namespace REMAXAPI.Controllers
                     var found = (from v in db.Vessels
                                  where v.IMO_No == imo.Key
                                  select v).FirstOrDefault();
-                    if (found==null) {
+                    if (found == null) {
                         logger.DebugFormat("Creating new Vessel : {0}", imo.Key);
 
                         Vessel v = new Vessel {
@@ -364,7 +372,7 @@ namespace REMAXAPI.Controllers
                         db.Vessels.Add(v);
                         db.Entry(v).State = System.Data.Entity.EntityState.Added;
                         int rowAffected = await db.SaveChangesAsync();
-                        if (rowAffected==1)
+                        if (rowAffected == 1)
                         {
                             logger.DebugFormat("New Vessel created : {0}", imo.Key);
                         }
@@ -383,8 +391,8 @@ namespace REMAXAPI.Controllers
                 foreach (var eng in enginesCheck.ToList())
                 {
                     var vesselFound = (from v in db.Vessels
-                                    where v.IMO_No == eng.Key.IMO_No
-                                    select v).FirstOrDefault();
+                                       where v.IMO_No == eng.Key.IMO_No
+                                       select v).FirstOrDefault();
 
                     if (vesselFound != null) {
                         var engineFound = (from e in db.Engines
@@ -414,59 +422,77 @@ namespace REMAXAPI.Controllers
                 }
                 #endregion
 
-                #region --------------------------- Data Extraction --------------------------- 
+                #region --------------------------- Data Extraction (Monitoring and Alert Settings) --------------------------- 
                 var monitoring = from m in db.Monitorings
 
-                            join v in db.Vessels on m.IMO_No equals v.IMO_No into mv
-                            from m_v in mv
+                                 join v in db.Vessels on m.IMO_No equals v.IMO_No into mv
+                                 from m_v in mv
 
-                            join e in db.Engines on m.SerialNo equals e.SerialNo into me
-                            from m_e in me
+                                 join e in db.Engines on m.SerialNo equals e.SerialNo into me
+                                 from m_e in me
 
-                            join ml in db.Models on m_e.EngineModelID equals ml.Id into mml
-                            from m_ml in mml.DefaultIfEmpty()
+                                 join ml in db.Models on m_e.EngineModelID equals ml.Id into mml
+                                 from m_ml in mml.DefaultIfEmpty()
 
-                            join c in db.Channels on
-                                new { m.ChannelNo, ID = m_ml.Id } equals
-                                new { c.ChannelNo, ID = c.ModelID.HasValue ? c.ModelID.Value : Guid.Empty}
-                                into mch
-                            from m_ch in mch.DefaultIfEmpty()
+                                 join c in db.Channels on
+                                     new { m.ChannelNo, ID = m_ml.Id } equals
+                                     new { c.ChannelNo, ID = c.ModelID.HasValue ? c.ModelID.Value : Guid.Empty }
+                                     into mch
+                                 from m_ch in mch.DefaultIfEmpty()
 
-                            join ct in db.ChartTypes on m_ch.ChartTypeID equals ct.Id into mct
-                            from m_ct in mct.DefaultIfEmpty()
+                                 join ct in db.ChartTypes on m_ch.ChartTypeID equals ct.Id into mct
+                                 from m_ct in mct.DefaultIfEmpty()
 
-                            where !(m.Processed.HasValue? m.Processed.Value : false)
+                                 where !(m.Processed.HasValue ? m.Processed.Value : false)
 
-                            select new
-                            {
-                                Id = m.Id,
-                                IMONo = m.IMO_No,
-                                VesselName = m_v.VesselName,
-                                SerialNo = m.SerialNo,
-                                EngineID = m_e.Id,
-                                EngineModelID = m_e.EngineModelID,
-                                ModelName = m_ml.Name,
-                                ChannelNo = m.ChannelNo,
-                                DisplayUnit = m.Unit,
-                                IncomingChannelName = m.ChannelDescription,
-                                ChannelName = m_ch.Name,
-                                ChartType = m_ct.Name,
-                                Processed = m.Processed
-                            };
+                                 select new
+                                 {
+                                     Id = m.Id,
+                                     IMONo = m.IMO_No,
+                                     VesselName = m_v.VesselName,
+                                     SerialNo = m.SerialNo,
+                                     EngineID = m_e.Id,
+                                     EngineModelID = m_e.EngineModelID,
+                                     ModelName = m_ml.Name,
+                                     ChannelNo = m.ChannelNo,
+                                     ChannelID = m_ch.Id,
+                                     ChannelName = m_ch.Name,
+                                     ChannelDocURL = m_ch.DocumentURL,
+                                     DisplayUnit = m.Unit,
+                                     IncomingChannelName = m.ChannelDescription,
+
+                                     ChartType = m_ct.Name,
+                                     Processed = m.Processed,
+                                     Value = m.Value
+                                 };
+                var conditions = from o in db.OptionSets
+                                 join og in db.OptionSetGroups on o.GroupId equals og.Id
+                                 where og.Name == "condition"
+                                 select o;
+
+                var alertLevels = from o in db.OptionSets
+                                 join og in db.OptionSetGroups on o.GroupId equals og.Id
+                                 where og.Name == "alertlevel"
+                                 select o;
+
+                var alertSettings = from s in db.AlertSettings
+                                    select s;
+
                 #endregion
 
-                #region --------------------------- Creating channel if doesn't exists --------------------------- 
-                List<Channel> newChannels = new List<Channel>();
+                #region --------------------------- Processing data and Creating Alerts --------------------------- 
 
                 // Do not remove ToList() in below line, it will trigger "There is already an open DataReader associated with this Command which must be closed first."
                 logger.DebugFormat("Total line to process : {0}", monitoring.ToList().Count());
-                foreach (var m in monitoring.ToList()) 
+                foreach (var m in monitoring.ToList())
                 {
                     var monitor = db.Monitorings.Where(mo => mo.Id == m.Id).FirstOrDefault();
                     bool error = false;
 
                     if (monitor != null)
                     {
+                        #region --------------------------- Processing monitoring data --------------------------- 
+
                         monitor.ProcessedError = string.Empty;
                         if (m.VesselName == null) monitor.ProcessedError += "IMO number not found.";
                         if (m.EngineID == null) monitor.ProcessedError += "Engine not found. ";
@@ -474,13 +500,129 @@ namespace REMAXAPI.Controllers
 
                         monitor.ProcessedError = monitor.ProcessedError.Trim();
 
-                        error = (m.VesselName ==null || m.EngineID == null || m.EngineModelID == null);
+                        error = (m.VesselName == null || m.EngineID == null || m.EngineModelID == null);
 
                         if (!error) monitor.Processed = true;
-                        db.Entry(monitor).State = System.Data.Entity.EntityState.Modified;
+
+                        monitoringList.Add(monitor);
+
+                        #endregion
+
+                        #region --------------------------- Checking and Adding Alerts  --------------------------- 
+
+                        var foundAlert = alertSettings.Where(s => s.EngineModelID == m.EngineModelID && s.ChannelID == m.ChannelID).FirstOrDefault();
+
+                        if (foundAlert != null) {
+                            string strAVal = foundAlert.Value;
+                            string strMVal = m.Value;
+
+                            decimal aVal = decimal.MinValue;
+                            decimal mVal = decimal.MinValue;
+
+                            decimal.TryParse(strAVal, out aVal);
+                            decimal.TryParse(strMVal, out mVal);
+
+                            bool isAlertValIsNumber = aVal != decimal.MinValue;
+                            bool isNeed2Alert = false;
+
+                            switch (foundAlert.Condition)
+                            {
+                                case 1: //Equal to
+                                    if (isAlertValIsNumber) isNeed2Alert = (mVal == aVal); //number equal
+                                    else isNeed2Alert = (strMVal.Trim().ToLower() == strAVal.Trim().ToLower()); //string equal
+                                    break;
+                                case 2: //Not equal to
+                                    if (isAlertValIsNumber) isNeed2Alert = (mVal != aVal); //number not equal
+                                    else isNeed2Alert = (strMVal.Trim().ToLower() != strAVal.Trim().ToLower()); //string not equal
+                                    break;
+                                case 3: //Greater than
+                                    if (isAlertValIsNumber) isNeed2Alert = (mVal > aVal); //number not equal
+                                    break;
+                                case 4: //Less than
+                                    if (isAlertValIsNumber) isNeed2Alert = (mVal < aVal); //number not equal
+                                    break;
+                                case 5: //Greater than or equal to
+                                    if (isAlertValIsNumber) isNeed2Alert = (mVal >= aVal); //number not equal
+                                    break;
+                                case 6: //Less than or equal to
+                                    if (isAlertValIsNumber) isNeed2Alert = (mVal <= aVal); //number not equal
+                                    break;
+                                default:
+                                    isNeed2Alert = false;
+                                    break;
+                            }
+
+                            if (isNeed2Alert) {
+                                logger.InfoFormat("Alert found: [AlertID:{0}] [MonintoringID:{1}]", foundAlert.Id, m.Id);
+
+                                EmailTemplate emailTemplate = (from t in db.EmailTemplates
+                                                               where t.Name.ToLower() == EMAIL_ALERT_TEMPLATE_NAME
+                                                               select t).FirstOrDefault();
+
+                                IQueryable<Vessel> vessels = from v in db.Vessels
+                                                              where v.IMO_No == m.IMONo
+                                                              select v;
+
+                                Vessel vesselFound = vessels.Include("OperatorAccount").Include("OwnerAccount").FirstOrDefault();
+
+                                if (emailTemplate != null && vesselFound != null)
+                                {
+                                    logger.InfoFormat("Alert creating.");
+
+                                    string emails = string.Empty;
+                                    if (vesselFound.OwnerAccount != null && vesselFound.OwnerAccount.Email != null) {
+                                        if (IsValidEmail(vesselFound.OwnerAccount.Email)) emails += vesselFound.OwnerAccount.Email + ";";
+                                    }
+                                    if (vesselFound.OperatorAccount != null && vesselFound.OperatorAccount.Email != null)
+                                    {
+                                        if (IsValidEmail(vesselFound.OperatorAccount.Email)) emails += vesselFound.OperatorAccount.Email + ";";
+                                    }
+
+                                    string msg = emailTemplate.Template;
+                                    string osCondition = conditions.Where(c => c.Value == foundAlert.Condition).Select(c=>c.Name).FirstOrDefault();
+                                    string osAlertLevel = alertLevels.Where(al => al.Value == foundAlert.AlertLevel).Select(al=>al.Name).FirstOrDefault();
+
+                                    string strDocURL = string.Empty;
+                                    if (!string.IsNullOrWhiteSpace(m.ChannelDocURL))
+                                        strDocURL = string.Format("<a href='{0}' target='_new'>Click here to open troubleshooting document</a>", m.ChannelDocURL);
+
+                                    msg = msg.Replace("[[Vessel.IMO_No]]", m.IMONo)
+                                        .Replace("[[Engine.SerialNo]]", m.SerialNo)
+                                        .Replace("[[Channel.Name]]", m.ChannelName)
+                                        .Replace("[[AlertSetting.Condition]]", osCondition)
+                                        .Replace("[[AlertSetting.Value]]", foundAlert.Value)
+                                        .Replace("[[AlertSetting.AlertLevel]]", osAlertLevel)
+                                        .Replace("[[AlertSetting.Message]]", foundAlert.Message)
+                                        .Replace("[[Channel.DocumentURL]]", strDocURL);
+
+                                    Alert a = new Alert()
+                                    {
+                                        MonitoringId = m.Id,
+                                        AlertSettingId = foundAlert.Id,
+                                        AlertLevel = foundAlert.AlertLevel,
+                                        Recipients = emails,
+                                        AlertMessage = msg,
+                                        Subject = string.Format("Alert for {0} - {1}", m.IMONo, m.SerialNo)
+                                    };
+
+                                    // Add to alert collection and update to database later
+                                    alertList.Add(a);
+                                }
+                                else if (emailTemplate == null) {
+                                    logger.DebugFormat("Email template {0} not found", EMAIL_ALERT_TEMPLATE_NAME);
+                                }
+                                else if (vesselFound == null)
+                                {
+                                    logger.DebugFormat("Vessel not found");
+                                }
+                            }
+                        }
+
+                        #endregion
                     }
 
-                    // No channel name found but have incoming channel name and no error i.e. engine serial no. not found
+                    #region ---------------------- Adding new channels -----------------------
+                    // No channel name found but have incoming channel name and no error e.g engine serial no. not found
                     if (m.ChannelName == null && !string.IsNullOrEmpty(m.IncomingChannelName) && !error) // Consider new channel for related engine model
                     {
                         Channel c = new Channel()
@@ -509,16 +651,95 @@ namespace REMAXAPI.Controllers
                         if (checkChannelDB == null && checkChannelMemory == null)
                         {
                             newChannels.Add(c);
-                            db.Channels.Add(c);
-                            db.Entry(c).State = System.Data.Entity.EntityState.Added;
                         }
                     }
+                    #endregion
                 }
-                logger.DebugFormat("Total new Channels to be created : {0}", newChannels.ToList().Count());
 
-                int recordAffected = await db.SaveChangesAsync();
+                #endregion
+
+                int recordAffected = 0;
+
+                #region ------------------------ Creating new channels ------------------------
+                logger.DebugFormat("Total new Channels to be created : {0}", newChannels.ToList().Count());
+                foreach (var c in newChannels)
+                {
+                    db.Channels.Add(c);
+                    db.Entry(c).State = System.Data.Entity.EntityState.Added;
+                }
+                recordAffected = await db.SaveChangesAsync();
                 logger.DebugFormat("Total new Channels created : {0}", recordAffected);
                 #endregion
+
+                #region ------------------------ Updating monitoring values ------------------------
+
+                logger.DebugFormat("Total values to be processed : {0}", monitoringList.ToList().Count());
+                foreach (var m in monitoringList)
+                {
+                    if (m.Id == null)
+                    {
+                        db.Monitorings.Add(m);
+                        db.Entry(m).State = System.Data.Entity.EntityState.Added;
+                    }
+                    else {
+                        db.Entry(m).State = System.Data.Entity.EntityState.Modified;
+                    }
+                   
+                }
+                recordAffected = await db.SaveChangesAsync();
+                logger.DebugFormat("Total values processed : {0}", recordAffected);
+                
+                #endregion
+
+                #region ------------------------ Creating alerts and sending emails------------------------
+                logger.DebugFormat("Total alerts to be created : {0}", monitoringList.ToList().Count());
+                foreach (var alert in alertList)
+                {
+                    db.Alerts.Add(alert);
+                    db.Entry(alert).State = System.Data.Entity.EntityState.Added;
+
+                    #region ----------------------- Send alert email -----------------------
+                    string emailHost = ConfigurationManager.AppSettings["EmailHost"];
+                    string emailPort = ConfigurationManager.AppSettings["EmailPort"];
+                    string emailSSL = ConfigurationManager.AppSettings["EmailSSL"];
+                    string emailAddr = ConfigurationManager.AppSettings["EmailAddress"];
+                    string emailName = ConfigurationManager.AppSettings["EmailName"];
+                    string emailPwd = ConfigurationManager.AppSettings["EmailPwd"];
+
+                    var fromAddress = new MailAddress(emailAddr, emailName);
+                    string fromPassword = emailPwd;
+
+                    var smtp = new SmtpClient
+                    {
+                        Host = emailHost,
+                        Port = int.Parse(emailPort),
+                        EnableSsl = bool.Parse(emailSSL),
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                    };
+                    using (var message = new MailMessage()
+                    {
+                        From = fromAddress,
+                        Subject = alert.Subject,
+                        Body = alert.AlertMessage,
+                        IsBodyHtml = true
+                    })
+                    {
+                        string[] toRecipient = alert.Recipients.Split(new char[] { ';', ',' });
+                        foreach (var r in toRecipient)
+                        {
+                            if (IsValidEmail(r)) message.To.Add(new MailAddress(r));
+                        }
+                        await smtp.SendMailAsync(message);
+                    }
+                    #endregion
+
+                }
+                recordAffected = await db.SaveChangesAsync();
+                logger.DebugFormat("Total alert created : {0}", recordAffected);
+                #endregion
+
             }
             catch (Exception ex)
             {
@@ -533,6 +754,19 @@ namespace REMAXAPI.Controllers
             logger.InfoFormat("Process Staging Data end at {0}", DateTime.Now);
             logger.InfoFormat(Environment.NewLine);
             return StatusCode(HttpStatusCode.OK);
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 

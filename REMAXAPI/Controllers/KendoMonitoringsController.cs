@@ -111,7 +111,7 @@ namespace REMAXAPI.Controllers
                                                      ModelName = m_ml.Name,
                                                      ChannelNo = m.ChannelNo,
                                                      Value = m.Value,
-                                                     DisplayUnit = m.Unit,
+                                                     DisplayUnit = m_ch.DisplayUnit,
                                                      IncomingChannelName = m.ChannelDescription,
                                                      ChannelName = m_ch.Name,
                                                      ChartType = m_ct.Name,

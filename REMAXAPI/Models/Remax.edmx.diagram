@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="717854d135c046e39b67716907fcadc7" Name="Diagram1">
+      <Diagram DiagramId="717854d135c046e39b67716907fcadc7" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="REMAXAPI.Models.Account" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="REMAXAPI.Models.AlternatorMaker" Width="1.5" PointX="8" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="REMAXAPI.Models.Channel" Width="1.5" PointX="10.25" PointY="13.25" IsExpanded="true" />
@@ -50,6 +50,8 @@
         <AssociationConnector Association="REMAXAPI.Models.FK_AlertSetting_Channel" />
         <AssociationConnector Association="REMAXAPI.Models.FK_AlertSetting_Model" />
         <EntityTypeShape EntityType="REMAXAPI.Models.CountryTimezone" Width="1.5" PointX="14.375" PointY="3.75" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.Alert" Width="1.5" PointX="14.375" PointY="10.75" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.EmailTemplate" Width="1.5" PointX="12.375" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

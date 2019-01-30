@@ -12,17 +12,14 @@ namespace REMAXAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AlertSetting
+    public partial class Alert
     {
         public System.Guid Id { get; set; }
-        public System.Guid EngineModelID { get; set; }
-        public System.Guid ChannelID { get; set; }
-        public int Condition { get; set; }
-        public string Value { get; set; }
-        public int AlertLevel { get; set; }
-        public string Message { get; set; }
-    
-        public virtual Channel Channel { get; set; }
-        public virtual Model Model { get; set; }
+        public Nullable<System.Guid> MonitoringId { get; set; }
+        public Nullable<System.Guid> AlertSettingId { get; set; }
+        public Nullable<int> AlertLevel { get; set; }
+        public string Recipients { get; set; }
+        public string Subject { get; set; }
+        public string AlertMessage { get; set; }
     }
 }
