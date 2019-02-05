@@ -66,7 +66,7 @@ var alertSettings = {
                     $('#channelNo').find('option').remove().end();
 
                     $.each(data, function (key, entry) {
-                        $('#channelNo').append($('<option></option>').attr('value', entry.id).text(entry.name));
+                        $('#channelNo').append($('<option></option>').attr('value', entry.id).text(entry.name)).end();
                     });
 
                     var grid = alertSettings.modules.settings.grid;
@@ -272,13 +272,13 @@ var alertSettings = {
 
         // validation
         $(alertSettings.modules.settings.formId)
-            .find('[name="channelNo"]')
-            .selectpicker()
-            .change(function (e) {
-                // revalidate the language when it is changed
-                $(alertSettings.modules.settings.formId).bootstrapValidator('revalidateField', 'channelNo');
-            })
-            .end()
+            //.find('[name="channelNo"]')
+            //.selectpicker()
+            //.change(function (e) {
+            //    // revalidate the language when it is changed
+            //    $(alertSettings.modules.settings.formId).bootstrapValidator('revalidateField', 'channelNo');
+            //})
+            //.end()
             .bootstrapValidator({
                 feedbackIcons: {
                     valid: 'glyphicon glyphicon-ok',

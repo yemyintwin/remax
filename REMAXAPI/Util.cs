@@ -11,6 +11,7 @@ using System.Web;
 
 namespace REMAXAPI
 {
+  
     public static class Messages {
         public static string LoginFailed = "User login failed.";
         public static string AnonymousUserDetected = "Anonymous user detected.";
@@ -20,6 +21,8 @@ namespace REMAXAPI
 
     public static class Util
     {
+        static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public enum ReourceOperations {
             Read = 1,
             Write = 2,
@@ -177,11 +180,14 @@ namespace REMAXAPI
             return dBEntityEntry;
         }
 
-        public static DateTime GetUserUtcTime(DateTime d) {
+        public static double GetUserTimeOffset()
+        {
             Remax_Entities db = new Remax_Entities();
             User user = Util.GetCurrentUser();
+            double dOffset = 0;
 
-            if (user != null) {
+            if (user != null)
+            {
                 var country = (from u in db.Users
                                join c in db.Countries on u.Country equals c.Id into uc
                                from u_c in uc.DefaultIfEmpty()
@@ -195,29 +201,40 @@ namespace REMAXAPI
                                    c_tz.Offset
                                }).FirstOrDefault();
 
-                if (country != null) {
+                if (country != null)
+                {
                     decimal? offset = country.Offset as decimal?;
-                    if (offset.HasValue) {
-                        int sign = country.EastWest == "+" ? -1 : 1;
+                    if (offset.HasValue)
+                    {
+                        int sign = country.EastWest == "-" ? -1 : 1;
                         offset = sign * offset;
-                        double dOffset = (double)offset; 
-                        d = d.AddSeconds(dOffset);
-                    } 
-                }   
+                        dOffset = (double)offset;
+                    }
+                }
             }
+
+            return dOffset;
+        }
+
+        public static DateTime GetUserTime(DateTime d) {
+            d = d.AddSeconds(GetUserTimeOffset());
             return d;
         }
 
         public static DateTime GetToday() {
             TimeZone localZone = TimeZone.CurrentTimeZone;
-            DateTime currentDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            TimeSpan currentOffset = localZone.GetUtcOffset(DateTime.Now);
+            double userTimeOffset = GetUserTimeOffset();
 
-            DateTime currentUTC = localZone.ToUniversalTime(currentDate);
-            TimeSpan currentOffset = localZone.GetUtcOffset(currentDate);
+            double secDiff = ((-1) * currentOffset.TotalSeconds) + userTimeOffset;
+            DateTime userToday = DateTime.Now.AddSeconds(secDiff);
+            DateTime today = userToday.Date.AddSeconds((-1) * userTimeOffset);
 
-            DateTime zeroUTC = currentUTC.Add(currentOffset);
+            logger.Info("Time different : " + secDiff);
+            logger.Info("User Today : " + userToday.ToString());
+            logger.Info("UTC Today : " + today.ToString());
 
-            return GetUserUtcTime(zeroUTC);
+            return today;
         }
     }
 }

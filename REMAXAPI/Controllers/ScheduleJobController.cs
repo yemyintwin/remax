@@ -427,16 +427,16 @@ namespace REMAXAPI.Controllers
                 var monitoring = from m in db.Monitorings
 
                                  join v in db.Vessels on m.IMO_No equals v.IMO_No into mv
-                                 from m_v in mv
+                                 from m_v in mv.DefaultIfEmpty()
 
                                  join e in db.Engines on m.SerialNo equals e.SerialNo into me
-                                 from m_e in me
+                                 from m_e in me.DefaultIfEmpty()
 
-                                 join ml in db.Models on m_e.EngineModelID equals ml.Id into mml
+                                 join ml in db.Models on (m_e.EngineModelID.HasValue? m_e.EngineModelID : Guid.Empty) equals ml.Id into mml
                                  from m_ml in mml.DefaultIfEmpty()
 
                                  join c in db.Channels on
-                                     new { m.ChannelNo, ID = m_ml.Id } equals
+                                     new { m.ChannelNo, ID = (m_ml != null && m_ml.Id != null) ? m_ml.Id : Guid.Empty } equals
                                      new { c.ChannelNo, ID = c.ModelID.HasValue ? c.ModelID.Value : Guid.Empty }
                                      into mch
                                  from m_ch in mch.DefaultIfEmpty()
@@ -453,11 +453,11 @@ namespace REMAXAPI.Controllers
                                      VesselId = m_v.Id,
                                      VesselName = m_v.VesselName,
                                      SerialNo = m.SerialNo,
-                                     EngineID = m_e.Id,
-                                     EngineModelID = m_e.EngineModelID,
+                                     EngineID = m_e.Id != null ? m_e.Id : Guid.Empty,
+                                     EngineModelID = m_e.EngineModelID != null ? m_e.EngineModelID : Guid.Empty,
                                      ModelName = m_ml.Name,
                                      ChannelNo = m.ChannelNo,
-                                     ChannelID = m_ch.Id,
+                                     ChannelID = m_ch.Id != null ? m_ch.Id : Guid.Empty,
                                      ChannelName = m_ch.Name,
                                      ChannelDocURL = m_ch.DocumentURL,
                                      DisplayUnit = m.Unit,
@@ -497,12 +497,16 @@ namespace REMAXAPI.Controllers
 
                         monitor.ProcessedError = string.Empty;
                         if (m.VesselName == null) monitor.ProcessedError += "IMO number not found.";
-                        if (m.EngineID == null) monitor.ProcessedError += "Engine not found. ";
-                        if (m.EngineModelID == null) monitor.ProcessedError += "Engine model not found. ";
+                        if (m.EngineID == null || m.EngineID == Guid.Empty) monitor.ProcessedError += "Engine not found. ";
+                        if (m.EngineModelID == null || m.EngineModelID == Guid.Empty) monitor.ProcessedError += "Engine model not found. ";
 
                         monitor.ProcessedError = monitor.ProcessedError.Trim();
 
-                        error = (m.VesselName == null || m.EngineID == null || m.EngineModelID == null);
+                        error = (m.VesselName == null || 
+                            m.EngineID == null || m.EngineID == Guid.Empty ||
+                            m.EngineModelID == null || m.EngineModelID == Guid.Empty
+                            );
+
 
                         if (!error) monitor.Processed = true;
 

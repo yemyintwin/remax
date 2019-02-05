@@ -392,6 +392,12 @@ namespace REMAXAPI.Controllers
         public async Task<IHttpActionResult> GetTodayData() {
             DateTime today = Util.GetToday();
             DateTime endOfToday = today.AddDays(1).AddMilliseconds(-1);
+            double offset = Util.GetUserTimeOffset();
+
+            logger.Debug("Offset : " + offset);
+            logger.Debug("Today : " + today.ToString());
+            logger.Debug("End of Today : " + endOfToday.ToString());
+
             var dataCounts = await (
                                         from m in db.Monitorings
                                         join v in db.Vessels on m.IMO_No equals v.IMO_No
@@ -400,8 +406,10 @@ namespace REMAXAPI.Controllers
                                         {
                                             IMO_No = m.IMO_No,
                                             VesselName = v.VesselName,
-                                            Hours = SqlFunctions.DatePart("HOUR", m.TimeStamp),
-                                            HalfHours = SqlFunctions.DatePart("HOUR", m.TimeStamp) < 30 ? 0 : 1
+                                            Hours = SqlFunctions.DatePart("HOUR", SqlFunctions.DateAdd("second", offset, m.TimeStamp)),
+                                            HalfHours = SqlFunctions.DatePart("HOUR", SqlFunctions.DateAdd("second", offset, m.TimeStamp)) < 30 ? 0 : 1
+                                            //Hours = SqlFunctions.DatePart("hour", m.TimeStamp),
+                                            //HalfHours = SqlFunctions.DatePart("hour", m.TimeStamp) < 30 ? 0 : 1
                                         }
                                         into m1
                                         orderby m1.Key.Hours, m1.Key.HalfHours

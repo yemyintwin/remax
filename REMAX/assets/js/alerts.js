@@ -144,7 +144,7 @@ var alerts = {
                 filterable: false,
                 width: 250,
                 template: function (dataItem) {
-                    return (dataItem.documentURL ? "<a href='" + documentURL + "'>Open</a>"  : "");
+                    return (dataItem.documentURL ? "<a href='" + dataItem.documentURL + "'>Open</a>"  : "");
                 }
             },
             {
