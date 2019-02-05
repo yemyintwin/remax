@@ -57,6 +57,15 @@ namespace REMAXAPI.Controllers
         public Guid Id { get; set; }
         public String SerialNo { get; set; }
         public EngineType EngineType { get; set; }
+        public List<AlertView> Alerts { get; set; }
+    }
+
+    public class AlertView {
+        public Guid Id { get; set; }
+        public string AlertMessage { get; set; }
+        public string AlertLevel { get; set; }
+        public bool? Notified { get; set; }
+        public DateTime? AlertTime { get; set; }
     }
 
     [Authorize]
@@ -136,6 +145,23 @@ namespace REMAXAPI.Controllers
                                 EngineType = e.EngineType
                             })
                             .ToListAsync();
+
+                foreach (var e in item.Engines)
+                {
+                    DateTime today = Util.GetToday();
+                    DateTime endOfToday = today.AddDays(1).AddMilliseconds(-1);
+                    e.Alerts = await db.Alerts
+                                .Where(a => a.AlertTime >= today && a.AlertTime <= endOfToday && a.EngineId == e.Id)
+                                .Select(a => new AlertView
+                                {
+                                    Id = a.Id,
+                                    AlertMessage = a.AlertMessage,
+                                    AlertLevel = a.AlertLevelValue,
+                                    Notified = a.Notified,
+                                    AlertTime = a.AlertTime
+                                })
+                                .ToListAsync();
+                }
             }
             
             //loading related entites

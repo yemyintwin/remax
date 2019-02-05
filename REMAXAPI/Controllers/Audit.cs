@@ -61,11 +61,11 @@ namespace REMAXAPI.Models
                             if (createdBy != null && (createdBy.PropertyType == typeof(Guid)|| createdBy.PropertyType == typeof(Guid?)))
                                 createdBy.SetValue(entity, u.Id);
                             if (createdOn != null && (createdOn.PropertyType == typeof(DateTime) || createdOn.PropertyType == typeof(DateTime?)))
-                                createdOn.SetValue(entity, DateTime.Now);
+                                createdOn.SetValue(entity, DateTime.UtcNow);
                             if (modifiedBy != null && (modifiedBy.PropertyType == typeof(Guid) || modifiedBy.PropertyType == typeof(Guid?)))
                                 modifiedBy.SetValue(entity, u.Id);
                             if (modifiedOn != null && (modifiedOn.PropertyType == typeof(DateTime) || modifiedOn.PropertyType == typeof(DateTime?)))
-                                modifiedOn.SetValue(entity, DateTime.Now);
+                                modifiedOn.SetValue(entity, DateTime.UtcNow);
 
                             if (typeOfObject != typeof(Client))
                             { 
@@ -79,7 +79,7 @@ namespace REMAXAPI.Models
                             if (modifiedBy != null && (modifiedBy.PropertyType == typeof(Guid) || modifiedBy.PropertyType == typeof(Guid?)))
                                 modifiedBy.SetValue(entity, u.Id);
                             if (modifiedOn != null && (modifiedOn.PropertyType == typeof(DateTime) || modifiedOn.PropertyType == typeof(DateTime?)))
-                                modifiedOn.SetValue(entity, DateTime.Now);
+                                modifiedOn.SetValue(entity, DateTime.UtcNow);
                         }
                     }
                 }

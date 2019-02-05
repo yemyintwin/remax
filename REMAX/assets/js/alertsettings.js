@@ -41,11 +41,10 @@ var alertSettings = {
 
             alertSettings.retrieveSettings(); // kendo grid id
             alertSettings.SubmitSetting(); // Create, Update
+            $("#engineModel").change(alertSettings.engineModel_OnChange); // engine model drop down event listener
+
+            Util.displayLoading(document.body, false); //show loading and hide when all channels are loaded
         }, 100);
-
-        Util.displayLoading(document.body, false); //show loading and hide when all channels are loaded
-
-        $("#engineModel").change(alertSettings.engineModel_OnChange);
     },
 
     engineModel_OnChange: function () {
@@ -272,96 +271,104 @@ var alertSettings = {
         alertSettings.SubmitSettingInitControls();
 
         // validation
-        $(alertSettings.modules.settings.formId).bootstrapValidator({
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            excluded: ':disabled',
-            fields: {
-                engineModel: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Engine model is requried.'
-                        },
-                    }
+        $(alertSettings.modules.settings.formId)
+            .find('[name="channelNo"]')
+            .selectpicker()
+            .change(function (e) {
+                // revalidate the language when it is changed
+                $(alertSettings.modules.settings.formId).bootstrapValidator('revalidateField', 'channelNo');
+            })
+            .end()
+            .bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
                 },
-                channelNo: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Channel no. is required'
-                        },
-                    }
-                },
-                condition: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Condition is required'
-                        },
-                    }
-                },
-                value: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Value is required'
-                        },
-                    }
-                },
-                level: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Alert level is required'
-                        },
-                    }
-                },
-            }
-        })
-        .on('success.form.bv', function (e) {
-            // Prevent form submission
-            e.preventDefault();
-            var url = alertSettings.modules.settings.webApiUrl;
-            var data = {
-                engineModelID: $('#engineModel').val(),
-                channelID: $('#channelNo').val(),
-                condition: $('#condition').val(),
-                value: $('#value').val(),
-                alertLevel: $('#level').val(),
-            };
-            var requestType = "POST"; // Create
-
-            if (alertSettings.modules.settings.state === 'update') {
-                data.id = $('#id').val();
-                requestType = "PUT";
-                url += '/' + data.id;
-            }// Update
-
-            $.ajax({
-                type: requestType,
-                url: url,
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                dataType: 'json',
-                // passing token
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Authorization', 'bearer ' + token);
-                },
-                success: function (d, textStatus, xhr) {
-                    console.log(d);
-
-                    $(alertSettings.modules.settings.dialogId).modal('toggle');
-
-                    $(alertSettings.modules.settings.gridId).data('kendoGrid').dataSource.read();
-                    $(alertSettings.modules.settings.gridId).data('kendoGrid').refresh();
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    $('#errors').html('');
-                    $('#errors').append(xhr.responseText);
-                    $('#messageModal').modal('show');
-                    $("#btnUserSubmit").prop("disabled", false);
+                excluded: ':disabled',
+                fields: {
+                    engineModel: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Engine model is requried'
+                            },
+                        }
+                    },
+                    channelNo: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Channel no. is required'
+                            },
+                        }
+                    },
+                    condition: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Condition is required'
+                            },
+                        }
+                    },
+                    value: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Value is required'
+                            },
+                        }
+                    },
+                    level: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Alert level is required'
+                            },
+                        }
+                    },
                 }
+            })
+            .on('success.form.bv', function (e) {
+                // Prevent form submission
+                e.preventDefault();
+                var url = alertSettings.modules.settings.webApiUrl;
+                var data = {
+                    engineModelID: $('#engineModel').val(),
+                    channelID: $('#channelNo').val(),
+                    condition: $('#condition').val(),
+                    value: $('#value').val(),
+                    alertLevel: $('#level').val(),
+                };
+                var requestType = "POST"; // Create
+
+                if (alertSettings.modules.settings.state === 'update') {
+                    data.id = $('#id').val();
+                    requestType = "PUT";
+                    url += '/' + data.id;
+                }// Update
+
+                $.ajax({
+                    type: requestType,
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    dataType: 'json',
+                    // passing token
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                    },
+                    success: function (d, textStatus, xhr) {
+                        console.log(d);
+
+                        $(alertSettings.modules.settings.dialogId).modal('toggle');
+
+                        $(alertSettings.modules.settings.gridId).data('kendoGrid').dataSource.read();
+                        $(alertSettings.modules.settings.gridId).data('kendoGrid').refresh();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        $('#errors').html('');
+                        $('#errors').append(xhr.responseText);
+                        $('#messageModal').modal('show');
+                        $("#btnUserSubmit").prop("disabled", false);
+                    }
+                });
             });
-        });
     },
 
     settingGrid_OnChange: function (arg) {
@@ -375,6 +382,9 @@ var alertSettings = {
     btnNewSetting_OnClick: function () {
         alertSettings.modules.settings.state = 'create';
         alertSettings.SubmitSettingInitControls();
+        $('#engineModel').prop("disabled", false);
+        $('#channelNo').prop("disabled", false);
+        $('#value').val('');
         $("#engineModel").change();
     },
 
@@ -385,6 +395,9 @@ var alertSettings = {
         if (selectedItem) {
             alertSettings.modules.settings.state = 'update';
             alertSettings.SubmitSettingInitControls();
+
+            $('#engineModel').prop("disabled", true);
+            $('#channelNo').prop("disabled", true);
 
             $('#id').val(selectedItem.id);
             $('#engineModel').val(selectedItem.engineModelID); $("#engineModel").change();

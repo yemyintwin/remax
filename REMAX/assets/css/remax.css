@@ -602,3 +602,14 @@ table.dataTable thead .sorting_asc::after {
   box-shadow:inset 0 1px 0 1px rgba(255,255,255,.15), 0 1px 5px 1px rgba(0,0,0,.075);
   /*border-style:groove;*/
 }
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.container {
+    padding: 2px 16px;
+}

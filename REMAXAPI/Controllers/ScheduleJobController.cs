@@ -16,6 +16,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Net;
 using System.Net.Mail;
+using System.Data.Entity.Infrastructure;
 
 namespace REMAXAPI.Controllers
 {
@@ -188,7 +189,7 @@ namespace REMAXAPI.Controllers
                     if (!string.IsNullOrWhiteSpace(raw[3])) monitor.ChannelDescription = RemoveDoubleQuotes(raw[3]);
                     // TimeStamp
                     if (!string.IsNullOrWhiteSpace(raw[4])) monitor.TimeStamp = DateTime.Parse(raw[4]).ToUniversalTime();
-                    // Data Value
+                    // Data Values
                     if (!string.IsNullOrWhiteSpace(raw[5])) monitor.Value = RemoveDoubleQuotes(raw[5]);
                     // Unit of Measurement
                     if (!string.IsNullOrWhiteSpace(raw[6])) monitor.Unit = RemoveDoubleQuotes(raw[6]);
@@ -449,6 +450,7 @@ namespace REMAXAPI.Controllers
                                  {
                                      Id = m.Id,
                                      IMONo = m.IMO_No,
+                                     VesselId = m_v.Id,
                                      VesselName = m_v.VesselName,
                                      SerialNo = m.SerialNo,
                                      EngineID = m_e.Id,
@@ -589,7 +591,7 @@ namespace REMAXAPI.Controllers
                                     msg = msg.Replace("[[Vessel.IMO_No]]", m.IMONo)
                                         .Replace("[[Engine.SerialNo]]", m.SerialNo)
                                         .Replace("[[Channel.Name]]", m.ChannelName)
-                                        .Replace("[[AlertSetting.Condition]]", osCondition)
+                                        .Replace("[[AlertSetting.Condition]]", osCondition != null? osCondition.ToLower() : "")
                                         .Replace("[[AlertSetting.Value]]", foundAlert.Value)
                                         .Replace("[[AlertSetting.AlertLevel]]", osAlertLevel)
                                         .Replace("[[AlertSetting.Message]]", foundAlert.Message)
@@ -598,11 +600,29 @@ namespace REMAXAPI.Controllers
                                     Alert a = new Alert()
                                     {
                                         MonitoringId = m.Id,
+                                        VesselId = m.VesselId,
+                                        IMO_No = m.IMONo,
+                                        VesselName = m.VesselName,
+                                        EngineId = m.EngineID,
+                                        SerialNo = m.SerialNo,
+                                        ModelId = m.EngineModelID,
+                                        ModelName = m.ModelName,
+                                        ChannelId = m.ChannelID,
+                                        ChannelName = m.ChannelName,
+                                        Value = m.Value,
+                                        DisplayUnit = m.DisplayUnit,
                                         AlertSettingId = foundAlert.Id,
+                                        Condition = foundAlert.Condition,
+                                        ConditionValue = osCondition,
+                                        AlertValue = foundAlert.Value,
                                         AlertLevel = foundAlert.AlertLevel,
+                                        AlertLevelValue = osAlertLevel,
                                         Recipients = emails,
-                                        AlertMessage = msg,
-                                        Subject = string.Format("Alert for {0} - {1}", m.IMONo, m.SerialNo)
+                                        Subject = string.Format("Alert for {0} - {1}", m.IMONo, m.SerialNo),
+                                        AlertMessage = foundAlert.Message,
+                                        AlertEmailMessage = msg,
+                                        DocumentURL = m.ChannelDocURL,
+                                        AlertTime = DateTime.UtcNow
                                     };
 
                                     // Add to alert collection and update to database later
@@ -695,8 +715,6 @@ namespace REMAXAPI.Controllers
                 logger.DebugFormat("Total alerts to be created : {0}", monitoringList.ToList().Count());
                 foreach (var alert in alertList)
                 {
-                    db.Alerts.Add(alert);
-                    db.Entry(alert).State = System.Data.Entity.EntityState.Added;
 
                     #region ----------------------- Send alert email -----------------------
                     string emailHost = ConfigurationManager.AppSettings["EmailHost"];
@@ -718,6 +736,7 @@ namespace REMAXAPI.Controllers
                         UseDefaultCredentials = false,
                         Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
                     };
+
                     using (var message = new MailMessage()
                     {
                         From = fromAddress,
@@ -731,9 +750,14 @@ namespace REMAXAPI.Controllers
                         {
                             if (IsValidEmail(r)) message.To.Add(new MailAddress(r));
                         }
+
                         await smtp.SendMailAsync(message);
+                        alert.Notified = true;
                     }
                     #endregion
+
+                    db.Alerts.Add(alert);
+                    db.Entry(alert).State = System.Data.Entity.EntityState.Added;
 
                 }
                 recordAffected = await db.SaveChangesAsync();

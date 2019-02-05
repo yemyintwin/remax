@@ -390,8 +390,8 @@ namespace REMAXAPI.Controllers
         [HttpGet]
         [Route("api/KendoMonitorings/GetTodayData")]
         public async Task<IHttpActionResult> GetTodayData() {
-            DateTime today = DateTime.Today;
-            DateTime endOfToday = today.AddDays(1);
+            DateTime today = Util.GetToday();
+            DateTime endOfToday = today.AddDays(1).AddMilliseconds(-1);
             var dataCounts = await (
                                         from m in db.Monitorings
                                         join v in db.Vessels on m.IMO_No equals v.IMO_No

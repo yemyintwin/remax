@@ -42,6 +42,12 @@ var Util = {
     displayLoading: function(target, show) {
         var element = $(target);
         kendo.ui.progress(element, show);
+    },
+
+    convertToLocalTime: function (utcDate) {
+        var utcTime = new Date(utcDate);
+        var localTime = new Date(utcTime.getTime() + (utcTime.getTimezoneOffset() * 60000 * (-1)));
+        return localTime;
     }
 }
 
@@ -188,6 +194,8 @@ vesselMenu = function (result, textStatus, jqXHR) {
     var vesselsCount, enginesCount, generatorsCount, alertCount;
     vesselsCount = enginesCount = generatorsCount = alertCount = 0;
 
+    var lastAlerted = new Date(0);
+
     // removing loading
     $("#vesselLoading").remove();
 
@@ -211,6 +219,17 @@ vesselMenu = function (result, textStatus, jqXHR) {
                 if (eng.engineType.name === "Engine") enginesCount++;
                 else if (eng.engineType.name === "Generator") generatorsCount++;
             }
+
+            if (eng.alerts && eng.alerts.length) {
+                alertCount += eng.alerts.length;
+                var maxDate = new Date(Math.max.apply(null, eng.alerts.map(function (a) {return new Date(a.alertTime);})));
+                if (maxDate instanceof Date && !isNaN(maxDate.valueOf())) {
+                    var localTime = Util.convertToLocalTime(maxDate);
+                    if (localTime instanceof Date && !isNaN(localTime.valueOf())) {
+                        lastAlerted = new Date(localTime.getTime() - new Date().getTime());
+                    }
+                }
+            }
         }
     }
 
@@ -222,6 +241,14 @@ vesselMenu = function (result, textStatus, jqXHR) {
         $("#count_alerts").html(alertCount); 
     }
 
+    $("#bell_alert").text(alertCount); 
+
+    if (lastAlerted) {
+        var ago = lastAlerted.getHours() + ':' + lastAlerted.getMinutes() + ' hour ago';
+        $("#bell_alert_ago").text(ago);
+        $("#bell_msg_ago").text(ago);
+    }
+    
     $('#side-menu').metisMenu();
 }
 

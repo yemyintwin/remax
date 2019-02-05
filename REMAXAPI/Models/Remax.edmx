@@ -28,11 +28,31 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="MonitoringId" Type="uniqueidentifier" />
+          <Property Name="VesselId" Type="uniqueidentifier" />
+          <Property Name="IMO_No" Type="nvarchar" MaxLength="50" />
+          <Property Name="VesselName" Type="nvarchar" MaxLength="100" />
+          <Property Name="EngineId" Type="uniqueidentifier" />
+          <Property Name="SerialNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="ModelId" Type="uniqueidentifier" />
+          <Property Name="ModelName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ChannelId" Type="uniqueidentifier" />
+          <Property Name="ChannelName" Type="nvarchar" MaxLength="100" />
+          <Property Name="TimeStamp" Type="datetime" />
+          <Property Name="Value" Type="nvarchar" MaxLength="50" />
+          <Property Name="DisplayUnit" Type="nvarchar" MaxLength="50" />
           <Property Name="AlertSettingId" Type="uniqueidentifier" />
+          <Property Name="Condition" Type="int" />
+          <Property Name="ConditionValue" Type="nvarchar" MaxLength="100" />
+          <Property Name="AlertValue" Type="nvarchar" MaxLength="50" />
           <Property Name="AlertLevel" Type="int" />
+          <Property Name="AlertLevelValue" Type="nvarchar" MaxLength="100" />
+          <Property Name="AlertMessage" Type="nvarchar(max)" />
           <Property Name="Recipients" Type="nvarchar" MaxLength="1000" />
           <Property Name="Subject" Type="nvarchar" MaxLength="1000" />
-          <Property Name="AlertMessage" Type="nvarchar(max)" />
+          <Property Name="AlertEmailMessage" Type="nvarchar(max)" />
+          <Property Name="AlertTime" Type="datetime" />
+          <Property Name="DocumentURL" Type="nvarchar" MaxLength="2083" />
+          <Property Name="Notified" Type="bit" />
         </EntityType>
         <EntityType Name="AlertSetting">
           <Key>
@@ -1440,6 +1460,26 @@
           <Property Name="Recipients" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Subject" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="AlertMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VesselId" Type="Guid" />
+          <Property Name="IMO_No" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VesselName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EngineId" Type="Guid" />
+          <Property Name="SerialNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ModelId" Type="Guid" />
+          <Property Name="ModelName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ChannelId" Type="Guid" />
+          <Property Name="ChannelName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayUnit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Condition" Type="Int32" />
+          <Property Name="ConditionValue" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AlertValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AlertLevelValue" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AlertTime" Type="DateTime" Precision="3" />
+          <Property Name="TimeStamp" Type="DateTime" Precision="3" />
+          <Property Name="Notified" Type="Boolean" />
+          <Property Name="DocumentURL" Type="String" MaxLength="2083" FixedLength="false" Unicode="true" />
+          <Property Name="AlertEmailMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="EmailTemplate">
           <Key>
@@ -1826,6 +1866,26 @@
           <EntitySetMapping Name="Alerts">
             <EntityTypeMapping TypeName="REMAXAPI.Models.Alert">
               <MappingFragment StoreEntitySet="Alerts">
+                <ScalarProperty Name="AlertEmailMessage" ColumnName="AlertEmailMessage" />
+                <ScalarProperty Name="DocumentURL" ColumnName="DocumentURL" />
+                <ScalarProperty Name="Notified" ColumnName="Notified" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="AlertTime" ColumnName="AlertTime" />
+                <ScalarProperty Name="AlertLevelValue" ColumnName="AlertLevelValue" />
+                <ScalarProperty Name="AlertValue" ColumnName="AlertValue" />
+                <ScalarProperty Name="ConditionValue" ColumnName="ConditionValue" />
+                <ScalarProperty Name="Condition" ColumnName="Condition" />
+                <ScalarProperty Name="DisplayUnit" ColumnName="DisplayUnit" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="ChannelName" ColumnName="ChannelName" />
+                <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+                <ScalarProperty Name="EngineId" ColumnName="EngineId" />
+                <ScalarProperty Name="VesselName" ColumnName="VesselName" />
+                <ScalarProperty Name="IMO_No" ColumnName="IMO_No" />
+                <ScalarProperty Name="VesselId" ColumnName="VesselId" />
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
                 <ScalarProperty Name="AlertMessage" ColumnName="AlertMessage" />
                 <ScalarProperty Name="Recipients" ColumnName="Recipients" />

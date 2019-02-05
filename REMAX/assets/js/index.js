@@ -12,6 +12,12 @@
         if (Settings.Counts && Settings.Counts.generator) $("count_generators").html(Settings.Counts.vessel)
         else $("count_generators").html(0);
 
+        if (Settings.Counts && Settings.Counts.generator) $("count_generators").html(Settings.Counts.vessel)
+        else $("count_generators").html(0);
+
+        if (Settings.Counts && Settings.Counts.generator) $("count_alerts").html(Settings.Counts.vessel)
+        else $("count_alerts").html(0);
+
         setTimeout(function () {
             if (Settings && Settings.Token && Settings.Token.access_token) {
                 index.createChart();

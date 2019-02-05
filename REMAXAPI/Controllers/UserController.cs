@@ -54,6 +54,33 @@ namespace REMAXAPI.Controllers
             return user;
         }
 
+        [HttpPost]
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/User/GetCurrentUserTimeZone")]
+        public object GetCurrentUserTimeZone()
+        {
+            CountryTimezone ctz = null;
+            ClaimsPrincipal currentClaim = HttpContext.Current.GetOwinContext().Authentication.User;
+            if (currentClaim != null && currentClaim.Claims != null && currentClaim.Claims.Count() > 1)
+            {
+                var sid = (from c in currentClaim.Claims.AsEnumerable()
+                           where c.Type.EndsWith("/sid")
+                           select c).FirstOrDefault();
+
+                var user_found = db.Users.Where(u => u.Id.ToString() == sid.Value).FirstOrDefault();
+                if (user_found != null && user_found.Country.HasValue) {
+                    var timezone = (from tz in db.CountryTimezones
+                                    join c in db.Countries on tz.CountryCode equals c.Code
+                                    where c.Id == user_found.Country.Value
+                                    select tz).FirstOrDefault();
+                    if (timezone != null) ctz = timezone;
+                }
+                
+            }
+            return ctz;
+        }
+
         [HttpGet]
         [ResponseType(typeof(User))]
         [Authorize]

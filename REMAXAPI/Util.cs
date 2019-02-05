@@ -176,5 +176,48 @@ namespace REMAXAPI
             }
             return dBEntityEntry;
         }
+
+        public static DateTime GetUserUtcTime(DateTime d) {
+            Remax_Entities db = new Remax_Entities();
+            User user = Util.GetCurrentUser();
+
+            if (user != null) {
+                var country = (from u in db.Users
+                               join c in db.Countries on u.Country equals c.Id into uc
+                               from u_c in uc.DefaultIfEmpty()
+                               join tz in db.CountryTimezones on u_c.Code equals tz.CountryCode into ctz
+                               from c_tz in ctz.DefaultIfEmpty()
+                               where u.Id == user.Id
+                               select new
+                               {
+                                   c_tz.CountryCode,
+                                   c_tz.EastWest,
+                                   c_tz.Offset
+                               }).FirstOrDefault();
+
+                if (country != null) {
+                    decimal? offset = country.Offset as decimal?;
+                    if (offset.HasValue) {
+                        int sign = country.EastWest == "+" ? -1 : 1;
+                        offset = sign * offset;
+                        double dOffset = (double)offset; 
+                        d = d.AddSeconds(dOffset);
+                    } 
+                }   
+            }
+            return d;
+        }
+
+        public static DateTime GetToday() {
+            TimeZone localZone = TimeZone.CurrentTimeZone;
+            DateTime currentDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+            DateTime currentUTC = localZone.ToUniversalTime(currentDate);
+            TimeSpan currentOffset = localZone.GetUtcOffset(currentDate);
+
+            DateTime zeroUTC = currentUTC.Add(currentOffset);
+
+            return GetUserUtcTime(zeroUTC);
+        }
     }
 }

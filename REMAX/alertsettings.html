@@ -23,6 +23,7 @@
     <link href="vendor/kendo/styles/kendo.bootstrap.min.css" rel="stylesheet" />
     <link href="vendor/kendo/styles/kendo.bootstrap.mobile.min.css" rel="stylesheet" />
     <link href="assets/bootstrap_datetime/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="assets/bootstrap_select/css/bootstrap-select.min.css" rel="stylesheet" />
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/kendo/js/kendo.all.min.js"></script>
@@ -37,6 +38,7 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/bootstrap/js/bootstrapValidator.min.js"></script>
     <script src="assets/bootstrap_datetime/js/bootstrap-datepicker.min.js"></script>
+    <script src="assets/bootstrap_select/js/bootstrap-select.min.js"></script>
 
     <script src="assets/js/remax.js?v=190220_1827"></script>
     <script src="assets/js/alertsettings.js?v=190220_1827"></script>
@@ -50,7 +52,7 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <div class="page-header">
-                        <h1>Alerts &amp; Settings</h1>
+                        <h1>Alerts Settings</h1>
                     </div>
                 </div>
             </div>
@@ -81,121 +83,13 @@
                 </div>
             </div>
 
+            <!-- Empty Row Dividor -->
             <div class="row">
                 <div class="col-md-12">
                     <div style="height:20px"></div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Alerts</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div id="table-wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6">
-                                        <div id="table_length" class="dataTables_length">
-                                            <span>Show &nbsp;</span><select class="form-control input-sm" name="dataTables-example_length" aria-controls="dataTables-example">
-                                                <option value="10" selected>10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div id="table_filter" class="dataTables_filter">
-                                            <label>
-                                                Search IMO No.:
-                                                <input type="search" class="form-control input-sm" placeholder aria-controls="dataTables-example" />
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="table-responsive">
-                                            <table class="table table table-striped table-bordered table-hover dataTable no-footer dtr-inline">
-                                                <thead>
-                                                    <tr role="row">
-                                                        <th class="sorting_asc" aria-controls="dataTables-example" aria-sort="ascending" aria-label="Account Name">Vessel Name (IMO)</th>
-                                                        <th class="sorting">Engine Serial No.</th>
-                                                        <th class="sorting">Channel No</th>
-                                                        <th class="sorting">Date Time</th>
-                                                        <th class="sorting">Value</th>
-                                                        <th class="sorting">Alert Level</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr class="gradeA odd" role="row">
-                                                        <td>PRINCESS SEAWAYS (8502391)<br></td>
-                                                        <td>DK12345678<br></td>
-                                                        <td>0106<br></td>
-                                                        <td>07/June/2018 11:00 AM<br></td>
-                                                        <td>1210</td>
-                                                        <td>Warning</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>PRINCESS SEAWAYS (8502391)<br></td>
-                                                        <td>DK12345678<br></td>
-                                                        <td>0106<br></td>
-                                                        <td>07/June/2018 11:10 AM<br></td>
-                                                        <td>1250</td>
-                                                        <td>Warning</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>PRINCESS SEAWAYS (8502391)<br></td>
-                                                        <td>DK12345678<br></td>
-                                                        <td>0106<br></td>
-                                                        <td>07/June/2018 11:30 AM<br></td>
-                                                        <td>1290</td>
-                                                        <td>Warning</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>PRINCESS SEAWAYS (8502391)<br></td>
-                                                        <td>DK12345678<br></td>
-                                                        <td>0106<br></td>
-                                                        <td>07/June/2018 11:50 AM<br></td>
-                                                        <td>1301</td>
-                                                        <td>Critical</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>PRINCESS SEAWAYS (8502391)<br></td>
-                                                        <td>DK12345678<br></td>
-                                                        <td>0106<br></td>
-                                                        <td>07/June/2018 12:10 PM<br></td>
-                                                        <td>1215</td>
-                                                        <td>Warning</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3 col-sm-12 col-xs-12">
-                                        <div class="dataTables_info"><span>Showing 1 to 5 of 50</span></div>
-                                    </div>
-                                    <div class="col-md-9 col-sm-12 col-xs-12">
-                                        <div class="dataTables_paginate paging_simple_numbers">
-                                            <ul class="pagination">
-                                                <li class="paginate_button previous disabled"><a href="#">Previous</a></li>
-                                                <li class="paginate_button active"><a href="#">1</a></li>
-                                                <li class="paginate_button"><a href="#">2</a></li>
-                                                <li class="paginate_button"><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a><a href="#">8</a><a href="#">9</a><a href="#">10</a></li>
-                                                <li class="paginate_button next"><a href="#">Next</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12"></div>
-            </div>
+
         </div>
     </div>
     
@@ -217,19 +111,19 @@
                             <div class="form-group">
                                 <label class="col-sm-4 control-label" for="engineModal">Engine Modal</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="engineModel"></select>
+                                    <select class="form-control" id="engineModel" name="engineModel"></select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label" for="channelNo">Channel No.</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="channelNo"></select>
+                                    <select class="form-control" id="channelNo" name="channelNo"></select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label" for="condition">Condition</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="condition"></select>
+                                    <select class="form-control" id="condition" name="condition"></select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -237,7 +131,7 @@
                                        for="value">Value</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control"
-                                           id="value" placeholder="Value" />
+                                           id="value" name="value" placeholder="Value"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -251,7 +145,7 @@
                                        for="message">Message</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control"
-                                           id="message" placeholder="Message" />
+                                           id="message" name="message" placeholder="Message" />
                                 </div>
                             </div>
 

@@ -21,5 +21,25 @@ namespace REMAXAPI.Models
         public string Recipients { get; set; }
         public string Subject { get; set; }
         public string AlertMessage { get; set; }
+        public Nullable<System.Guid> VesselId { get; set; }
+        public string IMO_No { get; set; }
+        public string VesselName { get; set; }
+        public Nullable<System.Guid> EngineId { get; set; }
+        public string SerialNo { get; set; }
+        public Nullable<System.Guid> ModelId { get; set; }
+        public string ModelName { get; set; }
+        public Nullable<System.Guid> ChannelId { get; set; }
+        public string ChannelName { get; set; }
+        public string Value { get; set; }
+        public string DisplayUnit { get; set; }
+        public Nullable<int> Condition { get; set; }
+        public string ConditionValue { get; set; }
+        public string AlertValue { get; set; }
+        public string AlertLevelValue { get; set; }
+        public Nullable<System.DateTime> AlertTime { get; set; }
+        public Nullable<System.DateTime> TimeStamp { get; set; }
+        public Nullable<bool> Notified { get; set; }
+        public string DocumentURL { get; set; }
+        public string AlertEmailMessage { get; set; }
     }
 }

@@ -168,6 +168,7 @@
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\DropDownController.cs" />
     <Compile Include="Controllers\KendoAccountsController.cs" />
+    <Compile Include="Controllers\KendoAlertsController.cs" />
     <Compile Include="Controllers\KendoAlertSettingsController.cs" />
     <Compile Include="Controllers\KendoAlternatorMakersController.cs" />
     <Compile Include="Controllers\KendoChannelsController.cs" />
