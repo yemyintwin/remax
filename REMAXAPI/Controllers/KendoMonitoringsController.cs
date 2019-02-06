@@ -96,9 +96,19 @@ namespace REMAXAPI.Controllers
                                                  join ct in db.ChartTypes on m_ch.ChartTypeID equals ct.Id into mct
                                                  from m_ct in mct.DefaultIfEmpty()
 
-                                                 where m.Processed.HasValue ? m.Processed.Value : false
-
-                                                 select new MonitorView
+                                                 where m.Processed.HasValue ? m.Processed.Value : false 
+                                                        &&
+                                                        // Login user is from Owing company
+                                                        (
+                                                            ((m_v.OwnerID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
+                                                            ||
+                                                            // Login user is from Operating company
+                                                            ((m_v.OperatorID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
+                                                            ||
+                                                            // Admin user
+                                                            readLevel == Util.AccessLevel.All
+                                                        )
+                                                  select new MonitorView
                                                  {
                                                      Id = m.Id,
                                                      IMONo = m.IMO_No,
@@ -390,6 +400,11 @@ namespace REMAXAPI.Controllers
         [HttpGet]
         [Route("api/KendoMonitorings/GetTodayData")]
         public async Task<IHttpActionResult> GetTodayData() {
+            int readLevel = Util.GetResourcePermission("Vessel", Util.ReourceOperations.Read);
+            if (readLevel == 0) return Ok();
+
+            User currentUser = Util.GetCurrentUser();
+
             DateTime today = Util.GetToday();
             DateTime endOfToday = today.AddDays(1).AddMilliseconds(-1);
             double offset = Util.GetUserTimeOffset();
@@ -401,7 +416,17 @@ namespace REMAXAPI.Controllers
             var dataCounts = await (
                                         from m in db.Monitorings
                                         join v in db.Vessels on m.IMO_No equals v.IMO_No
-                                        where m.TimeStamp >= today && m.TimeStamp <= endOfToday
+                                        where m.TimeStamp >= today && m.TimeStamp <= endOfToday 
+                                                        &&
+                                                        (
+                                                            ((v.OwnerID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
+                                                            ||
+                                                            // Login user is from Operating company
+                                                            ((v.OperatorID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
+                                                            ||
+                                                            // Admin user
+                                                            readLevel == Util.AccessLevel.All
+                                                        )
                                         group m by new
                                         {
                                             IMO_No = m.IMO_No,
@@ -427,34 +452,70 @@ namespace REMAXAPI.Controllers
 
         [HttpGet]
         [Route("api/KendoMonitorings/GetData")]
-        public async Task<IHttpActionResult> GetData(DateTime date)
+        public async Task<IHttpActionResult> GetData([FromUri]Guid vesselId, [FromUri]Guid engineId, [FromUri]DateTime fromDate, [FromUri]DateTime toDate)
         {
-            DateTime today = DateTime.Today;
-            DateTime endOfToday = today.AddDays(1);
-            var dataCounts = await (
-                                        from m in db.Monitorings
-                                        join v in db.Vessels on m.IMO_No equals v.IMO_No
-                                        where m.TimeStamp >= today && m.TimeStamp <= endOfToday
-                                        group m by new
-                                        {
-                                            IMO_No = m.IMO_No,
-                                            VesselName = v.VesselName,
-                                            Hours = SqlFunctions.DatePart("HOUR", m.TimeStamp),
-                                            HalfHours = SqlFunctions.DatePart("HOUR", m.TimeStamp) < 30 ? 0 : 1
-                                        }
-                                        into m1
-                                        orderby m1.Key.Hours, m1.Key.HalfHours
-                                        select new
-                                        {
-                                            m1.Key.IMO_No,
-                                            m1.Key.VesselName,
-                                            m1.Key.Hours,
-                                            m1.Key.HalfHours,
-                                            Count = m1.Count()
-                                        }
-                                    ).ToListAsync();
+            int readLevel = Util.GetResourcePermission("Vessel", Util.ReourceOperations.Read);
+            if (readLevel == 0) return Ok();
 
-            return Ok(dataCounts);
+            User currentUser = Util.GetCurrentUser();
+            double offset = Util.GetUserTimeOffset();
+            fromDate = fromDate.AddSeconds((-1) * offset);
+            toDate = toDate.AddSeconds((-1) * offset).AddDays(1);
+
+            List<MonitorView> monitorings = await( from m in db.Monitorings
+
+                                                  join v in db.Vessels on m.IMO_No equals v.IMO_No into mv
+                                                  from m_v in mv
+
+                                                  join e in db.Engines on m.SerialNo equals e.SerialNo into me
+                                                  from m_e in me
+
+                                                  join ml in db.Models on m_e.EngineModelID equals ml.Id into mml
+                                                  from m_ml in mml.DefaultIfEmpty()
+
+                                                  join c in db.Channels on
+                                                      new { m.ChannelNo, ID = m_ml.Id } equals
+                                                      new { c.ChannelNo, ID = c.ModelID.HasValue ? c.ModelID.Value : Guid.Empty }
+                                                      into mch
+                                                  from m_ch in mch.DefaultIfEmpty()
+
+                                                  join ct in db.ChartTypes on m_ch.ChartTypeID equals ct.Id into mct
+                                                  from m_ct in mct.DefaultIfEmpty()
+
+                                                  where m.TimeStamp >= fromDate && m.TimeStamp <= toDate
+                                                        && m_v.Id == vesselId && m_e.Id == engineId &&
+                                                        (
+                                                            ((m_v.OwnerID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
+                                                            ||
+                                                            // Login user is from Operating company
+                                                            ((m_v.OperatorID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
+                                                            ||
+                                                            // Admin user
+                                                            readLevel == Util.AccessLevel.All
+                                                        )
+
+                                                   select new MonitorView
+                                                  {
+                                                      Id = m.Id,
+                                                      IMONo = m.IMO_No,
+                                                      TimeStamp = SqlFunctions.DateAdd("second", offset, m.TimeStamp).Value,
+                                                      TimeStampDateOnly = DbFunctions.TruncateTime(SqlFunctions.DateAdd("second", offset, m.TimeStamp).Value),
+                                                      VesselName = m_v.VesselName,
+                                                      SerialNo = m.SerialNo,
+                                                      EngineID = m_e.Id, //!= null? m_e.Id.ToString() : "",
+                                                      EngineModelID = m_e.EngineModelID,
+                                                      ModelName = m_ml.Name,
+                                                      ChannelNo = m.ChannelNo,
+                                                      Value = m.Value,
+                                                      DisplayUnit = m_ch.DisplayUnit,
+                                                      IncomingChannelName = m.ChannelDescription,
+                                                      ChannelName = m_ch.Name,
+                                                      ChartType = m_ct.Name,
+                                                      Processed = m.Processed,
+                                                      DashboardDisplay = m_ch.DashboardDisplay
+                                                  }).ToListAsync<MonitorView>();
+
+            return Ok(monitorings);
         }
     }
 }

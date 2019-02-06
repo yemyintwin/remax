@@ -546,7 +546,9 @@ table.dataTable thead .sorting:after {
 }
 
 .container {
-  margin-top:15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 2px 16px;
 }
 
 .thumbnail h3 {
@@ -608,8 +610,4 @@ table.dataTable thead .sorting_asc::after {
     transition: 0.3s;
     width: 100%;
     border-radius: 5px;
-}
-
-.container {
-    padding: 2px 16px;
 }

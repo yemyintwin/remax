@@ -48,6 +48,30 @@ var Util = {
         var utcTime = new Date(utcDate);
         var localTime = new Date(utcTime.getTime() + (utcTime.getTimezoneOffset() * 60000 * (-1)));
         return localTime;
+    },
+
+    date_diff_indays : function (date1, date2) {
+        dt1 = new Date(date1);
+        dt2 = new Date(date2);
+        return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
+    },
+
+    today: function () {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        today = mm + '/' + dd+ '/' + yyyy;
+        return today;
     }
 }
 
