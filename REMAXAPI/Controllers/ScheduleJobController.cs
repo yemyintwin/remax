@@ -745,7 +745,7 @@ namespace REMAXAPI.Controllers
                     {
                         From = fromAddress,
                         Subject = alert.Subject,
-                        Body = alert.AlertMessage,
+                        Body = alert.AlertEmailMessage,
                         IsBodyHtml = true
                     })
                     {

@@ -8,6 +8,10 @@ var trending = {
             trending.initControls();
             Util.displayLoading(document.body, false); //hide loading
         }, 100);
+
+        $(window).resize(function () {
+            $("#dataChart").data("kendoChart").refresh();
+        });
     },
 
     initControls: function () {

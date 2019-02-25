@@ -1,7 +1,7 @@
 // Settings
 var Settings = {
-    WebApiUrl: 'http://localhost:56376/', // DEV
-    //WebApiUrl: 'http://hiroodaikai-001-site1.atempurl.com/', // UAT
+    //WebApiUrl: 'http://localhost:56376/', // DEV
+    WebApiUrl: 'http://hiroodaikai-001-site1.atempurl.com/', // UAT
     Token: null,
     CurrentUser: null,
     PageSize: 5,
@@ -267,7 +267,7 @@ vesselMenu = function (result, textStatus, jqXHR) {
 
     $("#bell_alert").text(alertCount); 
 
-    if (lastAlerted) {
+    if (lastAlerted && lastAlerted.getTime && lastAlerted.getTime() != 0 ) {
         var ago = lastAlerted.getHours() + ':' + lastAlerted.getMinutes() + ' hour ago';
         $("#bell_alert_ago").text(ago);
         $("#bell_msg_ago").text(ago);

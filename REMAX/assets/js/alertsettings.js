@@ -334,6 +334,7 @@ var alertSettings = {
                     condition: $('#condition').val(),
                     value: $('#value').val(),
                     alertLevel: $('#level').val(),
+                    message: $('#message').val(),
                 };
                 var requestType = "POST"; // Create
 
@@ -405,6 +406,7 @@ var alertSettings = {
             $('#condition').val(selectedItem.condition);
             $('#value').val(selectedItem.value);
             $('#level').val(selectedItem.alertLevel);
+            $('#message').val(selectedItem.message);
         }
         else {
             $(alertSettings.modules.settings.dialogId).modal('hide');

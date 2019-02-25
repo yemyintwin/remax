@@ -22,7 +22,13 @@ namespace REMAXAPI.Models
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
-    
+
+        public Remax_Entities(string constr)
+            : base(constr)
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -72,6 +78,31 @@ namespace REMAXAPI.Models
                 new ObjectParameter("operation_type", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ResourcePermission_Result>("sp_ResourcePermission", useridParameter, resource_nameParameter, operation_typeParameter);
+        }
+    
+        public virtual ObjectResult<sp_Trending_Result> sp_Trending(string vesselId, string engineId, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, string currentUser)
+        {
+            var vesselIdParameter = vesselId != null ?
+                new ObjectParameter("VesselId", vesselId) :
+                new ObjectParameter("VesselId", typeof(string));
+    
+            var engineIdParameter = engineId != null ?
+                new ObjectParameter("EngineId", engineId) :
+                new ObjectParameter("EngineId", typeof(string));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(System.DateTime));
+    
+            var currentUserParameter = currentUser != null ?
+                new ObjectParameter("CurrentUser", currentUser) :
+                new ObjectParameter("CurrentUser", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Trending_Result>("sp_Trending", vesselIdParameter, engineIdParameter, fromDateParameter, toDateParameter, currentUserParameter);
         }
     }
 }

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REMAXAPI", "REMAXAPI\REMAXAPI.csproj", "{DA9EBCD2-8734-4D09-8867-A0C0A31639DF}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "REMAX", "REMAX\", "{F1B51A0E-2369-457E-A3E7-21BE7F290552}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "REMAX(2)", "REMAX\", "{F1B51A0E-2369-457E-A3E7-21BE7F290552}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_58890"

@@ -624,10 +624,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_ResourcePermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="userid" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="resource_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="operation_type" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_ResourcePermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="resource_name" Type="nvarchar" Mode="In" />
           <Parameter Name="operation_type" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_Trending" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="VesselId" Type="nvarchar" Mode="In" />
+          <Parameter Name="EngineId" Type="nvarchar" Mode="In" />
+          <Parameter Name="FromDate" Type="datetime" Mode="In" />
+          <Parameter Name="ToDate" Type="datetime" Mode="In" />
+          <Parameter Name="CurrentUser" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="REMAXAPIModelsStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
@@ -1346,6 +1358,13 @@
           <EntitySet Name="CountryTimezones" EntityType="REMAXAPI.Models.CountryTimezone" />
           <EntitySet Name="Alerts" EntityType="REMAXAPI.Models.Alert" />
           <EntitySet Name="EmailTemplates" EntityType="REMAXAPI.Models.EmailTemplate" />
+          <FunctionImport Name="sp_Trending" ReturnType="Collection(REMAXAPI.Models.sp_Trending_Result)">
+            <Parameter Name="VesselId" Mode="In" Type="String" />
+            <Parameter Name="EngineId" Mode="In" Type="String" />
+            <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CurrentUser" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_ResourcePermission_Result">
           <Property Type="Guid" Name="User_Id" Nullable="true" />
@@ -1489,6 +1508,25 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Template" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <ComplexType Name="sp_Trending_Result">
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="IMONo" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="TimeStamp" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="TimeStampDateOnly" Nullable="true" />
+          <Property Type="String" Name="VesselName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SerialNo" Nullable="true" MaxLength="100" />
+          <Property Type="Guid" Name="EngineID" Nullable="true" />
+          <Property Type="Guid" Name="EngineModelID" Nullable="true" />
+          <Property Type="String" Name="ModelName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ChannelNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Value" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="DisplayUnit" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="IncomingChannelName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ChannelName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ChartType" Nullable="true" MaxLength="100" />
+          <Property Type="Boolean" Name="Processed" Nullable="true" />
+          <Property Type="Boolean" Name="DashboardDisplay" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1905,6 +1943,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_Trending" FunctionName="REMAXAPI.Models.Store.sp_Trending">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="REMAXAPI.Models.sp_Trending_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IMONo" ColumnName="IMONo" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="TimeStampDateOnly" ColumnName="TimeStampDateOnly" />
+                <ScalarProperty Name="VesselName" ColumnName="VesselName" />
+                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+                <ScalarProperty Name="EngineID" ColumnName="EngineID" />
+                <ScalarProperty Name="EngineModelID" ColumnName="EngineModelID" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="ChannelNo" ColumnName="ChannelNo" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="DisplayUnit" ColumnName="DisplayUnit" />
+                <ScalarProperty Name="IncomingChannelName" ColumnName="IncomingChannelName" />
+                <ScalarProperty Name="ChannelName" ColumnName="ChannelName" />
+                <ScalarProperty Name="ChartType" ColumnName="ChartType" />
+                <ScalarProperty Name="Processed" ColumnName="Processed" />
+                <ScalarProperty Name="DashboardDisplay" ColumnName="DashboardDisplay" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

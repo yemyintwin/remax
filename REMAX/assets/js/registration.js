@@ -2570,6 +2570,7 @@ var registration = {
             $('#channel_upperLimit').val(selectedItem.upperLimit);
             $('#channel_monitor').val(selectedItem.monitoringTimer);
             $('#channel_dataType').val(selectedItem.dataTypeNo);
+            $('#channel_documentUrl').val(selectedItem.documentURL);
         }
         else {
             $(registration.modules.channel.dialogId).modal('hide');
