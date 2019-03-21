@@ -51,6 +51,7 @@ namespace REMAXAPI.Controllers
         public Nullable<decimal> UpperLimit { get; set; }
         public Nullable<decimal> MonitoringTimer { get; set; }
         public Nullable<int> DataTypeNo { get; set; }
+        public Nullable<short> AlarmValue { get; set; }
         public Nullable<int> Status { get; set; }
         public System.Guid CreatedBy { get; set; }
         public System.DateTime CreatedOn { get; set; }
@@ -370,6 +371,7 @@ namespace REMAXAPI.Controllers
                                                     UpperLimit = c.UpperLimit,
                                                     MonitoringTimer = c.MonitoringTimer,
                                                     DataTypeNo = c.DataTypeNo,
+                                                    AlarmValue = c.AlarmValue,
                                                     Status = c.Status,
                                                     CreatedBy = c.CreatedBy,
                                                     CreatedOn = c.CreatedOn,
@@ -393,6 +395,8 @@ namespace REMAXAPI.Controllers
                     });
                 }
             }
+
+            gaugueViews = gaugueViews.OrderBy(g => g.ChannelSetup.ChannelNo).ToList();
 
             return Ok(gaugueViews);
         }
@@ -452,7 +456,7 @@ namespace REMAXAPI.Controllers
 
         [HttpGet]
         [Route("api/KendoMonitorings/GetData")]
-        public async Task<IHttpActionResult> GetData([FromUri]Guid vesselId, [FromUri]Guid engineId, [FromUri]DateTime fromDate, [FromUri]DateTime toDate)
+        public async Task<IHttpActionResult> GetData([FromUri]Guid vesselId, [FromUri]Guid engineId, [FromUri]Guid channelId, [FromUri]DateTime fromDate, [FromUri]DateTime toDate)
         {
             int readLevel = Util.GetResourcePermission("Vessel", Util.ReourceOperations.Read);
             if (readLevel == 0) return Ok();
@@ -483,7 +487,9 @@ namespace REMAXAPI.Controllers
                                                   from m_ct in mct.DefaultIfEmpty()
 
                                                   where m.TimeStamp >= fromDate && m.TimeStamp <= toDate
-                                                        && m_v.Id == vesselId && m_e.Id == engineId &&
+                                                        && m_v.Id == vesselId && m_e.Id == engineId 
+                                                        && m_ch.Id == channelId
+                                                        &&
                                                         (
                                                             ((m_v.OwnerID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
                                                             ||

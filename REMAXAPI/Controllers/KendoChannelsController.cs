@@ -95,6 +95,22 @@ namespace REMAXAPI.Controllers
             return Ok(channel);
         }
 
+        [ResponseType(typeof(Channel))]
+        [Route("api/KendoChannels/GetChannels")]
+        public async Task<IHttpActionResult> GetChannels([FromUri]Guid id)
+        {
+            var channels = from c in db.Channels
+                           join e in db.Engines on c.ModelID equals e.EngineModelID
+                           orderby c.ChannelNo ascending
+                            where e.Id == id
+                            select new {
+                                c.Name,
+                                c.ChannelNo,
+                                c.Id
+                            };
+            return Ok(await channels.ToListAsync());
+        }
+
         // PUT: api/KendoChannels/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutChannel(Guid id, Channel channel)

@@ -1,4 +1,0 @@
-IMO Number, Engine S/N, Channel, Channel Description, Timestamp, Value, Unit
-8502391,DC1632Z0001,0161,S M/E EXH No.1, CYL TEMP,2018-01-25 09:29:09,11.97,°C,1,The string was not recognized as a valid DateTime. There is an unknown word starting at index 1.
-8502391,DC1632Z0001,0162,S M/E EXH No.2, CYL TEMP,2018-01-25 09:29:09,11.97,°C,2,The string was not recognized as a valid DateTime. There is an unknown word starting at index 1.
-9999999,DC1632Z0003,10000,123,123,2018-01-25 09:29:09,1,Nil,17,String was not recognized as a valid DateTime.

@@ -14,7 +14,6 @@ namespace REMAXAPI
     {
         protected void Application_Start()
         {
-            Telerik.Reporting.Services.WebApi.ReportsControllerConfiguration.RegisterRoutes(System.Web.Http.GlobalConfiguration.Configuration);
             GlobalConfiguration.Configure(WebApiConfig.Register);
             var formatter = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             formatter.SerializerSettings = new JsonSerializerSettings

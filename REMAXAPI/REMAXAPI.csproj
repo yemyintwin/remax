@@ -80,9 +80,6 @@
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -123,7 +120,6 @@
     <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -131,12 +127,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Telerik.Reporting, Version=13.0.19.116, Culture=neutral, PublicKeyToken=a9d7983dfcc261be" />
-    <Reference Include="Telerik.Reporting.Services.WebApi, Version=13.0.19.116, Culture=neutral, PublicKeyToken=a9d7983dfcc261be" />
-    <Reference Include="Telerik.Reporting.XpsRendering, Version=13.0.19.116, Culture=neutral, PublicKeyToken=a9d7983dfcc261be" />
-    <Reference Include="System.Web.Http.WebHost">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Http.WebHost">
@@ -159,18 +149,14 @@
     </Content>
     <Content Include="SQL\Channels.sql" />
     <Content Include="SQL\Data Setup.sql" />
-    <Content Include="SQL\fn_ResourcePermission.sql" />
     <Content Include="SQL\Monitoring_Join.sql" />
     <Content Include="SQL\New Environment Setup\01. Database Setup.sql" />
     <Content Include="SQL\New Environment Setup\03. Master Data Setup.sql" />
     <Content Include="SQL\New Environment Setup\02. Root Setup.sql" />
     <Content Include="SQL\OptionSet.sql" />
     <Content Include="SQL\sp_ResourcePermission.sql" />
-    <Content Include="SQL\sp_Trending.sql" />
     <Content Include="SQL\User.sql" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -302,9 +288,6 @@
     <Compile Include="Models\sp_ResourcePermission_Result.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sp_Trending_Result.cs">
-      <DependentUpon>Remax.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
@@ -325,12 +308,6 @@
     <Compile Include="Provider\Helper.cs" />
     <Compile Include="Provider\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Provider\SimpleRefreshTokenProvider.cs" />
-    <Compile Include="Reports\Report1.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\Report1.Designer.cs">
-      <DependentUpon>Report1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Util.cs" />
@@ -345,11 +322,8 @@
       <DependentUpon>Remax.edmx</DependentUpon>
     </Content>
     <Content Include="App_Data\Codes.csv" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\DebugProfile.pubxml" />
-    <Content Include="Reports\Tranding.trdp" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -366,12 +340,6 @@
     <Folder Include="App_Data\Incoming\Error\" />
     <Folder Include="App_Data\Incoming\Processing\" />
     <Folder Include="App_Data\VesselPhotos\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
-    <EmbeddedResource Include="Reports\Report1.resx">
-      <DependentUpon>Report1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

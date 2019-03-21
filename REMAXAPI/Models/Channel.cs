@@ -34,6 +34,7 @@ namespace REMAXAPI.Models
         public Nullable<decimal> UpperLimit { get; set; }
         public Nullable<decimal> MonitoringTimer { get; set; }
         public Nullable<int> DataTypeNo { get; set; }
+        public Nullable<short> AlarmValue { get; set; }
         public Nullable<int> Status { get; set; }
         public System.Guid CreatedBy { get; set; }
         public System.DateTime CreatedOn { get; set; }

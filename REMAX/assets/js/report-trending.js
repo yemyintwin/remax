@@ -29,6 +29,7 @@ var trending = {
         $('#from').datepicker().datepicker('setDate', 'today');
         $('#to').datepicker().datepicker('setDate', 'today');
         $("#vessel").change(trending.vessel_OnChange);
+        $("#engine").change(trending.engine_OnChange);
         $("#btnGenerate").click(trending.btnGenerate_OnClick);
 
         // Retrieveing vessels
@@ -53,8 +54,6 @@ var trending = {
                 },
             });
         }
-
-
     },
 
     vessel_OnChange : function () {
@@ -69,11 +68,43 @@ var trending = {
                 $('#engine').append($('<option></option>').attr('value', entry.id).text(entry.serialNo)).end();
             });
         }
+
+        $("#engine").change();
+    },
+
+    engine_OnChange : function() {
+        var engineId = $('#engine').val();
+
+        // Retrieveing channels
+        if (Settings.Token) {
+            $.ajax({
+                type: 'GET',
+                url: Settings.WebApiUrl + 'api/KendoChannels/GetChannels',
+                data: { id: engineId},
+                dataType: 'json',
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'bearer ' + Settings.Token.access_token);
+                },
+                success: function (result, textStatus, jqXHR) {
+                    if (result) channels = result;
+
+                    $('#channel').find('option').remove().end();
+                    jQuery.each(channels, function (key, entry) {
+                        var name = entry.channelNo.toString() + ' (' + entry.name.toString() + ')';
+                        $('#channel').append($('<option></option>').attr('value', entry.id).text(name)).end();
+                    });
+
+                    $("#channel").change();
+                },
+            });
+        }
     },
 
     btnGenerate_OnClick: function () {
         var vesselId = $('#vessel').val();
         var engineId = $('#engine').val();
+        var channelId = $('#channel').val();
         var from = $('#from').val();
         var to = $('#to').val();
         var errorMsg = '';
@@ -81,6 +112,7 @@ var trending = {
 
         if (!vesselId) errorMsg += "<p>Vessel is not selected.</p>";
         if (!engineId) errorMsg += "<p>Engine is not selected.</p>";
+        if (!channelId) errorMsg += "<p>Channel is not selected.</p>";
         if (!from) errorMsg += "<p>From date is not selected.</p>";
         if (!to) errorMsg += "<p>To date is not selected.</p>";
 
@@ -166,7 +198,7 @@ var trending = {
             });
             */
 
-            var param = 'vesselId=' + vesselId + '&engineId=' + engineId + '&fromDate=' + strFromDate + '&toDate=' + strToDate;
+            var param = 'vesselId=' + vesselId + '&engineId=' + engineId + '&channelId=' + channelId + '&fromDate=' + strFromDate + '&toDate=' + strToDate;
 
             var dayDiff = Util.date_diff_indays(fromDate, toDate);
             var baseUnit = 'fit';

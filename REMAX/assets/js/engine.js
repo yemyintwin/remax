@@ -282,7 +282,7 @@ var engine = {
             '                <div id="channel_{{channelNo}}" class="gauge"></div>' +
             '            </div>' +
             '        </div>' +
-            '        <div class="panel-footer">' +
+            '        <div class="panel-footer" style="height:70px; !important">' +
             '            <span class="pull-left">{{channelName}}</span>' +
             '            <span class="pull-right"></span>' + //<i class="fa fa-arrow-circle-right"></i> //Arrow on right align
             '            <div class="clearfix"></div>' +
@@ -308,25 +308,46 @@ var engine = {
                     var d = new Date(v.timeStamp);
                     if (d) $("#channel_" + c.channelNo + "_Time").append("<span>" + d.toLocaleDateString() + " " + d.toLocaleTimeString()  + "</span>")
 
-                    // Draw gauge
-                    $("#channel_" + c.channelNo).css({ width: "300px", height: "200px" }).kendoRadialGauge({
-                        pointer: {
-                            value: v.value
-                        },
-                        scale: {
-                            minorUnit: c.scale,
-                            startAngle: -30,
-                            endAngle: 210,
-                            max: c.maxRange,
-                            ranges: [
-                                {
-                                    from: c.upperLimit,
-                                    to: c.maxRange,
-                                    color: "#c20000"
-                                }
-                            ]
-                        }
-                    });// end of gauge drawing
+                    // Digital Data Type
+                    if (c.dataTypeNo == 1) {
+                        $("#channel_" + c.channelNo).css({ width: "300px", height: "200px" }).kendoChart({
+                            title: {
+                                position: "bottom",
+                                text: (v.value && !isNaN(v.value) ? Math.trunc(v.value).toString() + " " : "") + "(" + c.displayUnit + ")"
+                            },
+                            legend: {
+                                visible: false
+                            },
+                            series: [{
+                                type: "pie",
+                                data: [{
+                                    value: "100",
+                                    color: (v.value == c.alarmValue ? "#dd0606" : "#068c35") // alarm = red, normal = green 
+                                }]
+                            }],
+                        });
+                    }
+                    else if (c.dataTypeNo == 2) {
+                        // Draw gauge
+                        $("#channel_" + c.channelNo).css({ width: "300px", height: "200px" }).kendoRadialGauge({
+                            pointer: {
+                                value: v.value
+                            },
+                            scale: {
+                                minorUnit: c.scale,
+                                startAngle: -30,
+                                endAngle: 210,
+                                max: c.maxRange,
+                                ranges: [
+                                    {
+                                        from: c.upperLimit,
+                                        to: c.maxRange,
+                                        color: "#c20000"
+                                    }
+                                ]
+                            }
+                        });// end of gauge drawing
+                    }
                 }// end of last value
             } // check channel
         });// end of for each

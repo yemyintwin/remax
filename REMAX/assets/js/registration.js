@@ -2388,6 +2388,17 @@ var registration = {
                 }
             });
         }
+
+        $('#channel_alarmValue')
+            .empty()
+            .append('<option value="0">0</option>')
+            .append('<option value="1">1</option>');
+
+        $('#channel_dataType').change(function () {
+            var d = this.value;
+            if (d == "1") $('#channel_alarmValue').prop('disabled', false);
+            else $('#channel_alarmValue').prop('disabled', 'disabled');
+        })
     },
 
     SubmitChannel: function () {
@@ -2496,6 +2507,7 @@ var registration = {
                     upperLimit: $('#channel_upperLimit').val(),
                     monitoringTimer: $('#channel_monitor').val(),
                     dataTypeNo: $('#channel_dataType').val(),
+                    alarmValue: $('#channel_alarmValue').val(),
                     documentURL: $('#channel_documentUrl').val(),
                 };
                 var requestType = "POST"; // Create
@@ -2570,6 +2582,7 @@ var registration = {
             $('#channel_upperLimit').val(selectedItem.upperLimit);
             $('#channel_monitor').val(selectedItem.monitoringTimer);
             $('#channel_dataType').val(selectedItem.dataTypeNo);
+            $('#channel_alarmValue').val(selectedItem.alarmValue);
             $('#channel_documentUrl').val(selectedItem.documentURL);
         }
         else {

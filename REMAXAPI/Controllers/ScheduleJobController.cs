@@ -89,21 +89,37 @@ namespace REMAXAPI.Controllers
         [Route("api/ScheduleJob/ProcessFiles")]
         public async Task<IHttpActionResult> ProcessFiles() {
             logger.InfoFormat("Process File start at {0}", DateTime.Now);
-            // Process the list of files found in the directory.
+            // Moveing incoming files to processing folder
             string[] fileEntries = Directory.GetFiles(this.IncomingFilePath, "*.csv", SearchOption.TopDirectoryOnly);
-            foreach (string fileName in fileEntries)
+            foreach (var fileName in fileEntries)
             {
+                string fileNameWithoutPath = Path.GetFileName(fileName);
+                string processingFile = string.Format(@"{0}\{1}", this.ProcessingFilePath, fileNameWithoutPath);
+                
                 try
                 {
-                    string fileNameWithoutPath = Path.GetFileName(fileName);
-                    string processingFile = string.Format(@"{0}\{1}", this.ProcessingFilePath, fileNameWithoutPath);
-                    string archiveFile = string.Format(@"{0}\{1}", this.ArchiveFilePath, fileNameWithoutPath);
-                    string errorFile = string.Format(@"{0}\{1}", this.ErrorFilePath, fileNameWithoutPath);
-
                     // Move file to processing folder
                     if (File.Exists(processingFile)) File.Delete(processingFile);
                     File.Move(fileName, processingFile);
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.Message, ex);
+                }
+            }
 
+            // Process the list of files found in the directory.
+            string[] processFileEntries = Directory.GetFiles(this.ProcessingFilePath, "*.csv", SearchOption.TopDirectoryOnly);
+
+            foreach (string fileName in processFileEntries)
+            {
+                string fileNameWithoutPath = Path.GetFileName(fileName);
+                string processingFile = string.Format(@"{0}\{1}", this.ProcessingFilePath, fileNameWithoutPath);
+                string archiveFile = string.Format(@"{0}\{1}", this.ArchiveFilePath, fileNameWithoutPath);
+                string errorFile = string.Format(@"{0}\{1}", this.ErrorFilePath, fileNameWithoutPath);
+
+                try
+                {
                     // Process file
                     FileProcessSummary summary = await ProcessSingleFile(processingFile);
 
@@ -134,11 +150,28 @@ namespace REMAXAPI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex.Message, ex);
+                    logger.ErrorFormat("Error File Name : {0}{1}{2}", fileNameWithoutPath, Environment.NewLine, ex.StackTrace);
+
+                    try
+                    {
+                        if (File.Exists(errorFile))
+                        {
+                            File.Delete(errorFile);
+                        }
+                        File.Move(processingFile, errorFile);
+                    }
+                    catch (Exception moveEx)
+                    {
+                        logger.Error(moveEx.Message, moveEx);
+                    }
+                    
                 }
             }
             logger.InfoFormat("Process Files end at {0}", DateTime.Now);
             logger.InfoFormat(Environment.NewLine);
+
+            await ProcessStagingData();
+
             return StatusCode(HttpStatusCode.OK);
         }
 
@@ -147,98 +180,103 @@ namespace REMAXAPI.Controllers
             string[] lines = File.ReadAllLines(fileNamePath);
             bool hasError = false;
             long totalLine = lines.Length;
+            int recordAffected = 0;
 
-            string headerLine = lines[0];
-            string[] header = headerLine.Split(new char[] { ',' });
-
-            if (header.Length != 7)
+            if (totalLine > 0)
             {
-                logger.Error(Consts.INTEGRATION_FILE_HEADER_LENGTH);
-                throw new FileProcessingException(Consts.INTEGRATION_FILE_HEADER_LENGTH, FileProcessingException.ErrorType.File);
-            }
+                string headerLine = lines[0];
+                string[] header = headerLine.Split(new char[] { ',' });
 
-            summary.ErrorList = new List<string>();
-            summary.ErrorList.Add(headerLine);
+                if (header.Length != 7)
+                {
+                    logger.Error(Consts.INTEGRATION_FILE_HEADER_LENGTH);
+                    throw new FileProcessingException(Consts.INTEGRATION_FILE_HEADER_LENGTH, FileProcessingException.ErrorType.File);
+                }
 
-            summary.Total = lines.Length - 1;
-            summary.StartTime = DateTime.Now;
+                summary.ErrorList = new List<string>();
+                summary.ErrorList.Add(headerLine);
 
-            List<Monitoring> monitoringList = new List<Monitoring>();
+                summary.Total = lines.Length - 1;
+                summary.StartTime = DateTime.Now;
 
-            for (long i = 0; i < lines.Length; i++)
-            {
-                long currentLine = i;
-                string line = lines[i];
+                List<Monitoring> monitoringList = new List<Monitoring>();
 
-                Regex CSVParser = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+                for (long i = 0; i < lines.Length; i++)
+                {
+                    long currentLine = i;
+                    string line = lines[i];
 
-                string[] raw = CSVParser.Split(line);
-                //string[] raw = line.Split(new char[] { ',' });
+                    Regex CSVParser = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+
+                    string[] raw = CSVParser.Split(line);
+                    //string[] raw = line.Split(new char[] { ',' });
+
+                    try
+                    {
+                        Monitoring monitor = new Monitoring();
+
+                        // IMO Number
+                        if (!string.IsNullOrWhiteSpace(raw[0])) monitor.IMO_No = RemoveDoubleQuotes(raw[0]);
+                        // Engine Serial No.
+                        if (!string.IsNullOrWhiteSpace(raw[1])) monitor.SerialNo = RemoveDoubleQuotes(raw[1]);
+                        // Channel No
+                        if (!string.IsNullOrWhiteSpace(raw[2])) monitor.ChannelNo = RemoveDoubleQuotes(raw[2]);
+                        // Channel Description
+                        if (!string.IsNullOrWhiteSpace(raw[3])) monitor.ChannelDescription = RemoveDoubleQuotes(raw[3]);
+                        // TimeStamp
+                        if (!string.IsNullOrWhiteSpace(raw[4])) monitor.TimeStamp = DateTime.Parse(raw[4]).ToUniversalTime();
+                        // Data Values
+                        if (!string.IsNullOrWhiteSpace(raw[5])) monitor.Value = RemoveDoubleQuotes(raw[5]);
+                        // Unit of Measurement
+                        if (!string.IsNullOrWhiteSpace(raw[6])) monitor.Unit = RemoveDoubleQuotes(raw[6]);
+
+                        // System Info
+                        //monitor.Id = Guid.NewGuid();
+                        //monitor.CreatedBy = Guid.Empty;
+                        //monitor.CreatedOn = DateTime.Now;
+                        //monitor.ModifiedBy = Guid.Empty;
+                        //monitor.ModifiedOn = DateTime.Now;
+
+                        monitor.DataRecord = line;
+                        monitor.FileName = Path.GetFileName(fileNamePath);
+                        monitor.TimeStampOriginal = raw[4];
+
+                        monitoringList.Add(monitor);
+                        summary.Success = summary.Success++;
+                    }
+                    catch (Exception ex)
+                    {
+                        summary.ErrorList.Add(string.Format("{0},{1},{2}", line, i.ToString(), ex.Message));
+                        hasError = true;
+                        summary.Failure++;
+                        continue;
+                    }
+                }
+                summary.EndTime = DateTime.Now;
+
+                Remax_Entities remax_Entities = new Remax_Entities();
+                remax_Entities.Monitorings.AddRange(monitoringList);
+
+                recordAffected = 0; // Do not remove this
+                User serviceUser = (from u in remax_Entities.Users
+                                    where (string.IsNullOrEmpty(u.FullName) ? "" : u.FullName).ToLower() == "service"
+                                    select u).FirstOrDefault();
+
+                remax_Entities.ServiceUser = serviceUser;
 
                 try
                 {
-                    Monitoring monitor = new Monitoring();
-
-                    // IMO Number
-                    if (!string.IsNullOrWhiteSpace(raw[0])) monitor.IMO_No = RemoveDoubleQuotes(raw[0]);
-                    // Engine Serial No.
-                    if (!string.IsNullOrWhiteSpace(raw[1])) monitor.SerialNo = RemoveDoubleQuotes(raw[1]);
-                    // Channel No
-                    if (!string.IsNullOrWhiteSpace(raw[2])) monitor.ChannelNo = RemoveDoubleQuotes(raw[2]);
-                    // Channel Description
-                    if (!string.IsNullOrWhiteSpace(raw[3])) monitor.ChannelDescription = RemoveDoubleQuotes(raw[3]);
-                    // TimeStamp
-                    if (!string.IsNullOrWhiteSpace(raw[4])) monitor.TimeStamp = DateTime.Parse(raw[4]).ToUniversalTime();
-                    // Data Values
-                    if (!string.IsNullOrWhiteSpace(raw[5])) monitor.Value = RemoveDoubleQuotes(raw[5]);
-                    // Unit of Measurement
-                    if (!string.IsNullOrWhiteSpace(raw[6])) monitor.Unit = RemoveDoubleQuotes(raw[6]);
-
-                    // System Info
-                    //monitor.Id = Guid.NewGuid();
-                    //monitor.CreatedBy = Guid.Empty;
-                    //monitor.CreatedOn = DateTime.Now;
-                    //monitor.ModifiedBy = Guid.Empty;
-                    //monitor.ModifiedOn = DateTime.Now;
-
-                    monitor.DataRecord = line;
-                    monitor.FileName = Path.GetFileName(fileNamePath);
-                    monitor.TimeStampOriginal = raw[4];
-
-                    monitoringList.Add(monitor);
-                    summary.Success = summary.Success++;
+                    recordAffected = await remax_Entities.SaveChangesAsync();
                 }
                 catch (Exception ex)
                 {
-                    summary.ErrorList.Add(string.Format("{0},{1},{2}", line, i.ToString(), ex.Message));
                     hasError = true;
-                    summary.Failure++;
-                    continue;
+                    logger.Error(ex.Message, ex);
+
+                    summary.Failure += (summary.Total - summary.Failure) - recordAffected;
                 }
             }
-            summary.EndTime = DateTime.Now;
-
-            Remax_Entities remax_Entities = new Remax_Entities();
-            remax_Entities.Monitorings.AddRange(monitoringList);
-
-            int recordAffected = 0;
-            User serviceUser = (from u in remax_Entities.Users
-                                where (string.IsNullOrEmpty(u.FullName) ? "" : u.FullName).ToLower() == "service"
-                                select u).FirstOrDefault();
-
-            remax_Entities.ServiceUser = serviceUser;
-
-            try
-            {
-                recordAffected = await remax_Entities.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                hasError = true;
-                logger.Error(ex.Message, ex);
-
-                summary.Failure += (summary.Total - summary.Failure) - recordAffected;
-            }
+            
             summary.DatabaseInsert = recordAffected;
             summary.Success = recordAffected;
             summary.SuccessfullyProcessed = !hasError;
@@ -399,11 +437,11 @@ namespace REMAXAPI.Controllers
                         var engineFound = (from e in db.Engines
                                            join v in db.Vessels on e.VesselID equals v.Id into ev
                                            from e_v in ev.DefaultIfEmpty()
-                                           where new { e_v.IMO_No, e.SerialNo } == new { eng.Key.IMO_No, eng.Key.SerialNo }
+                                           where new { e_v.Id, e.SerialNo } == new { vesselFound.Id, eng.Key.SerialNo }
                                            select e).FirstOrDefault();
                         if (engineFound == null)
                         {
-                            logger.DebugFormat("Creating new Engine : {0}", eng.Key);
+                            logger.DebugFormat("Creating new Engine : {0}", new { vesselFound.Id, eng.Key.SerialNo });
 
                             Engine e = new Engine
                             {
