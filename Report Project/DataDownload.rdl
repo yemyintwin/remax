@@ -1,0 +1,976 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="dsMain">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString>Data Source=sql7004.site4now.net;Initial Catalog=DB_A38003_UAT</ConnectString>
+      </ConnectionProperties>
+      <rd:SecurityType>DataBase</rd:SecurityType>
+      <rd:DataSourceID>9916f28d-1f74-4af0-8225-590d73fe5e7f</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsVessels">
+      <Query>
+        <DataSourceName>dsMain</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@userId">
+            <Value>=Parameters!currentUser.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>declare @userAccount	uniqueidentifier
+
+select @userAccount = u.AccountId
+from [User] u
+where u.Id = @userId
+
+select v.ID, v.VesselName + ' (' + v.IMO_No + ')' [VesselName]
+from Vessel v
+where v.OperatorID = @userAccount or 
+	v.OwnerID = @userAccount</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Guid</rd:TypeName>
+        </Field>
+        <Field Name="VesselName">
+          <DataField>VesselName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsData">
+      <Query>
+        <DataSourceName>dsMain</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@Vessel">
+            <Value>=Parameters!Vessel.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>select top 1000 m.IMO_No, v.VesselName, m.SerialNo, ml.Name [Model Name], m.ChannelNo
+	, c.Name [Channel Name], m.TimeStamp, m.Value, c.DisplayUnit
+from Monitoring m
+	left outer join Vessel v on m.IMO_No = v.IMO_No
+	left outer join Engine e on m.SerialNo = e.SerialNo
+	left outer join Model ml on e.EngineModelID = ml.Id
+	left outer join Channel c on c.ChannelNo = m.ChannelNo and c.ModelID = ml.Id
+	left outer join ChartType ct on c.ChartTypeID = ct.Id
+where v.Id in (@Vessel)
+order by m.IMO_No, m.SerialNo, c.ChannelNo, m.CreatedOn desc</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="IMO_No">
+          <DataField>IMO_No</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="VesselName">
+          <DataField>VesselName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SerialNo">
+          <DataField>SerialNo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Model_Name">
+          <DataField>Model Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ChannelNo">
+          <DataField>ChannelNo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Channel_Name">
+          <DataField>Channel Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TimeStamp">
+          <DataField>TimeStamp</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Value">
+          <DataField>Value</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DisplayUnit">
+          <DataField>DisplayUnit</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Tablix Name="Tablix3">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>1.87823cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>4.35208cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.5cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.5cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.5cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>4.07427cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.9463cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>4.06104cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.69844cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.78521cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox29">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>IMO No</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox29</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>DimGray</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox35">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Vessel Name</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox35</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>DimGray</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox31">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Serial No</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox31</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>DimGray</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox33">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Model Name</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox33</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>DimGray</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox37">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Channel No</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox37</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>DimGray</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox39">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Channel Name</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox39</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>DimGray</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox45">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Display Unit</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox45</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>DimGray</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox41">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Time Stamp</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox41</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>DimGray</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox43">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Value</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox43</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>DimGray</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="IMO_No">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!IMO_No.Value</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>IMO_No</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>=IIF(RowNumber("dsData") Mod 2 = 0, "#f5f5f5", "No Color")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="VesselName">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!VesselName.Value</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>VesselName</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>=IIF(RowNumber("dsData") Mod 2 = 0, "#f5f5f5", "No Color")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="SerialNo">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!SerialNo.Value</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>SerialNo</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>=IIF(RowNumber("dsData") Mod 2 = 0, "#f5f5f5", "No Color")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Model_Name">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Model_Name.Value</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Model_Name</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>=IIF(RowNumber("dsData") Mod 2 = 0, "#f5f5f5", "No Color")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="ChannelNo">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!ChannelNo.Value</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>ChannelNo</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>=IIF(RowNumber("dsData") Mod 2 = 0, "#f5f5f5", "No Color")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Channel_Name">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Channel_Name.Value</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Channel_Name</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>=IIF(RowNumber("dsData") Mod 2 = 0, "#f5f5f5", "No Color")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="DisplayUnit">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!DisplayUnit.Value</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>DisplayUnit</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>=IIF(RowNumber("dsData") Mod 2 = 0, "#f5f5f5", "No Color")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TimeStamp">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=dateadd("h", 8, Fields!TimeStamp.Value)</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                    <Format>dd/MM/yyyy hh:mm:ss</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>TimeStamp</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>=IIF(RowNumber("dsData") Mod 2 = 0, "#f5f5f5", "No Color")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Value">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(IsNumeric(Fields!Value.Value), Format(CDec(Fields!Value.Value), "#,##0.00"), Fields!Value.Value.ToString())</Value>
+                                  <Style>
+                                    <FontFamily>Helvetica</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Value</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>=IIF(RowNumber("dsData") Mod 2 = 0, "#f5f5f5", "No Color")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details" />
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!IMO_No.Value</Value>
+                    </SortExpression>
+                    <SortExpression>
+                      <Value>=Fields!SerialNo.Value</Value>
+                    </SortExpression>
+                    <SortExpression>
+                      <Value>=Fields!ChannelNo.Value</Value>
+                    </SortExpression>
+                    <SortExpression>
+                      <Value>=Fields!TimeStamp.Value</Value>
+                      <Direction>Descending</Direction>
+                    </SortExpression>
+                  </SortExpressions>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>dsData</DataSetName>
+            <Top>0.34078cm</Top>
+            <Height>1.38521cm</Height>
+            <Width>27.51036cm</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+        </ReportItems>
+        <Height>0.89583in</Height>
+        <Style />
+      </Body>
+      <Width>10.95064in</Width>
+      <Page>
+        <PageHeader>
+          <Height>1.09802cm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Image Name="logo">
+              <Source>Embedded</Source>
+              <Value>h2logo</Value>
+              <Sizing>FitProportional</Sizing>
+              <Top>0.3011cm</Top>
+              <Height>0.61365cm</Height>
+              <Width>5.75979cm</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Image>
+          </ReportItems>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </PageHeader>
+        <PageFooter>
+          <Height>1.12448cm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="Textbox47">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="Page " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox47</rd:DefaultName>
+              <Top>0.17639cm</Top>
+              <Height>0.6cm</Height>
+              <Width>2.5cm</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+          </ReportItems>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </PageFooter>
+        <PageHeight>21cm</PageHeight>
+        <PageWidth>29.7cm</PageWidth>
+        <LeftMargin>1cm</LeftMargin>
+        <RightMargin>1cm</RightMargin>
+        <TopMargin>0.5cm</TopMargin>
+        <BottomMargin>0.5cm</BottomMargin>
+        <ColumnSpacing>0.13cm</ColumnSpacing>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="currentUser">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>80BBCCFF-4B42-E811-80C4-BC305B849686</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Current User</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="Vessel">
+      <DataType>String</DataType>
+      <Prompt>Vessel</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsVessels</DataSetName>
+          <ValueField>ID</ValueField>
+          <LabelField>VesselName</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>currentUser</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>Vessel</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <EmbeddedImages>
+    <EmbeddedImage Name="h2logo">
+      <MIMEType>image/gif</MIMEType>
+      <ImageData>R0lGODlhFAI3APcAAKCgoESkZ0qdaUOdajExMZ2dnVijekChbkShbDk5ObjlzSwsLGeuhGtra6PXuzycY7HcwUGkadzc3Oz+8kKcZD+abNPT0z+jZ8nJycno1oSEhPn/+v/0/KSkpLu7u5PGqozKqkWfaPT//jWSVtPp30mcceTk5LGxsUiga/7//T6hajQ0NP/6/4uLi/X/9fr//jc3N8XFxeDg4GGnf6fNtnNzc0NDQ1NTU//4+a2trTaaYen97P/09mNjY1uqgD09PYGwknm1lJbMsEyicv/8/6mpqd7+6j6UY5OTk+X/8kxMTGiwiHSsjP/9/0GhZ6zXvpqamkWkcuL/7Xx8fEKkbvf//M3Nzez/+f//+1Sac9zs4rXNuFGZa/b++lxcXITCnUOUZUOoapK/o8DAwP//+P/59rncxT6obGOcfP/8+vD/+UmhbfH//kWlbcTr0HK2jf/8/dvz4kmdZD2sc/P37dv65kWXarXUvNny3Pv/99X14mOif4zQp6bqwfr6/f789svw2vz//0Wqc22cgkijY/b6/D2lZTKtZDWgZN316vX5+EOlak6Va6DKr/r+/DukalCgZ//3/vz/+jiNYCqTX06pdPH5+eb/+Pf//z+laU6gbz2ibUCZYD6gYzqiaen17EqVZkilb+fn5/z8+v/6+uP75j2lb2qojeb49E2qfNX85eX15i6mXimkafz//F2dfzWbaDmkYPj5+26ugfn69TipZjefXv37/zekaj+XZ0mqa/n482Wrh0mjaUufavj7/2ulgaTgu/39//z/+f/5/GiniEukeDqfZ/7/8zmmaTiTZPj4+P39/fz8/Pb29vHx8fDw8PT09PLy8u3t7evr6+7u7uzs7Orq6u/v7/n5+fX19fz6/fj8/UCjYv/s7vjy9FevgMLezvr8+fv5+vD58fv8/p/jutjY2Ofu53e+k/L8/Pb1++jv55DYq6DRtvf39WWli6C4q/r6+O3u8LjYwbvY
+wnakjOjz49j/60Geb/r6+vv7+/7+/vPz8/f39////yH5BAAAAAAALAAAAAAUAjcAAAj/AK8JHEiwoMGDCBMqXMiwocOHECNKnEixosWLGDNq3Mixo8ePIAlSG0mypMmTKFOqXMmypcuXMGPKnEmzps2bOHPq3Mmzp8+fQIOWtEa0qNGjSJMqXcq0qdOnUKNKnUq1qtWrWLNq3cq1q9evYMOKNTqtrNmzaNOqXcu2rdu3cOPKnUu3rt27ePPq3cu3r9+/gAMLHny2muHDiBMrXsy4sePHkCNLnky5suXLmDNr3sy5s+fPoEOLHk0aMbbTqFOrXs26tevXsGPLnk27tu3buHPr3s27t+/fwIMLH068eGpoyJMrX868ufPn0KNLn069uvXr2LNr3869u/fv4MOL/x9Pvrx55c/Sq1/Pvr379/Djy59Pv779+/jz69/Pv7///wAGKOCABBZo4IHrSaPgggw26OCDEEYo4YQUVmjhhRhmqOGGHHbo4YcghijiiCSWaOKJKDLYz4ostujiizDGKOOMNNZo44045qjjjjz26OOPQAYp5JBEFmnkkUgmqeSSTDbp5JNQRinllFRWaaWR0WSp5ZZcdunll2CGKeaYZJZp5plopqnmmmy26eabcMYp55x01mnnnVs6o+eefPbp55+ABirooIQWauihiCaq6KKMNuroo5BGKumklFZq6aWY8unPppx26umnoIYq6qiklmrqqaimquqqrLbq6quwxv8q66y01mrrrbjmquuuvPbq66/ABivssMQWa6ytyySr7LLMNuvss9BGK+201FZr7bXYZqvtttx26+234IYr7rjklmvuucvqo+667LLLwzuYqCPLN1jQYkQG9NBjxhNPQODvvwAHLPDABBds8MEIH8wvBGbQc0cGO7jAAw8iFHKLJSy0q/HGHHfs8ccghyzyyCSXbPLJKKes8sost+zyyzCTXIY86liyTQobZOCDJnYMkE8FFRwA9NBEF230
+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
+cYxnXOMb53jHPV7lgAAAOw==</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>93ee2c6f-9cf4-4e56-ae0e-a1f6d801c4db</rd:ReportID>
+</Report>

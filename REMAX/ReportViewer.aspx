@@ -6,7 +6,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Report - Data Download</title>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -16,7 +16,9 @@
         </asp:ScriptManager>
     
     </div>
-        <rsweb:ReportViewer ID="ReportViewer1" runat="server">
+        <rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="800" BackColor="#FFFBF7" ZoomMode="FullPage"
+                        BorderWidth="0px" ShowFindControls="False" ShowBackButton="True"
+                        ProcessingMode="Remote" ShowPromptAreaButton="False" SizeToReportContent="True">
         </rsweb:ReportViewer>
     </form>
 </body>

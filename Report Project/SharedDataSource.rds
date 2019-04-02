@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="SharedDataSource">
+  <ConnectionProperties>
+    <Extension>SQL</Extension>
+    <ConnectString>Data Source=sql7004.site4now.net;Initial Catalog=DB_A38003_UAT</ConnectString>
+  </ConnectionProperties>
+  <DataSourceID>08ec9c8b-bdba-4910-8716-11b601d92cc2</DataSourceID>
+</RptDataSource>

@@ -18,13 +18,11 @@ public partial class _Default : System.Web.UI.Page
     {
         if (!this.IsPostBack)
         {
-            ReportViewer1.Width = 800;
-            ReportViewer1.Height = 600;
             ReportViewer1.ProcessingMode = ProcessingMode.Remote;
             IReportServerCredentials irsc = new CustomReportCredentials("hiroodaikai-001", "yanmarsucks66!", "ifc"); // e.g.: ("demo-001", "123456789", "ifc")
             ReportViewer1.ServerReport.ReportServerCredentials = irsc;
             ReportViewer1.ServerReport.ReportServerUrl = new Uri("http://sql5030.site4now.net/ReportServer");
-            ReportViewer1.ServerReport.ReportPath = "/hiroodaikai-001/TestReport"; //e.g.: /demo-001/test
+            ReportViewer1.ServerReport.ReportPath = "/hiroodaikai-001/DataDownload"; //e.g.: /demo-001/test
             ReportViewer1.ServerReport.Refresh();
         }
     }

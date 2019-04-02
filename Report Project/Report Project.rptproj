@@ -49,6 +49,10 @@
     <Reports>@(Report)</Reports>
   </PropertyGroup>
   <ItemGroup>
+    <DataSource Include="SharedDataSource.rds" />
+  </ItemGroup>
+  <ItemGroup>
+    <Report Include="DataDownload.rdl" />
     <Report Include="TestReport.rdl" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Reporting Services\Microsoft.ReportingServices.MSBuilder.targets" />
