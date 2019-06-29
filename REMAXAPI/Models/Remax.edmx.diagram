@@ -52,6 +52,9 @@
         <EntityTypeShape EntityType="REMAXAPI.Models.CountryTimezone" Width="1.5" PointX="14.375" PointY="3.75" />
         <EntityTypeShape EntityType="REMAXAPI.Models.Alert" Width="1.5" PointX="14.375" PointY="10.75" />
         <EntityTypeShape EntityType="REMAXAPI.Models.EmailTemplate" Width="1.5" PointX="12.375" PointY="14.75" />
+        <EntityTypeShape EntityType="REMAXAPI.Models.ChannelGroup" Width="1.5" PointX="10.25" PointY="20.875" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_Channel_ChannelGroup" />
+        <AssociationConnector Association="REMAXAPI.Models.FK_ChannelGroup_ChartType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

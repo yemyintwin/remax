@@ -700,6 +700,9 @@ namespace REMAXAPI.Controllers
                             //ModifiedOn = DateTime.Now
                         };
 
+                        if (c.Name.Contains("Port")) c.Side = 1;
+                        else if (c.Name.Contains("Starboard") || c.Name.Contains("STBD")) c.Side = 2;
+
                         var checkChannelDB = db.Channels.Where(
                                 ch => ch.ChannelNo.ToLower() == (string.IsNullOrEmpty(c.ChannelNo) ? "" : c.ChannelNo.ToLower())
                                     && ch.ModelID == m.EngineModelID

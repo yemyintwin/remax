@@ -697,4 +697,168 @@ var master = {
             editable: "inline"
         });
     },
+
+    configure_channelGroupGird: function () {
+        var dataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: Settings.WebApiUrl + "/api/KendoInlineModel",
+                    type: "get",
+                    dataType: "json",
+                    //data: Settings.ClientData,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                    },
+                },
+                update: {
+                    url: function (data) {
+                        return Settings.WebApiUrl + "/api/KendoInlineModel/" + data.id;
+                    },
+                    type: "put",
+                    dataType: "json",
+                    //data: Settings.ClientData,
+                    contentType: "application/json",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                    },
+                },
+                destroy: {
+                    url: function (data) {
+                        return Settings.WebApiUrl + "/api/KendoInlineModel/" + data.id;
+                    },
+                    type: "delete",
+                    dataType: "json",
+                    //data: Settings.ClientData,
+                    contentType: "application/json",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                    },
+                    complete: function (d, textStatus, xhr) {
+                        var grid = $("#table_Models").data("kendoGrid");
+                        grid.dataSource.read();
+                        grid.refresh();
+                    }
+                },
+                create: {
+                    url: Settings.WebApiUrl + "/api/KendoInlineModel",
+                    type: "post",
+                    dataType: "json",
+                    //data: Settings.ClientData,
+                    contentType: "application/json",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                    },
+                    complete: function (d, textStatus, xhr) {
+                        var grid = $("#table_Models").data("kendoGrid");
+                        grid.dataSource.read();
+                        grid.refresh();
+                    }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return {
+                            aggregate: options.aggregate,
+                            group: options.group,
+                            filter: options.filter,
+                            models: options.models,
+                            page: options.page,
+                            pageSize: options.pageSize,
+                            take: options.take,
+                            skip: options.skip,
+                            sort: options.sort
+                        }
+                    }
+                    else if (operation === "create" && options) {
+                        return kendo.stringify({ name: options.name, engineTypeId: options.engineTypeID });
+                    }
+                    else if (operation === "update" && options) {
+                        return kendo.stringify({ id: options.id, name: options.name, engineTypeID: options.engineTypeID });
+                    }
+                }
+            },
+            pageSize: Settings.PageSize,
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true,
+            sort: { field: "name", dir: "asc" },
+            schema: {
+                total: function (response) {
+                    var total = response.length;
+                    $.ajax({
+                        type: 'get',
+                        url: Settings.WebApiUrl + '/api/KendoInlineModelTotal',
+                        contentType: "application/json",
+                        dataType: 'json',
+                        async: false,
+                        // passing token
+                        data: Settings.ClientData,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('Authorization', 'bearer ' + token);
+                        },
+                        success: function (d, textStatus, xhr) {
+                            total = d;
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.log(errorThrown);
+                        }
+                    });
+
+                    return total;
+                },
+                model: {
+                    id: "id",
+                    fields: {
+                        id: { editable: false, nullable: true },
+                        name: { validation: { required: true } },
+                        engineTypeID: { validation: { required: true } }
+                    }
+                }
+            }
+        });
+
+        $("#table_Models").kendoGrid({
+            dataSource: dataSource,
+            toolbar: ["create"],
+            sortable: true,
+            scrollable: true,
+            resizable: true,
+            pageable: true,
+            filterable: true,
+            columns: [
+                { field: "name", title: "Model", width: "120px" },
+                {
+                    field: "engineTypeID",
+                    title: "Engine Type",
+                    width: "150px",
+                    template: "#=master.getEngineType(engineTypeID)#",
+                    editor: function (container, options) {
+                        $('<input required id="inline_ddl_' + options.field + '" name="' + options.field + '"/>')
+                            .appendTo(container)
+                            .kendoDropDownList({
+                                autoBind: false,
+                                dataTextField: "name",
+                                dataValueField: "id",
+                                dataSource: {
+                                    data: [
+                                        { id: '91E4BC9C-8844-E811-80C4-BC305B849686', name: 'Engine' },
+                                        { id: '92E4BC9C-8844-E811-80C4-BC305B849686', name: 'Generator' }
+                                    ],
+                                },
+                            });
+                    }
+                },
+                { command: ["edit", "destroy"], title: "&nbsp;", width: "250px" }
+            ],
+            editable: "inline",
+            //edit: function (e) {
+            //    var model = e.model; //reference to the model that is about the be edited
+            //    var container = e.container; //reference to the editor container
+            //    var ddl = container.find("#inline_ddl_engineTypeID").data("kendoDropDownList");
+
+            //    if (ddl) {
+            //        ddl.value(model.engineTypeID);
+            //    }
+            //},
+        });
+    }
 }

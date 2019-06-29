@@ -34,7 +34,8 @@ namespace REMAXAPI.Controllers
             //User currentUser = Util.GetCurrentUser();
 
             IQueryable<Channel> channels = from c in db.Channels
-                                          select c;
+                                           where readLevel == Util.AccessLevel.All
+                                           select c;
 
             //loading related entites
             channels = channels.Include("Model")
@@ -106,7 +107,8 @@ namespace REMAXAPI.Controllers
                             select new {
                                 c.Name,
                                 c.ChannelNo,
-                                c.Id
+                                c.Id,
+                                c.Side
                             };
             return Ok(await channels.ToListAsync());
         }

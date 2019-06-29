@@ -47,6 +47,8 @@ namespace REMAXAPI
 
         public static byte[] StringToByteArray(String hex)
         {
+            if (hex == null) hex = string.Empty;
+
             int NumberChars = hex.Length;
             byte[] bytes = new byte[NumberChars / 2];
             for (int i = 0; i < NumberChars; i += 2)

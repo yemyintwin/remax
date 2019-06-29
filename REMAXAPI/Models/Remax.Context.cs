@@ -56,6 +56,7 @@ namespace REMAXAPI.Models
         public virtual DbSet<CountryTimezone> CountryTimezones { get; set; }
         public virtual DbSet<Alert> Alerts { get; set; }
         public virtual DbSet<EmailTemplate> EmailTemplates { get; set; }
+        public virtual DbSet<ChannelGroup> ChannelGroups { get; set; }
     
         public virtual ObjectResult<sp_ResourcePermission_Result> sp_ResourcePermission(Nullable<System.Guid> userid, string resource_name, Nullable<int> operation_type)
         {
@@ -72,6 +73,19 @@ namespace REMAXAPI.Models
                 new ObjectParameter("operation_type", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ResourcePermission_Result>("sp_ResourcePermission", useridParameter, resource_nameParameter, operation_typeParameter);
+        }
+    
+        public virtual int sp_AssignRoles(Nullable<System.Guid> user, string roles)
+        {
+            var userParameter = user.HasValue ?
+                new ObjectParameter("User", user) :
+                new ObjectParameter("User", typeof(System.Guid));
+    
+            var rolesParameter = roles != null ?
+                new ObjectParameter("Roles", roles) :
+                new ObjectParameter("Roles", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_AssignRoles", userParameter, rolesParameter);
         }
     }
 }

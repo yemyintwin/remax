@@ -277,14 +277,14 @@ var engine = {
             '<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">' +
             '    <div class="panel panel-default">' +
             '        <div class="panel-body">' +
-            '            <div>' +
+            '            <div style="text-align: center;">' +
             '                <div id="channel_{{channelNo}}_Time" class="gauge"></div>' +
-            '                <div id="channel_{{channelNo}}" class="gauge"></div>' +
+            '                <div id="channel_{{channelNo}}" class="gauge" style="display:inline-block;"></div>' +
             '            </div>' +
             '        </div>' +
-            '        <div class="panel-footer" style="height:70px; !important">' +
-            '            <span class="pull-left">{{channelName}}</span>' +
-            '            <span class="pull-right"></span>' + //<i class="fa fa-arrow-circle-right"></i> //Arrow on right align
+            '        <div class="panel-footer" style="text-align: center; height:70px; !important">' +
+            '            <span>{{channelName}}</span>' +
+            //'            <span class="pull-right"></span>' + //<i class="fa fa-arrow-circle-right"></i> //Arrow on right align
             '            <div class="clearfix"></div>' +
             '        </div>' +
             '    </div>' +
@@ -309,11 +309,11 @@ var engine = {
                     if (d) $("#channel_" + c.channelNo + "_Time").append("<span>" + d.toLocaleDateString() + " " + d.toLocaleTimeString()  + "</span>")
 
                     // Digital Data Type
-                    if (c.dataTypeNo == 1) {
+                    if (c.dataTypeNo === 1) {
                         $("#channel_" + c.channelNo).css({ width: "300px", height: "200px" }).kendoChart({
                             title: {
                                 position: "bottom",
-                                text: (v.value && !isNaN(v.value) ? Math.trunc(v.value).toString() + " " : "") + "(" + c.displayUnit + ")"
+                                //text: (v.value && !isNaN(v.value) ? Math.trunc(v.value).toString() + " " : "") + "(" + c.displayUnit + ")"
                             },
                             legend: {
                                 visible: false
@@ -322,12 +322,12 @@ var engine = {
                                 type: "pie",
                                 data: [{
                                     value: "100",
-                                    color: (v.value == c.alarmValue ? "#dd0606" : "#068c35") // alarm = red, normal = green 
+                                    color: (v.value === c.alarmValue ? "#dd0606" : "#068c35") // alarm = red, normal = green 
                                 }]
                             }],
                         });
                     }
-                    else if (c.dataTypeNo == 2) {
+                    else if (c.dataTypeNo === 2) {
                         // Draw gauge
                         $("#channel_" + c.channelNo).css({ width: "300px", height: "200px" }).kendoRadialGauge({
                             pointer: {

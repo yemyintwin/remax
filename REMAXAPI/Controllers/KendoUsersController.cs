@@ -45,7 +45,8 @@ namespace REMAXAPI.Controllers
                                         select u;
 
             //loading related entites
-            users = users.Include("Account");
+            users = users.Include("Account")
+                    .Include("UserRoles");
 
             // total count
             var total = users.Count();
@@ -132,6 +133,45 @@ namespace REMAXAPI.Controllers
                 return BadRequest();
             }
 
+            //var newRoles = user.UserRoles.ToList();
+            //var currentUser = db.Users.Where(u => u.Id == user.Id).Include("UserRoles").FirstOrDefault();
+            //var currentRoles = new List<UserRole>();
+
+            //if (currentUser != null) {
+            //    currentRoles = currentUser.UserRoles.ToList();
+            //    db.Entry(currentUser).State = EntityState.Detached;
+            //}
+            //user.UserRoles.Clear();
+
+            //foreach (var r in db.UserRoles)
+            //{
+            //    if (newRoles.Any(rr => rr.Id == r.Id))
+            //    {
+            //        if (!currentRoles.Any(rr => rr.Id == r.Id))
+            //        {
+            //            db.UserRoles.Attach(r);
+            //            db.Entry(r).State = EntityState.Modified;
+            //            user.UserRoles.Add(r);
+            //        }
+            //    }
+            //    else {
+            //        user.UserRoles.Remove(r);
+            //    }
+            //}
+
+
+            List<string> roles = user.UserRoles.Select(r => r.Id.ToString()).ToList();
+            string strRoles = string.Join(",", roles.ToArray());
+
+            //foreach (var r in currentRoles)
+            //{
+            //    if (!newRoles.Any(rr => r.Id == r.Id))
+            //    {
+            //        db.UserRoles.Attach(r);
+            //        user.UserRoles.Remove(r);
+            //    }
+            //}
+
             DbEntityEntry entry = db.Entry(user);
             entry.State = EntityState.Modified;
 
@@ -142,6 +182,7 @@ namespace REMAXAPI.Controllers
             try
             {
                 await db.SaveChangesAsync();
+                if (!string.IsNullOrEmpty(strRoles)) db.sp_AssignRoles(user.Id, strRoles);
             }
             catch (DbUpdateConcurrencyException)
             {

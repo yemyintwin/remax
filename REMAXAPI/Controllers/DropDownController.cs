@@ -34,6 +34,22 @@ namespace REMAXAPI.Controllers
             return objects;
         }
 
+        // GET: api/DropDown/ListAllRoles
+        [HttpGet]
+        [Route("api/DropDown/ListAllRoles")]
+        public Object ListAllRoles()
+        {
+            Object[] objects = (from r in db.UserRoles
+                                where r.Name != "root"
+                                orderby r.Name
+                                select new
+                                {
+                                    r.Id,
+                                    r.Name
+                                }).ToArray<object>();
+            return objects;
+        }
+
         // GET: api/DropDown/ListAllCountry
         [HttpGet]
         [Route("api/DropDown/ListAllCountry")]

@@ -127,8 +127,8 @@ namespace REMAXAPI.Controllers
             {
                 ModelState.AddModelError("Access Level", "Unauthorized write access.");
             }
-            var am = db.AlternatorMakers.Where(a => a.Name == model.Name).FirstOrDefault();
-            if (am != null) ModelState.AddModelError("Duplicate", "Alternator Maker already existed.");
+            var am = db.Models.Where(m => m.Name == model.Name && m.EngineTypeID == model.EngineTypeID).FirstOrDefault();
+            if (am != null) ModelState.AddModelError("Duplicate", "Model name already existed.");
 
             if (!ModelState.IsValid)
             {

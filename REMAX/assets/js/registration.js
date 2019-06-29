@@ -109,6 +109,7 @@ var registration = {
                 };
                 registration.retrieveUsers(); // kendo grid id
                 registration.SubmitUser(); // Create, Update
+                $("#userRole").kendoMultiSelect();
             } catch (e) {
                 console.log(e.message);
             }
@@ -663,6 +664,10 @@ var registration = {
                 {
                     ctrl: 'userCountry',
                     method: 'ListAllCountry'
+                },
+                {
+                    ctrl: 'userRole',
+                    method: 'ListAllRoles'
                 }
             ];
 
@@ -766,6 +771,12 @@ var registration = {
             // Prevent form submission
             e.preventDefault();
             var url = registration.modules.user.webApiUrl;
+            var selectedRoles = $("#userRole").data("kendoMultiSelect").value();
+            var roles = [];
+            for (var i = 0; i < selectedRoles.length; i++) {
+                roles.push({ id: selectedRoles[i] });
+            }
+
             var data = {
                 fullName: $('#userName').val(),
                 accountID: $('#userParent').val(),
@@ -774,6 +785,7 @@ var registration = {
                 phoneNumber: $('#userMobile').val(),
                 email: $('#userEmail').val(),
                 country: $('#userCountry').val(),
+                userRoles: roles
             };
             var requestType = "POST"; // Create
 
@@ -829,6 +841,21 @@ var registration = {
         var userGrid = registration.modules.user.grid;
         var selectedItem = userGrid.dataItem(userGrid.select());
 
+        var userRoels = $("#userRole").data("kendoMultiSelect");
+        //var userRoels = $("#userRole").kendoMultiSelect({
+        //    itemTemplate: "#:data.text# <input type='checkbox'/>",
+        //    autoClose: true,
+        //    change: function () {
+        //        var items = this.ul.find("li");
+        //        items.each(function () {
+        //            var element = $(this);
+        //            var input = element.children("input");
+
+        //            input.prop("checked", element.hasClass("k-state-selected"));
+        //        });
+        //    }
+        //}).data("kendoMultiSelect");
+
         if (selectedItem) {
             registration.modules.user.state = 'update';
             registration.SubmitUserInitControls();
@@ -841,6 +868,15 @@ var registration = {
             $('#userMobile').val(selectedItem.phoneNumber);
             $('#userEmail').val(selectedItem.email);
             $('#userCountry').val(selectedItem.country);
+
+            // roles
+            var roles = [];
+            $.each(selectedItem.userRoles, function (i, r){
+                if (r.id) {
+                    roles.push(r.id);
+                }
+            });
+            userRoels.value(roles);
         }
         else {
             $(registration.modules.user.dialogId).modal('hide');
@@ -1382,7 +1418,9 @@ var registration = {
         var url = registration.modules.vessel.webApiUrl + '/' + selectedItem.id;
 
         if (selectedItem) {
-            var ans = confirm("Are you sure you want to delete \'" + selectedItem.vesselName + "\' vessel?");
+            var str = "Are you sure you want to delete \'" + selectedItem.vesselName + "\' vessel?";
+            str += "\nAll incoming data and engines under this vessel will be deleted.";
+            var ans = confirm(str);
             if (!ans) return;
 
             $.ajax({
@@ -1741,6 +1779,10 @@ var registration = {
                 {
                     ctrl: 'engine_alertEmail',
                     method: 'ListAllOptionSetByName?groupname=AlertEmails'
+                },
+                {
+                    ctrl: 'engine_side',
+                    method: 'ListAllOptionSetByName?groupname=Side'
                 }
             ];
 
@@ -1893,6 +1935,13 @@ var registration = {
                             message: 'Mounting must be less than 100 characters long'
                         }
                     }
+                },
+                engine_side: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Side is required'
+                        }
+                    }
                 }
             }
         })
@@ -1914,7 +1963,8 @@ var registration = {
                 insulationTempRise: $('#engine_insulation').val(),
                 ipRating: $('#engine_iprRate').val(),
                 mounting: $('#engine_mounting').val(),
-                alertEmail: $('#engine_alertEmail').val()
+                alertEmail: $('#engine_alertEmail').val(),
+                side: $('#engine_side').val()
             };
 
             if ($('#engine_type option:selected').text() != 'Engine') {
@@ -2007,6 +2057,7 @@ var registration = {
             $('#engine_iprRate').val(selectedItem.ipRating);
             $('#engine_mounting').val(selectedItem.mounting);
             $('#engine_alertEmail').val(selectedItem.alertEmail);
+            $('#engine_side').val(selectedItem.side);
         }
         else {
             $(registration.modules.engine.dialogId).modal('hide');
@@ -2364,6 +2415,10 @@ var registration = {
                     ctrl: 'channel_dataType',
                     method: 'ListAllOptionSetByName?groupname=DataType'
                 },
+                {
+                    ctrl: 'channel_side',
+                    method: 'ListAllOptionSetByName?groupname=Side'
+                },
             ];
 
         // Populate dropdown with list of accounts
@@ -2487,6 +2542,13 @@ var registration = {
                         }
                     }
                 },
+                channel_side: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Side is required'
+                        }
+                    }
+                },
             }
         })
             .on('success.form.bv', function (e) {
@@ -2509,6 +2571,7 @@ var registration = {
                     dataTypeNo: $('#channel_dataType').val(),
                     alarmValue: $('#channel_alarmValue').val(),
                     documentURL: $('#channel_documentUrl').val(),
+                    side: $('#channel_side').val(),
                 };
                 var requestType = "POST"; // Create
 
@@ -2584,6 +2647,7 @@ var registration = {
             $('#channel_dataType').val(selectedItem.dataTypeNo);
             $('#channel_alarmValue').val(selectedItem.alarmValue);
             $('#channel_documentUrl').val(selectedItem.documentURL);
+            $('#channel_side').val(selectedItem.side);
         }
         else {
             $(registration.modules.channel.dialogId).modal('hide');

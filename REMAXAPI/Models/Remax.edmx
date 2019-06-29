@@ -81,6 +81,8 @@
           <Property Name="ChannelNo" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ModelID" Type="uniqueidentifier" />
+          <Property Name="ChannelGroupID" Type="uniqueidentifier" />
+          <Property Name="Side" Type="int" />
           <Property Name="DashboardDisplay" Type="bit" />
           <Property Name="ChartTypeID" Type="uniqueidentifier" />
           <Property Name="MinRange" Type="decimal" Precision="18" Scale="2" />
@@ -98,6 +100,14 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChannelGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ChartTypeId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="ChartType">
           <Key>
@@ -180,6 +190,7 @@
           <Property Name="IPRating" Type="nvarchar" MaxLength="100" />
           <Property Name="Mounting" Type="nvarchar" MaxLength="100" />
           <Property Name="AlertEmail" Type="int" />
+          <Property Name="Side" Type="int" />
           <Property Name="Status" Type="int" />
           <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -312,8 +323,8 @@
           <Property Name="AccountID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="JobTitle" Type="nvarchar" MaxLength="100" />
           <Property Name="BusinessPhoneNumber" Type="nvarchar" MaxLength="50" />
-          <Property Name="Country" Type="uniqueidentifier" />
           <Property Name="IsRootUser" Type="bit" />
+          <Property Name="Country" Type="uniqueidentifier" />
           <Property Name="Status" Type="int" />
           <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -413,6 +424,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Channel_ChannelGroup">
+          <End Role="ChannelGroup" Type="Self.ChannelGroup" Multiplicity="0..1" />
+          <End Role="Channel" Type="Self.Channel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChannelGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Channel">
+              <PropertyRef Name="ChannelGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Channel_ChartType">
           <End Role="ChartType" Type="Self.ChartType" Multiplicity="0..1" />
           <End Role="Channel" Type="Self.Channel" Multiplicity="*" />
@@ -434,6 +457,18 @@
             </Principal>
             <Dependent Role="Channel">
               <PropertyRef Name="ModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChannelGroup_ChartType">
+          <End Role="ChartType" Type="Self.ChartType" Multiplicity="1" />
+          <End Role="ChannelGroup" Type="Self.ChannelGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChartType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChannelGroup">
+              <PropertyRef Name="ChartTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -625,6 +660,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_AssignRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="User" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Roles" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="sp_ResourcePermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="resource_name" Type="nvarchar" Mode="In" />
@@ -636,6 +675,7 @@
           <EntitySet Name="AlertSetting" EntityType="Self.AlertSetting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlternatorMaker" EntityType="Self.AlternatorMaker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Channel" EntityType="Self.Channel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChannelGroup" EntityType="Self.ChannelGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChartType" EntityType="Self.ChartType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
@@ -672,6 +712,10 @@
             <End Role="Model" EntitySet="Model" />
             <End Role="AlertSetting" EntitySet="AlertSetting" />
           </AssociationSet>
+          <AssociationSet Name="FK_Channel_ChannelGroup" Association="Self.FK_Channel_ChannelGroup">
+            <End Role="ChannelGroup" EntitySet="ChannelGroup" />
+            <End Role="Channel" EntitySet="Channel" />
+          </AssociationSet>
           <AssociationSet Name="FK_Channel_ChartType" Association="Self.FK_Channel_ChartType">
             <End Role="ChartType" EntitySet="ChartType" />
             <End Role="Channel" EntitySet="Channel" />
@@ -679,6 +723,10 @@
           <AssociationSet Name="FK_Channel_Model" Association="Self.FK_Channel_Model">
             <End Role="Model" EntitySet="Model" />
             <End Role="Channel" EntitySet="Channel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChannelGroup_ChartType" Association="Self.FK_ChannelGroup_ChartType">
+            <End Role="ChartType" EntitySet="ChartType" />
+            <End Role="ChannelGroup" EntitySet="ChannelGroup" />
           </AssociationSet>
           <AssociationSet Name="FK_Engine_AlternatorMaker" Association="Self.FK_Engine_AlternatorMaker">
             <End Role="AlternatorMaker" EntitySet="AlternatorMaker" />
@@ -792,6 +840,7 @@
           <Property Name="MonitoringTimer" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="DataTypeNo" Type="Int32" />
           <Property Name="AlarmValue" Type="Int16" />
+          <Property Name="Side" Type="Int32" />
           <Property Name="Status" Type="Int32" />
           <Property Name="CreatedBy" Type="Guid" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
@@ -801,6 +850,8 @@
           <NavigationProperty Name="Model" Relationship="Self.FK_Channel_Model" FromRole="Channel" ToRole="Model" />
           <Property Name="DocumentURL" Type="String" MaxLength="2083" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AlertSettings" Relationship="REMAXAPI.Models.FK_AlertSetting_Channel" FromRole="Channel" ToRole="AlertSetting" />
+          <Property Name="ChannelGroupID" Type="Guid" />
+          <NavigationProperty Name="ChannelGroup" Relationship="REMAXAPI.Models.FK_Channel_ChannelGroup" FromRole="Channel" ToRole="ChannelGroup" />
         </EntityType>
         <EntityType Name="ChartType">
           <Key>
@@ -809,6 +860,7 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Channels" Relationship="Self.FK_Channel_ChartType" FromRole="ChartType" ToRole="Channel" />
+          <NavigationProperty Name="ChannelGroups" Relationship="REMAXAPI.Models.FK_ChannelGroup_ChartType" FromRole="ChartType" ToRole="ChannelGroup" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -853,6 +905,7 @@
           <Property Name="IPRating" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Mounting" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AlertEmail" Type="Int32" />
+          <Property Name="Side" Type="Int32" />
           <Property Name="Status" Type="Int32" />
           <Property Name="CreatedBy" Type="Guid" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
@@ -1348,6 +1401,19 @@
           <EntitySet Name="CountryTimezones" EntityType="REMAXAPI.Models.CountryTimezone" />
           <EntitySet Name="Alerts" EntityType="REMAXAPI.Models.Alert" />
           <EntitySet Name="EmailTemplates" EntityType="REMAXAPI.Models.EmailTemplate" />
+          <EntitySet Name="ChannelGroups" EntityType="REMAXAPI.Models.ChannelGroup" />
+          <AssociationSet Name="FK_Channel_ChannelGroup" Association="REMAXAPI.Models.FK_Channel_ChannelGroup">
+            <End Role="ChannelGroup" EntitySet="ChannelGroups" />
+            <End Role="Channel" EntitySet="Channels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChannelGroup_ChartType" Association="REMAXAPI.Models.FK_ChannelGroup_ChartType">
+            <End Role="ChartType" EntitySet="ChartTypes" />
+            <End Role="ChannelGroup" EntitySet="ChannelGroups" />
+          </AssociationSet>
+          <FunctionImport Name="sp_AssignRoles">
+            <Parameter Name="User" Mode="In" Type="Guid" />
+            <Parameter Name="Roles" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_ResourcePermission_Result">
           <Property Type="Guid" Name="User_Id" Nullable="true" />
@@ -1491,6 +1557,40 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Template" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="ChannelGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ChartTypeId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Channels" Relationship="REMAXAPI.Models.FK_Channel_ChannelGroup" FromRole="ChannelGroup" ToRole="Channel" />
+          <NavigationProperty Name="ChartType" Relationship="REMAXAPI.Models.FK_ChannelGroup_ChartType" FromRole="ChannelGroup" ToRole="ChartType" />
+        </EntityType>
+        <Association Name="FK_Channel_ChannelGroup">
+          <End Type="REMAXAPI.Models.ChannelGroup" Role="ChannelGroup" Multiplicity="0..1" />
+          <End Type="REMAXAPI.Models.Channel" Role="Channel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChannelGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Channel">
+              <PropertyRef Name="ChannelGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChannelGroup_ChartType">
+          <End Type="REMAXAPI.Models.ChartType" Role="ChartType" Multiplicity="1" />
+          <End Type="REMAXAPI.Models.ChannelGroup" Role="ChannelGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChartType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChannelGroup">
+              <PropertyRef Name="ChartTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1526,6 +1626,8 @@
           <EntitySetMapping Name="Channels">
             <EntityTypeMapping TypeName="REMAXAPI.Models.Channel">
               <MappingFragment StoreEntitySet="Channel">
+                <ScalarProperty Name="Side" ColumnName="Side" />
+                <ScalarProperty Name="ChannelGroupID" ColumnName="ChannelGroupID" />
                 <ScalarProperty Name="AlarmValue" ColumnName="AlarmValue" />
                 <ScalarProperty Name="DocumentURL" ColumnName="DocumentURL" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1582,6 +1684,7 @@
           <EntitySetMapping Name="Engines">
             <EntityTypeMapping TypeName="REMAXAPI.Models.Engine">
               <MappingFragment StoreEntitySet="Engine">
+                <ScalarProperty Name="Side" ColumnName="Side" />
                 <ScalarProperty Name="AlertEmail" ColumnName="AlertEmail" />
                 <ScalarProperty Name="GearBoxModelID" ColumnName="GearBoxModelID" />
                 <ScalarProperty Name="RPM" ColumnName="RPM" />
@@ -1908,6 +2011,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ChannelGroups">
+            <EntityTypeMapping TypeName="REMAXAPI.Models.ChannelGroup">
+              <MappingFragment StoreEntitySet="ChannelGroup">
+                <ScalarProperty Name="ChartTypeId" ColumnName="ChartTypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_AssignRoles" FunctionName="REMAXAPI.Models.Store.sp_AssignRoles" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

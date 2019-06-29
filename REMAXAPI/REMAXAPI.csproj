@@ -52,6 +52,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FleekDeveloper.GoogleAuthenticator, Version=1.0.6432.1957, Culture=neutral, PublicKeyToken=103418593cd561c9, processorArchitecture=MSIL">
+      <HintPath>..\packages\FleekDeveloper.GoogleAuthenticator.1.0.1\lib\net461\FleekDeveloper.GoogleAuthenticator.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Authenticator, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GoogleAuthenticator.1.2.1\lib\net45\Google.Authenticator.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -79,6 +85,15 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -168,13 +183,16 @@
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\DropDownController.cs" />
+    <Compile Include="Controllers\GoogleAuthenticatorController.cs" />
     <Compile Include="Controllers\KendoAccountsController.cs" />
     <Compile Include="Controllers\KendoAlertsController.cs" />
     <Compile Include="Controllers\KendoAlertSettingsController.cs" />
     <Compile Include="Controllers\KendoAlternatorMakersController.cs" />
+    <Compile Include="Controllers\KendoChannelGroupsController.cs" />
     <Compile Include="Controllers\KendoChannelsController.cs" />
     <Compile Include="Controllers\KendoEnginesController.cs" />
     <Compile Include="Controllers\KendoGearboxModelsController.cs" />
+    <Compile Include="Controllers\KendoInlineChannelGroupsController.cs" />
     <Compile Include="Controllers\KendoInlineGearboxModelsController.cs" />
     <Compile Include="Controllers\KendoInlineShipTypes.cs" />
     <Compile Include="Controllers\KendoInlineShipClasses.cs" />
@@ -207,6 +225,9 @@
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Channel.cs">
+      <DependentUpon>Remax.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChannelGroup.cs">
       <DependentUpon>Remax.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChartType.cs">

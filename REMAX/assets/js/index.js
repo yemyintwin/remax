@@ -130,6 +130,10 @@
                         labels: {
                             format: "{0}"
                         },
+                        title: {
+                            text: "No. of channel data received (today)",
+                            font: "12px sans-serif"
+                        },
                         line: {
                             visible: false
                         },
@@ -142,6 +146,10 @@
                         },
                         labels: {
                             rotation: "auto"
+                        },
+                        title: {
+                            text: "Hours",
+                            font: "12px sans-serif"
                         }
                     },
                     tooltip: {

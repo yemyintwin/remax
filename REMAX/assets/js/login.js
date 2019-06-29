@@ -5,7 +5,7 @@
     performLogOut: function () {
         var currentUser, currentToken, clientId;
 
-        debugger;
+        //debugger;
 
         if (localStorage.getItem('currentToken')) currentToken = localStorage.getItem('currentToken').toString();
         else if ($.cookie('currentToken')) currentToken = $.cookie('currentToken');

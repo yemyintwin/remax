@@ -57,6 +57,7 @@ namespace REMAXAPI.Controllers
         public Guid Id { get; set; }
         public String SerialNo { get; set; }
         public EngineType EngineType { get; set; }
+        public int? Side { get; set; }
         public List<AlertView> Alerts { get; set; }
     }
 
@@ -142,7 +143,8 @@ namespace REMAXAPI.Controllers
                             .Select(e=> new EngineView{
                                 Id = e.Id,
                                 SerialNo = e.SerialNo,
-                                EngineType = e.EngineType
+                                EngineType = e.EngineType,
+                                Side = e.Side
                             })
                             .ToListAsync();
 
@@ -315,8 +317,29 @@ namespace REMAXAPI.Controllers
                 return NotFound();
             }
 
-            db.Vessels.Remove(vessel);
-            await db.SaveChangesAsync();
+            try
+            {
+                var mList = from m in db.Monitorings
+                            where m.IMO_No == vessel.IMO_No
+                            select m;
+
+                var eList = from e in db.Engines
+                            where e.VesselID == vessel.Id
+                            select e;
+
+                db.Monitorings.RemoveRange(mList); // removing all incoming messages
+                db.Engines.RemoveRange(eList); // removing all engines related to this vessel
+                db.Vessels.Remove(vessel); // removing vessel
+                await db.SaveChangesAsync(); 
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null)
+                    return Content(HttpStatusCode.BadRequest, ex.InnerException.Message);
+                else
+                    return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+           
 
             return Ok(vessel);
         }

@@ -456,10 +456,12 @@ namespace REMAXAPI.Controllers
 
         [HttpGet]
         [Route("api/KendoMonitorings/GetData")]
-        public async Task<IHttpActionResult> GetData([FromUri]Guid vesselId, [FromUri]Guid engineId, [FromUri]Guid channelId, [FromUri]DateTime fromDate, [FromUri]DateTime toDate)
+        public async Task<IHttpActionResult> GetData([FromUri]Guid vesselId, [FromUri]Guid engineId, [FromUri]string channelId, [FromUri]DateTime fromDate, [FromUri]DateTime toDate)
         {
             int readLevel = Util.GetResourcePermission("Vessel", Util.ReourceOperations.Read);
             if (readLevel == 0) return Ok();
+
+            List<Guid> channelIds = channelId.Split(',').Select(Guid.Parse).ToList();
 
             User currentUser = Util.GetCurrentUser();
             double offset = Util.GetUserTimeOffset();
@@ -488,7 +490,7 @@ namespace REMAXAPI.Controllers
 
                                                   where m.TimeStamp >= fromDate && m.TimeStamp <= toDate
                                                         && m_v.Id == vesselId && m_e.Id == engineId 
-                                                        && m_ch.Id == channelId
+                                                        && channelIds.Contains(m_ch.Id)
                                                         &&
                                                         (
                                                             ((m_v.OwnerID == currentUser.AccountID && readLevel == Util.AccessLevel.Own))
@@ -520,6 +522,58 @@ namespace REMAXAPI.Controllers
                                                       Processed = m.Processed,
                                                       DashboardDisplay = m_ch.DashboardDisplay
                                                   }).ToListAsync<MonitorView>();
+
+            MonitorView mMin = monitorings.OrderBy(m => m.TimeStampDateOnly).FirstOrDefault();
+            MonitorView mMax = monitorings.OrderByDescending(m => m.TimeStampDateOnly).FirstOrDefault();
+
+            if (mMax != null && mMin != null && mMax.TimeStampDateOnly.HasValue && mMin.TimeStampDateOnly.HasValue)
+            {
+                MonitorView mvMin = new MonitorView()
+                {
+                    Id = mMin.Id,
+                    IMONo = mMin.IMONo,
+                    TimeStamp = fromDate.AddSeconds(offset),
+                    TimeStampDateOnly = fromDate.AddSeconds(offset).Date,
+                    VesselName = mMin.VesselName,
+                    SerialNo = mMin.SerialNo,
+                    EngineID = mMin.Id,
+                    EngineModelID = mMin.EngineModelID,
+                    ModelName = mMin.ModelName,
+                    ChannelNo = mMin.ChannelNo,
+                    Value = "0",
+                    DisplayUnit = mMin.DisplayUnit,
+                    IncomingChannelName = mMin.IncomingChannelName,
+                    ChannelName = mMin.ChannelName,
+                    ChartType = mMin.ChartType,
+                    Processed = mMin.Processed,
+                    DashboardDisplay = mMin.DashboardDisplay
+                };
+
+                if (mMin.TimeStampDateOnly != mvMin.TimeStampDateOnly) monitorings.Add(mvMin);
+
+                MonitorView mvMax = new MonitorView()
+                {
+                    Id = mMax.Id,
+                    IMONo = mMax.IMONo,
+                    TimeStamp = toDate.AddSeconds(offset),
+                    TimeStampDateOnly = toDate.AddSeconds(offset).Date,
+                    VesselName = mMax.VesselName,
+                    SerialNo = mMax.SerialNo,
+                    EngineID = mMax.Id,
+                    EngineModelID = mMax.EngineModelID,
+                    ModelName = mMax.ModelName,
+                    ChannelNo = mMax.ChannelNo,
+                    Value = "0",
+                    DisplayUnit = mMax.DisplayUnit,
+                    IncomingChannelName = mMax.IncomingChannelName,
+                    ChannelName = mMax.ChannelName,
+                    ChartType = mMax.ChartType,
+                    Processed = mMax.Processed,
+                    DashboardDisplay = mMax.DashboardDisplay
+                };
+
+                if (mMax.TimeStampDateOnly != mvMax.TimeStampDateOnly) monitorings.Add(mvMax);
+            }
 
             return Ok(monitorings);
         }

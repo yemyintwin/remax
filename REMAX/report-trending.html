@@ -27,6 +27,7 @@
     <link href="vendor/kendo/styles/kendo.bootstrap.min.css" rel="stylesheet" />
     <link href="vendor/kendo/styles/kendo.bootstrap.mobile.min.css" rel="stylesheet" />
     <link href="assets/bootstrap_datetime/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="assets/bootstrap_select/css/bootstrap-select.min.css" rel="stylesheet" />
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/kendo/js/kendo.all.min.js"></script>
@@ -40,15 +41,16 @@
     <script src="assets/bootstrap/js/bootstrapValidator.min.js"></script>
     <script src="assets/bootstrap_datetime/js/bootstrap-datepicker.min.js"></script>
     <!--<script src="assets/datatables-responsive/dataTables.responsive.js"></script>-->
+    <script src="assets/bootstrap_select/js/bootstrap-select.min.js"></script>
 
-    <script src="assets/js/remax.js?v=190320_2325"></script>
-    <script src="assets/js/report-trending.js?v=190320_2325"></script>
+    <script src="assets/js/remax.js?v=190503_2103"></script>
+    <script src="assets/js/report-trending.js?v=190503_2103"></script>
 
 </head>
 <body>
     <div id="wrapper">
         <div>
-            <div class="card">
+            <div class="">
                 <div class="row">
                     <div class="col-sm-12 container" style="padding-left:25px">
                         <em class="fa fa-book fa-3x"></em>&nbsp;<h4 style="display:inline !important">Trending Report</h4>
@@ -56,63 +58,97 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-4 container">
-                        <label class="col-sm-3 control-label" for="vessel">Vessel</label>
-                        <div class="col-sm-9">
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 container">
+                        <label class="control-label" for="vessel">Vessel</label>
+                        <div>
                             <select class="form-control" id="vessel"></select>
                         </div>
                     </div>
-                    <div class="col-sm-4 container">
-                        <label class="col-sm-3 control-label" for="engine">Engine</label>
-                        <div class="col-sm-9">
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 container">
+                        <label class="control-label" for="engine">Engine</label>
+                        <div>
                             <select class="form-control" id="engine"></select>
                         </div>
                     </div>
-                    <div class="col-sm-4 container">
-                        <label class="col-sm-3 control-label" for="channel">Channel</label>
-                        <div class="col-sm-9">
-                            <select class="form-control" id="channel"></select>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 container">
+                        <label class="control-label" for="channel">Channel</label>
+                        <div>
+                            <select class="selectpicker form-control" id="channel" data-width="100%" 
+                                    data-size="15" data-live-search="true" data-dropdown-align-right="true"
+                                    data-selected-text-format="count" multiple>
+                            </select>
                         </div>
                     </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-sm-4 container">
-                        <label class="col-sm-3 control-label" for="vessel">From</label>
-                        <div class="col-sm-9">
-                            <div class="input-append date">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="from" name="from" placeholder="dd/mm/yyyy" data-provide="datepicker" readonly />
-                                    <label class="input-group-btn" for="from">
-                                        <span class="btn btn-default">
-                                            <span class="fa fa-calendar"></span>
-                                        </span>
-                                    </label>
-                                </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 container">
+                        <label class="control-label" for="engine">Engine</label>
+                        <div class="input-append date">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="from" name="from" placeholder="dd/mm/yyyy" data-provide="datepicker" readonly />
+                                <label class="input-group-btn" for="from">
+                                    <span class="btn btn-default">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </label>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 container">
-                        <label class="col-sm-3 control-label" for="">To</label>
-                        <div class="col-sm-9">
-                            <div class="input-append date">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="to" name="to" placeholder="dd/mm/yyyy" data-provide="datepicker" readonly />
-                                    <label class="input-group-btn" for="to">
-                                        <span class="btn btn-default">
-                                            <span class="fa fa-calendar"></span>
-                                        </span>
-                                    </label>
-                                </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 container">
+                        <label class="control-label" for="engine">Engine</label>
+                        <div class="input-append date">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="to" name="to" placeholder="dd/mm/yyyy" data-provide="datepicker" readonly />
+                                <label class="input-group-btn" for="to">
+                                    <span class="btn btn-default">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </label>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 container">
-                        <div class="col-sm-6">
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 container">
+                        <label class="control-label" for="btnGenerate">&nbsp;</label>
+                        <div>
                             <button class="btn btn-primary" type="button" id="btnGenerate">Generate Report</button>
                         </div>
                     </div>
                 </div>
+                <!--<div class="row">
+        <div class="col-sm-3 container">
+            <label class="col-sm-3 control-label" for="vessel">From</label>
+            <div class="col-sm-9">
+                <div class="input-append date">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="from" name="from" placeholder="dd/mm/yyyy" data-provide="datepicker" readonly />
+                        <label class="input-group-btn" for="from">
+                            <span class="btn btn-default">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 container">
+            <label class="col-sm-3 control-label" for="">To</label>
+            <div class="col-sm-9">
+                <div class="input-append date">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="to" name="to" placeholder="dd/mm/yyyy" data-provide="datepicker" readonly />
+                        <label class="input-group-btn" for="to">
+                            <span class="btn btn-default">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 container">
+            <div class="col-sm-6">
+                <button class="btn btn-primary" type="button" id="btnGenerate">Generate Report</button>
+            </div>
+        </div>
+    </div>-->
 
             </div>
 
@@ -125,10 +161,16 @@
                     <div class="panel panel-default">
                         <div class="panel-heading"><i class="fa fa-bar-chart-o fa-fw"></i> Output</div>
                         <div class="panel-body">
+                            <!--<div class="row">
+                                <div class="col-sm-12">
+                                    Hourly format will show up to 48 hours. Above 48 hours (2 days) will show with day format. More than 60 days will show with week format.
+                                </div>
+                            </div>-->
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="demo-section k-content wide">
                                         <div id="dataChart"></div>
+                                        <div class="chart-loading"></div>
                                     </div>
                                 </div>
                             </div>

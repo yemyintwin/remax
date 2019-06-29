@@ -18,6 +18,7 @@ namespace REMAXAPI.Models
         public ChartType()
         {
             this.Channels = new HashSet<Channel>();
+            this.ChannelGroups = new HashSet<ChannelGroup>();
         }
     
         public System.Guid Id { get; set; }
@@ -25,5 +26,7 @@ namespace REMAXAPI.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Channel> Channels { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChannelGroup> ChannelGroups { get; set; }
     }
 }

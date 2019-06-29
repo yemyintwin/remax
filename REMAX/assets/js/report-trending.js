@@ -10,7 +10,8 @@ var trending = {
         }, 100);
 
         $(window).resize(function () {
-            $("#dataChart").data("kendoChart").refresh();
+            var chart = $("#dataChart").data("kendoChart");
+            if (chart) chart.refresh();
         });
     },
 
@@ -30,6 +31,7 @@ var trending = {
         $('#to').datepicker().datepicker('setDate', 'today');
         $("#vessel").change(trending.vessel_OnChange);
         $("#engine").change(trending.engine_OnChange);
+        $("#channel").change(trending.channel_OnChange);
         $("#btnGenerate").click(trending.btnGenerate_OnClick);
 
         // Retrieveing vessels
@@ -59,7 +61,7 @@ var trending = {
     vessel_OnChange : function () {
         var id = $('#vessel').val();
         var found = jQuery.grep(vessels, function (v) {
-            return v.id == id;
+            return v.id === id;
         });
 
         $('#engine').find('option').remove().end();
@@ -72,8 +74,23 @@ var trending = {
         $("#engine").change();
     },
 
-    engine_OnChange : function() {
+    engine_OnChange: function () {
+        var engine;
+        var engineSide=-1;
+
         var engineId = $('#engine').val();
+        var id = $('#vessel').val();
+        var found = jQuery.grep(vessels, function (v) {
+            return v.id === id;
+        });
+        if (found && found[0] && found[0].engines) {
+            engine = jQuery.grep(found[0].engines, function (e) {
+                return e.id === engineId;
+            });
+        }
+        if (engine && engine[0] && engine[0].side) {
+            engineSide = engine[0].side;
+        }
 
         // Retrieveing channels
         if (Settings.Token) {
@@ -91,14 +108,23 @@ var trending = {
 
                     $('#channel').find('option').remove().end();
                     jQuery.each(channels, function (key, entry) {
-                        var name = entry.channelNo.toString() + ' (' + entry.name.toString() + ')';
-                        $('#channel').append($('<option></option>').attr('value', entry.id).text(name)).end();
+                        if (engineSide === entry.side) {
+                            var name = entry.channelNo.toString() + ' (' + entry.name.toString() + ')';
+                            $('#channel').append($('<option></option>').attr('value', entry.id).text(name)).end();
+                        }
                     });
 
+                    $('.selectpicker').selectpicker('refresh');
+
+                    //$("#channel").selectpicker();
                     $("#channel").change();
-                },
+                }
             });
         }
+    },
+
+    channel_OnChange: function () {
+        
     },
 
     btnGenerate_OnClick: function () {
@@ -119,21 +145,20 @@ var trending = {
         if (from && to) {
             var fromArray = from.split('/');
             var toArray = to.split('/');
-            if (fromArray.length == 3 && toArray.length == 3) {
+            if (fromArray.length === 3 && toArray.length === 3) {
                 fromDate = new Date(fromArray[1] + '/' + fromArray[0] + '/' + fromArray[2]);
                 toDate = new Date(toArray[1] + '/' + toArray[0] + '/' + toArray[2]);
                 if (fromDate > toDate) errorMsg += "<p>From date is must be earlier than to date.</p>";
             }
         } 
 
-        if (errorMsg && errorMsg != '') {
+        if (errorMsg && errorMsg !== '') {
             $('#errors').html('');
             $('#errors').append(errorMsg);
             $('#messageModal').modal('show');
         }
         else {
 
-            Util.displayLoading(document.body, true);
             $('#btnGenerate').prop('disabled', true);
 
             var strFromDate = fromDate.getFullYear() + '-' + (fromDate.getMonth() + 1) + '-' + fromDate.getDate();
@@ -198,14 +223,59 @@ var trending = {
             });
             */
 
+            //Settings.WebApiUrl + 'api/KendoChannels/' + channelId
+            var displayUnit = '';
+
+            $.each(channelId, function (i) {
+                $.ajax({
+                    type: 'GET',
+                    url: Settings.WebApiUrl + 'api/KendoChannels/' + this,
+                    dataType: 'json',
+                    async: false,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'bearer ' + Settings.Token.access_token);
+                    },
+                    success: function (result, textStatus, jqXHR) {
+                        var tempUnit = result.displayUnit;
+                        if (displayUnit.indexOf(tempUnit) < 0) {
+                            if (displayUnit && displayUnit.length !== 0) displayUnit += ', ';
+                            displayUnit += tempUnit;
+                        }
+                    }
+                });
+            });
+
             var param = 'vesselId=' + vesselId + '&engineId=' + engineId + '&channelId=' + channelId + '&fromDate=' + strFromDate + '&toDate=' + strToDate;
 
             var dayDiff = Util.date_diff_indays(fromDate, toDate);
-            var baseUnit = 'fit';
+            var baseUnit = 'fit'; // fit, milliseconds, seconds, minutes, hours, days, weeks, months, years
+            var labelSteps = 1;
+            var format = "HH:mm";
+            var missingValues = "zero"; // interpolate, gap, zero;
+            var baseUnitStep = 1;
+            var catAxisTitle = '';
 
-            if (dayDiff >= 0 && dayDiff <= 1) baseUnit = 'hours';
-            else if (dayDiff > 1 && dayDiff <= 14) baseUnit = 'days';
-            else if (dayDiff > 14) baseUnit = 'weeks';
+            if (dayDiff >= 0 && dayDiff <= 2) {
+                baseUnit = 'minutes';
+                baseUnitStep = 10;
+                labelSteps = 3;
+                format = 'hh:mm';
+                catAxisTitle = 'Interval (10 minute)';
+            }
+            else if (dayDiff > 2) {
+                baseUnit = 'hours';
+                baseUnitStep = 1;
+                labelSteps = 24;
+                format = 'd/MMM';
+                catAxisTitle = 'Interval (hour)';
+            }
+            else if (dayDiff > 30*3) {
+                baseUnit = 'days';
+                baseUnitStep = 1;
+                labelSteps = 5;
+                format = 'd/MMM';
+                catAxisTitle = 'Interval (days)';
+            }
 
             var dataSource = new kendo.data.DataSource({
                 transport: {
@@ -224,11 +294,25 @@ var trending = {
                     dir: "asc"
                 }
             });
+
+            // Spin all loading indicators on the page
+            kendo.ui.progress($(".chart-loading"), true);
             $("#dataChart").kendoChart({
                 title: { text: $('#engine option:selected').text() },
                 dataSource: dataSource,
+                valueAxis: {
+                    title: {
+                        text: displayUnit,
+                        font: "12px sans-serif"
+                    }
+                },
                 series: [{
                     type: "line",
+                    missingValues: missingValues,
+                    style: "normal",
+                    markers: {
+                        visible: false
+                    },
                     field: "value",
                     categoryField: "timeStamp",
                     name: "#= group.value #"
@@ -238,12 +322,35 @@ var trending = {
                 },
                 categoryAxis: {
                     type: "date",
-                    baseUnit: baseUnit
+                    baseUnit: baseUnit,
+                    baseUnitStep: baseUnitStep,
+                    labels: {
+                        step: labelSteps,
+                        rotation: 270,
+                        dateFormats: {
+                            minutes: format,
+                            hours: format,
+                            days: format
+                        }
+                    },
+                    majorGridLines: {
+                        step: labelSteps
+                    },
+                    title: {
+                        text: catAxisTitle,
+                        font: "12px sans-serif"
+                    }
+                },
+                tooltip: {
+                    visible: true,
+                    template: "${category} : ${value}"
+                },
+                render: function (e) {
+                    var loading = $(".chart-loading", e.sender.element.parent());
+                    kendo.ui.progress(loading, false);
+                    $('#btnGenerate').prop('disabled', false);
                 }
             });
-
-            Util.displayLoading(document.body, false);
-            $('#btnGenerate').prop('disabled', false);
         }
     }
 }

@@ -35,16 +35,19 @@ namespace REMAXAPI.Models
         public Nullable<decimal> MonitoringTimer { get; set; }
         public Nullable<int> DataTypeNo { get; set; }
         public Nullable<short> AlarmValue { get; set; }
+        public Nullable<int> Side { get; set; }
         public Nullable<int> Status { get; set; }
         public System.Guid CreatedBy { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.Guid ModifiedBy { get; set; }
         public System.DateTime ModifiedOn { get; set; }
         public string DocumentURL { get; set; }
+        public Nullable<System.Guid> ChannelGroupID { get; set; }
     
         public virtual ChartType ChartType { get; set; }
         public virtual Model Model { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlertSetting> AlertSettings { get; set; }
+        public virtual ChannelGroup ChannelGroup { get; set; }
     }
 }
