@@ -26,9 +26,10 @@
     <script src="assets/js/kendo.all.min.js"></script>
     <script src="assets/js/metisMenu.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrapValidator.min.js"></script>
 
-    <script src="assets/js/remax.js?v=190503_2103"></script>
-    <script src="assets/js/login.js?v=190503_2103"></script>
+    <script src="assets/js/remax.js?v=190607_1648"></script>
+    <script src="assets/js/login.js?v=190607_1648"></script>
 </head>
 
 <body>
@@ -51,9 +52,44 @@
         </div>
     </div>
 
+    <div>
+        <div class="modal fade" role="dialog" tabindex="-1" id="twoFA" aria-labelledby="twoFALabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-horizontal" role="form" id="form_twoFA">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title">
+                                <em class="fa fa-upload fa-1x"></em>
+                                Google Two Factor Authenticator
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="channel_model">Enter Google Authenticator Token</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" id="googleToken" name="googleToken" placeholder="Token" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" type="button" id="btnTwoFACancel" data-dismiss="modal">Cancel</button>
+                            <button class="btn btn-primary" type="button" id="btnTwoFALogin">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(document).ready(function () {
             login.performLogOut();
+            $('#btnTwoFALogin').click(function () {
+                login.verifyToken();
+            });
+            $('#btnTwoFACancel').click(function () {
+                login.performLogOut();
+            });
         });
     </script>
 </body>

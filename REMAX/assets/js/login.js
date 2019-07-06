@@ -7,11 +7,14 @@
 
         //debugger;
 
+        $('#login').prop('disabled', false);
+        $('#login').text("Login");
+
         if (localStorage.getItem('currentToken')) currentToken = localStorage.getItem('currentToken').toString();
-        else if ($.cookie('currentToken')) currentToken = $.cookie('currentToken');
+        if ($.cookie('currentToken')) currentToken = $.cookie('currentToken');
 
         if (localStorage.getItem('currentUser')) currentUser = localStorage.getItem('currentUser').toString();
-        else if ($.cookie('currentUser')) currentUser = $.cookie('currentUser');
+        if ($.cookie('currentUser')) currentUser = $.cookie('currentUser');
 
         if (currentToken) {
             Settings.Token = JSON.parse(currentToken);
@@ -33,6 +36,12 @@
                 });
             }
         }
+
+        if (localStorage.getItem('currentToken')) localStorage.removeItem('currentToken')
+        if ($.cookie('currentToken')) $.removeCookie('currentToken');
+
+        if (localStorage.getItem('currentUser')) localStorage.removeItem('currentUser')
+        if ($.cookie('currentUser')) $.removeCookie('currentUser');
     },
 
     performLogin: function () {
@@ -83,14 +92,22 @@
             localStorage.setItem(login.tokenKey, JSON.stringify(data));
        
             var success = login.getCurrentUserInfo(data.access_token);
+            var twoFASuccess = false;
+
+            // Password Correct
             if (success) {
-                var params = Util.parse_query_string(window.location.search.substring(1));
-                if (params && params.callbackurl) {
-                    window.location = params.callbackurl;
+
+                var intCount = 1;
+                $(this).find('form').bootstrapValidator("resetForm", true); //reset forms
+                $('.modal:visible').length && $(document.body).addClass('modal-open'); //reset scrollbar setting
+
+                if (success.twoFactorEnabled) {
+                    $('#twoFA').modal('show');
                 }
                 else {
-                    window.location = '/';
+                    login.redirectCallingPage();
                 }
+                
             }
             else throw 'User info can\'t get!!';
 
@@ -101,8 +118,63 @@
         });
     },
 
+    verifyToken: function () {
+        var tempToken, tempUser;
+
+        //Store into temp
+        if (localStorage.getItem('currentToken')) tempToken = localStorage.getItem('currentToken').toString();
+        else if ($.cookie('currentToken')) tempToken = $.cookie('currentToken');
+
+        if (localStorage.getItem('currentUser')) tempUser = localStorage.getItem('currentUser').toString();
+        else if ($.cookie('currentUser')) tempUser = $.cookie('currentUser');
+
+        //Clear Token and user info
+        if (localStorage.getItem('currentToken')) localStorage.removeItem('currentToken')
+        if ($.cookie('currentToken')) $.removeCookie('currentToken');
+
+        if (localStorage.getItem('currentUser')) localStorage.removeItem('currentUser')
+        if ($.cookie('currentUser')) $.removeCookie('currentUser');
+
+        $.ajax({
+            type: 'GET',
+            url: Settings.WebApiUrl + '/api/GoogleAuthenticator/Verify/' + $('#googleToken').val(),
+            async: false
+        }).done(function (data) {
+                //2FA success and store cookies back
+                try {
+                    $.cookie(login.tokenKey, tempToken);
+                } catch (e) {
+                    console.assert(e.message);
+                }
+                localStorage.setItem(login.tokenKey, tempToken);
+
+                try {
+                    $.cookie(login.userKey, tempUser);
+                } catch (e) {
+                    console.assert(e.message);
+                }
+                localStorage.setItem(login.userKey, tempUser);
+
+                login.redirectCallingPage();
+        }).fail(function (jqXHR, textStatus) {
+            alert('Invalid Token. Please try again.');
+            $('#googleToken').val('');
+            $('#googleToken').focus();
+        });
+    },
+
+    redirectCallingPage: function () {
+        var params = Util.parse_query_string(window.location.search.substring(1));
+        if (params && params.callbackurl) {
+            window.location = params.callbackurl;
+        }
+        else {
+            window.location = '/';
+        }
+    },
+
     getCurrentUserInfo: function (token) {
-        var success = false;
+        var success = null;
         if (!token) {
             if (localStorage.getItem(login.tokenKey)) token = localStorage.getItem(login.tokenKey).access_token.toString();
             else if ($.cookie(login.tokenKey)) token = $.cookie(login.tokenKey).access_token;
@@ -128,10 +200,11 @@
                         console.assert(e.message);
                     }
                     localStorage.setItem(login.userKey, JSON.stringify(data));
-                    success = true;
+                    success = data;
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
-                    success = false;
+                    console.assert(jqXhr.responseText);
+                    success = null;
                 }
             });
         }

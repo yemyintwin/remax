@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,7 +12,7 @@ namespace REMAXAPI.Controllers
 {
     public class GoogleAuthenticatorController : ApiController
     {
-        private const string Key = "drumsdrumsdrumsdrums";
+        private string Key = "qwerty123456asdfgh";
 
         [HttpPost]
         [HttpGet]
@@ -19,9 +20,13 @@ namespace REMAXAPI.Controllers
         [Route("api/GoogleAuthenticator/Verify/{passcode}")]
         public async Task<IHttpActionResult> Verify(string passcode)
         {
+            if (ConfigurationManager.AppSettings.AllKeys.Contains("Key")) {
+                this.Key = ConfigurationManager.AppSettings["Key"].ToString();
+            }
+
             var token = passcode;
             var authenticator = new TwoFactorAuthenticator();
-            var ticks = new DateTime().AddMinutes(5).Ticks; // Time Tolerance is 5 minutes
+            var ticks = new DateTime().AddMinutes(2).Ticks; // Time Tolerance is 2 minutes
             var isValid = authenticator.ValidateTwoFactorPIN(Key, token, new TimeSpan(ticks));
             if (isValid)
             {
@@ -32,9 +37,8 @@ namespace REMAXAPI.Controllers
 
         [HttpPost]
         [HttpGet]
-        [AllowAnonymous]
-        [Route("api/GoogleAuthenticator/Login")]
-        public async Task<IHttpActionResult> Login()
+        [Route("api/GoogleAuthenticator/GetQRCodeURL")]
+        public async Task<IHttpActionResult> GetQRCodeURL()
         {
             var authenticator = new TwoFactorAuthenticator();
             var result = authenticator.GenerateSetupCode("Daikai", "DRUMS", Key, 300, 300);

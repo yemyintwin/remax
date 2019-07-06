@@ -84,6 +84,9 @@ var userprofile = {
                     $('#userMobile').val(d.phoneNumber);
                     $('#userEmail').val(d.email);
                     $('#userCountry').val(d.country);
+                    $('#userTwoFA').val(d.twoFactorEnabled ? "Yes" : "No");
+
+                    userprofile.getGoogleAuthQR();
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     $('#errors').html('');
@@ -92,6 +95,24 @@ var userprofile = {
                 }
             });
         }
+    },
+
+    getGoogleAuthQR: function () {
+        $.ajax({
+            type: 'GET',
+            url: Settings.WebApiUrl + '/api/GoogleAuthenticator/GetQRCodeURL',
+            contentType: "application/json",
+            data: null,
+            dataType: 'json',
+            // passing token
+            //data: Settings.ClientData,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'bearer ' + token);
+            },
+            success: function (d, textStatus, xhr) {
+                $('#twoFAQR').attr("src", d);
+            }
+        });
     },
 
     SubmitUser: function () {
@@ -161,7 +182,14 @@ var userprofile = {
                             message: 'Email is required'
                         }
                     }
-                }
+                },
+                twoFactorEnabled: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Two FA is required'
+                        }
+                    }
+                },
             }
         })
             .on('success.form.bv', function (e) {
@@ -180,6 +208,7 @@ var userprofile = {
                     phoneNumber: $('#userMobile').val(),
                     email: $('#userEmail').val(),
                     country: $('#userCountry').val(),
+                    twoFactorEnabled: $('#userTwoFA').val()=='yes'?true:false,
                 };
 
                 $.ajax({

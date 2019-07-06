@@ -599,6 +599,14 @@ var registration = {
                 title: "Mobile",
                 filterable: false
             },
+            {
+                field: "twoFactorEnabled",
+                title: "Two Factor Enabled",
+                filterable: false,
+                template: function (dataItem) {
+                    return dataItem.twoFactorEnabled?"Yes":"No";
+                },
+            },
         ];
 
         // initialize grid
@@ -785,6 +793,7 @@ var registration = {
                 phoneNumber: $('#userMobile').val(),
                 email: $('#userEmail').val(),
                 country: $('#userCountry').val(),
+                twoFactorEnabled: ($('#userTwoFA').val().toLowerCase()==='yes'),
                 userRoles: roles
             };
             var requestType = "POST"; // Create
@@ -868,6 +877,7 @@ var registration = {
             $('#userMobile').val(selectedItem.phoneNumber);
             $('#userEmail').val(selectedItem.email);
             $('#userCountry').val(selectedItem.country);
+            $('#userTwoFA').val(selectedItem.twoFactorEnabled?"Yes":"No");
 
             // roles
             var roles = [];
