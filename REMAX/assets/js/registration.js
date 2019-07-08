@@ -843,6 +843,10 @@ var registration = {
 
     btnNewUser_OnClick: function () {
         registration.modules.user.state = 'create';
+
+        var multiselect = $("#userRole").data("kendoMultiSelect");
+        multiselect.enable(false);
+
         registration.SubmitUserInitControls();
     },
 
@@ -878,6 +882,9 @@ var registration = {
             $('#userEmail').val(selectedItem.email);
             $('#userCountry').val(selectedItem.country);
             $('#userTwoFA').val(selectedItem.twoFactorEnabled?"Yes":"No");
+
+            var multiselect = $("#userRole").data("kendoMultiSelect");
+            multiselect.enable(true);
 
             // roles
             var roles = [];

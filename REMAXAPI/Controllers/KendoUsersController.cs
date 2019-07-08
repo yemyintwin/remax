@@ -218,6 +218,8 @@ namespace REMAXAPI.Controllers
                 ModelState.AddModelError("Duplicate email found", "Email already exists in system. Please use another email address.");
             }
 
+            user.UserRoles.Clear();
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
